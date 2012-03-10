@@ -1,0 +1,15 @@
+[user]
+	name = Douglas Anderson
+	email = hockeybuggy@gmail.com
+[color]
+	ui = true
+[core]
+	excludesfile = /home/douglas/.gitignore
+[alias]
+	co =  !git commit
+	com = !git commit -m
+	coa = !git commit -a
+	cam = !git commit -am
+	coam = !git commit -am
+	sta = !git status -s
+	pom = !git push origin master
