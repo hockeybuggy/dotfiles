@@ -6,8 +6,8 @@ set ruler
 set laststatus=2
 set nu!
 
-set background=dark
-colorscheme solarized
+"set background=dark
+"colorscheme solarized
 
 "Nerd commenter want this enabled
 filetype plugin on
@@ -20,7 +20,6 @@ set list
 set listchars=tab:▸\ ,eol:¬
 highlight NonText guifg=#dddddd
 highlight SpecialKey guifg=#dddddd
-
 
 set ts=4 sts=4 sw=4 expandtab
 
