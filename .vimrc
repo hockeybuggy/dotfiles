@@ -9,6 +9,9 @@ set nu!
 set background=dark
 colorscheme solarized
 
+"Nerd commenter want this enabled
+filetype plugin on
+
 " markdown filetype file
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 

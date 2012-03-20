@@ -2,6 +2,6 @@
 ## My dot files
 This repository is for managing my dotfiles.
 
-This are copys and should be updated periodiclly
+This are hard links on slate. gitconfig is not because I have removed my github credentials because this repository is public.
 
 ***
