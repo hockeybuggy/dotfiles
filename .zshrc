@@ -9,9 +9,11 @@ ZSH_THEME="djanderson"
 
 # Example alias
 # alias zshconfig="mate ~/.zshrc"
+alias -r tvim="ex -v"
 alias -r vim="gvim"
-alias -r tvim="vim"
 alias -r la="ls -A"
+alias -r cbrow="chromium-browser"
+alias -r fbrow="firefox"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
