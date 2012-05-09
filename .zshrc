@@ -1,40 +1,66 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
+#FILE: .zshrc
+#AUTHOR: Douglas Anderson
+#DATE: 12/04/19
+
+ZSH=$HOME/.zsh
+
 ZSH_THEME="djanderson"
 
-# Example alias
-# alias zshconfig="mate ~/.zshrc"
-alias -r tvim="ex -v"
-alias -r vim="gvim"
-alias -r la="ls -A"
+#------------------------------
+# Alias
+#------------------------------
+#alias -r tvim="ex -v"
+#alias -r vim="gvim"
+alias -r ls="ls --color -F"
+alias -r la="ls --color -A"
+alias -r ll="ls --color -lh"
+alias -r lla="ls --color -lhA"
 alias -r cbrow="chromium-browser"
 alias -r fbrow="firefox"
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
 
-# Comment this out to disable weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+autoload -U colors && colors
+autoload -U compinit promptinit
+compinit
+promptinit
 
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
+#------------------------------
+# Prompt
+#------------------------------
+setprompt () {
+    # load some modules
+    autoload -U colors zsh/terminfo # Used in the colour alias below
+    colors
+    setopt prompt_subst
 
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
+    # make some aliases for the colours: (coud use normal escap.seq's too)
+    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+        eval PR_$color='%{$fg[${(L)color}]%}'
+    done
+    PR_NO_COLOR="%{$terminfo[sgr0]%}"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
+    # Check the UID
+    if [[ $UID -ge 1000 ]]; then # normal user
+        eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
+        eval PR_USER_OP='${PR_YELLOW}\ \>${PR_NO_COLOR}'
+    elif [[ $UID -eq 0 ]]; then # root
+        eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
+        eval PR_USER_OP='${PR_RED}\ \>${PR_NO_COLOR}'
+    fi
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+    # Check if we are on SSH or not
+    if [[ -n "$SSH_CLIENT" || -n "$SSH2_CLIENT" ]]; then
+        eval PR_HOST='${PR_YELLOW}%M${PR_NO_COLOR}' #SSH
+    else
+        eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
+    fi
+    # set the prompt
+    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ %~${PR_USER_OP} '
+   # PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][${PR_BLUE}%~${PR_CYAN}]${PR_USER_OP} '
+    PS2=$'%_>'
+}
+setprompt
 
-source $ZSH/oh-my-zsh.sh
+#source $ZSH/themes/$ZSH_THEME.zsh-theme
 
-# Customize to your needs...

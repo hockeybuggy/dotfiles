@@ -6,12 +6,12 @@ set ruler
 set laststatus=2
 set nu!
 "make comment not blue in my blue terminal
-highlight Comment ctermfg=green
+"highlight Comment ctermfg=green
 
 "set background=dark
 "colorscheme solarized
 
-"Nerd commenter want this enabled
+"Nerd commenter wants this enabled
 filetype plugin on
 
 " markdown filetype file
