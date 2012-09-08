@@ -36,6 +36,8 @@ xterm*|rxvt*)
     ;;
 esac
 
+color_prompt=yes
+
 # Alias definitions.
 
 # enable color support of ls and also add handy aliases
@@ -51,10 +53,10 @@ case $OSTYPE in
 esac
 
 # some more ls aliases
-alias ls='ls -lh --full-time'
-alias ll='ls -lh --full-time'
-alias la='ls -lhA --full-time'
-alias lla='ls -lhA --full-time | less'
+alias ls='ls -lh --color --full-time'
+alias ll='ls -lh --color --full-time'
+alias la='ls -lhA --color --full-time'
+alias lla='ls -lhA --color --full-time | less'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
