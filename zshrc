@@ -1,21 +1,19 @@
 
 #FILE: .zshrc
 #AUTHOR: Douglas Anderson
-#DATE: 12/04/19
+#DATE: 12/05/09
 
 ZSH=$HOME/.zsh
-
-ZSH_THEME="djanderson"
 
 #------------------------------
 # Alias
 #------------------------------
 #alias -r tvim="ex -v"
 #alias -r vim="gvim"
-alias -r ls="ls --color -F"
-alias -r la="ls --color -A"
+alias -r ls="ls --color -lh"
+alias -r la="ls --color -lhA"
 alias -r ll="ls --color -lh"
-alias -r lla="ls --color -lhA"
+alias -r lla="ls --color=no -lhA | less"
 alias -r cbrow="chromium-browser"
 alias -r fbrow="firefox"
 
@@ -61,6 +59,4 @@ setprompt () {
     PS2=$'%_>'
 }
 setprompt
-
-#source $ZSH/themes/$ZSH_THEME.zsh-theme
 
