@@ -1,0 +1,19 @@
+[user]
+	name = Douglas Anderson
+	email = dougjamesanderson@gmail.com
+
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+
+[alias]
+	ci = commit
+	com = commit -m
+	cam = commit -am
+	sta = status -s
+	lg = log --oneline
+	bra = branch
+	che = checkout
+	pom = push origin master
+	plo = pull origin
