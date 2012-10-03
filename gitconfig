@@ -16,4 +16,4 @@
 	bra = branch
 	che = checkout
 	pom = push origin master
-	plo = pull origin
+	plo = pull origin master

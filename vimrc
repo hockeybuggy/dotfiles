@@ -9,8 +9,8 @@ set nu!
 "comment was too blue in my blue terminal
 "highlight Comment ctermfg=green
 
-"set background=dark
-"colorscheme solarized
+set background=dark
+colorscheme solarized
 
 "Nerd commenter want this enabled
 filetype plugin on

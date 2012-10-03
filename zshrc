@@ -1,22 +1,19 @@
 
 #FILE: .zshrc
 #AUTHOR: Douglas Anderson
-#DATE: 12/05/09
+#DATE: 12/09/27
 
 ZSH=$HOME/.zsh
 
 #------------------------------
 # Alias
 #------------------------------
-#alias -r tvim="ex -v"
-#alias -r vim="gvim"
 alias -r ls="ls --color -lh"
 alias -r la="ls --color -lhA"
 alias -r ll="ls --color -lh"
 alias -r lla="ls --color=no -lhA | less"
 alias -r cbrow="chromium-browser"
 alias -r fbrow="firefox"
-
 
 autoload -U colors && colors
 autoload -U compinit promptinit
@@ -41,7 +38,7 @@ setprompt () {
     # Check the UID
     if [[ $UID -ge 1000 ]]; then # normal user
         eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
-        eval PR_USER_OP='${PR_YELLOW}\ \>${PR_NO_COLOR}'
+        eval PR_USER_OP='${PR_RED}\ ➤${PR_NO_COLOR}'
     elif [[ $UID -eq 0 ]]; then # root
         eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
         eval PR_USER_OP='${PR_RED}\ \>${PR_NO_COLOR}'
@@ -54,7 +51,7 @@ setprompt () {
         eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
     fi
     # set the prompt
-    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ %~${PR_USER_OP} '
+    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ %~${PR_USER_OP} '
    # PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][${PR_BLUE}%~${PR_CYAN}]${PR_USER_OP} '
     PS2=$'%_>'
 }
