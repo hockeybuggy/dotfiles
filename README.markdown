@@ -2,14 +2,12 @@
 ## My dot files
 This repository is for managing my dotfiles.
 
-This are hard links on slate. gitconfig is not because I have removed my github credentials because this repository is public.
-
-bashrc is from the school's system
+bashrc is from the school's system and other times that zsh is unavaible.
 
 Copy vim/
-    $ cp ~/dotfiles/vim ~/.vim
+		$ cp ~/dotfiles/vim ~/.vim
 
 Symlink everything else
-    $ ln -s ~/dotfiles/* ~/.*
+		$ ln -s ~/dotfiles/* ~/.*
 
 ***
