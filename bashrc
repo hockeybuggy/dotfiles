@@ -53,10 +53,10 @@ case $OSTYPE in
 esac
 
 # some more ls aliases
-alias ls='ls -lh --color --full-time'
-alias ll='ls -lh --color --full-time'
-alias la='ls -lhA --color --full-time'
-alias lla='ls -lhA --color --full-time | less'
+alias ls='ls -lh --color'
+alias ll='ls -lh --color'
+alias la='ls -lhA --color'
+alias lla='ls -lhA --color | less'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
