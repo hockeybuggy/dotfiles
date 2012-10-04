@@ -1,24 +1,28 @@
 
 #FILE: .zshrc
 #AUTHOR: Douglas Anderson
-#DATE: 12/09/27
+#DATE: 12/10/03
 
 ZSH=$HOME/.zsh
 
 #------------------------------
 # Alias
 #------------------------------
-alias -r ls="ls --color -lh"
-alias -r la="ls --color -lhA"
-alias -r ll="ls --color -lh"
+alias -r ls="ls --color=always -lh"
+alias -r la="ls --color=always -lhA"
+alias -r ll="ls --color=always -lh"
 alias -r lla="ls --color=no -lhA | less"
 alias -r cbrow="chromium-browser"
 alias -r fbrow="firefox"
 
+
+eval `dircolors $HOME/.dotfiles/dircolors.256dark` 
 autoload -U colors && colors
 autoload -U compinit promptinit
 compinit
 promptinit
+
+setopt correct
 
 #------------------------------
 # Prompt
@@ -41,7 +45,10 @@ setprompt () {
         eval PR_USER_OP='${PR_RED}\ ➤${PR_NO_COLOR}'
     elif [[ $UID -eq 0 ]]; then # root
         eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
-        eval PR_USER_OP='${PR_RED}\ \>${PR_NO_COLOR}'
+        eval PR_USER_OP='${PR_RED}\ ➤➤${PR_NO_COLOR}'
+    elif [[ $UID -eq 0 ]]; then # root
+        eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
+        eval PR_USER_OP='${PR_RED}\ ➤➤${PR_NO_COLOR}'
     fi
 
     # Check if we are on SSH or not
@@ -50,10 +57,13 @@ setprompt () {
     else
         eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
     fi
+
+
     # set the prompt
     PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ %~${PR_USER_OP} '
    # PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][${PR_BLUE}%~${PR_CYAN}]${PR_USER_OP} '
     PS2=$'%_>'
 }
 setprompt
+
 

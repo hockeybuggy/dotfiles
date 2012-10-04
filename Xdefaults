@@ -1,5 +1,6 @@
 
 # Created 2012/09/20
+# Modified 2012/10/04
 # source:http://wiki.afterstep.org/index.php?title=Rxvt-Unicode_Configuration_Tutorial 
 
 # transparency - true or false (default)
@@ -28,16 +29,6 @@ URxvt*saveLines: 12000
 URxvt*font: xft:terminus:pixelsize=15
 URxvt*boldFont: xft:terminus:bold:pixelsize=15
 
-# Replace blue folder colors with a lighter shade for clarity. To
-#  set colored folders and files within urxvt, xterm, and aterm, add
-#  the following line to your ~/.bashrc ($HOME/.bashrc) file under
-#  the heading "# User specific aliases and functions":
-#   alias ls="ls -h --color=auto"
-# Dirs
-URxvt*color4: RoyalBlue
-URxvt*color12: RoyalBlue
-
-
 # scrollbar - true (default) or false
 URxvt*scrollBar: true
 # scrollbar position - left=false (default) or right=true
@@ -47,4 +38,41 @@ URxvt*scrollstyle: rxvt
 
 # Douglas 2012 - Trying to set urgancy hint
 URxvt*urgentOnBell: true
+
+
+# ****************
+# Solarized 
+# ****************
+urxvt*background:            #002b36
+urxvt*foreground:            #839496
+#*fading:                40
+#*fadeColor:             #002b36
+#*cursorColor:           #93a1a1
+#*pointerColorBackground:#586e75
+#*pointerColorForeground:#93a1a1
+
+#!! red dark/light
+urxvt*color1: #dc322f
+urxvt*color9: #cb4b16 
+
+#!! green dark/light
+urxvt*color2: #859900
+urxvt*color10: #586e75
+
+#!! yellow dark/light
+urxvt*color3: #b58900
+urxvt*color11: #657b83
+
+#!! blue dark/light
+urxvt*color4: #268bd2
+urxvt*color12: #839496
+
+#!! magenta dark/light
+urxvt*color5: #d33682
+urxvt*color13: #6c71c4
+
+#!! cyan dark/light
+urxvt*color6: #2aa198
+urxvt*color14: #93a1a1
+
 
