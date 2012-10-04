@@ -9,7 +9,7 @@
 
 [alias]
 # Basic action aliases
-	ci   = commit
+	co   = commit
 	com  = commit -m
 	cam  = commit -am
 	sta  = status -s
@@ -19,8 +19,12 @@
 	bra  = branch
 	che  = checkout
 # Push-Pull aliases
+	po  = push origin
 	pom  = push origin master
-	plo  = pull origin master
+	pl  = pull
+	plo  = pull origin
+	plom  = pull origin master
+
 # Cloneing aliases 
 	cl   = clone
 	clo  = clone
