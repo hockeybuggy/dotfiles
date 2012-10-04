@@ -13,8 +13,15 @@
 	com  = commit -m
 	cam  = commit -am
 	sta  = status -s
-# Log aliases
+# Display aliases
 	lg   = log --oneline
+	cf   = cat-file -p
+	cft  = cat-file -t
+	cfs  = cat-file -s
+	cfp  = cat-file -p
+	ls   = ls-tree
+	lst  = ls-tree
+	lsr  = ls-tree -r
 # Branching aliases
 	bra  = branch
 	che  = checkout
@@ -24,7 +31,6 @@
 	pl  = pull
 	plo  = pull origin
 	plom  = pull origin master
-
 # Cloneing aliases 
 	cl   = clone
 	clo  = clone
