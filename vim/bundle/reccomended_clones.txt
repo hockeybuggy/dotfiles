@@ -1,0 +1,5 @@
+
+https://github.com/scrooloose/nerdcommenter.git
+
+https://github.com/altercation/solarized.git
+
