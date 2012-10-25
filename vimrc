@@ -26,17 +26,11 @@ highlight SpecialKey guifg=#dddddd
 
 set ts=4 sts=4 sw=4 expandtab
 
+"Proud of my heritage. But I find it a little sad it might give me trouble
+"   with colour...
+setlocal spell spelllang=en_ca
+
 "External copy paste
 nmap <C-P> "+gP
 vmap <C-C> "+y
-
-" I can have these back once I don't want them anymore
-noremap  <Up> ""
-noremap! <Up> <Esc>
-noremap  <Down> ""
-noremap! <Down> <Esc>
-noremap  <Left> ""
-noremap! <Left> <Esc>
-noremap  <Right> ""
-noremap! <Right> <Esc>
 

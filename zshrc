@@ -8,6 +8,10 @@ ZSH=$HOME/.zsh
 #------------------------------
 # Alias
 #------------------------------
+
+#
+alias -r l="less"
+#
 alias -r ls="ls --color=always -lh"
 alias -r la="ls --color=always -lhA"
 alias -r ll="ls --color=always -lh"
@@ -17,6 +21,7 @@ alias -r fbrow="firefox"
 
 
 eval `dircolors $HOME/.dotfiles/dircolors.256dark` 
+
 autoload -U colors && colors
 autoload -U compinit promptinit
 compinit
