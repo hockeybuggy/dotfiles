@@ -1,0 +1,11 @@
+[submodules "vim-scratch"]
+    path = vim/bundle
+    url = git://github.com/kana/vim-scratch.git
+
+[submodules "nerdcommenter"]
+    path = vim/bundle
+    url = git://github.com/scrooloose/nerdcommenter.git
+
+[submodules "solarized"]
+    path = vim/bundle
+    url = git://github.com/altercation/solarized.git
