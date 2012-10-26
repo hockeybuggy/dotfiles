@@ -16,6 +16,7 @@ alias -r fbrow="firefox"
 
 eval `dircolors $HOME/.dotfiles/dircolors.256dark` 
 
+source $ZSHDIR/git-prompt/zshrc.sh
 autoload -U colors && colors
 autoload -U compinit promptinit
 compinit
@@ -26,15 +27,15 @@ setopt correct
 #------------------------------
 # Prompt
 #------------------------------
+RPROMPT=""
+
 setprompt () {
     # load some modules
     autoload -U colors zsh/terminfo # Used in the colour alias below
     colors
     setopt prompt_subst
 
-    source $ZSHDIR/git-prompt/zshrc.sh
-
-    # make some aliases for the colours: (coud use normal escap.seq's too)
+    # make some aliases for the colours: (could use normal escape sequence's too)
     for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
         eval PR_$color='%{$fg[${(L)color}]%}'
     done
@@ -58,7 +59,6 @@ setprompt () {
     else
         eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
     fi
-
 
     # set the prompt
     PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ $(git_super_status) %~${PR_USER_OP} '
