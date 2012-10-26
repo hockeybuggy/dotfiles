@@ -1,17 +1,11 @@
 
-#FILE: .zshrc
-#AUTHOR: Douglas Anderson
-#DATE: 12/10/03
-
-ZSH=$HOME/.zsh
+ZSHDIR=$HOME/.zsh
 
 #------------------------------
 # Alias
 #------------------------------
-
-#
 alias -r l="less"
-#
+
 alias -r ls="ls --color=always -lh"
 alias -r la="ls --color=always -lhA"
 alias -r ll="ls --color=always -lh"
@@ -37,6 +31,8 @@ setprompt () {
     autoload -U colors zsh/terminfo # Used in the colour alias below
     colors
     setopt prompt_subst
+
+    source $ZSHDIR/git-prompt/zshrc.sh
 
     # make some aliases for the colours: (coud use normal escap.seq's too)
     for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
@@ -65,8 +61,7 @@ setprompt () {
 
 
     # set the prompt
-    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ %~${PR_USER_OP} '
-   # PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}][${PR_BLUE}%~${PR_CYAN}]${PR_USER_OP} '
+    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ $(git_super_status) %~${PR_USER_OP} '
     PS2=$'%_>'
 }
 setprompt
