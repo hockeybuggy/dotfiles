@@ -44,13 +44,10 @@ setprompt () {
     # Check the UID
     if [[ $UID -ge 1000 ]]; then # normal user
         eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
-        eval PR_USER_OP='${PR_RED}\ ➤${PR_NO_COLOR}'
+        eval PR_USER_OP='${PR_RED}➤${PR_NO_COLOR}'
     elif [[ $UID -eq 0 ]]; then # root
         eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
-        eval PR_USER_OP='${PR_RED}\ ➤➤${PR_NO_COLOR}'
-    elif [[ $UID -eq 0 ]]; then # root
-        eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
-        eval PR_USER_OP='${PR_RED}\ ➤➤${PR_NO_COLOR}'
+        eval PR_USER_OP='${PR_RED}➤➤${PR_NO_COLOR}'
     fi
 
     # Check if we are on SSH or not
@@ -61,7 +58,7 @@ setprompt () {
     fi
 
     # set the prompt
-    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ $(git_super_status) %~${PR_USER_OP} '
+    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ $(git_super_status) %~  \n${PR_USER_OP} '
     PS2=$'%_>'
 }
 setprompt
