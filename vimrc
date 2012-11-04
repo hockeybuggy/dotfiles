@@ -15,16 +15,17 @@ colorscheme solarized
 "Nerd commenter want this enabled
 filetype plugin on
 
-" markdown filetype file
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
-
 "Invisible character colors
 set list
 set listchars=tab:▸\ ,eol:¬
 highlight NonText guifg=#dddddd
 highlight SpecialKey guifg=#dddddd
 
-set ts=4 sts=4 sw=4 expandtab
+" Indentation
+set ts=4
+set sts=4
+set sw=4
+set expandtab
 
 "Proud of my heritage. But I find it a little sad it might give me trouble
 "   with colour...
