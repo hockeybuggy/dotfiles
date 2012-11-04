@@ -1,15 +1,16 @@
+## My dotfiles
 
-## My dot files
 This repository is for managing my dotfiles.
 
-bashrc is from the school's system and other times that zsh is unavaible.
+bashrc is from the school's system and other times that zsh is unavailable.
 
-## Copy vim/
+## Create Symlinks 
 
-	$ cp ~/dotfiles/vim ~/.vim
-
-## Symlink everything else
-
-	$ ln -s ~/dotfiles/* ~/.*
+	ln -s ~/dotfiles/bashrc ~/.bashrc
+	ln -s ~/dotfiles/zshrc ~/.zshrc
+	ln -s ~/dotfiles/vimrc ~/.vimrc
+	ln -s ~/dotfiles/gvimrc ~/.gvimrc
+	ln -s ~/dotfiles/vim ~/.vim
+	ln -s ~/dotfiles/gitconfig ~/.gitconfig
 
 ***
