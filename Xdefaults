@@ -39,6 +39,13 @@ URxvt*scrollstyle: rxvt
 # Douglas 2012 - Trying to set urgancy hint
 URxvt*urgentOnBell: true
 
+#######################
+#Clickable Links
+#######################
+URxvt.perl-ext-common: default,matcher
+URxvt.urlLauncher: /usr/bin/firefox
+URxvt.matcher.button: 3
+URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 
 # ****************
 # Solarized 
