@@ -1,7 +1,5 @@
 *~
-*.swp
 *.o
 *.pyc
 *.so
 *.bak
-*.gitconfig
