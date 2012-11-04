@@ -2,6 +2,7 @@
 set nocompatible
 
 call pathogen#infect()
+call pathogen#helptags()
 
 syntax on
 set hlsearch
