@@ -1,11 +1,16 @@
-[submodules "vim-scratch"]
-    path = vim/bundle
-    url = git://github.com/kana/vim-scratch.git
-
-[submodules "nerdcommenter"]
-    path = vim/bundle
-    url = git://github.com/scrooloose/nerdcommenter.git
-
-[submodules "solarized"]
-    path = vim/bundle
-    url = git://github.com/altercation/solarized.git
+[submodule "vim/bundle/vim-markdown"]
+	path = vim/bundle/vim-markdown
+	url = git://github.com/tpope/vim-markdown.git
+	ignore = dirty
+[submodule "vim/bundle/vim-git"]
+	path = vim/bundle/vim-git
+	url = git://github.com/tpope/vim-git.git
+[submodule "vim/bundle/vim-javascript"]
+	path = vim/bundle/vim-javascript
+	url = git://github.com/pangloss/vim-javascript.git
+[submodule "vim/bundle/solarized"]
+	path = vim/bundle/solarized
+	url = git://github.com/altercation/solarized.git
+[submodule "vim/bundle/nerdcommenter"]
+	path = vim/bundle/nerdcommenter
+	url = git://github.com/scrooloose/nerdcommenter.git
