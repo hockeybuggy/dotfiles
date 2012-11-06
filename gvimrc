@@ -5,3 +5,5 @@
 set guioptions-=T
 set guioptions+=c
 
+set guifont=terminus
+
