@@ -32,7 +32,7 @@ set expandtab
 set nobackup
 set noswapfile
 
-"Proud of my canadian heritage. But I find it a little sad it might give me
+"Proud of my Canadian heritage. But I find it a little sad it might give me
 "trouble with colour...
 setlocal spell spelllang=en_ca
 
