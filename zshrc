@@ -7,11 +7,15 @@ ZSHDIR=$HOME/.zsh
 alias -r l="less"
 alias -r g="git"
 
+#Not a perfect solution to fork terminals but not bad.
+alias -r rxvt="nohup urxvt &"
+alias -r urxvt="nohup urxvt &"
+
 alias -r ls="ls --color=always -lh"
 alias -r la="ls --color=always -lhA"
 alias -r ll="ls --color=always -lh"
 alias -r lla="ls --color=no -lhA | less"
-alias -r cbrow="chromium-browser"
+alias -r cbrow="google-chrome"
 alias -r fbrow="firefox"
 
 
