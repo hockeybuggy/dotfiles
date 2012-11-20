@@ -5,16 +5,18 @@ call pathogen#infect()
 call pathogen#helptags()
 
 syntax on
+filetype plugin indent on
+
 set hlsearch
 set ruler
 set laststatus=2
 set number
+set history=50
 set wildmode=longest,list
 
 set background=dark
 colorscheme solarized
 
-filetype plugin on
 
 "Invisible character colors
 set list
