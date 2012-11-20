@@ -11,8 +11,6 @@ set laststatus=2
 set number
 set wildmode=longest,list
 
-"highlight Comment ctermfg=green
-
 set background=dark
 colorscheme solarized
 
