@@ -5,6 +5,7 @@ ZSHDIR=$HOME/.zsh
 # Alias
 #------------------------------
 alias -r l="less"
+alias -r g="git"
 
 alias -r ls="ls --color=always -lh"
 alias -r la="ls --color=always -lhA"
