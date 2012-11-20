@@ -35,5 +35,4 @@
 	cl   = clone
 	clo  = clone
 	clgh = clone gh:# gh is a ssh host
-	clogh= clone gh:
 
