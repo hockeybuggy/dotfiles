@@ -41,18 +41,6 @@ color_prompt=yes
 # Alias definitions.
 
 # enable color support of ls and also add handy aliases
-case $OSTYPE in
-	darwin*)
-		alias ls='ls -G'
-		;;
-	linux*)
-		eval "`dircolors -b`"
-		alias ls='ls --color=auto'
-		;;
-	*)
-esac
-
-# some more ls aliases
 alias ls='ls -lh --color'
 alias ll='ls -lh --color'
 alias la='ls -lhA --color'
