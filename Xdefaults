@@ -60,7 +60,7 @@ urxvt*foreground:            #839496
 
 #!! red dark/light
 urxvt*color1: #dc322f
-urxvt*color9: #cb4b16 
+urxvt*color9: #cb4b16
 
 #!! green dark/light
 urxvt*color2: #859900
