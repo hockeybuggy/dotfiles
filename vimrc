@@ -17,6 +17,8 @@ set wildmode=longest,list
 
 set background=dark
 colorscheme solarized
+" Toggles the background. Requires solarized.
+call togglebg#map("<F3>")
 
 "Invisible character
 set list
@@ -42,3 +44,5 @@ nmap <C-P> "+gP
 vmap <C-C> "+y
 
 nmap <F4> :set hlsearch!<CR>
+nmap <F2> :set spell!<CR>
+
