@@ -1,11 +1,12 @@
 " The vimrc of Douglas Anderson
 "
 "Preferences{{{1
+set nocompatible
+
 call pathogen#infect()
 call pathogen#helptags()
 
 filetype off
-set nocompatible
 syntax on
 filetype plugin indent on
 
