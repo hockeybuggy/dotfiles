@@ -1,12 +1,13 @@
-" vim: foldmethod=marker
-
-set nocompatible
-syntax on
-filetype plugin indent on
-
+" The vimrc of Douglas Anderson
+"
 "Preferences{{{1
 call pathogen#infect()
 call pathogen#helptags()
+
+filetype off
+set nocompatible
+syntax on
+filetype plugin indent on
 
 set hlsearch
 set ruler
