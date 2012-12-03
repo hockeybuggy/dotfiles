@@ -1,5 +1,6 @@
 " The vimrc of Douglas Anderson
 "
+
 "Preferences{{{1
 set nocompatible
 
@@ -39,6 +40,9 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
+if exists('*fugitive#statusline')
+    let &statusline='%< %f %{fugitive#statusline()} ... (other stuff)'
+endif
 
 "Mappings {{{1
 "External copy paste
