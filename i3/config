@@ -27,6 +27,15 @@ bindsym $mod+Shift+G exec google-chrome
 bindsym $mod+Shift+B exec banshee
 # start calibre
 bindsym $mod+Shift+C exec calibre
+# start thunar
+bindsym $mod+Shift+T exec thunar
+
+# Sound things
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
+bindsym XF86AudioMute        exec amixer -q set Master toggle
+
+
 
 # change focus
 bindsym $mod+h focus left
@@ -103,7 +112,7 @@ bindsym $mod+Shift+parenleft move workspace 9
 bindsym $mod+Shift+parenright move workspace 10
 
 # reload the configuration file
-bindsym $mod+Shift+T reload
+bindsym $mod+Shift+Y reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
