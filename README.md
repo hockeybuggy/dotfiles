@@ -18,5 +18,6 @@ bashrc is from the school's system and other times that zsh is unavailable.
     ln -s ~/dotfiles/gitconfig ~/.gitconfig
     ln -s ~/dotfiles/vim ~/.vim
     ln -s ~/dotfiles/zsh ~/.zsh
+    ln -s ~/dotfiles/i3 ~/.i3
 
 ***
