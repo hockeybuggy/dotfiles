@@ -18,6 +18,8 @@ alias -r lla="ls --color=no -lhA | less"
 alias -r cbrow="google-chrome"
 alias -r fbrow="firefox"
 
+alias -r server="python -m SimpleHTTPServer"
+
 
 eval `dircolors $HOME/.dotfiles/dircolors.256dark` 
 
