@@ -4,3 +4,4 @@
 *.so
 *.bak
 vim/.netrwhist
+zsh/.zsh_history
