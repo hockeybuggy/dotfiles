@@ -1,5 +1,4 @@
 " The vimrc of Douglas Anderson
-"
 
 "Preferences{{{1
 set nocompatible
@@ -11,6 +10,7 @@ filetype off
 syntax on
 filetype plugin indent on
 
+let mapleader = ','
 set hlsearch
 set ruler
 set laststatus=2
@@ -28,7 +28,13 @@ set list
 set listchars=tab:▸\ ,eol:¬
 
 " Disables swap files and backups. Living on the edge.
-set nobackup
+set backup
+if has('persistent_undo')
+    set undofile
+    set undolevels=1000
+    set undoreload=10000
+endif
+
 set noswapfile
 
 "Proud of my Canadian heritage.
@@ -40,10 +46,6 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
-if exists('*fugitive#statusline')
-    let &statusline='%< %f %{fugitive#statusline()} ... (other stuff)'
-endif
-
 "Mappings {{{1
 "External copy paste
 nmap <C-P> "+gP
@@ -51,4 +53,21 @@ vmap <C-C> "+y
 
 nmap <F4> :set hlsearch!<CR>
 nmap <F2> :set spell!<CR>
+
+"Status Line {{{1
+if has('statusline')
+    set laststatus=2
+    set statusline+=%w%h%m%r " Options
+    set statusline+=%=
+    set statusline+=%#Identifier#
+    set statusline+=\ [%{fugitive#head()}]
+    set statusline+=\ %*
+    set statusline+=\ %#Special#
+    set statusline+=\ [%{getcwd()}\/%f]
+    set statusline+=\ %*
+    set statusline+=\ \ %#Constant#
+    set statusline+=\ %(%l,%c%V%)\ %p%%
+    set statusline+=\ %*\ 
+endif
+
 
