@@ -15,7 +15,7 @@ set hlsearch
 set ruler
 set laststatus=2
 set number
-set history=50
+set history=200
 set wildmode=longest,list
 
 set background=dark
