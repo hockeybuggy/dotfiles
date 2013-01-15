@@ -22,7 +22,7 @@ bindsym $mod+d exec dmenu_run
 
 # start a browser
 bindsym $mod+Shift+F exec firefox
-bindsym $mod+Shift+G exec google-chrome
+bindsym $mod+Shift+G exec google-chrome --incognito
 # start banshee
 bindsym $mod+Shift+B exec banshee
 # start calibre
