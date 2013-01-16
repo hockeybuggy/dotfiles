@@ -22,14 +22,17 @@ set background=dark
 colorscheme solarized
 " Toggles the background. Requires solarized.
 call togglebg#map("<F3>")
+
 "Invisible character
 set list
 set listchars=tab:▸\ ,eol:¬
 
 " Disables swap files. Enables backups.
+"set swapdir=~/.vim/temp/swap
 set noswapfile
-set nobackup
+set backupdir=~/.vim/temp/backup
 if has('persistent_undo')
+    set undodir=~/.vim/temp/undo
     set undofile
     set undolevels=1000
     set undoreload=10000
