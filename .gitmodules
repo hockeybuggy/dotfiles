@@ -32,3 +32,4 @@
 [submodule "vim/bundle/snipmate"]
 	path = vim/bundle/snipmate
 	url = git://github.com/msanders/snipmate.vim.git
+	ignore = dirty
