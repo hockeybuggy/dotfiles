@@ -50,7 +50,7 @@ set expandtab
 
 "Mappings {{{1
 "External copy paste
-nmap <C-P> "+gP
+nmap <C-P> "+gp
 vmap <C-C> "+y
 
 nmap <F4> :set hlsearch!<CR>
@@ -65,7 +65,7 @@ if has('statusline')
     set statusline+=[%{fugitive#head()}]
     set statusline+=%*
     set statusline+=\ %#Special#
-    set statusline+=[%{getcwd()}\/%f]
+    set statusline+=[%f]
     set statusline+=%*
     set statusline+=\ %#Constant#
     set statusline+=%(%l,%c%V%)\ %p%%
