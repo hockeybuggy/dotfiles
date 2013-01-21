@@ -11,7 +11,7 @@ syntax on
 filetype plugin indent on
 
 let mapleader = ','
-set hlsearch
+set nohlsearch
 set ruler
 set laststatus=2
 set number
