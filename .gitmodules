@@ -33,3 +33,6 @@
 	path = vim/bundle/snipmate
 	url = git://github.com/msanders/snipmate.vim.git
 	ignore = dirty
+[submodule "vim/bundle/vim-less"]
+	path = vim/bundle/vim-less
+	url = https://github.com/KohPoll/vim-less.git
