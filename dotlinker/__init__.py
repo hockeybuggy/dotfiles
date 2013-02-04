@@ -60,30 +60,53 @@ class Linker:
                 print val
                 # key is the name of the dotfile
                 # val is the name of the link
-                self.checkForFile( os.path.join(homePath, val))
+                targetPath = os.path.join(homePath, val)
+                sourcePath = os.path.join(os.path.realpath(""), key)
+                if self.checkForFile(targetPath):
+                    # TODO check to see if it is a link
+                    ans = Ask.YesNo("This file already exists. Attempt to move it and create a link?")
+                    if ans == "y":
+                        self.moveExistingFile(targetPath)
+                    elif ans == "n":
+                        print "Not Creating a link."
+                else:
+                    ans = Ask.YesNo("This file does not exists. Create a link?", default="y")
+                    if ans == "y":
+                        self.createLink(sourcePath, targetPath)
+                    elif ans == "n":
+                        print "Not Creating a link."
+
 
 # TODO zshrc is misspelled on purpose.. FIX
 
     def checkForFile(self, fn):
-        print fn
         if os.path.exists(fn):
-            ans = Ask.YesNo("This file already exists. Attempt to move it?")
-            if ans == "y":
-                self.moveExistingFile(fn)
-            elif ans == "n":
-                print "Not Moving file"
+            return(True)
+        return(False)
 
     def checkForExistingLink(self):
         pass
 
     def moveExistingFile(self, fn):
-        pass
+        target = fn + "bak"
+        if not self.checkForFile(target):
+            try:
+                os.rename(fn, target)
+            except:
+                print "Could not move the file", fn, "to", target
+                sys.exit(1)
+        else:
+            # This protection is required to protect from the methods silent overwrite
+            print "Error. The file", target, "already exists. Clean up and rerun the program."
+            sys.exit(1)
 
-    def createLink(self):
-        pass
-
-    def __str__(self):
-        #return "Linker test"
-        return json.dumps(self.config, indent=4)
+    def createLink(self, source, target):
+        print "SRC", source
+        print "TARGET", target
+        try:
+            os.symlink(source, target)
+        except:
+            print "Error. Could not create symlink from", source, "to", target
+            sys.exit(1)
 
 
