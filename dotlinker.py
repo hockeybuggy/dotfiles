@@ -7,4 +7,5 @@ from dotlinker import Linker
 if __name__ == "__main__":
     d = Linker()
     print(d)
+    d.link()
 
