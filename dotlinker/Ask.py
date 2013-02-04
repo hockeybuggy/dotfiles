@@ -20,6 +20,7 @@ def YesNo(message, default='n'):
             return(inStr)
     return(None)
 
+
 def YesNoSorta(message, default='n'):
     default = default.lower()
     if default == "y":
@@ -34,7 +35,7 @@ def YesNoSorta(message, default='n'):
         inStr = raw_input(message + options).lower()
         if inStr == "":
             return(default)
-        elif inStr == "y" or inStr == "x" or inStr == "s":
+        elif inStr == "y" or inStr == "n" or inStr == "s":
             return(inStr)
     return(None)
 

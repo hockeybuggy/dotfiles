@@ -10,13 +10,13 @@ from dotlinker.Ask import YesNoSorta
 
 thisDir = "dotlinker/"
 configFile = "config.json"
-configDir = os.path.realpath(thisDir + configFile)
-
+configPath = os.path.realpath(thisDir + configFile)
+homePath = os.path.expanduser("~")
 class Linker:
     config = None
 
     def __init__(self):
-        r = open(configDir)
+        r = open(configPath)
         configStr = ""
         for line in r:
             configStr += line.strip()
@@ -25,8 +25,9 @@ class Linker:
 
     def link(self):
         subGroups = self.config["groups"]
+        print "Dotlinker... Rock it"
         for group in self.config["groups"]:
-            print "Group:", group
+            print "\nGroup:", group
             groupVals = subGroups[group]
             #print json.dumps(groupVals, indent=4)
             linkKeys = []
@@ -38,14 +39,48 @@ class Linker:
             print "    ", linkKeyStr
             ans = YesNoSorta("Would you like to link this group?", groupVals["default"])
             if ans == "y":
-                print "link the group"
+                self.linkGroup(linkKeys, groupVals)
             elif ans == "n":
-                print "don't link the group"
+                print "Not Linking the Group"
             elif ans == "s":
-                print "link the members of the group on a individual basis"
+                self.linkSome(linkKeys, groupVals)
 
 
+    def linkGroup(self, keys, group):
+            print "link the group"
+            for key in keys:
+                val = group[key]
+                print val
 
+
+    def linkSome(self, keys, group):
+            print "link the members of the group on a individual basis"
+            for key in keys:
+                val = group[key]
+                print val
+                # key is the name of the dotfile
+                # val is the name of the link
+                self.checkForFile( os.path.join(homePath, val))
+
+# TODO zshrc is misspelled on purpose.. FIX
+
+    def checkForFile(self, fn):
+        print fn
+        if os.path.exists(fn):
+            ans = Ask.YesNo("This file already exists. Attempt to move it?")
+            if ans == "y":
+                self.moveExistingFile(fn)
+            elif ans == "n":
+                print "Not Moving file"
+
+    def checkForExistingLink(self):
+        pass
+
+    def moveExistingFile(self, fn):
+        pass
+
+    def createLink(self):
+        pass
 
     def __str__(self):
         #return "Linker test"
