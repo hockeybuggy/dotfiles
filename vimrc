@@ -1,7 +1,6 @@
-" vim:fdm=marker fdc=3 fdl=1
-
 " The vimrc of Douglas James Anderson
 
+" vim:fdm=marker fdc=3 fdl=1
 " My theory is that anyone who is looking at this can use vim and can handle
 " the folds. For people reading it outside of Vim I apologize for the fold
 " markers.
