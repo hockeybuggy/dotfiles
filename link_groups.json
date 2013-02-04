@@ -1,4 +1,0 @@
-{
-'vim' : ['vim', 'vimrc'],
-'zsh' : ['zsh', 'zshrc'],
-}

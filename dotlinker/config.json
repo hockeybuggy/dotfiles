@@ -1,0 +1,15 @@
+{
+    "groups" : {
+        "vim" : {
+            "default": true,
+            "vim": ".vim",
+            "vimrc": ".vimrc",
+            "gvimrc": ".gvimrc"
+        },
+        "zsh" : {
+            "default": false,
+            "zsh": ".zsh",
+            "zshrc": "zshrc"
+        }
+    }
+}

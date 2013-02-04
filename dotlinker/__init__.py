@@ -1,17 +1,24 @@
 #!/usr/bin/python
 
-import json
+#Filename: __init__.py
+#Author: Douglas Anderson
+#Created: 2013/02/04
 
-groupFileStr = "link_groups.json"
+import json
+import os
+
+thisDir = "dotlinker/"
+configFile = "config.json"
+configDir = os.path.realpath(thisDir + configFile)
 
 class Linker:
-    groupsStr = ""
+    config = None
     def __init__(self):
-        r = open(groupFileStr)
-        text = ""
+        r = open(configDir)
+        configStr = ""
         for line in r:
-            text += line.strip()
-        self.groupsStr = json.dumps(text)
+            configStr += line.strip()
+        self.config = json.loads(configStr)
 
     def link(self):
         print self.groupsStr
@@ -27,6 +34,10 @@ class Linker:
         else:
             print "[y/N]"
         # TODO get user input
+
+    def __str__(self):
+        #return "Linker test"
+        return json.dumps(self.config, indent=4)
 
 
 if __name__ == "__main__":
