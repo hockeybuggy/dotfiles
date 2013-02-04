@@ -26,10 +26,16 @@ class Linker:
     def link(self):
         subGroups = self.config["groups"]
         for group in self.config["groups"]:
-            print group
-            #print subGroups[group] # TODO pretty this up
+            print "Group:", group
             groupVals = subGroups[group]
-            print json.dumps(groupVals, indent=4)
+            #print json.dumps(groupVals, indent=4)
+            linkKeys = []
+            linkKeyStr = ""
+            for key in groupVals:
+                if key != "default":
+                    linkKeys.append(key)
+                    linkKeyStr += key + " "
+            print "    ", linkKeyStr
             ans = YesNoSorta("Would you like to link this group?", groupVals["default"])
             if ans == "y":
                 print "link the group"
