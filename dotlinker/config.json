@@ -1,13 +1,13 @@
 {
     "groups" : {
         "vim" : {
-            "default": true,
+            "default": "y",
             "vim": ".vim",
             "vimrc": ".vimrc",
             "gvimrc": ".gvimrc"
         },
         "zsh" : {
-            "default": false,
+            "default": "n",
             "zsh": ".zsh",
             "zshrc": "zshrc"
         }
