@@ -1,12 +1,15 @@
 #!/usr/bin/python
+"""
+Filename: __init__.py
+Author: Douglas Anderson
+Created: 2013/02/04
 
-#Filename: __init__.py
-#Author: Douglas Anderson
-#Created: 2013/02/04
+Reads the config and asks the user for input to decide what files to link
+"""
 
 import json
 import os, sys
-from dotlinker.Ask import YesNoSorta
+from dotlinker.Ask import yes_no_sorta, yes_no
 
 class Linker:
     thisDir = "dotlinker/"
@@ -38,66 +41,62 @@ class Linker:
                     linkKeys.append(key)
                     linkKeyStr += key + " "
             print "    ", linkKeyStr
-            ans = YesNoSorta("Would you like to link this group?", groupVals["default"])
+            ans = yes_no_sorta("Would you like to link this group?", groupVals["default"])
             if ans == "y":
-                self.linkGroup(linkKeys, groupVals)
+                self.link_group(linkKeys, groupVals)
             elif ans == "n":
                 print "Not Linking the Group"
             elif ans == "s":
-                self.linkSome(linkKeys, groupVals)
+                self.link_some(linkKeys, groupVals)
 
 
-    def linkGroup(self, keys, group):
+    def link_group(self, keys, group):
         for key in keys:
             val = group[key]
-            targetPath = os.path.join(self.homePath, val)
-            sourcePath = os.path.join(os.path.realpath(""), key)
-            if self.checkForFile(targetPath):
-                # TODO check to see if it is a link
-                ans = Ask.YesNo(targetPath + " already exists. Attempt to move it and create a link?")
+            target_path = os.path.join(self.homePath, val)
+            source_path = os.path.join(os.path.realpath(""), key)
+            if self.check_for_file(target_path):
+                ans = yes_no(target_path + " already exists. Attempt to move it and create a link?")
                 if ans == "y":
-                    self.moveExistingFile(targetPath)
-                    self.createLink(sourcePath, targetPath)
+                    self.move_existing_file(target_path)
+                    self.create_link(source_path, target_path)
                 elif ans == "n":
                     print "Not Creating a link."
             else:
-                self.createLink(sourcePath, targetPath)
+                self.create_link(source_path, target_path)
 
 
-    def linkSome(self, keys, group):
+    def link_some(self, keys, group):
         for key in keys:
             val = group[key]
-            targetPath = os.path.join(self.homePath, val)
-            sourcePath = os.path.join(os.path.realpath(""), key)
-            if self.checkForFile(targetPath):
-                # TODO check to see if it is a link
-                ans = Ask.YesNo(targetPath + " already exists. Attempt to move it and create a link?")
+            target_path = os.path.join(self.homePath, val)
+            source_path = os.path.join(os.path.realpath(""), key)
+            if self.check_for_file(target_path):
+                ans = yes_no(target_path + " already exists. Attempt to move it and create a link?")
                 if ans == "y":
-                    self.moveExistingFile(targetPath)
-                    self.createLink(sourcePath, targetPath)
+                    self.move_existing_file(target_path)
+                    self.create_link(source_path, target_path)
                 elif ans == "n":
                     print "Moving existing file or not Creating a link."
             else:
-                ans = Ask.YesNo(targetPath + " does not exists. Create a link?", default="y")
+                ans = Ask.yes_no(target_path + " does not exists. Create a link?", default="y")
                 if ans == "y":
-                    self.createLink(sourcePath, targetPath)
+                    self.create_link(source_path, target_path)
+                    print "Link Created."
                 elif ans == "n":
                     print "Not Creating a link."
 
-
-# TODO zshrc is misspelled on purpose.. FIX
-
-    def checkForFile(self, fn):
+    def check_for_file(self, fn):
         if os.path.exists(fn):
             return(True)
         return(False)
 
-    def checkForExistingLink(self):
+    def check_for_existing_link(self):
         pass
 
-    def moveExistingFile(self, fn):
+    def move_existing_file(self, fn):
         target = fn + ".bak"
-        if not self.checkForFile(target):
+        if not self.check_for_file(target):
             try:
                 os.rename(fn, target)
             except:
@@ -108,7 +107,7 @@ class Linker:
             print "Error. The file", target, "already exists. Clean up and rerun the program."
             sys.exit(1)
 
-    def createLink(self, source, target):
+    def create_link(self, source, target):
         #print "SRC", source
         #print "TARGET", target
         try:
