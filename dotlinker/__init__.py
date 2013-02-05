@@ -8,19 +8,20 @@ import json
 import os, sys
 from dotlinker.Ask import YesNoSorta
 
-thisDir = "dotlinker/"
-configFile = "config.json"
-configPath = os.path.realpath(thisDir + configFile)
-homePath = os.path.expanduser("~")
 class Linker:
+    thisDir = "dotlinker/"
+    configFile = "config.json"
+    configPath = os.path.realpath(thisDir + configFile)
+    homePath = os.path.expanduser("~")
     config = None
 
     def __init__(self):
-        r = open(configPath)
+        read = open(self.configPath)
         configStr = ""
-        for line in r:
+        for line in read:
             configStr += line.strip()
         self.config = json.loads(configStr)
+        read.close()
 
 
     def link(self):
@@ -47,41 +48,41 @@ class Linker:
 
 
     def linkGroup(self, keys, group):
-            for key in keys:
-                val = group[key]
-                targetPath = os.path.join(homePath, val)
-                sourcePath = os.path.join(os.path.realpath(""), key)
-                if self.checkForFile(targetPath):
-                    # TODO check to see if it is a link
-                    ans = Ask.YesNo(targetPath + " already exists. Attempt to move it and create a link?")
-                    if ans == "y":
-                        self.moveExistingFile(targetPath)
-                        self.createLink(sourcePath, targetPath)
-                    elif ans == "n":
-                        print "Not Creating a link."
-                else:
+        for key in keys:
+            val = group[key]
+            targetPath = os.path.join(self.homePath, val)
+            sourcePath = os.path.join(os.path.realpath(""), key)
+            if self.checkForFile(targetPath):
+                # TODO check to see if it is a link
+                ans = Ask.YesNo(targetPath + " already exists. Attempt to move it and create a link?")
+                if ans == "y":
+                    self.moveExistingFile(targetPath)
                     self.createLink(sourcePath, targetPath)
+                elif ans == "n":
+                    print "Not Creating a link."
+            else:
+                self.createLink(sourcePath, targetPath)
 
 
     def linkSome(self, keys, group):
-            for key in keys:
-                val = group[key]
-                targetPath = os.path.join(homePath, val)
-                sourcePath = os.path.join(os.path.realpath(""), key)
-                if self.checkForFile(targetPath):
-                    # TODO check to see if it is a link
-                    ans = Ask.YesNo(targetPath + " already exists. Attempt to move it and create a link?")
-                    if ans == "y":
-                        self.moveExistingFile(targetPath)
-                        self.createLink(sourcePath, targetPath)
-                    elif ans == "n":
-                        print "Moving existing file or not Creating a link."
-                else:
-                    ans = Ask.YesNo(targetPath + " does not exists. Create a link?", default="y")
-                    if ans == "y":
-                        self.createLink(sourcePath, targetPath)
-                    elif ans == "n":
-                        print "Not Creating a link."
+        for key in keys:
+            val = group[key]
+            targetPath = os.path.join(self.homePath, val)
+            sourcePath = os.path.join(os.path.realpath(""), key)
+            if self.checkForFile(targetPath):
+                # TODO check to see if it is a link
+                ans = Ask.YesNo(targetPath + " already exists. Attempt to move it and create a link?")
+                if ans == "y":
+                    self.moveExistingFile(targetPath)
+                    self.createLink(sourcePath, targetPath)
+                elif ans == "n":
+                    print "Moving existing file or not Creating a link."
+            else:
+                ans = Ask.YesNo(targetPath + " does not exists. Create a link?", default="y")
+                if ans == "y":
+                    self.createLink(sourcePath, targetPath)
+                elif ans == "n":
+                    print "Not Creating a link."
 
 
 # TODO zshrc is misspelled on purpose.. FIX
