@@ -1,15 +1,33 @@
 {
-    "groups" : {
-        "vim" : {
-            "default": "y",
-            "vim": ".vim",
-            "vimrc": ".vimrc",
-            "gvimrc": ".gvimrc"
-        },
-        "zsh" : {
-            "default": "n",
-            "zsh": ".zsh",
-            "zshrc": "zshrc"
-        }
+"groups" : {
+    "vim" : {
+        "default": "y",
+        "vim": ".vim",
+        "vimrc": ".vimrc",
+        "gvimrc": ".gvimrc"
+    },
+    "zsh" : {
+        "default": "n",
+        "zsh": ".zsh",
+        "zshrc": ".zshrc"
+    },
+    "git" : {
+        "default": "y",
+        "gitconfig": ".gitconfig"
+    },
+    "i3" : {
+        "default": "n",
+        "i3": ".i3"
+    },
+    "bash" : {
+        "default": "y",
+        "bashrc": ".bashrc"
+    },
+    "misc" : {
+        "default": "s",
+        "Xdefaults": ".Xdefaults",
+        "Xresources": ".Xresources",
+        "tmux.conf": ".tmux.conf"
     }
+}
 }

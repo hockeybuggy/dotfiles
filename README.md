@@ -9,16 +9,10 @@ bashrc is from the school's system and other times that zsh is unavailable.
     git submodule init
     git submodule update
 
-### Create Symlinks 
+### Run the Linker
 
-    ln -s ~/dotfiles/bashrc ~/.bashrc
-    ln -s ~/dotfiles/zshrc ~/.zshrc
-    ln -s ~/dotfiles/vimrc ~/.vimrc
-    ln -s ~/dotfiles/gvimrc ~/.gvimrc
-    ln -s ~/dotfiles/gitconfig ~/.gitconfig
-    ln -s ~/dotfiles/vim ~/.vim
-    ln -s ~/dotfiles/zsh ~/.zsh
-    ln -s ~/dotfiles/i3 ~/.i3
-    ln -s ~/dotfiles/Xresources ~/.Xresources
+    ./dotlinker.py
+
+It will ask you some questions and you should answer them to set up your files.
 
 ***

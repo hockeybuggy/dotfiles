@@ -5,7 +5,7 @@
 #Created: 2013/02/04
 
 import json
-import os
+import os, sys
 from dotlinker.Ask import YesNoSorta
 
 thisDir = "dotlinker/"
@@ -50,27 +50,36 @@ class Linker:
             print "link the group"
             for key in keys:
                 val = group[key]
-                print val
+                targetPath = os.path.join(homePath, val)
+                sourcePath = os.path.join(os.path.realpath(""), key)
+                if self.checkForFile(targetPath):
+                    # TODO check to see if it is a link
+                    ans = Ask.YesNo(targetPath + " already exists. Attempt to move it and create a link?")
+                    if ans == "y":
+                        self.moveExistingFile(targetPath)
+                        self.createLink(sourcePath, targetPath)
+                    elif ans == "n":
+                        print "Not Creating a link."
+                else:
+                    self.createLink(sourcePath, targetPath)
 
 
     def linkSome(self, keys, group):
             print "link the members of the group on a individual basis"
             for key in keys:
                 val = group[key]
-                print val
-                # key is the name of the dotfile
-                # val is the name of the link
                 targetPath = os.path.join(homePath, val)
                 sourcePath = os.path.join(os.path.realpath(""), key)
                 if self.checkForFile(targetPath):
                     # TODO check to see if it is a link
-                    ans = Ask.YesNo("This file already exists. Attempt to move it and create a link?")
+                    ans = Ask.YesNo(targetPath + " already exists. Attempt to move it and create a link?")
                     if ans == "y":
                         self.moveExistingFile(targetPath)
+                        self.createLink(sourcePath, targetPath)
                     elif ans == "n":
                         print "Not Creating a link."
                 else:
-                    ans = Ask.YesNo("This file does not exists. Create a link?", default="y")
+                    ans = Ask.YesNo(targetPath + " does not exists. Create a link?", default="y")
                     if ans == "y":
                         self.createLink(sourcePath, targetPath)
                     elif ans == "n":
@@ -88,7 +97,7 @@ class Linker:
         pass
 
     def moveExistingFile(self, fn):
-        target = fn + "bak"
+        target = fn + ".bak"
         if not self.checkForFile(target):
             try:
                 os.rename(fn, target)
