@@ -47,7 +47,6 @@ class Linker:
 
 
     def linkGroup(self, keys, group):
-            print "link the group"
             for key in keys:
                 val = group[key]
                 targetPath = os.path.join(homePath, val)
@@ -65,7 +64,6 @@ class Linker:
 
 
     def linkSome(self, keys, group):
-            print "link the members of the group on a individual basis"
             for key in keys:
                 val = group[key]
                 targetPath = os.path.join(homePath, val)
@@ -77,7 +75,7 @@ class Linker:
                         self.moveExistingFile(targetPath)
                         self.createLink(sourcePath, targetPath)
                     elif ans == "n":
-                        print "Not Creating a link."
+                        print "Moving existing file or not Creating a link."
                 else:
                     ans = Ask.YesNo(targetPath + " does not exists. Create a link?", default="y")
                     if ans == "y":
@@ -110,8 +108,8 @@ class Linker:
             sys.exit(1)
 
     def createLink(self, source, target):
-        print "SRC", source
-        print "TARGET", target
+        #print "SRC", source
+        #print "TARGET", target
         try:
             os.symlink(source, target)
         except:
