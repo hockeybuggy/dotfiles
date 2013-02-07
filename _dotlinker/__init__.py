@@ -9,10 +9,10 @@ Reads the config and asks the user for input to decide what files to link
 
 import json
 import os, sys
-from dotlinker.Ask import yes_no_sorta, yes_no
+from _dotlinker.Ask import yes_no_sorta, yes_no
 
 class Linker:
-    thisDir = "dotlinker/"
+    thisDir = "_dotlinker/"
     configFile = "config.json"
     configPath = os.path.realpath(thisDir + configFile)
     homePath = os.path.expanduser("~")

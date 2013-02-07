@@ -4,7 +4,7 @@
 Runs the dotlinker
 """
 
-from dotlinker import Linker
+from _dotlinker import Linker
 
 def main():
     """
