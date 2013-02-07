@@ -1,28 +1,37 @@
+# The vimrc of Douglas James Anderson
+# vim:fdm=marker fdc=3 fdl=1
 
 ZSHDIR=$HOME/.zsh
 
+#------------------------------ {{{1
+# Aliases
 #------------------------------
-# Alias
-#------------------------------
+# Common shorthands
 alias -r l="less"
 alias -r g="git"
 
-#Not a perfect solution to fork terminals but not bad.
+# Fork Terminals. It's TODO pretty bad..
 alias -r rxvt="nohup urxvt &"
 alias -r urxvt="nohup urxvt &"
 
+# LS aliases
 alias -r ls="ls --color=always -lh"
 alias -r la="ls --color=always -lhA"
 alias -r ll="ls --color=always -lh"
 alias -r lla="ls --color=no -lhA | less"
+
+# Browsers
 alias -r cbrow="google-chrome"
 alias -r fbrow="firefox"
 
+# Assorted
 alias -r clip="xclip -i -selection clipboard"
-
 alias -r server="python -m SimpleHTTPServer"
 
-
+#------------------------------ {{{1
+# Settings
+#------------------------------
+ 
 eval `dircolors $HOME/.dotfiles/dircolors.256dark` 
 
 source $ZSHDIR/git-prompt/zshrc.sh
@@ -45,13 +54,10 @@ setopt inc_append_history
 setopt share_history # share command history data
 
 
-#-----------------------------------------
-# "Get Special keys working"
-# from
-#-----------------------------------------
+# Get Special keys working {{{2
 
 # create a zkbd compatible hash;
-#to add other keys to this hash, see: man 5 terminfo
+# to add other keys to this hash, see: man 5 terminfo
 typeset -A key
 
 key[Home]=${terminfo[khome]}
@@ -87,8 +93,8 @@ function zle-line-finish () {
 zle -N zle-line-init
 zle -N zle-line-finish
 
-#------------------------------
-# Prompt
+#------------------------------{{{1
+# Prompt 
 #------------------------------
 RPROMPT=""
 
