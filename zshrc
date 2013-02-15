@@ -26,7 +26,7 @@ alias -r fbrow="firefox"
 
 # Assorted
 alias -r clip="xclip -i -selection clipboard"
-alias -r server="python -m SimpleHTTPServer"
+alias -r server="python -m SimpleHTTPServer &"
 
 #------------------------------ {{{1
 # Settings
