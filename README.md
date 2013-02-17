@@ -14,5 +14,6 @@ bashrc is from the school's system and other times that zsh is unavailable.
     ./dotlinker.py
 
 It will ask you some questions and you should answer them to set up your files.
+The questions will be yes or no.
 
 ***
