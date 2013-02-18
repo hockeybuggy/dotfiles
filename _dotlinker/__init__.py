@@ -16,21 +16,28 @@ class Linker:
     configFile = "config.json"
     configPath = os.path.realpath(thisDir + configFile)
     homePath = os.path.expanduser("~")
+    args = None
     config = None
 
-    def __init__(self):
+    def __init__(self, args):
         read = open(self.configPath)
         configStr = ""
         for line in read:
             configStr += line.strip()
         self.config = json.loads(configStr)
         read.close()
-
+        self.args = args
 
     def link(self):
+        if self.args.interactive:
+            self.interactive_linker()
+        else:
+            self.automatic_linker()
+
+    def interactive_linker(self):
         subGroups = self.config["groups"]
-        print "Dotlinker... Rock it"
-        for group in self.config["groups"]:
+        print "Dotlinker running in interactive mode... Rocking"
+        for group in subGroups:
             print "\nGroup:", group
             groupVals = subGroups[group]
             #print json.dumps(groupVals, indent=4)
@@ -49,6 +56,8 @@ class Linker:
             elif ans == "s":
                 self.link_some(linkKeys, groupVals)
 
+    def automatic_linker(self):
+        print "Dotlinker running in automatic mode... Rocking"
 
     def link_group(self, keys, group):
         for key in keys:
