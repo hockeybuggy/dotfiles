@@ -31,7 +31,11 @@ alias -r server="python -m SimpleHTTPServer"
 #------------------------------ {{{1
 # Settings
 #------------------------------
- 
+
+# Set up z, a directory jumping tool
+export _Z_DATA="$ZSHDIR/z/.z"
+source $ZSHDIR/z/z.sh
+
 eval `dircolors $HOME/.dotfiles/dircolors.256dark` 
 
 source $ZSHDIR/git-prompt/zshrc.sh
