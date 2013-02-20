@@ -23,13 +23,13 @@ set nohlsearch
 set ruler
 set laststatus=2
 set number
-set history=200
+set history=800
 set wildmode=longest,list
 
 set background=dark
 colorscheme solarized
 
-" Allow the viewing of invisible characters {{{2
+" Invisible characters {{{2
 set list
 set listchars=tab:▸\ ,eol:¬
 
@@ -64,10 +64,7 @@ nnoremap <C-l> <C-W>l
 nmap <C-P> "+gp
 vmap <C-C> "+y
 
-" Toggle highlighting & search, background colour toggle {{{2
-" TODO denote this in the status line
-nmap <F4> :set hlsearch!<CR>
-nmap <F2> :set spell!<CR>
+" Background colour toggle {{{2
 " Toggles the background. Requires solarized.
 call togglebg#map("<F3>")
 
