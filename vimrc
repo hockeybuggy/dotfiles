@@ -3,11 +3,11 @@
 " Preferences {{{1
 " Setup & pathogen {{{2
 set nocompatible
+filetype off
 
 call pathogen#infect()
 call pathogen#helptags()
 
-filetype off
 syntax on
 filetype plugin indent on
 
@@ -28,7 +28,6 @@ set list
 set listchars=tab:▸\ ,eol:¬
 
 " Disables swap files. Enables backups. {{{2
-"set swapdir=~/.vim/temp/swap
 set noswapfile
 set backupdir=~/.vim/temp/backup
 if has('persistent_undo')
