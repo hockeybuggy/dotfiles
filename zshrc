@@ -1,5 +1,5 @@
 # The vimrc of Douglas James Anderson
-# vim:fdm=marker fdc=3 fdl=1
+# vim:fdm=marker fdl=1
 
 ZSHDIR=$HOME/.zsh
 
@@ -20,11 +20,8 @@ alias -r la="ls --color=always -lhA"
 alias -r ll="ls --color=always -lh"
 alias -r lla="ls --color=no -lhA | less"
 
-# Browsers
-alias -r cbrow="google-chrome"
-alias -r fbrow="firefox"
-
 # Assorted
+alias -r clr="clear"
 alias -r clip="xclip -i -selection clipboard"
 alias -r server="python -m SimpleHTTPServer"
 

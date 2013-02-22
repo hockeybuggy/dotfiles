@@ -19,6 +19,7 @@ set laststatus=2
 set number
 set history=800
 set wildmode=longest,list
+set showcmd
 
 set background=dark
 colorscheme solarized
