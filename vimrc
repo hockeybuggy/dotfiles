@@ -2,8 +2,8 @@
 " The vimrc of Douglas James Anderson
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible
-filetype off
+set nocompatible        " Pffft... vi... Please...
+filetype off            " Turning filetype detection apparently speeds up pathogen
 
 call pathogen#infect()
 call pathogen#helptags()
@@ -11,14 +11,17 @@ call pathogen#helptags()
 syntax on
 filetype plugin indent on
 
-" Basic Preferences
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" General Preferences
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ','
-set incsearch
+set incsearch  
 set nohlsearch
 set ruler
-set laststatus=2
-set number
-set history=800
+set number              " Show line numbers
+set history=800         " This may be a bit extreme
 set wildmode=longest,list
 set laststatus=2        " Always show the last command
 set showcmd             " Show unfinished commands in the status line
@@ -78,6 +81,7 @@ vmap <C-C> "+y
 
 " Toggle between light and dark background
 call togglebg#map("<F3>")
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
 """"""""""""""""""""""""""""""""""""""""""""""""""
