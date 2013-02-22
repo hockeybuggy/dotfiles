@@ -13,6 +13,7 @@ filetype plugin indent on
 
 " Basic Preferences
 let mapleader = ','
+set incsearch
 set nohlsearch
 set ruler
 set laststatus=2
@@ -20,7 +21,7 @@ set number
 set history=800
 set wildmode=longest,list
 set laststatus=2        " Always show the last command
-set showcmd             " Show unfinshed commands in the status line
+set showcmd             " Show unfinished commands in the status line
 
 " Invisible characters
 set list
