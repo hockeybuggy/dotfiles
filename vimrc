@@ -26,16 +26,6 @@ set showcmd             " Show unfinshed commands in the status line
 set list
 set listchars=tab:▸\ ,eol:¬
 
-" Disables swap files. Enables backups.
-set noswapfile
-set backupdir=~/.vim/temp/backup
-if has('persistent_undo')
-    set undodir=~/.vim/temp/undo
-    set undofile
-    set undolevels=1000
-    set undoreload=10000
-endif
-
 " Set Spelling. Proud of my Canadian heritage.
 setlocal spell spelllang=en_ca
 
@@ -48,6 +38,24 @@ set softtabstop=4
 set shiftwidth=4
 set smarttab
 
+" Colour scheme
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors = 256
+let g:solarized_termtrans = 1
+let g:solarized_visibility = "high"
+call togglebg#map("<F3>")
+
+" Disable swap files. Enables backups. Enable undo
+set noswapfile
+set backupdir=~/.vim/temp/backup
+if has('persistent_undo')
+    set undodir=~/.vim/temp/undo
+    set undofile
+    set undolevels=1000
+    set undoreload=10000
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -57,17 +65,16 @@ nnoremap <C-j> <C-W>j
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
+" current file directory expand (http://vimcasts.org/episodes/the-edit-command/)
+cnoremap %% <C-R>=expand('%:h').'/'<CR>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
+
 " External copy paste
 nmap <C-P> "+gp
 vmap <C-C> "+y
-
-" Colour scheme
-set background=dark
-colorscheme solarized
-let g:solarized_termcolors = 256
-let g:solarized_termtrans = 1
-let g:solarized_visibility = "high"
-call togglebg#map("<F3>")
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
