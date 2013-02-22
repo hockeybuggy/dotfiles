@@ -47,7 +47,7 @@ set splitbelow
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set expandtab
+set smarttab
 
 " Window switching {{{2
 nnoremap <C-k> <C-W>k
