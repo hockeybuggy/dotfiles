@@ -44,7 +44,6 @@ colorscheme solarized
 let g:solarized_termcolors = 256
 let g:solarized_termtrans = 1
 let g:solarized_visibility = "high"
-call togglebg#map("<F3>")
 
 " Disable swap files. Enables backups. Enable undo
 set noswapfile
@@ -76,6 +75,8 @@ map <leader>et :tabe %%
 nmap <C-P> "+gp
 vmap <C-C> "+y
 
+" Toggle between light and dark background
+call togglebg#map("<F3>")
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
 """"""""""""""""""""""""""""""""""""""""""""""""""
