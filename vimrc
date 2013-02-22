@@ -1,7 +1,7 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""
 " The vimrc of Douglas James Anderson
+""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Preferences {{{1
-" Setup & pathogen {{{2
 set nocompatible
 filetype off
 
@@ -11,7 +11,7 @@ call pathogen#helptags()
 syntax on
 filetype plugin indent on
 
-" Basic Preferences {{{2
+" Basic Preferences
 let mapleader = ','
 set nohlsearch
 set ruler
@@ -21,19 +21,11 @@ set history=800
 set wildmode=longest,list
 set showcmd
 
-" Invisible characters {{{2
+" Invisible characters
 set list
 set listchars=tab:▸\ ,eol:¬
 
-" Colour scheme {{{2
-colorscheme solarized
-set background=dark
-let g:solarized_termcolors = 256
-let g:solarized_termtrans = 1
-let g:solarized_visibility = "high"
-call togglebg#map("<F3>")
-
-" Disables swap files. Enables backups. {{{2
+" Disables swap files. Enables backups.
 set noswapfile
 set backupdir=~/.vim/temp/backup
 if has('persistent_undo')
@@ -43,38 +35,42 @@ if has('persistent_undo')
     set undoreload=10000
 endif
 
-" Set Canadian Spelling. Proud of my Canadian heritage.  {{{2
+" Set Spelling. Proud of my Canadian heritage.
 setlocal spell spelllang=en_ca
 
-" Changing the default spiltbehaviour {{{2
 set splitright
 set splitbelow
 
-" Set Indentation preferences {{{2
+" Set Indentation preferences
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set smarttab
 
-" Mappings {{{1
-" Window switching {{{2
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" Mappings
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" Window switching
 nnoremap <C-k> <C-W>k
 nnoremap <C-j> <C-W>j
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
-"current file directory expand (http://vimcasts.org/episodes/the-edit-command/)
-cnoremap %% <C-R>=expand('%:h').'/'<CR>
-map <leader>ew :e %%
-map <leader>es :sp %%
-map <leader>ev :vsp %%
-map <leader>et :tabe %%
-
-" External copy paste {{{2
+" External copy paste
 nmap <C-P> "+gp
 vmap <C-C> "+y
 
-"Status Line {{{1
+" Colour scheme
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors = 256
+let g:solarized_termtrans = 1
+let g:solarized_visibility = "high"
+call togglebg#map("<F3>")
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+"Status Line
+""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('statusline')
     set laststatus=2
     set statusline+=%w%h%m%r " Options
