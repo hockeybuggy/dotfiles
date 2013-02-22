@@ -21,9 +21,6 @@ set history=800
 set wildmode=longest,list
 set showcmd
 
-set background=dark
-colorscheme solarized
-
 " Invisible characters {{{2
 set list
 set listchars=tab:▸\ ,eol:¬
@@ -61,13 +58,15 @@ nnoremap <C-l> <C-W>l
 nmap <C-P> "+gp
 vmap <C-C> "+y
 
-" Background colour toggle {{{2
-" Toggles the background. Requires solarized.
+" Colour scheme {{{2
+colorscheme solarized
+set background=dark
+let g:solarized_termcolors = 256
+let g:solarized_termtrans = 1
+let g:solarized_visibility = "high"
 call togglebg#map("<F3>")
 
 "Status Line {{{1
-" Set the status line {{{2
-" Really just put under a level two fold for giggles.
 if has('statusline')
     set laststatus=2
     set statusline+=%w%h%m%r " Options
