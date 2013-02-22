@@ -19,7 +19,8 @@ set laststatus=2
 set number
 set history=800
 set wildmode=longest,list
-set showcmd
+set laststatus=2        " Always show the last command
+set showcmd             " Show unfinshed commands in the status line
 
 " Invisible characters
 set list
@@ -69,10 +70,9 @@ let g:solarized_visibility = "high"
 call togglebg#map("<F3>")
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-"Status Line
+" Status Line
 """"""""""""""""""""""""""""""""""""""""""""""""""
 if has('statusline')
-    set laststatus=2
     set statusline+=%w%h%m%r " Options
     set statusline+=%=
     set statusline+=%#Identifier#
