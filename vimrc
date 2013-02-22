@@ -1,11 +1,5 @@
 " The vimrc of Douglas James Anderson
 
-" vim:fdm=marker fdc=3 fdl=1
-" My theory is that anyone who is looking at this can use vim and can handle
-" the folds. For people reading it outside of Vim I apologize for the fold
-" markers.
-" NOTE: remember zi & za, & zA. also remember z{motion} to move around
-
 " Preferences {{{1
 " Setup & pathogen {{{2
 set nocompatible
@@ -47,6 +41,9 @@ endif
 " Set Spelling. Proud of my Canadian heritage.  {{{2
 setlocal spell spelllang=en_ca
 
+set splitright
+set splitbelow
+
 " Set Indentation preferences {{{2
 set tabstop=4
 set softtabstop=4
@@ -67,9 +64,6 @@ vmap <C-C> "+y
 " Background colour toggle {{{2
 " Toggles the background. Requires solarized.
 call togglebg#map("<F3>")
-
-" Toggle folding with space {{{2
-nnoremap <Space> za
 
 "Status Line {{{1
 " Set the status line {{{2
