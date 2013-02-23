@@ -17,7 +17,7 @@ filetype plugin indent on
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ','
-set incsearch  
+set incsearch
 set nohlsearch
 set ruler
 set number              " Show line numbers
@@ -40,7 +40,7 @@ set splitbelow
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set smarttab
+set expandtab
 
 " Colour scheme
 set background=dark
@@ -58,7 +58,7 @@ if has('persistent_undo')
     set undolevels=1000
     set undoreload=10000
 endif
-
+ 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -86,17 +86,22 @@ call togglebg#map("<F3>")
 " Status Line
 """"""""""""""""""""""""""""""""""""""""""""""""""
 if has('statusline')
-    set statusline+=%w%h%m%r " Options
-    set statusline+=%=
-    set statusline+=%#Identifier#
-    set statusline+=[%{fugitive#head()}]
-    set statusline+=%*
-    set statusline+=\ %#Special#
-    set statusline+=[%f]
-    set statusline+=%*
+    set statusline=                      " Useful if re-source-ing
+    set statusline+=%w%h%m%r             " Flags
+    set statusline+=%=                   " Right align
+    set statusline+=%#Special#
+    set statusline+=[%f]                 " File name
+    set statusline+=%*                   " Reset colour
+    set statusline+=\ %#Identifier#
+    set statusline+=[%{fugitive#head()}] " Branch name
+    set statusline+=%*                   " Reset colour
+    set statusline+=\ %#Statement#
+    set statusline+=[%Y]                 " File type
+    set statusline+=%*                   " Reset colour
     set statusline+=\ %#Constant#
-    set statusline+=%(%l,%c%V%)\ %p%%
-    set statusline+=%*\ 
+    set statusline+=b:%n\                " Buffer number
+    set statusline+=%(%l,%c%V%)\ %p%%    " Positional info
+    set statusline+=%*\                  " End the status line in style
 endif
 
 
