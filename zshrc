@@ -1,14 +1,16 @@
-# The vimrc of Douglas James Anderson
+# The zshrc of Douglas James Anderson
 # vim:fdm=marker fdl=1
 
 ZSHDIR=$HOME/.zsh
 
-#------------------------------ {{{1
+#------------------------------
 # Aliases
 #------------------------------
 # Common shorthands
 alias -r l="less"
 alias -r g="git"
+alias -r z="z" # Just written so I remember. Performance hit?
+alias -r to="$ZSHDIR/todo/todo.sh"
 
 # Fork Terminals. It's TODO pretty bad..
 alias -r rxvt="nohup urxvt &"
@@ -25,13 +27,9 @@ alias -r clr="clear"
 alias -r clip="xclip -i -selection clipboard"
 alias -r server="python -m SimpleHTTPServer"
 
-#------------------------------ {{{1
+#------------------------------
 # Settings
 #------------------------------
-
-# Set up z, a directory jumping tool
-export _Z_DATA="$ZSHDIR/z/.z"
-source $ZSHDIR/z/z.sh
 
 eval `dircolors $HOME/.dotfiles/dircolors.256dark` 
 
@@ -54,6 +52,57 @@ setopt hist_verify
 setopt inc_append_history
 setopt share_history # share command history data
 
+#------------------------------
+# Plugins
+# Set up z, a directory jumping tool
+#------------------------------
+# z : a file jumper based on Frecency 
+export _Z_DATA="$ZSHDIR/z/.z"
+source $ZSHDIR/z/z.sh
+
+# todo.txt : a todo application
+# NOTE alias todo to to
+source $ZSHDIR/todo/todo_completion
+#complete -F _todo to # Get completion for the alias
+
+#------------------------------
+# Prompt 
+#------------------------------
+RPROMPT=""
+
+setprompt () {
+    # load some modules
+    autoload -U colors zsh/terminfo # Used in the colour alias below
+    colors
+    setopt prompt_subst
+
+    # make some aliases for the colours: (could use normal escape sequence's too)
+    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+        eval PR_$color='%{$fg[${(L)color}]%}'
+    done
+    PR_NO_COLOR="%{$terminfo[sgr0]%}"
+
+    # Check the UID
+    if [[ $UID -ge 1000 ]]; then # normal user
+        eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
+        eval PR_USER_OP='${PR_RED}➤${PR_NO_COLOR}'
+    elif [[ $UID -eq 0 ]]; then # root
+        eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
+        eval PR_USER_OP='${PR_RED}➤➤${PR_NO_COLOR}'
+    fi
+
+    # Check if we are on SSH or not
+    if [[ -n "$SSH_CLIENT" || -n "$SSH2_CLIENT" ]]; then
+        eval PR_HOST='${PR_YELLOW}%M${PR_NO_COLOR}' #SSH
+    else
+        eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
+    fi
+
+    # set the prompt
+    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ $(git_super_status) %~  \n${PR_USER_OP} '
+    PS2=$'%_>'
+}
+setprompt
 
 # Get Special keys working {{{2
 
@@ -93,44 +142,4 @@ function zle-line-finish () {
 
 zle -N zle-line-init
 zle -N zle-line-finish
-
-#------------------------------{{{1
-# Prompt 
-#------------------------------
-RPROMPT=""
-
-setprompt () {
-    # load some modules
-    autoload -U colors zsh/terminfo # Used in the colour alias below
-    colors
-    setopt prompt_subst
-
-    # make some aliases for the colours: (could use normal escape sequence's too)
-    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-        eval PR_$color='%{$fg[${(L)color}]%}'
-    done
-    PR_NO_COLOR="%{$terminfo[sgr0]%}"
-
-    # Check the UID
-    if [[ $UID -ge 1000 ]]; then # normal user
-        eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
-        eval PR_USER_OP='${PR_RED}➤${PR_NO_COLOR}'
-    elif [[ $UID -eq 0 ]]; then # root
-        eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
-        eval PR_USER_OP='${PR_RED}➤➤${PR_NO_COLOR}'
-    fi
-
-    # Check if we are on SSH or not
-    if [[ -n "$SSH_CLIENT" || -n "$SSH2_CLIENT" ]]; then
-        eval PR_HOST='${PR_YELLOW}%M${PR_NO_COLOR}' #SSH
-    else
-        eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
-    fi
-
-    # set the prompt
-    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ $(git_super_status) %~  \n${PR_USER_OP} '
-    PS2=$'%_>'
-}
-setprompt
-
 
