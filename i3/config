@@ -23,10 +23,12 @@ bindsym $mod+Shift+G exec google-chrome
 bindsym $mod+Shift+I exec google-chrome --incognito
 # start banshee
 bindsym $mod+Shift+B exec banshee
-# start calibre
-bindsym $mod+Shift+C exec calibre
+#NOTE start calibre
+#bindsym $mod+Shift+C exec calibre
 # start thunar
 bindsym $mod+Shift+T exec thunar
+# start keepass
+bindsym $mod+Shift+P exec keepassx
 
 # Sound things
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
