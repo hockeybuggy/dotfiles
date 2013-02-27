@@ -10,7 +10,8 @@ ZSHDIR=$HOME/.zsh
 alias -r l="less"
 alias -r g="git"
 alias -r z="z" # Just written so I remember. Performance hit?
-alias -r to="$ZSHDIR/todo/todo.sh"
+alias -r to="$ZSHDIR/todo/todo.sh -d $ZSHDIR/todo/todo.cfg"
+alias -r todo="to"
 
 # Fork Terminals. It's TODO pretty bad..
 alias -r rxvt="nohup urxvt &"
@@ -61,7 +62,7 @@ export _Z_DATA="$ZSHDIR/z/.z"
 source $ZSHDIR/z/z.sh
 
 # todo.txt : a todo application
-# NOTE alias todo to to
+# remember: todo.txt is aliased to to
 source $ZSHDIR/todo/todo_completion
 #complete -F _todo to # Get completion for the alias
 
