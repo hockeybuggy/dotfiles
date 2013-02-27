@@ -2,6 +2,10 @@
 # vim:fdm=marker fdl=1
 
 ZSHDIR=$HOME/.zsh
+DOTDIR=$HOME/.dotfiles
+SCRIPTDIR=$DOTDIR/scripts
+ZDIR=$SCRIPTDIR/z
+TODODIR=$SCRIPTDIR/todo
 
 #------------------------------
 # Aliases
@@ -10,7 +14,7 @@ ZSHDIR=$HOME/.zsh
 alias -r l="less"
 alias -r g="git"
 alias -r z="z" # Just written so I remember. Performance hit?
-alias -r to="$ZSHDIR/todo/todo.sh -d $ZSHDIR/todo/todo.cfg"
+alias -r to="$TODODIR/todo.sh -d $TODODIR/todo.cfg"
 alias -r todo="to"
 
 # Fork Terminals. It's TODO pretty bad..
@@ -31,8 +35,8 @@ alias -r server="python -m SimpleHTTPServer"
 #------------------------------
 # Settings
 #------------------------------
-
-eval `dircolors $HOME/.dotfiles/dircolors.256dark` 
+#TODO maybe should not be hard coded
+eval `dircolors $DOTDIR/dircolors.256dark` 
 
 source $ZSHDIR/git-prompt/zshrc.sh
 autoload -U colors && colors
@@ -54,16 +58,16 @@ setopt inc_append_history
 setopt share_history # share command history data
 
 #------------------------------
-# Plugins
+# Scripts
 # Set up z, a directory jumping tool
 #------------------------------
 # z : a file jumper based on Frecency 
-export _Z_DATA="$ZSHDIR/z/.z"
-source $ZSHDIR/z/z.sh
+export _Z_DATA="$ZDIR/.z"
+source $ZDIR/z.sh
 
 # todo.txt : a todo application
-# remember: todo.txt is aliased to to
-source $ZSHDIR/todo/todo_completion
+# remember: todo.txt is aliased 'to' and 'todo'
+source $TODODIR/todo_completion
 #complete -F _todo to # Get completion for the alias
 
 #------------------------------
