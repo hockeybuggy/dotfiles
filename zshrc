@@ -35,7 +35,6 @@ alias -r server="python -m SimpleHTTPServer"
 #------------------------------
 # Settings
 #------------------------------
-#TODO maybe should not be hard coded
 eval `dircolors $DOTDIR/dircolors.256dark` 
 
 source $ZSHDIR/git-prompt/zshrc.sh
@@ -59,7 +58,6 @@ setopt share_history # share command history data
 
 #------------------------------
 # Scripts
-# Set up z, a directory jumping tool
 #------------------------------
 # z : a file jumper based on Frecency 
 export _Z_DATA="$ZDIR/.z"
