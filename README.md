@@ -1,8 +1,6 @@
 ## My dotfiles
 
-This repository is for managing my dotfiles.
-
-bashrc is from the school's system and other times that zsh is unavailable.
+This repository is for managing my configuration.
 
 ### Update submodules
 
@@ -11,7 +9,13 @@ bashrc is from the school's system and other times that zsh is unavailable.
 
 ### Run the Linker
 
+To run the linker in automatic mode run:
+
     ./dotlinker.py -a
+
+To run the linker in interactive mode run:
+
+    ./dotlinker.py -i
 
 It will ask you some questions and you should answer them to set up your files.
 The questions will be yes or no.
