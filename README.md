@@ -9,7 +9,7 @@ The dotlinker requires python and the submodules requires git for submodules.
 Currently there are some dependances to the location of this directory.
 ".dotfiles" is preferred.
 
-    git clone git@github.com:hockeybuggy/dotfiles .dotfiles
+    git clone git@github.com:hockeybuggy/dotfiles .dotfiles && cd .dotfiles
 
 ### Update submodules
 
