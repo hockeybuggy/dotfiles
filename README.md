@@ -2,6 +2,15 @@
 
 This repository is for managing my configuration.
 
+The dotlinker requires python and the submodules requires git for submodules.
+
+### Clone this repo
+
+Currently there are some dependances to the location of this directory.
+".dotfiles" is preferred.
+
+    git clone git@github.com:hockeybuggy/dotfiles .dotfiles
+
 ### Update submodules
 
     git submodule init
