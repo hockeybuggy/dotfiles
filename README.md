@@ -30,3 +30,16 @@ It will ask you some questions and you should answer them to set up your files.
 The questions will be yes or no.
 
 ***
+
+### No python?
+
+What alien cruel machine have stumbled upon? This is an ok alternative after
+cloneing:
+
+    cd ~
+    ln -s ~/.dotfiles/bashrc .bashrc
+    ln -s ~/.dotfiles/vimrc .vimrc
+    ln -s ~/.dotfiles/gvimrc .gvimrc
+    ln -s ~/.dotfiles/vim .vim
+    ln -s ~/.dotfiles/gitconfig .gitconfig
+
