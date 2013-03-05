@@ -25,6 +25,7 @@ set history=800         " This may be a bit extreme
 set wildmode=longest,list
 set laststatus=2        " Always show the last command
 set showcmd             " Show unfinished commands in the status line
+set mouse=a             " Makes the mouse work in urxvt
 
 " Invisible characters
 set list
