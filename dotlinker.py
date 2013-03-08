@@ -5,7 +5,7 @@ Creates symlinks from one directory to another
 """
 
 from _dotlinker import Linker
-import _dotlinker.argparse
+import argparse
 
 parser = argparse.ArgumentParser(description="Creates symlinks from my home to my dotfiles")
 group = parser.add_mutually_exclusive_group(required=True)
