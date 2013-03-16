@@ -155,10 +155,16 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-# TODO fix single monitors
 #bar {
     #status_command    i3status
 #}
+
+bar {
+    output            LVDS
+    status_command    i3status
+    position          bottom
+    workspace_buttons yes
+}
 
 bar {
     output            CRT1
@@ -169,7 +175,7 @@ bar {
 
 bar {
     output            DFP5
-    status_command    i3status --config ~/.i3/i3status.conf
+    status_command    i3status --config ~/.i3/i3status.desktop.conf
     position          bottom
     workspace_buttons yes
     

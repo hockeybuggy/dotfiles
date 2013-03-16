@@ -33,7 +33,7 @@ The questions will be yes or no.
 
 ### No python?
 
-What alien cruel machine have stumbled upon? This is an ok alternative after
+What alien cruel machine have you stumbled upon? This is an ok alternative after
 cloneing:
 
     cd ~
