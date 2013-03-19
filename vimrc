@@ -34,6 +34,7 @@ set listchars=tab:▸\ ,eol:¬
 " Set Spelling. Proud of my Canadian heritage.
 setlocal spell spelllang=en_ca
 
+" Change the splitting behaviour.
 set splitright
 set splitbelow
 
