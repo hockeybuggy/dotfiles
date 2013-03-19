@@ -36,6 +36,6 @@
 [submodule "vim/bundle/vim-less"]
 	path = vim/bundle/vim-less
 	url = https://github.com/KohPoll/vim-less.git
-[submodule "vim-eunuch"]
-	path = vim-eunuch
+[submodule "vim/bundle/vim-eunuch"]
+	path = vim/bundle/vim-eunuch
 	url = git://github.com/tpope/vim-eunuch.git
