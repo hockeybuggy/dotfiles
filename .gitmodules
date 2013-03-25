@@ -39,3 +39,6 @@
 [submodule "vim/bundle/vim-eunuch"]
 	path = vim/bundle/vim-eunuch
 	url = git://github.com/tpope/vim-eunuch.git
+[submodule "vim/bundle/vim-visual-star-search"]
+	path = vim/bundle/vim-visual-star-search
+	url = git://github.com/nelstrom/vim-visual-star-search.git
