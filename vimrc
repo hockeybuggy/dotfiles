@@ -20,6 +20,7 @@ let mapleader = ','
 set incsearch
 set nohlsearch
 set ruler
+set hidden
 set number              " Show line numbers
 set history=800         " This may be a bit extreme
 set wildmode=longest,list
