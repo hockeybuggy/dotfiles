@@ -17,6 +17,11 @@ alias -r z="z" # Just written so I remember. Performance hit?
 alias -r to="$TODODIR/todo.sh -d $TODODIR/todo.cfg"
 alias -r todo="to"
 
+mkcd() {
+    mkdir -p "$*"
+    cd "$*"
+}
+
 # Fork Terminals. It's TODO pretty bad..
 alias -r rxvt="nohup urxvt &"
 alias -r urxvt="nohup urxvt &"

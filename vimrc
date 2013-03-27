@@ -19,13 +19,13 @@ filetype plugin indent on
 let mapleader = ','
 set incsearch
 set nohlsearch
-set hidden              " Allow navigating away from unsaved buffers
-set number              " Show line numbers
-set history=800         " This may be a bit extreme
+set hidden                " Allow navigating away from unsaved buffers
+set number                " Show line numbers
+set history=800           " This may be a bit extreme
 set wildmode=longest,list
-set laststatus=2        " Always show the last command
-set showcmd             " Show unfinished commands in the status line
-set mouse=a             " Makes the mouse work in urxvt
+set laststatus=2          " Always show the last command
+set showcmd               " Show unfinished commands in the status line
+set mouse=a               " Makes the mouse work in urxvt
 
 " Invisible characters
 set list
