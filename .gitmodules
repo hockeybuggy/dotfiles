@@ -1,0 +1,45 @@
+# Vim 
+
+## Languages
+[submodule "vim/bundle/vim-markdown"]
+	path = vim/bundle/vim-markdown
+	url = git://github.com/tpope/vim-markdown.git
+[submodule "vim/bundle/vim-git"]
+	path = vim/bundle/vim-git
+	url = git://github.com/tpope/vim-git.git
+	ignore = dirty
+[submodule "vim/bundle/vim-javascript"]
+	path = vim/bundle/vim-javascript
+	url = git://github.com/pangloss/vim-javascript.git
+[submodule "vim/bundle/vim-bundle-mako"]
+	path = vim/bundle/vim-bundle-mako
+	url = git://github.com/sophacles/vim-bundle-mako.git
+[submodule "vim/bundle/vim-less"]
+	path = vim/bundle/vim-less
+	url = https://github.com/KohPoll/vim-less.git
+
+## Colours
+[submodule "vim/bundle/vim-colors-solarized"]
+	path = vim/bundle/vim-colors-solarized
+	url = git://github.com/altercation/vim-colors-solarized.git
+
+
+## Plugins
+[submodule "vim/bundle/nerdcommenter"]
+	path = vim/bundle/nerdcommenter
+	url = git://github.com/scrooloose/nerdcommenter.git
+[submodule "vim/bundle/vim-fugitive"]
+	path = vim/bundle/vim-fugitive
+	url = git://github.com/tpope/vim-fugitive.git
+[submodule "vim/bundle/vim-unimpaired"]
+	path = vim/bundle/vim-unimpaired
+	url = git://github.com/tpope/vim-unimpaired.git
+[submodule "vim/bundle/vim-surround"]
+	path = vim/bundle/vim-surround
+	url = git://github.com/tpope/vim-surround.git
+[submodule "vim/bundle/vim-eunuch"]
+	path = vim/bundle/vim-eunuch
+	url = git://github.com/tpope/vim-eunuch.git
+[submodule "vim/bundle/vim-visual-star-search"]
+	path = vim/bundle/vim-visual-star-search
+	url = git://github.com/nelstrom/vim-visual-star-search.git
