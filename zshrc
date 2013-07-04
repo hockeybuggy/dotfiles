@@ -5,7 +5,6 @@ ZSHDIR=$HOME/.zsh
 DOTDIR=$HOME/.dotfiles
 SCRIPTDIR=$DOTDIR/scripts
 ZDIR=$SCRIPTDIR/z
-TODODIR=$SCRIPTDIR/todo
 
 #------------------------------
 # Aliases
@@ -14,8 +13,6 @@ TODODIR=$SCRIPTDIR/todo
 alias -r l="less"
 alias -r g="git"
 alias -r z="z" # Just written so I remember. Performance hit?
-alias -r to="$TODODIR/todo.sh -d $TODODIR/todo.cfg"
-alias -r todo="to"
 
 mkcd() {
     mkdir -p "$*"
@@ -71,11 +68,6 @@ setopt share_history # share command history data
 # z : a file jumper based on Frecency 
 export _Z_DATA="$ZDIR/.z"
 source $ZDIR/z.sh
-
-# todo.txt : a todo application
-# remember: todo.txt is aliased 'to' and 'todo'
-source $TODODIR/todo_completion
-#complete -F _todo to # Get completion for the alias
 
 #------------------------------
 # Prompt 
