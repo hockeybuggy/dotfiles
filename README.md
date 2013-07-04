@@ -2,39 +2,21 @@
 
 This repository is for managing my configuration.
 
-The dotlinker requires python and the submodules requires git for submodules.
+### 1.Clone this repo
 
-### Clone this repo
-
-Currently there are some dependances to the location of this directory.
-".dotfiles" is preferred.
+Currently there are some dependences to the location of this directory.
+".dotfiles" is preferred. For example the bootstrap.sh wont work.
 
     git clone git@github.com:hockeybuggy/dotfiles .dotfiles && cd .dotfiles
 
-### Update submodules
+### 2. Automagically Link the files
+
+    ./scripts/bootstrap.sh
+
+### 2-alt. Manually link some files
 
     git submodule init
     git submodule update
-
-### Run the Linker
-
-To run the linker in automatic mode run:
-
-    ./dotlinker.py -a
-
-To run the linker in interactive mode run:
-
-    ./dotlinker.py -i
-
-It will ask you some questions and you should answer them to set up your files.
-The questions will be yes or no.
-
-***
-
-### No python?
-
-What alien cruel machine have you stumbled upon? This is an ok alternative after
-cloneing:
 
     cd ~
     ln -s ~/.dotfiles/bashrc .bashrc

@@ -1,29 +1,34 @@
 #!/bin/sh
 
-DIR="~/.dotfiles"
+DIR="$HOME/.dotfiles"
 
-echo "Linking dotfiles..."
+echo "\nGrabing submodules...\n"
+
+git submodule init -q
+git submodule update
+
+echo "\nLinking dotfiles...\n"
 
 # Shells
-ln -sb $DIR/bashrc .bashrc
-ln -sb $DIR/zshrc .zshrc
-ln -sb $DIR/zsh .zsh
+ln -sb $DIR/bashrc $HOME/.bashrc
+ln -sb $DIR/zshrc $HOME/.zshrc
+ln -sb $DIR/zsh $HOME/.zsh
 
 # Vim
-ln -sb $DIR/vimrc .vimrc
-ln -sb $DIR/gvimrc .gvimrc
-ln -sb $DIR/vim .vim
+ln -sb $DIR/vimrc $HOME/.vimrc
+ln -sb $DIR/gvimrc $HOME/.gvimrc
+ln -sb $DIR/vim $HOME/.vim
 
 # Git
-ln -sb $DIR/gitconfig .gitconfig
+ln -sb $DIR/gitconfig $HOME/.gitconfig
 
 # Terminals
-ln -sb $DIR/dircolors.256dark .dircolors.256dark
-ln -sb $DIR/Xdefaults .Xdefaults
-ln -sb $DIR/Xreasources .Xreasources
-ln -sb $DIR/tmux.conf .tmux.conf
+ln -sb $DIR/dircolors.256dark $HOME/.dircolors.256dark
+ln -sb $DIR/Xdefaults $HOME/.Xdefaults
+ln -sb $DIR/Xresources $HOME/.Xresources
+ln -sb $DIR/tmux.conf $HOME/.tmux.conf
 
 # i3
-ln -sb $DIR/i3 .i3
+ln -sb $DIR/i3 $HOME/.i3
 
 echo "Done"
