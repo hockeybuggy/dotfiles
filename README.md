@@ -7,7 +7,7 @@ This repository is for managing my configuration.
 Currently there are some dependences to the location of this directory.
 ".dotfiles" is preferred. For example the bootstrap.sh wont work.
 
-    git clone https://github.com:hockeybuggy/dotfiles.git .dotfiles && cd .dotfiles
+    git clone https://github.com/hockeybuggy/dotfiles.git .dotfiles && cd .dotfiles
 
 ### 2. Automagically Link the files
 
