@@ -4,7 +4,7 @@ DIR="$HOME/.dotfiles"
 
 echo "\nGrabing submodules...\n"
 
-git submodule init -q
+git submodule init
 git submodule update
 
 echo "\nLinking dotfiles...\n"
