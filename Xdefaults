@@ -30,13 +30,13 @@ URxvt*font: xft:terminus:pixelsize=15
 URxvt*boldFont: xft:terminus:bold:pixelsize=15
 
 # scrollbar - true (default) or false
-URxvt*scrollBar: true
+URxvt*scrollBar: false
 # scrollbar position - left=false (default) or right=true
-URxvt*scrollBar_right: true
+#URxvt*scrollBar_right: true
 # scrollbar style - rxvt (default), plain, next, or xterm
-URxvt*scrollstyle: rxvt
+#URxvt*scrollstyle: rxvt
 
-# Douglas 2012 - Trying to set urgancy hint
+# Trying to set urgancy hint
 URxvt*urgentOnBell: true
 
 #######################
