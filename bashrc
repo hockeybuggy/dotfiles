@@ -44,12 +44,17 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 #------------------------------
-# Scripts
+# Program specific
 #------------------------------
 # z : a file jumper based on Frecency 
 export _Z_DATA="$ZDIR/.z"
 source $ZDIR/z.sh
 
+### Added by the Heroku Toolbelt
+PATH="$PATH:/usr/local/heroku/bin"
+
+### Added by RVM 
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #------------------------------
 # Prompt 
 #------------------------------
@@ -70,6 +75,3 @@ case "$TERM" in
         ;;
 esac
 
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"

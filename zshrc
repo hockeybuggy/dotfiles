@@ -63,12 +63,14 @@ setopt inc_append_history
 setopt share_history # share command history data
 
 #------------------------------
-# Scripts
+# Program Specific
 #------------------------------
 # z : a file jumper based on Frecency 
 export _Z_DATA="$ZDIR/.z"
 source $ZDIR/z.sh
 
+### Added by RVM
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #------------------------------
 # Prompt 
 #------------------------------
