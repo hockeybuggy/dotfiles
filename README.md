@@ -15,10 +15,13 @@ Currently there are some dependences to the location of this directory.
 
 ### 2-alt. Manually link some files
 
+For some more minimal systems run these:
+
     git submodule init
     git submodule update
 
     cd ~
+    ln -s ~/.dotfiles/bash_profile .bash_profile
     ln -s ~/.dotfiles/bashrc .bashrc
     ln -s ~/.dotfiles/vimrc .vimrc
     ln -s ~/.dotfiles/gvimrc .gvimrc
