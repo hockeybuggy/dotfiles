@@ -11,7 +11,9 @@ echo "\nLinking dotfiles...\n"
 
 # Shells
 ln -sb $DIR/bashrc $HOME/.bashrc
+ln -sb $DIR/bash_profile $HOME/.bash_profile
 ln -sb $DIR/zshrc $HOME/.zshrc
+ln -sb $DIR/zlogin $HOME/.zlogin
 ln -sb $DIR/zsh $HOME/.zsh
 
 # Vim

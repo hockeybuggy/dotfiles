@@ -19,10 +19,6 @@ mkcd() {
     cd "$*"
 }
 
-# Fork Terminals. It's TODO pretty bad..
-alias -r rxvt="nohup urxvt &"
-alias -r urxvt="nohup urxvt &"
-
 # LS aliases
 alias -r ls="ls --color=always -lh"
 alias -r la="ls --color=always -lhA"
