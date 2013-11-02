@@ -46,3 +46,6 @@
 [submodule "vim/bundle/vim-visual-star-search"]
 	path = vim/bundle/vim-visual-star-search
 	url = git://github.com/nelstrom/vim-visual-star-search.git
+[submodule "vim/bundle/LaTex-Box"]
+	path = vim/bundle/LaTex-Box
+	url = git://github.com/LaTeX-Box-Team/LaTeX-Box.git
