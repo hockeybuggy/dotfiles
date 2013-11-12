@@ -1,52 +1,44 @@
-# transparency - true or false (default)
+!# transparency - true or false (default)
 URxvt*transparent: false
 
-# tint with any color; i.e., blue, red, tomato4, olivedrab2, etc.
-#   some nice listings are at:
-#     http://www.nisrv.com/drupal/?q=node/11
-#     http://www.htmlgoodies.com/tutorials/colors/article.php/3478921
-#URxvt*tintColor: Blue
-
-# shading - 0 to 99 darkens, 101 to 200 lightens.
-#   Don't use with tintColor; just use a darker or lighter color instead.
+!# shading - 0 to 99 darkens, 101 to 200 lightens.
 URxvt*shading: 40
 
-# scrollback buffer lines - 65535 is max on most machines (64 is default)
+!# scrollback buffer lines - 65535 is max on most machines (64 is default)
 URxvt*saveLines: 12000
 
-# Xft: DejaVu fonts
-#  Fedora/debian packages: dejavu-sans-mono-fonts/ttf-dejavu 
-#URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
-#URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
+!# Xft: DejaVu fonts
+!#  Fedora/debian packages: dejavu-sans-mono-fonts/ttf-dejavu 
+!#URxvt*font: xft:DejaVu Sans Mono:pixelsize=12:antialias=true:hinting=true
+!#URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=12:antialias=true:hinting=true
 
-# Xft: Terminus fonts
-#  Fedora/debian packages: terminus-fonts/xfonts-terminus
+!# Xft: Terminus fonts
+!#  Fedora/debian packages: terminus-fonts/xfonts-terminus
 URxvt*font: xft:terminus:pixelsize=15
 URxvt*boldFont: xft:terminus:bold:pixelsize=15
 
-# scrollbar - true (default) or false
+!# scrollbar - true (default) or false
 URxvt*scrollBar: false
-# scrollbar position - left=false (default) or right=true
-#URxvt*scrollBar_right: true
-# scrollbar style - rxvt (default), plain, next, or xterm
-#URxvt*scrollstyle: rxvt
+!# scrollbar position - left=false (default) or right=true
+!#URxvt*scrollBar_right: true
+!# scrollbar style - rxvt (default), plain, next, or xterm
+!#URxvt*scrollstyle: rxvt
 
-# Trying to set urgancy hint
+!# Trying to set urgancy hint
 URxvt*urgentOnBell: true
 
-#######################
-#Clickable Links
-#######################
+!# ****************
+!# Clickable Links
+!# ****************
 URxvt.perl-ext-common: default,matcher
 URxvt.urlLauncher: /usr/bin/firefox
 URxvt.matcher.button: 3
 URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 
-# ****************
-# Solarized 
-# ****************
-
-# Common
+!# ****************
+!# Solarized 
+!# ****************
+!# Common
 #define S_yellow        #b58900
 #define S_orange        #cb4b16
 #define S_red           #dc322f
@@ -57,7 +49,7 @@ URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 #define S_green         #859900
 
 
-# Dark
+!# Dark
 #define S_base03        #002b36
 #define S_base02        #073642
 #define S_base01        #586e75
@@ -68,7 +60,7 @@ URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 #define S_base3         #fdf6e3
 
 
-# Light
+!# Light
 ! #define S_base03        #fdf6e3
 ! #define S_base02        #eee8d5
 ! #define S_base01        #93a1a1
@@ -109,36 +101,35 @@ URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 *color14:                 S_base1
 *color15:                 S_base3
 
-#urxvt*background:            #002b36
-#urxvt*foreground:            #839496
-##*fading:                40
-##*fadeColor:             #002b36
-##*cursorColor:           #93a1a1
-##*pointerColorBackground:#586e75
-##*pointerColorForeground:#93a1a1
+!#urxvt*background:            #002b36
+!#urxvt*foreground:            #839496
+!##*fading:                40
+!##*fadeColor:             #002b36
+!##*cursorColor:           #93a1a1
+!##*pointerColorBackground:#586e75
+!##*pointerColorForeground:#93a1a1
 
-##!! red dark/light
-#urxvt*color1: #dc322f
-#urxvt*color9: #cb4b16
+!##!! red dark/light
+!#urxvt*color1: #dc322f
+!#urxvt*color9: #cb4b16
 
-##!! green dark/light
-#urxvt*color2: #859900
-#urxvt*color10: #586e75
+!##!! green dark/light
+!#urxvt*color2: #859900
+!#urxvt*color10: #586e75
 
-##!! yellow dark/light
-#urxvt*color3: #b58900
-#urxvt*color11: #657b83
+!##!! yellow dark/light
+!#urxvt*color3: #b58900
+!#urxvt*color11: #657b83
 
-##!! blue dark/light
-#urxvt*color4: #268bd2
-#urxvt*color12: #839496
+!##!! blue dark/light
+!#urxvt*color4: #268bd2
+!#urxvt*color12: #839496
 
-##!! magenta dark/light
-#urxvt*color5: #d33682
-#urxvt*color13: #6c71c4
+!##!! magenta dark/light
+!#urxvt*color5: #d33682
+!#urxvt*color13: #6c71c4
 
-##!! cyan dark/light
-#urxvt*color6: #2aa198
-#urxvt*color14: #93a1a1
-
+!##!! cyan dark/light
+!#urxvt*color6: #2aa198
+!#urxvt*color14: #93a1a1
 

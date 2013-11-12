@@ -3,6 +3,7 @@
 DOTDIR=$HOME/.dotfiles
 SCRIPTDIR=$DOTDIR/scripts
 ZDIR=$SCRIPTDIR/z
+
 #------------------------------
 # Aliases
 #------------------------------
