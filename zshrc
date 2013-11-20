@@ -12,7 +12,6 @@ ZDIR=$SCRIPTDIR/z
 # Common shorthands
 alias -r l="less"
 alias -r g="git"
-alias -r z="z" # Just written so I remember. Performance hit?
 
 mkcd() {
     mkdir -p "$*"
@@ -25,14 +24,14 @@ alias -r la="ls --color=always -lhA"
 alias -r ll="ls --color=always -lh"
 alias -r lla="ls --color=no -lhA | less"
 
-# Vim
-alias -r vimtoc='vim `cat .toc.txt`'
-alias -r gvimtoc='gvim `cat .toc.txt`'
-
 # Assorted
 alias -r clr="clear"
 alias -r clip="xclip -i -selection clipboard"
 alias -r server="python -m SimpleHTTPServer"
+
+if [ -x /usr/bin/exo-open ]; then
+    alias open="exo-open"
+fi
 
 #------------------------------
 # Settings

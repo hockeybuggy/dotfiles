@@ -22,6 +22,10 @@ alias clr="clear"
 alias clip="xclip -i -selection clipboard"
 alias server="python -m SimpleHTTPServer"
 
+if [ -x /usr/bin/exo-open ]; then
+    alias open="exo-open"
+fi
+
 #------------------------------
 # Settings
 #------------------------------
