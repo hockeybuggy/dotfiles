@@ -1,3 +1,4 @@
+URxvt*loginShell: true
 !# transparency - true or false (default)
 URxvt*transparent: false
 
