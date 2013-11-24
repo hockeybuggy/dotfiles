@@ -3,6 +3,7 @@
 DOTDIR=$HOME/.dotfiles
 SCRIPTDIR=$DOTDIR/scripts
 ZDIR=$SCRIPTDIR/z
+
 #------------------------------
 # Aliases
 #------------------------------
@@ -20,6 +21,10 @@ alias lla='ls -lhA --color=no | less'
 alias clr="clear"
 alias clip="xclip -i -selection clipboard"
 alias server="python -m SimpleHTTPServer"
+
+if [ -x /usr/bin/exo-open ]; then
+    alias open="exo-open"
+fi
 
 #------------------------------
 # Settings

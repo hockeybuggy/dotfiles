@@ -167,14 +167,14 @@ bar {
 }
 
 bar {
-    output            CRT1
+    output            DVI-I-0
     position          bottom
     workspace_buttons yes
     tray_output       none
 }
 
 bar {
-    output            DFP5
+    output            HDMI-0
     status_command    i3status --config ~/.i3/i3status.desktop.conf
     position          bottom
     workspace_buttons yes
