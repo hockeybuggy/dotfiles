@@ -4,7 +4,9 @@
 *.pyo
 *.so
 *.bak
+*.spl
 vim/.netrwhist
 vim/temp
 zsh/.zsh_history
 scripts/z/.z
+scripts/z/.z.*
