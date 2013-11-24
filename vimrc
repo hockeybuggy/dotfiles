@@ -17,6 +17,7 @@ filetype plugin indent on
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ','
+let maplocalleader = ','
 set incsearch
 set nohlsearch
 set hidden                " Allow navigating away from unsaved buffers
@@ -83,6 +84,9 @@ vmap <C-C> "+y
 
 " Toggle between light and dark background
 call togglebg#map("<F3>")
+
+" Latex macro
+autocmd FileType tex :nmap <Leader>ll \ll
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
