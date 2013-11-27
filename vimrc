@@ -18,7 +18,8 @@ filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ','
 let maplocalleader = ','
-set incsearch
+
+set incsearch             " incremental search and no highlight
 set nohlsearch
 set hidden                " Allow navigating away from unsaved buffers
 set number                " Show line numbers
@@ -84,9 +85,6 @@ vmap <C-C> "+y
 
 " Toggle between light and dark background
 call togglebg#map("<F3>")
-
-" Latex macro
-autocmd FileType tex :nmap <Leader>ll \ll
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
