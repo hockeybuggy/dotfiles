@@ -29,6 +29,7 @@ ln -sb $DIR/dircolors.256dark $HOME/.dircolors.256dark
 ln -sb $DIR/Xdefaults $HOME/.Xdefaults
 ln -sb $DIR/Xresources $HOME/.Xresources
 ln -sb $DIR/tmux.conf $HOME/.tmux.conf
+ln -sb $DIR/terminfo/rxvt-unicode-256color $HOME/.terminfo/r/rxvt-unicode-256color
 
 # i3
 ln -sb $DIR/i3 $HOME/.i3
