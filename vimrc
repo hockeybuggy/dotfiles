@@ -29,6 +29,10 @@ set laststatus=2          " Always show the last command
 set showcmd               " Show unfinished commands in the status line
 set mouse=a               " Makes the mouse work in urxvt
 
+" Disable man mode and ex mode. I was finding them not useful
+noremap K <nop>
+noremap Q <nop>
+
 " Invisible characters
 set list
 set listchars=tab:▸\ ,eol:¬
