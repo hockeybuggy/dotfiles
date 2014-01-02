@@ -15,8 +15,13 @@ URxvt*saveLines: 12000
 
 !# Xft: Terminus fonts
 !#  Fedora/debian packages: terminus-fonts/xfonts-terminus
-URxvt*font: xft:terminus:pixelsize=15
-URxvt*boldFont: xft:terminus:bold:pixelsize=15
+!#URxvt*font: xft:terminus:pixelsize=15
+!#URxvt*boldFont: xft:terminus:bold:pixelsize=15
+
+!# Xft: Inconsolata fonts
+!# debian packages: fonts-inconsolata
+URxvt*font:               xft:Inconsolata:style=Semibold:pixelsize=14:antialias=true:hinting=slight
+URxvt*boldFont:           xft:Inconsolata:style=bold:pixelsize=14:antialias=true:hinting=slight
 
 !# scrollbar - true (default) or false
 URxvt*scrollBar: false

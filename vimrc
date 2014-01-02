@@ -18,7 +18,8 @@ filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ','
 let maplocalleader = ','
-set incsearch
+
+set incsearch             " incremental search and no highlight
 set nohlsearch
 set hidden                " Allow navigating away from unsaved buffers
 set number                " Show line numbers
@@ -27,6 +28,10 @@ set wildmode=longest,list
 set laststatus=2          " Always show the last command
 set showcmd               " Show unfinished commands in the status line
 set mouse=a               " Makes the mouse work in urxvt
+
+" Disable man mode and ex mode. I was finding them not useful
+noremap K <nop>
+noremap Q <nop>
 
 " Invisible characters
 set list
@@ -84,9 +89,6 @@ vmap <C-C> "+y
 
 " Toggle between light and dark background
 call togglebg#map("<F3>")
-
-" Latex macro
-autocmd FileType tex :nmap <Leader>ll \ll
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
