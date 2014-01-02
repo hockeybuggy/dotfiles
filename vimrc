@@ -16,18 +16,18 @@ filetype plugin indent on
 " General Preferences
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader = ','
+let mapleader      = ','
 let maplocalleader = ','
 
-set incsearch             " incremental search and no highlight
-set nohlsearch
+set incsearch             " Incremental search
+set nohlsearch            " Don't highlight searches
 set hidden                " Allow navigating away from unsaved buffers
 set number                " Show line numbers
 set history=800           " This may be a bit extreme
-set wildmode=longest,list
+set wildmode=longest,list " List completions
 set laststatus=2          " Always show the last command
 set showcmd               " Show unfinished commands in the status line
-set mouse=a               " Makes the mouse work in urxvt
+set mouse=a               " Makes the mouse work in rxvt
 
 " Disable man mode and ex mode. I was finding them not useful
 noremap K <nop>
@@ -49,6 +49,10 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+
+"Automatic comment continuation on newlines.
+"http://tilvim.com/2013/05/29/comment-prefix.html TODO fix this
+set formatoptions-=or
 
 " Colour scheme
 set background=dark
@@ -111,5 +115,4 @@ if has('statusline')
     set statusline+=%(%l,%c%V%)\ %p%%    " Positional info
     set statusline+=%*\                  " End the status line in style
 endif
-
 
