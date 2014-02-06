@@ -4,6 +4,3 @@
 export EDITOR='vim'
 
 /usr/bin/setxkbmap -option 'ctrl:nocaps'
-
-/usr/bin/xrandr --auto --output HDMI-0 --left-of DVI-I-0
-
