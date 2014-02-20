@@ -17,8 +17,8 @@ Currently there are some dependences to the location of this directory.
 
 For some more minimal systems run these:
 
-    git submodule init
-    git submodule update
+    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+    vim +BundleInstall +qall
 
     cd ~
     ln -s ~/.dotfiles/bash_profile .bash_profile
