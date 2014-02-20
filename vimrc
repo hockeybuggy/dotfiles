@@ -4,7 +4,7 @@
 
 set nocompatible    " Pffft... vi... Please...
 
-if filereadable(expand(""))
+if filereadable(expand("~/.vim/vimrc.bundle"))
     source ~/.vim/vimrc.bundle
 endif
 
