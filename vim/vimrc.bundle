@@ -11,10 +11,11 @@ Bundle 'altercation/vim-colors-solarized'
 
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-fugitive'
 
 Bundle 'nelstrom/vim-visual-star-search'
 
-Bundle 'LaTex-Box-Team/LaTeX-Box'
+Bundle 'vim-scripts/LaTeX-Box'
 
 syntax on
 filetype plugin indent on
