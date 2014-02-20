@@ -2,19 +2,15 @@
 " The vimrc of Douglas James Anderson
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible        " Pffft... vi... Please...
-filetype off            " Turning filetype detection apparently speeds up pathogen
+set nocompatible    " Pffft... vi... Please...
 
-call pathogen#infect()
-call pathogen#helptags()
-
-syntax on
-filetype plugin indent on
+if filereadable(expand(""))
+    source ~/.vim/vimrc.bundle
+endif
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " General Preferences
-
 """"""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader      = ','
 let maplocalleader = ','
@@ -90,9 +86,6 @@ map <leader>et :tabe %%
 " External copy paste
 nmap <C-P> "+gp
 vmap <C-C> "+y
-
-" Toggle between light and dark background
-call togglebg#map("<F3>")
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line

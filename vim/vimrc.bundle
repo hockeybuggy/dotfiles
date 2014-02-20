@@ -1,0 +1,20 @@
+" This file holds bundles for vundle
+
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+
+Bundle 'altercation/vim-colors-solarized'
+
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'tpope/vim-unimpaired'
+
+Bundle 'nelstrom/vim-visual-star-search'
+
+Bundle 'LaTex-Box-Team/LaTeX-Box'
+
+syntax on
+filetype plugin indent on
