@@ -2,10 +2,13 @@
 
 DIR="$HOME/.dotfiles"
 
-echo "\nGrabing submodules...\n"
+echo "\nGrabing Vundle\n"
 
-git submodule init
-git submodule update
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+
+echo "\nInstalling Bundles\n"
+
+vim +BundleInstall +qall
 
 echo "\nLinking dotfiles...\n"
 
