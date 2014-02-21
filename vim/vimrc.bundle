@@ -12,10 +12,10 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-fugitive'
-
+Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'nelstrom/vim-visual-star-search'
 
-Bundle 'vim-scripts/LaTeX-Box'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
 
 syntax on
 filetype plugin indent on
