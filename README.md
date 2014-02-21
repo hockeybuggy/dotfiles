@@ -28,3 +28,4 @@ For some more minimal systems run these:
     ln -s ~/.dotfiles/vim .vim
     ln -s ~/.dotfiles/gitconfig .gitconfig
 
+

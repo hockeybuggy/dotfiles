@@ -66,7 +66,7 @@ if has('persistent_undo')
     set undolevels=1000
     set undoreload=10000
 endif
- 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -82,6 +82,11 @@ map <leader>ew :e %%
 map <leader>es :sp %%
 map <leader>ev :vsp %%
 map <leader>et :tabe %%
+
+" Make splitting into an open buffer 2+ lowercase keystokes rather than 5+ of
+" alternating upper and lower case.
+map <leader>- :sp<bar>b
+map <leader>\ :vsp<bar>b
 
 " External copy paste
 nmap <C-P> "+gp
