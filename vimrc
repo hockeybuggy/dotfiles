@@ -51,11 +51,13 @@ set expandtab
 set formatoptions-=or
 
 " Colour scheme
-set background=dark
-colorscheme solarized
-let g:solarized_termcolors = 256
-let g:solarized_termtrans = 1
-let g:solarized_visibility = "high"
+if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colours/solarized.vim"))
+    set background=dark
+    colorscheme solarized
+    let g:solarized_termcolors = 256
+    let g:solarized_termtrans = 1
+    let g:solarized_visibility = "high"
+endif
 
 " Disable swap files. Enables backups. Enable undo
 set noswapfile
