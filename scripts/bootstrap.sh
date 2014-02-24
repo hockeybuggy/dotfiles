@@ -13,30 +13,39 @@ vim +BundleInstall +qall
 echo "\nLinking dotfiles...\n"
 
 # Shells
-ln -sb $DIR/bashrc $HOME/.bashrc
-ln -sb $DIR/bash_profile $HOME/.bash_profile
-ln -sb $DIR/zshrc $HOME/.zshrc
-ln -sb $DIR/zlogin $HOME/.zlogin
-ln -sb $DIR/zsh $HOME/.zsh
+ln -s $DIR/bashrc $HOME/.bashrc
+ln -s $DIR/bash_profile $HOME/.bash_profile
+ln -s $DIR/zshrc $HOME/.zshrc
+ln -s $DIR/zlogin $HOME/.zlogin
+if [ -d "$HOME/.zsh" ]; then
+    mv $HOME/.zsh $HOME/.zsh.bak
+fi
+ln -s $DIR/zsh $HOME/.zsh
 
 # Vim
-ln -sb $DIR/vimrc $HOME/.vimrc
-ln -sb $DIR/gvimrc $HOME/.gvimrc
-ln -sb $DIR/vim $HOME/.vim
+ln -s $DIR/vimrc $HOME/.vimrc
+ln -s $DIR/gvimrc $HOME/.gvimrc
+if [ -d "$HOME/.vim" ]; then
+    mv $HOME/.vim $HOME/.vim.bak
+fi
+ln -s $DIR/vim $HOME/.vim
 
 # Git
-ln -sb $DIR/gitconfig $HOME/.gitconfig
+ln -s $DIR/gitconfig $HOME/.gitconfig
 
 # Terminals
-ln -sb $DIR/dircolors.256dark $HOME/.dircolors.256dark
-ln -sb $DIR/Xdefaults $HOME/.Xdefaults
-ln -sb $DIR/Xresources $HOME/.Xresources
-ln -sb $DIR/tmux.conf $HOME/.tmux.conf
+ln -s $DIR/dircolors.256dark $HOME/.dircolors.256dark
+ln -s $DIR/Xdefaults $HOME/.Xdefaults
+ln -s $DIR/Xresources $HOME/.Xresources
+ln -s $DIR/tmux.conf $HOME/.tmux.conf
 
 mkdir -p $HOME/.terminfo/r
-ln -sb $DIR/terminfo/rxvt-unicode-256color $HOME/.terminfo/r/rxvt-unicode-256color
+ln -s $DIR/terminfo/rxvt-unicode-256color $HOME/.terminfo/r/rxvt-unicode-256color
 
 # i3
-ln -sb $DIR/i3 $HOME/.i3
+if [ -d "$HOME/.i3" ]; then
+    mv $HOME/.i3 $HOME/.i3.bak
+fi
+ln -s $DIR/i3 $HOME/.i3
 
 echo "Done"
