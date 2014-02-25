@@ -51,12 +51,14 @@ set expandtab
 set formatoptions-=or
 
 " Colour scheme
-if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colours/solarized.vim"))
+if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
     set background=dark
     colorscheme solarized
     let g:solarized_termcolors = 256
     let g:solarized_termtrans = 1
     let g:solarized_visibility = "high"
+else
+    colorscheme desert
 endif
 
 " Disable swap files. Enables backups. Enable undo
@@ -104,9 +106,11 @@ if has('statusline')
     set statusline+=%#Special#
     set statusline+=[%f]                 " File name
     set statusline+=%*                   " Reset colour
+if filereadable(expand("~/.vim/bundle/vim-fugitive/plugin/fugitive.vim"))
     set statusline+=\ %#Identifier#
     set statusline+=[%{fugitive#head()}] " Branch name
     set statusline+=%*                   " Reset colour
+endif
     set statusline+=\ %#Statement#
     set statusline+=[%Y]                 " File type
     set statusline+=%*                   " Reset colour
