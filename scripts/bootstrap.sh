@@ -2,16 +2,15 @@
 
 DIR="$HOME/.dotfiles"
 
-echo "\nGrabing Vundle\n"
-
-git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+if [ ! -d "$HOME/.vim/bundle/vundle" ]; then
+    echo "\nGrabing Vundle\n"
+    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+fi
 
 echo "\nInstalling Bundles\n"
-
 vim +BundleInstall +qall
 
 echo "\nLinking dotfiles...\n"
-
 # Shells
 ln -sf $DIR/bashrc $HOME/.bashrc
 ln -sf $DIR/bash_profile $HOME/.bash_profile
@@ -20,7 +19,7 @@ ln -sf $DIR/zlogin $HOME/.zlogin
 if [ -d "$HOME/.zsh" ]; then
     mv $HOME/.zsh $HOME/.zsh.bak
 fi
-ln -sf $DIR/zsh $HOME/.zsh
+ln -s $DIR/zsh $HOME/.zsh
 
 # Vim
 ln -sf $DIR/vimrc $HOME/.vimrc
@@ -28,7 +27,7 @@ ln -sf $DIR/gvimrc $HOME/.gvimrc
 if [ -d "$HOME/.vim" ]; then
     mv $HOME/.vim $HOME/.vim.bak
 fi
-ln -sf $DIR/vim $HOME/.vim
+ln -s $DIR/vim $HOME/.vim
 
 # Git
 ln -sf $DIR/gitconfig $HOME/.gitconfig
@@ -46,6 +45,6 @@ ln -sf $DIR/terminfo/rxvt-unicode-256color $HOME/.terminfo/r/rxvt-unicode-256col
 if [ -d "$HOME/.i3" ]; then
     mv $HOME/.i3 $HOME/.i3.bak
 fi
-ln -sf $DIR/i3 $HOME/.i3
+ln -s $DIR/i3 $HOME/.i3
 
 echo "Done"
