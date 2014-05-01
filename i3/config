@@ -2,7 +2,8 @@
 set $mod Mod4
 
 # font for window titles. ISO 10646 = Unicode
-font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+#font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font pango:DejaVu Sans Mono 16
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -158,6 +159,13 @@ bindsym $mod+r mode "resize"
 #bar {
     #status_command    i3status
 #}
+
+bar {
+    output            eDP1
+    status_command    i3status
+    position          bottom
+    workspace_buttons yes
+}
 
 bar {
     output            LVDS
