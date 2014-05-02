@@ -2,6 +2,20 @@
 
 This repository is for managing my configuration.
 
+## Dependencies
+
+#### Minimum:
+
+1. vim  - 7.4
+2. bash - (whatever is installed)
+3. git  - 1.9
+
+#### Ideal:
+
+1. tmux - 1.9
+2. zsh  - 5.0
+3. urxvt
+
 ### 1.Clone this repo
 
 Currently there are some dependences to the location of this directory.
