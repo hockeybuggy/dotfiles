@@ -38,13 +38,21 @@ URxvt*scrollBar: false
 !# Trying to set urgancy hint
 URxvt*urgentOnBell: true
 
+URxvt.perl-ext-common: default,clipboard,matcher
+
 !# ****************
 !# Clickable Links
 !# ****************
-URxvt.perl-ext-common: default,matcher
 URxvt.urlLauncher: /usr/bin/firefox
 URxvt.matcher.button: 3
 URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+
+!# ****************
+!# Copy-paste
+!# ****************
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.keysym.Shift-Control-P: perl:clipboard:copy
+
 
 !# ****************
 !# Solarized
