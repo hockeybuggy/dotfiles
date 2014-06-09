@@ -87,8 +87,10 @@ map <leader>es :sp %%
 map <leader>ev :vsp %%
 map <leader>et :tabe %%
 
-" Make splitting into an open buffer 2+ lowercase keystokes rather than 5+ of
-" alternating upper and lower case.
+" list current buffers
+map <leader>l :ls
+
+" Open a new split from an open buffer
 map <leader>- :sp<bar>b
 map <leader>\ :vsp<bar>b
 
@@ -106,11 +108,11 @@ if has('statusline')
     set statusline+=%#Special#
     set statusline+=[%f]                 " File name
     set statusline+=%*                   " Reset colour
-if filereadable(expand("~/.vim/bundle/vim-fugitive/plugin/fugitive.vim"))
-    set statusline+=\ %#Identifier#
-    set statusline+=[%{fugitive#head()}] " Branch name
-    set statusline+=%*                   " Reset colour
-endif
+    if filereadable(expand("~/.vim/bundle/vim-fugitive/plugin/fugitive.vim"))
+        set statusline+=\ %#Identifier#
+        set statusline+=[%{fugitive#head()}] " Branch name
+        set statusline+=%*                   " Reset colour
+    endif
     set statusline+=\ %#Statement#
     set statusline+=[%Y]                 " File type
     set statusline+=%*                   " Reset colour

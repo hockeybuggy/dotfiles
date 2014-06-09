@@ -30,13 +30,15 @@ alias -r clip="xclip -i -selection clipboard"
 alias -r server="python -m SimpleHTTPServer"
 
 if [ -x /usr/bin/exo-open ]; then
-    alias open="exo-open"
+    alias open="exo-open" # Conditional open alias
 fi
 
 #------------------------------
 # Settings
 #------------------------------
-eval `dircolors $DOTDIR/dircolors.256dark` 
+
+# Style
+eval `dircolors $DOTDIR/dircolors.256dark`
 
 source $ZSHDIR/git-prompt/zshrc.sh
 autoload -U colors && colors
@@ -45,6 +47,7 @@ compinit
 promptinit
 setopt correct
 
+# History
 HISTFILE=$ZSHDIR/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -60,7 +63,7 @@ setopt share_history # share command history data
 #------------------------------
 # Program Specific
 #------------------------------
-# z : a file jumper based on Frecency 
+# z : a file jumper based on Frecency
 export _Z_DATA="$ZDIR/.z"
 source $ZDIR/z.sh
 
