@@ -88,7 +88,7 @@ map <leader>ev :vsp %%
 map <leader>et :tabe %%
 
 " list current buffers
-map <leader>l :ls
+map <leader>l :ls<CR>
 
 " Open a new split from an open buffer
 map <leader>- :sp<bar>b
