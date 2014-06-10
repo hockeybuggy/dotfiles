@@ -7,15 +7,21 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
+" Style
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'ap/vim-css-color'
 
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'tpope/vim-unimpaired'
+" Language
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-markdown'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Bundle 'andersoncustodio/vim-tmux'
+
+" Utility
 Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'nelstrom/vim-visual-star-search'
-
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'tpope/vim-unimpaired'
 
 syntax on
 filetype plugin indent on
