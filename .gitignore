@@ -10,3 +10,4 @@ vim/temp
 zsh/.zsh_history
 scripts/z/.z
 scripts/z/.z.*
+vim/bundle
