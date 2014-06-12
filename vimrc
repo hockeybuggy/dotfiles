@@ -31,7 +31,7 @@ noremap Q <nop>
 
 " Invisible characters
 set list
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬,trail:¤
 
 " Set Spelling. Proud of my Canadian heritage.
 setlocal spell spelllang=en_ca
