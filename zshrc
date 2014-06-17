@@ -9,6 +9,11 @@ ZDIR=$SCRIPTDIR/z
 #------------------------------
 # Aliases
 #------------------------------
+# Directory Climbing
+alias -r ..="cd .."
+alias -r ...="cd ../.."
+alias -r ....="cd ../../.."
+
 # Common shorthands
 alias -r l="less"
 alias -r g="git"
