@@ -8,7 +8,6 @@ if filereadable(expand("~/.vim/vimrc.bundle"))
     source ~/.vim/vimrc.bundle
 endif
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " General Preferences
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -89,7 +88,7 @@ map <leader>et :tabe %%
 
 " -----  Shortcuts -----
 " list current buffers
-map <leader>l :ls<CR> 
+map <leader>l :ls<CR>
 
 " Open a new split from an open buffer
 map <leader>b :b
@@ -103,24 +102,39 @@ vmap <C-C> "+y
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
 """"""""""""""""""""""""""""""""""""""""""""""""""
-if has('statusline')
-    set statusline=                      " Useful if re-source-ing
-    set statusline+=%w%h%m%r             " Flags
-    set statusline+=%=                   " Right align
-    set statusline+=%#Special#
-    set statusline+=[%f]                 " File name
-    set statusline+=%*                   " Reset colour
-    if filereadable(expand("~/.vim/bundle/vim-fugitive/plugin/fugitive.vim"))
-        set statusline+=\ %#Identifier#
-        set statusline+=[%{fugitive#head()}] " Branch name
-        set statusline+=%*                   " Reset colour
-    endif
-    set statusline+=\ %#Statement#
-    set statusline+=[%Y]                 " File type
-    set statusline+=%*                   " Reset colour
-    set statusline+=\ %#Constant#
-    set statusline+=b:%n\                " Buffer number
-    set statusline+=%(%l,%c%V%)\ %p%%    " Positional info
-    set statusline+=%*\                  " End the status line in style
+" Airline
+set noshowmode " Hide the default mode display
+let g:airline_theme="solarized"
+"let g:airline_powerline_fonts=1
+
+" Speeds the timeout for the status line
+if ! has('gui_running')
+    set ttimeoutlen=10
+    augroup FastEscape
+        autocmd!
+        au InsertEnter * set timeoutlen=0
+        au InsertLeave * set timeoutlen=1000
+    augroup END
 endif
+
+"if has('statusline')
+    "set statusline=                      " Useful if re-source-ing
+    "set statusline+=%w%h%m%r             " Flags
+    "set statusline+=%=                   " Right align
+    "set statusline+=%#Special#
+    "set statusline+=[%f]                 " File name
+    "set statusline+=%*                   " Reset colour
+    "if filereadable(expand("~/.vim/bundle/vim-fugitive/plugin/fugitive.vim"))
+        "set statusline+=\ %#Identifier#
+        "set statusline+=[%{fugitive#head()}] " Branch name
+        "set statusline+=%*                   " Reset colour
+    "endif
+    "set statusline+=\ %#Statement#
+    "set statusline+=[%Y]                 " File type
+    "set statusline+=%*                   " Reset colour
+    "set statusline+=\ %#Constant#
+    "set statusline+=b:%n\                " Buffer number
+    "set statusline+=%(%l,%c%V%)\ %p%%    " Positional info
+    "set statusline+=%*\                  " End the status line in style
+"endif
 
