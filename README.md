@@ -15,6 +15,7 @@ This repository is for managing my configuration.
 1. tmux - 1.9
 2. zsh  - 5.0
 3. urxvt
+4. inconsolata font
 
 ## Installation
 
