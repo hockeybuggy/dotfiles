@@ -29,10 +29,15 @@ alias -r la="ls --color=always -lhA"
 alias -r ll="ls --color=always -lh"
 alias -r lla="ls --color=no -lhA | less"
 
+# Piping
+alias -g L="| less"
+alias -g DN="> /dev/null"
+
 # Assorted
 alias -r clr="clear"
 alias -r clip="xclip -i -selection clipboard"
 alias -r server="python -m SimpleHTTPServer"
+
 
 if [ -x /usr/bin/exo-open ]; then
     alias open="exo-open" # Conditional open alias
