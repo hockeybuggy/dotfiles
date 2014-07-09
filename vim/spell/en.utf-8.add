@@ -23,7 +23,7 @@ pacman
 teleport
 online
 symlinks
-Frecency
+frecency
 ArcMap
 inline
 Emirati
@@ -37,9 +37,9 @@ subclassing
 app
 linting
 precommit
-Geospatial
+geospatial
 nginx
-Rasterizing
+rasterizing
 interpolator
 colourable
 preprocess
@@ -62,6 +62,7 @@ CSS
 Github
 soya
 biome
+biomes
 intertidal
 fuelwood
 towards
@@ -69,3 +70,4 @@ defacto
 Torvalds
 libre
 recreationally
+benthic
