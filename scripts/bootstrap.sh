@@ -47,4 +47,6 @@ if [ -d "$HOME/.i3" ]; then
 fi
 ln -s $DIR/i3 $HOME/.i3
 
+ln -s $DIR/bin $HOME/.bin
+
 echo "Done"

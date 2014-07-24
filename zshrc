@@ -6,6 +6,8 @@ DOTDIR=$HOME/.dotfiles
 SCRIPTDIR=$DOTDIR/scripts
 ZDIR=$SCRIPTDIR/z
 
+export PATH="$HOME/.bin:$PATH"
+
 #------------------------------
 # Aliases
 #------------------------------
@@ -17,11 +19,6 @@ alias -r ....="cd ../../.."
 # Common shorthands
 alias -r l="less"
 alias -r g="git"
-
-mkcd() {
-    mkdir -p "$*"
-    cd "$*"
-}
 
 # LS aliases
 alias -r ls="ls --color=always -lh"
@@ -37,7 +34,12 @@ alias -g DN="> /dev/null"
 alias -r clr="clear"
 alias -r clip="xclip -i -selection clipboard"
 alias -r server="python -m SimpleHTTPServer"
+alias -r tlf="tail -f"
 
+mkcd() {
+    mkdir -p "$*"
+    cd "$*"
+}
 
 if [ -x /usr/bin/exo-open ]; then
     alias open="exo-open" # Conditional open alias
