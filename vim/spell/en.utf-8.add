@@ -32,6 +32,7 @@ practice
 toolbar
 checkbox
 URLs
+url
 choropleth
 subclassing
 app
@@ -76,7 +77,11 @@ Silviculture
 sustainably
 microbloging
 emoticon
-hashtag
-url
+Hashtag
+Hashtags
 OCTOTHORPE
+octothorpe
 overfit
+hillclimbing
+CamelCase
+tokenization
