@@ -22,7 +22,7 @@ set history=800           " This may be a bit extreme
 set wildmode=longest,list " List completions
 set laststatus=2          " Always show the last command
 set showcmd               " Show unfinished commands in the status line
-set mouse=a               " Makes the mouse work in rxvt
+set mouse=""              " I don't really like the mouse much...
 
 " Disable man mode and ex mode. I was finding them not useful
 noremap K <nop>

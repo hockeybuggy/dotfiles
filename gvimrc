@@ -3,5 +3,7 @@ set guioptions-=T
 set guioptions-=m
 set guioptions+=c
 
-set guifont=terminus
+set guifont=inconsolata\ Bold\ 14
+
+set background=light
 
