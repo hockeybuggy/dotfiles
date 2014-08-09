@@ -4,9 +4,16 @@ DOTDIR=$HOME/.dotfiles
 SCRIPTDIR=$DOTDIR/scripts
 ZDIR=$SCRIPTDIR/z
 
+export PATH="$HOME/.bin:$PATH"
+
 #------------------------------
 # Aliases
 #------------------------------
+# Directory Climbing
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
 # Common shorthands
 alias  l="less"
 alias  g="git"
@@ -21,6 +28,12 @@ alias lla='ls -lhA --color=no | less'
 alias clr="clear"
 alias clip="xclip -i -selection clipboard"
 alias server="python -m SimpleHTTPServer"
+alias tlf="tail -f"
+
+mkcd() {
+    mkdir -p "$*"
+    cd "$*"
+}
 
 if [ -x /usr/bin/exo-open ]; then
     alias open="exo-open"
@@ -51,17 +64,17 @@ fi
 #------------------------------
 # Program specific
 #------------------------------
-# z : a file jumper based on Frecency 
+# z : a file jumper based on Frecency
 export _Z_DATA="$ZDIR/.z"
 source $ZDIR/z.sh
 
 ### Added by the Heroku Toolbelt
 PATH="$PATH:/usr/local/heroku/bin"
 
-### Added by RVM 
+### Added by RVM
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #------------------------------
-# Prompt 
+# Prompt
 #------------------------------
 case "$TERM" in
     xterm-color|rxvt-unicode-256color)
