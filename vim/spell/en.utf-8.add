@@ -85,3 +85,5 @@ overfit
 hillclimbing
 CamelCase
 tokenization
+stopword
+emoticons
