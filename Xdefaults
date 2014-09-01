@@ -1,14 +1,11 @@
-# 1 "Xdefaults.bak"
-# 1 "<command-line>"
-# 1 "/usr/include/stdc-predef.h" 1 3 4
-# 1 "<command-line>" 2
-# 1 "Xdefaults.bak"
+
 URxvt*loginShell: true
+
 !# transparency - true or false (default)
 URxvt*transparent: false
 
 !# shading - 0 to 99 darkens, 101 to 200 lightens.
-URxvt*shading: 40
+!#URxvt*shading: 40
 
 !# scrollback buffer lines - 65535 is max on most machines (64 is default)
 URxvt*saveLines: 12000
@@ -62,14 +59,14 @@ URxvt.keysym.Shift-Control-P: perl:clipboard:copy
 !# Dark
 # 69 "Xdefaults.bak"
 !# Light
-! #define #002b36 #fdf6e3
-! #define #073642 #eee8d5
-! #define #586e75 #93a1a1
-! #define #657b83 #839496
-! #define #839496 #657b83
-! #define #93a1a1 #586e75
-! #define #eee8d5 #073642
-! #define #fdf6e3 #002b36
+!#define #002b36 #fdf6e3
+!#define #073642 #eee8d5
+!#define #586e75 #93a1a1
+!#define #657b83 #839496
+!#define #839496 #657b83
+!#define #93a1a1 #586e75
+!#define #eee8d5 #073642
+!#define #fdf6e3 #002b36
 
 
 ! To only apply colors to your terminal, for example, prefix
@@ -79,8 +76,6 @@ URxvt.keysym.Shift-Control-P: perl:clipboard:copy
 
 *background: #002b36
 *foreground: #839496
-*fading: 40
-*fadeColor: #002b36
 *cursorColor: #93a1a1
 *pointerColorBackground: #586e75
 *pointerColorForeground: #93a1a1
@@ -102,34 +97,3 @@ URxvt.keysym.Shift-Control-P: perl:clipboard:copy
 *color14: #93a1a1
 *color15: #fdf6e3
 
-!#urxvt*background: #002b36
-!#urxvt*foreground: #839496
-!##*fading: 40
-!##*fadeColor: #002b36
-!##*cursorColor: #93a1a1
-!##*pointerColorBackground:#586e75
-!##*pointerColorForeground:#93a1a1
-
-!##!! red dark/light
-!#urxvt*color1: #dc322f
-!#urxvt*color9: #cb4b16
-
-!##!! green dark/light
-!#urxvt*color2: #859900
-!#urxvt*color10: #586e75
-
-!##!! yellow dark/light
-!#urxvt*color3: #b58900
-!#urxvt*color11: #657b83
-
-!##!! blue dark/light
-!#urxvt*color4: #268bd2
-!#urxvt*color12: #839496
-
-!##!! magenta dark/light
-!#urxvt*color5: #d33682
-!#urxvt*color13: #6c71c4
-
-!##!! cyan dark/light
-!#urxvt*color6: #2aa198
-!#urxvt*color14: #93a1a1
