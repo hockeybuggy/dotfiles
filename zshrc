@@ -120,6 +120,8 @@ setprompt () {
 }
 setprompt
 
+bindkey -s "^T" "^[Isudo ^[A" # "T" for "toughguy". credit -> thoughtbot
+
 # Get Special keys working {{{2
 
 # create a zkbd compatible hash;
