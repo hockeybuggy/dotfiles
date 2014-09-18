@@ -19,6 +19,10 @@ Bundle 'tpope/vim-markdown'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'andersoncustodio/vim-tmux'
 
+runtime macros/matchit.vim
+Bundle 'kana/vim-textobj-user'
+Bundle 'nelstrom/vim-textobj-rubyblock'
+
 " Utility
 Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'nelstrom/vim-visual-star-search'
