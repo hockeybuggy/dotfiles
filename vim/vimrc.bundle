@@ -1,4 +1,4 @@
-" This file holds bundles for vundle
+" This file holds bundles for Vundle
 
 filetype off
 
@@ -21,7 +21,11 @@ Bundle 'andersoncustodio/vim-tmux'
 
 runtime macros/matchit.vim
 Bundle 'kana/vim-textobj-user'
+Bundle 'kana/vim-textobj-line'
+Bundle 'kana/vim-textobj-entire'
 Bundle 'nelstrom/vim-textobj-rubyblock'
+Bundle 'lucapette/vim-textobj-underscore'
+
 
 " Utility
 Bundle 'christoomey/vim-tmux-navigator'
