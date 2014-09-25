@@ -45,9 +45,8 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
-"Automatic comment continuation on newlines.
-"http://tilvim.com/2013/05/29/comment-prefix.html TODO fix this
-set formatoptions-=or
+" Turn off automatic comment continuation on newlines.
+autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 
 " Colour scheme
 if has("gui_running")
