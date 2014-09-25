@@ -17,8 +17,10 @@ alias -r ...="cd ../.."
 alias -r ....="cd ../../.."
 
 # Common shorthands
+alias -r v="vim"
 alias -r l="less"
 alias -r g="git"
+alias -r t="tmux"
 
 # LS aliases
 alias -r ls="ls --color=always -lh"
