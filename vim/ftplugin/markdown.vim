@@ -1,1 +1,1 @@
-setlocal wrap linebreak
+setlocal wrap linebreak nolist
