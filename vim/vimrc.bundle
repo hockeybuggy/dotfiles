@@ -32,6 +32,7 @@ Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'nelstrom/vim-visual-star-search'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-surround'
 
 syntax on
 filetype plugin indent on
