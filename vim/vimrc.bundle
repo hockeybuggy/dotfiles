@@ -22,6 +22,7 @@ Bundle 'andersoncustodio/vim-tmux'
 runtime macros/matchit.vim
 Bundle 'kana/vim-textobj-user'
 Bundle 'kana/vim-textobj-line'
+Bundle 'kana/vim-textobj-indent'
 Bundle 'kana/vim-textobj-entire'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'lucapette/vim-textobj-underscore'
