@@ -34,7 +34,6 @@ alias -g DN="> /dev/null"
 
 # Assorted
 alias -r clr="clear"
-alias -r clip="xclip -i -selection clipboard"
 alias -r server="python -m SimpleHTTPServer"
 alias -r tlf="tail -f"
 

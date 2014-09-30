@@ -85,7 +85,7 @@ nnoremap <C-j> <C-W>j
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
-" current file directory expand (http://vimcasts.org/episodes/the-edit-command/)
+" Current file directory expand (http://vimcasts.org/episodes/the-edit-command/)
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 map <leader>ew :e %%
 map <leader>es :sp %%
@@ -93,7 +93,7 @@ map <leader>ev :vsp %%
 map <leader>et :tabe %%
 
 " -----  Shortcuts -----
-" list current buffers
+" List current buffers
 map <leader>l :ls<CR>
 
 " Open a new split from an open buffer
@@ -122,25 +122,4 @@ if ! has('gui_running')
         au InsertLeave * set timeoutlen=1000
     augroup END
 endif
-
-"if has('statusline')
-    "set statusline=                      " Useful if re-source-ing
-    "set statusline+=%w%h%m%r             " Flags
-    "set statusline+=%=                   " Right align
-    "set statusline+=%#Special#
-    "set statusline+=[%f]                 " File name
-    "set statusline+=%*                   " Reset colour
-    "if filereadable(expand("~/.vim/bundle/vim-fugitive/plugin/fugitive.vim"))
-        "set statusline+=\ %#Identifier#
-        "set statusline+=[%{fugitive#head()}] " Branch name
-        "set statusline+=%*                   " Reset colour
-    "endif
-    "set statusline+=\ %#Statement#
-    "set statusline+=[%Y]                 " File type
-    "set statusline+=%*                   " Reset colour
-    "set statusline+=\ %#Constant#
-    "set statusline+=b:%n\                " Buffer number
-    "set statusline+=%(%l,%c%V%)\ %p%%    " Positional info
-    "set statusline+=%*\                  " End the status line in style
-"endif
 
