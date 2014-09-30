@@ -1,0 +1,5 @@
+#!/bin/sh
+# copys the piped text to the clipboard
+
+xclip -i -selection clipboard $*
+

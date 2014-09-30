@@ -1,0 +1,8 @@
+#!/bin/sh
+# open vim to temporary file
+TMP_FILE=`mktemp /tmp/scratch.XXXXX.md`
+
+vim $TMP_FILE
+clip $TMP_FILE
+echo 'Tempfile copied to clipboard. done.'
+

@@ -34,6 +34,7 @@ alias -g DN="> /dev/null"
 
 # Assorted
 alias -r clr="clear"
+alias -r scr="scratch"
 alias -r server="python -m SimpleHTTPServer"
 alias -r tlf="tail -f"
 
