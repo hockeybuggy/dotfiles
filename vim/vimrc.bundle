@@ -27,7 +27,6 @@ Bundle 'kana/vim-textobj-entire'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'lucapette/vim-textobj-underscore'
 
-
 " Utility
 Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'nelstrom/vim-visual-star-search'
