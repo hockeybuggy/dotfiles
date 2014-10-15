@@ -5,6 +5,7 @@
 *.so
 *.bak
 *.spl
+*.lock
 vim/.netrwhist
 vim/temp
 zsh/.zsh_history
