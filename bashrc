@@ -15,8 +15,10 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 
 # Common shorthands
-alias  l="less"
-alias  g="git"
+alias v="vim"
+alias l="less"
+alias g="git"
+alias t="tmux"
 
 # LS aliases
 alias ls='ls -lh --color=always'
@@ -26,7 +28,7 @@ alias lla='ls -lhA --color=no | less'
 
 # Assorted
 alias clr="clear"
-alias clip="xclip -i -selection clipboard"
+alias scr="scratch"
 alias server="python -m SimpleHTTPServer"
 alias tlf="tail -f"
 
