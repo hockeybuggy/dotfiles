@@ -29,6 +29,7 @@
 # Push-Pull aliases
 	po  = push origin
 	pom  = push origin master
+	phm  = push heroku master
 	pl  = pull
 	plo  = pull origin
 	plom  = pull origin master
