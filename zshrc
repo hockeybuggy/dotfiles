@@ -23,9 +23,15 @@ alias -r g="git"
 alias -r t="tmux"
 
 # LS aliases
-alias -r ls="ls -lh"
-alias -r la="ls -lhA"
-alias -r ll="ls -lh"
+if [ "$(uname)" = "Darwin" ]; then
+    alias -r ls="ls -lhG"
+    alias -r la="ls -lhAG"
+    alias -r ll="ls -lhG"
+else
+    alias -r ls="ls -lh --color=allways"
+    alias -r la="ls -lhA --color=allways"
+    alias -r ll="ls -lh --color=allways"
+fi
 alias -r lla="ls -lhA | less"
 
 # Piping
