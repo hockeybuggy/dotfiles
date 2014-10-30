@@ -23,10 +23,10 @@ alias -r g="git"
 alias -r t="tmux"
 
 # LS aliases
-alias -r ls="ls --color=always -lh"
-alias -r la="ls --color=always -lhA"
-alias -r ll="ls --color=always -lh"
-alias -r lla="ls --color=no -lhA | less"
+alias -r ls="ls -lh"
+alias -r la="ls -lhA"
+alias -r ll="ls -lh"
+alias -r lla="ls -lhA | less"
 
 # Piping
 alias -g L="| less"
@@ -52,7 +52,9 @@ fi
 #------------------------------
 
 # Style
-eval `dircolors $DOTDIR/dircolors.256dark`
+if [ "$(uname)" != "Darwin" ]; then
+    eval `dircolors $DOTDIR/dircolors.256dark`
+fi
 
 source $ZSHDIR/git-prompt/zshrc.sh
 autoload -U colors && colors

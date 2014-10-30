@@ -21,10 +21,10 @@ alias g="git"
 alias t="tmux"
 
 # LS aliases
-alias ls='ls -lh --color=always'
-alias ll='ls -lh --color=always'
-alias la='ls -lhA --color=always'
-alias lla='ls -lhA --color=no | less'
+alias ls="ls -lh"
+alias ll="ls -lh"
+alias la="ls -lhA"
+alias lla="ls -lhA"
 
 # Assorted
 alias clr="clear"
