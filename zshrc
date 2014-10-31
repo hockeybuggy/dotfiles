@@ -23,10 +23,16 @@ alias -r g="git"
 alias -r t="tmux"
 
 # LS aliases
-alias -r ls="ls --color=always -lh"
-alias -r la="ls --color=always -lhA"
-alias -r ll="ls --color=always -lh"
-alias -r lla="ls --color=no -lhA | less"
+if [ "$(uname)" = "Darwin" ]; then
+    alias -r ls="ls -lhG"
+    alias -r la="ls -lhAG"
+    alias -r ll="ls -lhG"
+else
+    alias -r ls="ls -lh --color=allways"
+    alias -r la="ls -lhA --color=allways"
+    alias -r ll="ls -lh --color=allways"
+fi
+alias -r lla="ls -lhA | less"
 
 # Piping
 alias -g L="| less"
@@ -52,7 +58,9 @@ fi
 #------------------------------
 
 # Style
-eval `dircolors $DOTDIR/dircolors.256dark`
+if [ "$(uname)" != "Darwin" ]; then
+    eval `dircolors $DOTDIR/dircolors.256dark`
+fi
 
 source $ZSHDIR/git-prompt/zshrc.sh
 autoload -U colors && colors
@@ -117,7 +125,7 @@ setprompt () {
     fi
 
     # set the prompt
-    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]\ $(git_super_status) %~  \n${PR_USER_OP} '
+    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}]\ $(git_super_status) ${PR_CYAN}%~${PR_NO_COLOR}  \n${PR_USER_OP} '
     PS2=$'%_>'
 }
 setprompt

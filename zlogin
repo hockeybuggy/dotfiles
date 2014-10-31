@@ -11,5 +11,7 @@ export EDITOR='vim'
 export TERMINAL="urxvt"
 export WORKON_HOME="$HOME/devel/envs"
 
-# Turn off the stupid caps lock key
-/usr/bin/setxkbmap -option 'ctrl:nocaps'
+if [ "$(uname)" != "Darwin" ]; then
+    # Turn off the stupid caps lock key
+    /usr/bin/setxkbmap -option 'ctrl:nocaps'
+fi
