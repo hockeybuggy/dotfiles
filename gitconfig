@@ -12,6 +12,7 @@
 # Basic action aliases
 	co   = commit
 	com  = commit -m
+	co   = commit -a
 	cam  = commit -am
 	sta  = status -s
 # Display aliases
