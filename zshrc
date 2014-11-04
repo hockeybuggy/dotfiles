@@ -28,9 +28,9 @@ if [ "$(uname)" = "Darwin" ]; then
     alias -r la="ls -lhAG"
     alias -r ll="ls -lhG"
 else
-    alias -r ls="ls -lh --color=allways"
-    alias -r la="ls -lhA --color=allways"
-    alias -r ll="ls -lh --color=allways"
+    alias -r ls="ls -lh --color=always"
+    alias -r la="ls -lhA --color=always"
+    alias -r ll="ls -lh --color=always"
 fi
 alias -r lla="ls -lhA | less"
 
@@ -108,14 +108,8 @@ setprompt () {
     done
     PR_NO_COLOR="%{$terminfo[sgr0]%}"
 
-    # Check the UID
-    if [[ $UID -ge 1000 ]]; then # normal user
-        eval PR_USER='${PR_GREEN}%n${PR_NO_COLOR}'
-        eval PR_USER_OP='${PR_RED}➤${PR_NO_COLOR}'
-    elif [[ $UID -eq 0 ]]; then # root
-        eval PR_USER='${PR_RED}%n${PR_NO_COLOR}'
-        eval PR_USER_OP='${PR_RED}➤➤${PR_NO_COLOR}'
-    fi
+    eval PR_USER='%(!.${PR_RED}.${PR_GREEN})%n${PR_NO_COLOR}'
+    eval PR_USER_OP='${PR_RED}%(!.#.➤)${PR_NO_COLOR}'
 
     # Check if we are on SSH or not
     if [[ -n "$SSH_CLIENT" || -n "$SSH2_CLIENT" ]]; then
