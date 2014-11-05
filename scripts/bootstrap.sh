@@ -4,7 +4,8 @@ DIR="$HOME/.dotfiles"
 
 if [ ! -d "$HOME/.vim/bundle/vundle" ]; then
     echo "\nGrabing Vundle\n"
-    git clone https://github.com/gmarik/Vundle.git ~/.vim/bundle/Vundle.vim
+    mkdir -p $DIR/vim/bundle
+    git clone https://github.com/gmarik/Vundle.git $DIR/vim/bundle/Vundle.vim
 fi
 
 echo "\nInstalling Bundles\n"
