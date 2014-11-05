@@ -5,7 +5,7 @@
 export EDITOR="vim"
 export TERMINAL="urxvt"
 
-if [ "$(uname)" != "Darwin" ]; then
+if [ -s "/usr/bin/setxkbmap" ]; then
     # Turn off the stupid caps lock key
     /usr/bin/setxkbmap -option 'ctrl:nocaps'
 fi
