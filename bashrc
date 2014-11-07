@@ -21,10 +21,15 @@ alias g="git"
 alias t="tmux"
 
 # LS aliases
-alias ls="ls -lh"
-alias ll="ls -lh"
-alias la="ls -lhA"
-alias lla="ls -lhA"
+if [ "$(uname)" = "Darwin" ]; then
+    alias ls="ls -lhG"
+    alias ll="ls -lhG"
+    alias la="ls -lhAG"
+else
+    alias ls="ls -lh --color=always"
+    alias ll="ls -lh --color=always"
+    alias la="ls -lhA --color=always"
+fi
 
 # Assorted
 alias clr="clear"
