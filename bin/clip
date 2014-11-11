@@ -1,5 +1,9 @@
 #!/bin/sh
 # copys the piped text to the clipboard
 
-xclip -i -selection clipboard $*
+if [ "$(uname)" == "Darwin" ]; then
+    cat $* | pbcopy
+else
+    xclip -i -selection clipboard $*
+fi
 
