@@ -33,6 +33,7 @@ Bundle 'nelstrom/vim-visual-star-search'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
 
 syntax on
 filetype plugin indent on
