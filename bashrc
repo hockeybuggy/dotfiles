@@ -32,6 +32,7 @@ else
 fi
 
 # Assorted
+alias vg="vagrant"
 alias clr="clear"
 alias scr="scratch"
 alias server="python -m SimpleHTTPServer"
