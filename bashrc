@@ -31,6 +31,15 @@ else
     alias la="ls -lhA --color=always"
 fi
 
+# Django aliases
+alias pm="python manage.py"
+alias pmm="python manage.py migrate"
+alias pmmm="python manage.py makemigrations"
+alias pmsh="python manage.py shell"
+alias pmm="python manage.py migrate"
+alias pmt="python manage.py test"
+alias pmrs="python manage.py runserver"
+
 # Assorted
 alias vg="vagrant"
 alias clr="clear"

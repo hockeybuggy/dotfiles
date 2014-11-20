@@ -34,6 +34,15 @@ else
 fi
 alias -r lla="ls -lhA | less"
 
+# Django aliases
+alias -r pm="python manage.py"
+alias -r pmm="python manage.py migrate"
+alias -r pmmm="python manage.py makemigrations"
+alias -r pmsh="python manage.py shell"
+alias -r pmm="python manage.py migrate"
+alias -r pmt="python manage.py test"
+alias -r pmrs="python manage.py runserver"
+
 # Piping
 alias -g L="| less"
 alias -g DN="> /dev/null"
