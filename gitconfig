@@ -22,13 +22,17 @@
 	bra  = branch
 	che  = checkout
 
+# Rebase aliases
+	rb   = rebase
+	rbi  = rebase -i
+
 # Push-Pull aliases
-	po  = push origin
+	po   = push origin
 	pom  = push origin master
 	phm  = push heroku master
-	pl  = pull
+	pl   = pull
 	plo  = pull origin
-	plom  = pull origin master
+	plom = pull origin master
 
 # Cloneing aliases
 	cl   = clone
