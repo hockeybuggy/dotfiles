@@ -43,6 +43,8 @@ alias -r pmm="python manage.py migrate"
 alias -r pmt="python manage.py test"
 alias -r pmrs="python manage.py runserver"
 
+alias -r rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
+
 # Piping
 alias -g L="| less"
 alias -g DN="> /dev/null"
