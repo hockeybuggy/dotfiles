@@ -48,6 +48,8 @@ set expandtab
 " Turn off automatic comment continuation on newlines.
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 
+" TODO :%! python -m json.tool
+
 " Colour scheme
 if has("gui_running")
     set background=light
