@@ -50,6 +50,7 @@ alias -g L="| less"
 alias -g DN="> /dev/null"
 
 # Assorted
+alias -r ipy="ipython"
 alias -r vg="vagrant"
 alias -r clr="clear"
 alias -r scr="scratch"
