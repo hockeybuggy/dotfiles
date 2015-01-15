@@ -43,6 +43,7 @@ alias pmrs="python manage.py runserver"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 
 # Assorted
+alias ipy="ipython"
 alias vg="vagrant"
 alias clr="clear"
 alias scr="scratch"

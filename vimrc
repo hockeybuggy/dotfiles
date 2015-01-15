@@ -48,6 +48,8 @@ set expandtab
 " Turn off automatic comment continuation on newlines.
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 
+" TODO :%! python -m json.tool
+
 " Colour scheme
 if has("gui_running")
     set background=light
@@ -100,6 +102,7 @@ map <leader>l :ls<CR>
 map <leader>b :b
 map <leader>- :sp<bar>b
 map <leader>\ :vsp<bar>b
+map <leader>t :tabe<bar>b
 
 " External copy paste
 nmap <C-P> "+gp
