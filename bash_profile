@@ -4,6 +4,7 @@
 # Set up terminal and editor
 export EDITOR="vim"
 export TERMINAL="urxvt"
+export GREP_OPTIONS="--color=auto"
 
 if [ -s "/usr/bin/setxkbmap" ]; then
     # Turn off the stupid caps lock key
