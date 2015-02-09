@@ -35,6 +35,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-vinegar'
+Bundle 'rking/ag.vim'
 
 syntax on
 filetype plugin indent on

@@ -35,7 +35,7 @@ set listchars=tab:▸\ ,eol:¬,trail:¤
 " Set Spelling. Proud of my Canadian heritage.
 setlocal spell spelllang=en_ca
 
-" Change the splitting behaviour.
+" My preferred splitting behaviour.
 set splitright
 set splitbelow
 
