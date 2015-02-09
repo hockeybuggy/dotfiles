@@ -8,7 +8,7 @@
 *.lock
 vim/.netrwhist
 vim/temp
-zsh/.zsh_history
+zsh/.zsh_history*
 scripts/z/.z
 scripts/z/.z.*
 vim/bundle
