@@ -16,6 +16,7 @@ Bundle 'ap/vim-css-color'
 Bundle 'tpope/vim-git'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
+Bundle 'mustache/vim-mustache-handlebars'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'andersoncustodio/vim-tmux'
 
