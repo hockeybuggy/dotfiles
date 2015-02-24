@@ -5,39 +5,39 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
-Bundle 'gmarik/Vundle.vim'
+Plugin 'gmarik/Vundle.vim'
 
 " Style
-Bundle 'bling/vim-airline'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'ap/vim-css-color'
+Plugin 'bling/vim-airline'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'ap/vim-css-color'
 
 " Language
-Bundle 'tpope/vim-git'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-markdown'
-Bundle 'mustache/vim-mustache-handlebars'
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
-Bundle 'andersoncustodio/vim-tmux'
-Bundle 'derekwyatt/vim-scala'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-markdown'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plugin 'andersoncustodio/vim-tmux'
+Plugin 'derekwyatt/vim-scala'
 
 runtime macros/matchit.vim
-Bundle 'kana/vim-textobj-user'
-Bundle 'kana/vim-textobj-line'
-Bundle 'kana/vim-textobj-indent'
-Bundle 'kana/vim-textobj-entire'
-Bundle 'nelstrom/vim-textobj-rubyblock'
-Bundle 'lucapette/vim-textobj-underscore'
+Plugin 'kana/vim-textobj-user'
+Plugin 'kana/vim-textobj-line'
+Plugin 'kana/vim-textobj-indent'
+Plugin 'kana/vim-textobj-entire'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'lucapette/vim-textobj-underscore'
 
 " Utility
-Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'nelstrom/vim-visual-star-search'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-vinegar'
-Bundle 'rking/ag.vim'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-vinegar'
+Plugin 'rking/ag.vim'
 
 syntax on
 filetype plugin indent on
