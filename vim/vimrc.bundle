@@ -19,6 +19,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'mustache/vim-mustache-handlebars'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'andersoncustodio/vim-tmux'
+Bundle 'derekwyatt/vim-scala'
 
 runtime macros/matchit.vim
 Bundle 'kana/vim-textobj-user'
