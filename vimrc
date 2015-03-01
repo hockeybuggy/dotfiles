@@ -90,10 +90,6 @@ nnoremap <C-l> <C-W>l
 
 " Current file directory expand (http://vimcasts.org/episodes/the-edit-command/)
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
-map <leader>ew :e %%
-map <leader>es :sp %%
-map <leader>ev :vsp %%
-map <leader>et :tabe %%
 
 " -----  Shortcuts -----
 " List current buffers
