@@ -11,6 +11,10 @@ export PATH="$HOME/.bin:$PATH"
 #------------------------------
 # Aliases
 #------------------------------
+
+# Corrective Alises
+alias -r :q="echo 'Nope. Not vim dummy.'"
+
 # Directory Climbing
 alias -r ..="cd .."
 alias -r ...="cd ../.."
