@@ -9,6 +9,10 @@ export PATH="$HOME/.bin:$PATH"
 #------------------------------
 # Aliases
 #------------------------------
+
+# Corrective Alises
+alias :q="echo 'Nope. Not vim dummy.'"
+
 # Directory Climbing
 alias ..="cd .."
 alias ...="cd ../.."
@@ -41,7 +45,7 @@ alias pmt="python manage.py test"
 alias pmrs="python manage.py runserver"
 
 # Python aliases
-alias pipip="pip install -r requirements.txt"
+alias pipir="pip install -r requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 
 # Assorted
