@@ -37,19 +37,18 @@ fi
 
 # Django aliases
 alias pm="python manage.py"
-alias pmm="python manage.py migrate"
-alias pmmm="python manage.py makemigrations"
 alias pmsh="python manage.py shell"
-alias pmm="python manage.py migrate"
 alias pmt="python manage.py test"
 alias pmrs="python manage.py runserver"
+alias pmm="python manage.py migrate"
+alias pmmm="python manage.py makemigrations"
 
 # Python aliases
+alias ipy="ipython"
 alias pipir="pip install -r requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 
 # Assorted
-alias ipy="ipython"
 alias vg="vagrant"
 alias clr="clear"
 alias scr="scratch"
