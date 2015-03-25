@@ -40,14 +40,14 @@ alias -r lla="ls -lhA | less"
 
 # Django aliases
 alias -r pm="python manage.py"
-alias -r pmm="python manage.py migrate"
-alias -r pmmm="python manage.py makemigrations"
 alias -r pmsh="python manage.py shell"
-alias -r pmm="python manage.py migrate"
 alias -r pmt="python manage.py test"
 alias -r pmrs="python manage.py runserver"
+alias -r pmm="python manage.py migrate"
+alias -r pmmm="python manage.py makemigrations"
 
 # Python aliases
+alias -r ipy="ipython"
 alias -r pipir="pip install -r requirements.txt"
 alias -r rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 
@@ -56,7 +56,6 @@ alias -g L="| less"
 alias -g DN="> /dev/null"
 
 # Assorted
-alias -r ipy="ipython"
 alias -r vg="vagrant"
 alias -r clr="clear"
 alias -r scr="scratch"
