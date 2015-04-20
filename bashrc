@@ -45,6 +45,7 @@ alias pmmm="python manage.py makemigrations"
 
 # Python aliases
 alias ipy="ipython"
+alias nse="nosetests"
 alias pipir="pip install -r requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 
