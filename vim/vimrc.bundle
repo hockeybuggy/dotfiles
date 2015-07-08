@@ -20,6 +20,7 @@ Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'andersoncustodio/vim-tmux'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'fatih/vim-go'
 
 runtime macros/matchit.vim
 Plugin 'kana/vim-textobj-user'

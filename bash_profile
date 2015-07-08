@@ -13,3 +13,5 @@ fi
 
 # Load bashrc
 [[ -r ~/.bashrc ]] && . ~/.bashrc
+
+export PATH=$PATH:/usr/local/go/bin
