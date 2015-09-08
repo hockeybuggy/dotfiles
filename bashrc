@@ -40,6 +40,8 @@ alias pmm="python manage.py migrate"
 alias pmt="python manage.py test"
 alias pmrs="python manage.py runserver"
 
+# Python aliases
+alias pipir="pip install -r requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 
 # Assorted
