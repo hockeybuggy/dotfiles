@@ -8,7 +8,7 @@
 	status = auto
 
 [push]
-	default = matching
+	default = simple
 
 [alias]
 # Basic action aliases

@@ -49,6 +49,9 @@ set expandtab
 " Turn off automatic comment continuation on newlines.
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 
+" Alias Ls to ls
+cnoreabbrev Ls ls
+
 " TODO :%! python -m json.tool
 
 " Colour scheme

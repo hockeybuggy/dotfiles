@@ -8,8 +8,8 @@ opperational
 repo
 practices
 sudoku
-solarized
-wikipedia
+Solarized
+Wikipedia
 Hasdrubal
 canoeing
 xyrself
@@ -110,6 +110,7 @@ adapter
 refactored
 refactor
 webhook
+webhooks
 Shopify
 Magento
 uninstall
@@ -117,3 +118,4 @@ uninstalling
 Redis
 Django
 middleware
+browsable

@@ -9,6 +9,11 @@ export PATH="$HOME/.bin:$PATH"
 #------------------------------
 # Aliases
 #------------------------------
+
+# Corrective Alises
+alias :q="echo 'Nope. Not vim dummy.'"
+alias :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
+
 # Directory Climbing
 alias ..="cd .."
 alias ...="cd ../.."
@@ -33,19 +38,19 @@ fi
 
 # Django aliases
 alias pm="python manage.py"
-alias pmm="python manage.py migrate"
-alias pmmm="python manage.py makemigrations"
 alias pmsh="python manage.py shell"
-alias pmm="python manage.py migrate"
 alias pmt="python manage.py test"
 alias pmrs="python manage.py runserver"
+alias pmm="python manage.py migrate"
+alias pmmm="python manage.py makemigrations"
 
 # Python aliases
+alias ipy="ipython"
+alias nse="nosetests"
 alias pipir="pip install -r requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 
 # Assorted
-alias ipy="ipython"
 alias vg="vagrant"
 alias clr="clear"
 alias scr="scratch"

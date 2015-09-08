@@ -16,3 +16,5 @@ if [ -s "/usr/bin/setxkbmap" ]; then
     # Turn off the stupid caps lock key
     /usr/bin/setxkbmap -option 'ctrl:nocaps'
 fi
+
+export PATH=$PATH:/usr/local/go/bin
