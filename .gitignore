@@ -6,6 +6,7 @@
 *.bak
 *.spl
 *.lock
+__pycache__
 vim/.netrwhist
 vim/temp
 zsh/.zsh_history*
