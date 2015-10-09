@@ -11,7 +11,7 @@ export PATH="$HOME/.bin:$PATH"
 #------------------------------
 
 # Corrective Alises
-alias :q="echo 'Nope. Not vim dummy.'"
+alias :q="echo 'Nope. Not vim dummy.' && sleep 1 && exit"
 alias :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
 
 # Directory Climbing
