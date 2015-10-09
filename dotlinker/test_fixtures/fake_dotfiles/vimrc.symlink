@@ -1,0 +1,4 @@
+set nocompatible
+setlocal spell spelllang=en_ca
+set list
+set listchars=tab:▸\ ,eol:¬,trail:¤

@@ -1,0 +1,49 @@
+[user]
+	name = Douglas Anderson  # Please change this if you opt to use this and you are not me
+	email = hockeybuggy@gmail.com
+
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+
+[push]
+	default = simple
+
+[alias]
+# Basic action aliases
+	co   = commit
+	com  = commit -m
+	ca   = commit -a
+	cam  = commit -am
+	sta  = status -s
+
+# Branching aliases
+	bra  = branch
+	che  = checkout
+
+# Rebase aliases
+	rb   = rebase
+	rbi  = rebase -i
+
+# Push-Pull aliases
+	po   = push origin
+	pom  = push origin master
+	phm  = push heroku master
+	pl   = pull
+	plo  = pull origin
+	plom = pull origin master
+
+# Cloneing aliases
+	cl   = clone
+	clo  = clone
+
+# Hardcore aliases
+	lg   = log --oneline
+	cf   = cat-file -p
+	cft  = cat-file -t
+	cfs  = cat-file -s
+	cfp  = cat-file -p
+	ls   = ls-tree
+	lst  = ls-tree
+	lsr  = ls-tree -r

@@ -1,0 +1,2 @@
+export PATH="$HOME/.bin:$PATH"
+alias :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
