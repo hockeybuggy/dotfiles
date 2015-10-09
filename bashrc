@@ -119,4 +119,3 @@ case "$TERM" in
     *)
         ;;
 esac
-

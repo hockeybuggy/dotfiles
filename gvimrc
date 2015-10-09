@@ -8,4 +8,3 @@ set guifont=inconsolata\ Bold\ 14
 
 hi NonText guifg=#444444
 hi SpecialKey guifg=#444444
-
