@@ -39,6 +39,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-vinegar'
 Plugin 'rking/ag.vim'
+Plugin 'kien/ctrlp.vim'
 
 syntax on
 filetype plugin indent on
