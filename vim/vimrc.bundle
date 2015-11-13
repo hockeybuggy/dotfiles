@@ -22,6 +22,7 @@ Plugin 'andersoncustodio/vim-tmux'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'fatih/vim-go'
 
+" Textobjs
 runtime macros/matchit.vim
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-line'
@@ -40,6 +41,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-vinegar'
 Plugin 'rking/ag.vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'vim-scripts/gitignore'
 
 syntax on
 filetype plugin indent on
