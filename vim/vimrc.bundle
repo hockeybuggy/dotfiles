@@ -21,6 +21,7 @@ Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'andersoncustodio/vim-tmux'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'fatih/vim-go'
+Plugin 'groenewege/vim-less'
 
 " Textobjs
 runtime macros/matchit.vim
