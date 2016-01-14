@@ -40,4 +40,4 @@
 	clo  = clone
 
 # Other aliases
-	cf   = cat-file -p
+	chp   = cherry-pick
