@@ -17,6 +17,7 @@
 	ca   = commit -a
 	cam  = commit -am
 	sta  = status -s
+	lg   = log --oneline
 
 # Branching aliases
 	bra  = branch
@@ -38,12 +39,5 @@
 	cl   = clone
 	clo  = clone
 
-# Hardcore aliases
-	lg   = log --oneline
+# Other aliases
 	cf   = cat-file -p
-	cft  = cat-file -t
-	cfs  = cat-file -s
-	cfp  = cat-file -p
-	ls   = ls-tree
-	lst  = ls-tree
-	lsr  = ls-tree -r
