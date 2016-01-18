@@ -14,11 +14,6 @@ export PATH="$HOME/.bin:$PATH"
 alias :q="echo 'Nope. Not vim dummy.' && sleep 1 && exit"
 alias :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
 
-# Directory Climbing
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-
 # Common shorthands
 alias v="vim"
 alias l="less"
