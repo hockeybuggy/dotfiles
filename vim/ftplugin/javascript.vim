@@ -1,6 +1,6 @@
 setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
-set makeprg =jshint\ %
+set makeprg =jshint\ --reporter=unix\ %
 
 map <leader>m :call Jslint()<CR>
 
