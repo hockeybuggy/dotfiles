@@ -41,3 +41,4 @@
 
 # Other aliases
 	chp   = cherry-pick
+	who   = blame
