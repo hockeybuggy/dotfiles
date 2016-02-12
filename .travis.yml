@@ -4,4 +4,4 @@ python:
   - "3.4"
 
 # Run tests
-script: python dotlinker/tests.py
+script: python scripts/test.py
