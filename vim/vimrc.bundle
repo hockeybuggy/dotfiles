@@ -23,6 +23,7 @@ Plugin 'derekwyatt/vim-scala'
 Plugin 'fatih/vim-go'
 Plugin 'groenewege/vim-less'
 Plugin 'rust-lang/rust.vim'
+Plugin 'cespare/vim-toml'
 
 " Textobjs
 runtime macros/matchit.vim
