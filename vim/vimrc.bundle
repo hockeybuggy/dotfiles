@@ -22,6 +22,7 @@ Plugin 'andersoncustodio/vim-tmux'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'fatih/vim-go'
 Plugin 'groenewege/vim-less'
+Plugin 'rust-lang/rust.vim'
 
 " Textobjs
 runtime macros/matchit.vim
