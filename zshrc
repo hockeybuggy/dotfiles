@@ -22,6 +22,12 @@ alias -r l="less"
 alias -r g="git"
 alias -r t="tmux"
 
+# Neovim aliases
+if [ "$(uname)" = "Darwin" ]; then
+    alias vim="nvim"
+    alias v="nvim"
+fi
+
 # LS aliases
 if [ "$(uname)" = "Darwin" ]; then
     alias -r ls="ls -lhG"
