@@ -5,6 +5,7 @@
 export EDITOR="vim"
 export TERMINAL="urxvt"
 export GREP_OPTIONS="--color=auto"
+export XDG_CONFIG_HOME="~/.config"
 
 if [ -s "/usr/bin/setxkbmap" ]; then
     # Turn off the stupid caps lock key

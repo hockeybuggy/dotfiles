@@ -30,6 +30,9 @@ if [ -d "$HOME/.vim" ]; then
 fi
 ln -s $DIR/vim $HOME/.vim
 
+# Neovim
+ln -sf $DIR/vimrc $XDG_CONFIG_HOME/nvim/init.vim
+
 # Git
 ln -sf $DIR/gitconfig $HOME/.gitconfig
 
