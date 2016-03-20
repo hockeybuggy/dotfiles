@@ -35,6 +35,7 @@ set listchars=tab:▸\ ,eol:¬,trail:¤
 
 " Set Spelling. Proud of my Canadian heritage.
 set spell spelllang=en_ca
+set spellfile=~/.vim/spell/en.utf-8.add
 
 " My preferred splitting behaviour.
 set splitright
@@ -51,8 +52,6 @@ autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 
 " Alias Ls to ls
 cnoreabbrev Ls ls
-
-" TODO :%! python -m json.tool
 
 " Colour scheme
 if has("gui_running")
@@ -104,7 +103,6 @@ map <leader>- :sp<bar>b
 map <leader>\ :vsp<bar>b
 map <leader>t :tabe<bar>b
 map <leader>m :make<CR>
-
 
 " External copy paste
 nmap <C-P> "+gp
