@@ -34,7 +34,7 @@ set list
 set listchars=tab:▸\ ,eol:¬,trail:¤
 
 " Set Spelling. Proud of my Canadian heritage.
-setlocal spell spelllang=en_ca
+set spell spelllang=en_ca
 
 " My preferred splitting behaviour.
 set splitright
@@ -127,4 +127,3 @@ if ! has('gui_running')
         au InsertLeave * set timeoutlen=1000
     augroup END
 endif
-
