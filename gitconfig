@@ -1,6 +1,7 @@
 [user]
 	name = Douglas Anderson  # Please change this if you opt to use this and you are not me
 	email = hockeybuggy@gmail.com
+	signingkey = C9366F2A
 
 [color]
 	branch = auto
