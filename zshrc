@@ -29,6 +29,7 @@ if [ "$(uname)" = "Darwin" ]; then
 fi
 
 # LS aliases
+alias -r lla="ls -lhA | less"
 if [ "$(uname)" = "Darwin" ]; then
     alias -r ls="ls -lhG"
     alias -r la="ls -lhAG"
@@ -38,7 +39,6 @@ else
     alias -r la="ls -lhA --color=always"
     alias -r ll="ls -lh --color=always"
 fi
-alias -r lla="ls -lhA | less"
 
 # Django aliases
 alias -r pm="python manage.py"
@@ -59,6 +59,7 @@ alias -g L="| less"
 alias -g DN="> /dev/null"
 
 # Assorted
+alias -r hidemyshame="git commit -am 'SHAME' && git rebase -i HEAD~2"
 alias -r vg="vagrant"
 alias -r clr="clear"
 alias -r scr="scratch"
