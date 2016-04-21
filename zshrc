@@ -24,8 +24,8 @@ alias -r t="tmux"
 
 # Neovim aliases
 if [ "$(uname)" = "Darwin" ]; then
-    alias vim="nvim"
-    alias v="nvim"
+    # alias vim="nvim"
+    # alias v="nvim"
 fi
 
 # LS aliases
