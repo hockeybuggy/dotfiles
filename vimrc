@@ -24,6 +24,7 @@ set laststatus=2          " Always show the last command
 set showcmd               " Show unfinished commands in the status line
 set mouse=""              " I don't really like the mouse much...
 set ttyfast               " Send characters to the screen faster
+set relativenumber        " Try out relative numbers
 
 " Disable man mode and ex mode. I was finding them not useful
 noremap K <nop>
