@@ -17,14 +17,13 @@ let maplocalleader = ','
 set incsearch             " Incremental search
 set nohlsearch            " Don't highlight searches
 set hidden                " Allow navigating away from unsaved buffers
-set number                " Show line numbers
+set relativenumber        " Try out relative numbers
 set history=800           " This may be a bit extreme
 set wildmode=longest,list " List completions
 set laststatus=2          " Always show the last command
 set showcmd               " Show unfinished commands in the status line
 set mouse=""              " I don't really like the mouse much...
 set ttyfast               " Send characters to the screen faster
-set relativenumber        " Try out relative numbers
 
 " Disable man mode and ex mode. I was finding them not useful
 noremap K <nop>
