@@ -51,6 +51,9 @@ alias nse="nosetests"
 alias pipir="pip install -r requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 
+# Rust aliases
+alias -r car="cargo"
+
 # Assorted
 alias vg="vagrant"
 alias clr="clear"
