@@ -19,3 +19,4 @@ if [ -s "/usr/bin/setxkbmap" ]; then
 fi
 
 export PATH=$PATH:/usr/local/go/bin
+export EXERCISM_CONFIG_FILE=$XDG_CONFIG_HOME/exercism
