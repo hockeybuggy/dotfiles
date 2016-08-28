@@ -17,7 +17,7 @@ let maplocalleader = ','
 set incsearch             " Incremental search
 set nohlsearch            " Don't highlight searches
 set hidden                " Allow navigating away from unsaved buffers
-set relativenumber        " Try out relative numbers
+set relativenumber        " Relative numbers are the bomb
 set history=800           " This may be a bit extreme
 set wildmode=longest,list " List completions
 set laststatus=2          " Always show the last command
