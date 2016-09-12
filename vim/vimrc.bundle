@@ -25,7 +25,7 @@ Plugin 'groenewege/vim-less'
 Plugin 'rust-lang/rust.vim'
 Plugin 'cespare/vim-toml'
 Plugin 'pangloss/vim-javascript'
-
+Plugin 'mxw/vim-jsx'
 
 " Textobjs
 runtime macros/matchit.vim
