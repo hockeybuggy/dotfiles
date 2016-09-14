@@ -125,3 +125,7 @@ if ! has('gui_running')
         au InsertLeave * set timeoutlen=1000
     augroup END
 endif
+
+
+" Language Specific settings
+autocmd BufNewFile,BufRead *.json set ft=javascript
