@@ -113,6 +113,7 @@ if executable('rg')
 elseif executable('ag')
   let g:ackprg='ag --vimgrep'
 endif
+cnoreabbrev Ag Ack
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
