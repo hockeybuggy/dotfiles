@@ -8,7 +8,8 @@ call vundle#rc()
 Plugin 'gmarik/Vundle.vim'
 
 " Style
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ap/vim-css-color'
 
