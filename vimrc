@@ -108,6 +108,13 @@ map <leader>m :make<CR>
 nmap <C-P> "+gp
 vmap <C-C> "+y
 
+if executable('rg')
+  let g:ackprg='rg --vimgrep'
+elseif executable('ag')
+  let g:ackprg='ag --vimgrep'
+endif
+cnoreabbrev Ag Ack
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
 """"""""""""""""""""""""""""""""""""""""""""""""""
