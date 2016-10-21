@@ -20,12 +20,6 @@ alias l="less"
 alias g="git"
 alias t="tmux"
 
-# Neovim aliases
-if [ "$(uname)" = "Darwin" ]; then
-    # alias vim="nvim"
-    # alias v="nvim"
-fi
-
 # LS aliases
 if [ "$(uname)" = "Darwin" ]; then
     alias ls="ls -lhG"
@@ -52,7 +46,7 @@ alias pipir="pip install -r requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 
 # Rust aliases
-alias -r car="cargo"
+alias car="cargo"
 
 # Assorted
 alias vg="vagrant"
