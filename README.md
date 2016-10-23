@@ -2,20 +2,24 @@
 
 [![Build Status](https://travis-ci.org/hockeybuggy/dotfiles.svg)](https://travis-ci.org/hockeybuggy/dotfiles)
 
-This repository is for managing my configuration.
+This repository is for managing my configuration files.
 
 
 ## Installation
 
 ### 1.Clone this repo
 
-Clone dat. I like to clone put it at `~/.dotlinker`
+Clone dah repo. I like to clone put it at `~/.dotlinker`
 
-    git clone https://github.com/hockeybuggy/dotfiles.git .dotfiles && cd .dotfiles
+    git clone git@github.com:hockeybuggy/dotfiles.git .dotfiles && cd .dotfiles
 
 ### 2. Automagically Link the files
 
     ./scripts/bootstrap.sh
+
+### 3. May need to install the vim deps via Vundle
+
+    ./scripts/vundle.sh
 
 
 ## Dependencies
@@ -24,12 +28,14 @@ Clone dat. I like to clone put it at `~/.dotlinker`
 
 1. vim  - 7.4
 2. bash - (whatever is installed)
-3. git  - 1.9
-4. python - 2.7 or 3.5
+3. git  - 2.*
+4. python - 2.7 and 3.5
 
 #### Ideal:
 
 1. tmux - 1.9
 2. zsh  - 5.0
-3. urxvt or iterm
-4. inconsolata font
+3. urxvt or iter2
+4. ripgrep
+5. silver searcher
+6. inconsolata font
