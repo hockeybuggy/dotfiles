@@ -16,6 +16,7 @@ echo "\nLinking dotfiles...\n"
 ln -sf $DIR/bashrc $HOME/.bashrc
 ln -sf $DIR/bash_profile $HOME/.bash_profile
 ln -sf $DIR/zshrc $HOME/.zshrc
+ln -sf $DIR/zshenv $HOME/.zshenv
 ln -sf $DIR/zlogin $HOME/.zlogin
 if [ -d "$HOME/.zsh" ]; then
     mv $HOME/.zsh $HOME/.zsh.bak
