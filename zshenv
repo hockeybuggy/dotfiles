@@ -1,5 +1,5 @@
 # Set up terminal and editor
-export EDITOR='vim'
+export EDITOR="vim"
 export TERMINAL="urxvt"
 
 # Set up some package managers
