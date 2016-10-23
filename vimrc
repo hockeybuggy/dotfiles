@@ -59,16 +59,13 @@ if has("gui_running")
 else
     set background=dark
 endif
-if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-    colorscheme solarized
-    let g:solarized_termcolors = 256
-    let g:solarized_termtrans = 1
-    let g:solarized_visibility = "high"
-    if $TERM_PROGRAM =~ "screen-256color"
-        let s:terminal_italic=1
-    endif
-else
-    colorscheme desert
+
+colorscheme solarized
+let g:solarized_termcolors = 256
+let g:solarized_termtrans = 1
+let g:solarized_visibility = "high"
+if $TERM_PROGRAM =~ "screen-256color"
+    let s:terminal_italic=1
 endif
 
 " Disable swap files. Enables backups. Enable undo

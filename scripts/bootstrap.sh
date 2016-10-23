@@ -45,12 +45,6 @@ ln -sf $DIR/tmux.conf $HOME/.tmux.conf
 mkdir -p $HOME/.terminfo/r
 ln -sf $DIR/terminfo/rxvt-unicode-256color $HOME/.terminfo/r/rxvt-unicode-256color
 
-# i3
-if [ -d "$HOME/.i3" ]; then
-    mv $HOME/.i3 $HOME/.i3.bak
-fi
-ln -s $DIR/i3 $HOME/.i3
-
 ln -s $DIR/bin $HOME/.bin
 
 echo "Done"
