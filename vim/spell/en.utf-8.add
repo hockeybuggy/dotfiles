@@ -149,3 +149,7 @@ serializable
 creatives
 CDN
 offline
+codebase
+localhost
+Redux
+uglified
