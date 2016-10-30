@@ -41,6 +41,8 @@ ln -sf $DIR/gitconfig $HOME/.gitconfig
 ln -sf $DIR/dircolors.256dark $HOME/.dircolors.256dark
 ln -sf $DIR/Xdefaults $HOME/.Xdefaults
 ln -sf $DIR/Xresources $HOME/.Xresources
+
+# Tmux
 ln -sf $DIR/tmux.conf $HOME/.tmux.conf
 
 mkdir -p $HOME/.terminfo/r

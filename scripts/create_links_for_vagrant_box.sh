@@ -15,6 +15,12 @@ if [ -d "$HOME/.vim" ]; then
 fi
 ln -s $DIR/vim $HOME/.vim
 
+# Git
+ln -sf $DIR/gitconfig $HOME/.gitconfig
+
+# Tmux
+ln -sf $DIR/tmux.conf $HOME/.tmux.conf
+
 # Switch back to starting directory
 cd -
 
