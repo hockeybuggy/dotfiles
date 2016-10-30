@@ -12,7 +12,6 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ap/vim-css-color'
-Plugin 'editorconfig/editorconfig-vim'
 
 " Language
 Plugin 'tpope/vim-git'
