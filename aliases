@@ -1,0 +1,57 @@
+# vim: set filetype=shell
+
+# Corrective Alises
+alias :q="echo 'Nope. Not vim dummy.' && sleep 1 && exit"
+alias :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
+
+# Common shorthands
+alias v="vim"
+alias l="less"
+alias g="git"
+alias t="tmux"
+
+# LS aliases
+alias lla="ls -lhA | less"
+if [ "$(uname)" = "Darwin" ]; then
+    alias ls="ls -lhG"
+    alias la="ls -lhAG"
+    alias ll="ls -lhG"
+else
+    alias ls="ls -lh --color=always"
+    alias la="ls -lhA --color=always"
+    alias ll="ls -lh --color=always"
+fi
+
+# Django aliases
+alias pm="python manage.py"
+alias pmsh="python manage.py shell"
+alias pmt="python manage.py test"
+alias pmrs="python manage.py runserver"
+alias pmm="python manage.py migrate"
+alias pmmm="python manage.py makemigrations"
+
+# Python aliases
+alias ipy="ipython"
+alias nse="nosetests"
+alias pipir="pip install requirements.txt"
+alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
+
+# Rust aliases
+alias car="cargo"
+
+# Assorted
+alias hidemyshame="git commit -am 'SHAME' && git rebase -i HEAD~2"
+alias vg="vagrant"
+alias clr="clear"
+alias scr="scratch"
+alias server="python -m SimpleHTTPServer"
+alias tlf="tail -f"
+
+mkcd() {
+    mkdir -p "$*"
+    cd "$*"
+}
+
+if [ -x /usr/bin/exo-open ]; then
+    alias open="exo-open" # Conditional open alias
+fi
