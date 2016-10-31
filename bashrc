@@ -6,63 +6,12 @@ ZDIR=$SCRIPTDIR/z
 
 export PATH="$HOME/.bin:$PATH"
 
+
 #------------------------------
 # Aliases
 #------------------------------
+[[ -f $DOTDIR/aliases ]] && source $DOTDIR/aliases
 
-# Corrective Alises
-alias :q="echo 'Nope. Not vim dummy.' && sleep 1 && exit"
-alias :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
-
-# Common shorthands
-alias v="vim"
-alias l="less"
-alias g="git"
-alias t="tmux"
-
-# LS aliases
-if [ "$(uname)" = "Darwin" ]; then
-    alias ls="ls -lhG"
-    alias ll="ls -lhG"
-    alias la="ls -lhAG"
-else
-    alias ls="ls -lh --color=always"
-    alias ll="ls -lh --color=always"
-    alias la="ls -lhA --color=always"
-fi
-
-# Django aliases
-alias pm="python manage.py"
-alias pmsh="python manage.py shell"
-alias pmt="python manage.py test"
-alias pmrs="python manage.py runserver"
-alias pmm="python manage.py migrate"
-alias pmmm="python manage.py makemigrations"
-
-# Python aliases
-alias ipy="ipython"
-alias nse="nosetests"
-alias pipir="pip install -r requirements.txt"
-alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
-
-# Rust aliases
-alias car="cargo"
-
-# Assorted
-alias vg="vagrant"
-alias clr="clear"
-alias scr="scratch"
-alias server="python -m SimpleHTTPServer"
-alias tlf="tail -f"
-
-mkcd() {
-    mkdir -p "$*"
-    cd "$*"
-}
-
-if [ -x /usr/bin/exo-open ]; then
-    alias open="exo-open"
-fi
 
 #------------------------------
 # Settings
@@ -93,10 +42,10 @@ fi
 export _Z_DATA="$ZDIR/.z"
 source $ZDIR/z.sh
 
-### Added by the Heroku Toolbelt
+## Added by the Heroku Toolbelt
 PATH="$PATH:/usr/local/heroku/bin"
 
-### Added by RVM
+## Added by RVM
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #------------------------------
 # Prompt
