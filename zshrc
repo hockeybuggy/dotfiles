@@ -6,77 +6,36 @@ DOTDIR=$HOME/.dotfiles
 SCRIPTDIR=$DOTDIR/scripts
 ZDIR=$SCRIPTDIR/z
 
+# Set up terminal and editor
+export EDITOR="vim"
+export TERMINAL="urxvt"
+
 export PATH="$HOME/.bin:$PATH"
+# Add some package managers to the path
+export PATH=$PATH:$HOME/.cargo/bin
+export PATH=$PATH:$HOME/.yarn/bin
+export PATH=$PATH:/usr/local/go/bin
+export NVM_DIR="/Users/dev1/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# Set up other config vars
+export WORKON_HOME="$HOME/devel/envs"
+export GREP_OPTIONS="--color=auto"
+export XDG_CONFIG_HOME="~/.config"
+export EXERCISM_CONFIG_FILE=$XDG_CONFIG_HOME/exercism
+
 
 #------------------------------
 # Aliases
 #------------------------------
+[[ -f $DOTDIR/aliases ]] && source $DOTDIR/aliases
 
-# Corrective Alises
-alias -r :q="echo 'Nope. Not vim dummy.' && sleep 1 && exit"
-alias -r :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
-
-# Common shorthands
-alias -r v="vim"
-alias -r l="less"
-alias -r g="git"
-alias -r t="tmux"
-
-# Neovim aliases
-if [ "$(uname)" = "Darwin" ]; then
-    # alias vim="nvim"
-    # alias v="nvim"
-fi
-
-# LS aliases
-alias -r lla="ls -lhA | less"
-if [ "$(uname)" = "Darwin" ]; then
-    alias -r ls="ls -lhG"
-    alias -r la="ls -lhAG"
-    alias -r ll="ls -lhG"
-else
-    alias -r ls="ls -lh --color=always"
-    alias -r la="ls -lhA --color=always"
-    alias -r ll="ls -lh --color=always"
-fi
-
-# Django aliases
-alias -r pm="python manage.py"
-alias -r pmsh="python manage.py shell"
-alias -r pmt="python manage.py test"
-alias -r pmrs="python manage.py runserver"
-alias -r pmm="python manage.py migrate"
-alias -r pmmm="python manage.py makemigrations"
-
-# Python aliases
-alias -r ipy="ipython"
-alias -r nse="nosetests"
-alias -r pipir="pip install -r requirements.txt"
-alias -r rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
-
-# Rust aliases
-alias -r car="cargo"
-
-# Piping
+# Zsh only piping aliases
 alias -g L="| less"
 alias -g DN="> /dev/null"
 
-# Assorted
-alias -r hidemyshame="git commit -am 'SHAME' && git rebase -i HEAD~2"
-alias -r vg="vagrant"
-alias -r clr="clear"
-alias -r scr="scratch"
-alias -r server="python -m SimpleHTTPServer"
-alias -r tlf="tail -f"
-
-mkcd() {
-    mkdir -p "$*"
-    cd "$*"
-}
-
-if [ -x /usr/bin/exo-open ]; then
-    alias open="exo-open" # Conditional open alias
-fi
 
 #------------------------------
 # Settings

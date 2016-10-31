@@ -14,16 +14,17 @@ endif
 let mapleader      = ','
 let maplocalleader = ','
 
-set incsearch             " Incremental search
-set nohlsearch            " Don't highlight searches
-set hidden                " Allow navigating away from unsaved buffers
-set relativenumber        " Relative numbers are the bomb
-set history=800           " This may be a bit extreme
-set wildmode=longest,list " List completions
-set laststatus=2          " Always show the last command
-set showcmd               " Show unfinished commands in the status line
-set mouse=""              " I don't really like the mouse much...
-set ttyfast               " Send characters to the screen faster
+set incsearch                  " Incremental search
+set nohlsearch                 " Don't highlight searches
+set hidden                     " Allow navigating away from unsaved buffers
+set relativenumber             " Relative numbers are the bomb
+set history=800                " This may be a bit extreme
+set wildmode=longest,list      " List completions
+set laststatus=2               " Always show the last command
+set showcmd                    " Show unfinished commands in the status line
+set mouse=""                   " I don't really like the mouse much...
+set ttyfast                    " Send characters to the screen faster
+set backspace=indent,eol,start " Change the backspace mode
 
 " Disable man mode and ex mode. I was finding them not useful
 noremap K <nop>
