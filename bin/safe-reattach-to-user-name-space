@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-echo "ATTACHING user namespace"
-if [ -n "$(command -v reattach-to-user-namespace)" ]; then
-    reattach-to-user-namespace $@
-else
-    exec "$@"
-fi
