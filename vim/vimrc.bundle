@@ -16,7 +16,7 @@ Plugin 'ap/vim-css-color'
 " Language
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-markdown'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'andersoncustodio/vim-tmux'
