@@ -1,6 +1,6 @@
 # vim: set filetype=shell
 
-# Corrective Alises
+# Corrective Aliases
 alias :q="echo 'Nope. Not vim dummy.' && sleep 1 && exit"
 alias :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
 
@@ -35,6 +35,7 @@ alias ipy="ipython"
 alias nse="nosetests"
 alias pipir="pip install requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
+alias venv="source .env/bin/activate"
 
 # Rust aliases
 alias car="cargo"
