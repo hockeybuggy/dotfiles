@@ -44,6 +44,7 @@ ln -sf $DIR/Xresources $HOME/.Xresources
 
 # Tmux
 ln -sf $DIR/tmux.conf $HOME/.tmux.conf
+ln -sf $DIR/tmux-osx.conf $HOME/.tmux-osx.conf
 
 mkdir -p $HOME/.terminfo/r
 ln -sf $DIR/terminfo/rxvt-unicode-256color $HOME/.terminfo/r/rxvt-unicode-256color
