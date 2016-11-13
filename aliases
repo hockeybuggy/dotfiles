@@ -35,7 +35,8 @@ alias ipy="ipython"
 alias nse="nosetests"
 alias pipir="pip install requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
-alias venv="source .env/bin/activate"
+alias srcvenv="source .venv/bin/activate"
+alias mkvenv="python3 -m venv .venv"
 
 # Rust aliases
 alias car="cargo"
