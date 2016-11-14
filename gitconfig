@@ -43,3 +43,5 @@
 # Other aliases
 	chp   = cherry-pick
 	who   = blame
+[commit]
+	gpgsign = true
