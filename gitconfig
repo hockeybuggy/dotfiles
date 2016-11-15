@@ -1,5 +1,5 @@
 [user]
-	name = Douglas Anderson  # Please change this if you opt to use this and you are not me
+	name = Douglas Anderson
 	email = hockeybuggy@gmail.com
 	signingkey = 9892CB4012843ABE
 
@@ -41,7 +41,7 @@
 	clo  = clone
 
 # Other aliases
-	chp   = cherry-pick
+	pick   = cherry-pick
 	who   = blame
 [commit]
-	gpgsign = true
+	gpgsign = false
