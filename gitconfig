@@ -27,6 +27,7 @@
 # Rebase aliases
 	rb   = rebase
 	rbi  = rebase -i
+	rbm  = rebase master
 
 # Push-Pull aliases
 	po   = push origin
@@ -43,5 +44,6 @@
 # Other aliases
 	pick   = cherry-pick
 	who   = blame
+
 [commit]
 	gpgsign = false
