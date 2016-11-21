@@ -32,18 +32,40 @@ def get_tagname_or_hash():
     return None
 
 
-# `git status --porcelain --branch` can collect all information
-# branch, remote_branch, untracked, staged, changed, conflicts, ahead, behind
-po = Popen(['git', 'status', '--porcelain', '--branch'], stdout=PIPE, stderr=PIPE)
-stdout, sterr = po.communicate()
-if po.returncode != 0:
-    sys.exit(0)  # Not a git repository
+def display_branch_name(branch):
+    return ""
 
-# collect git status information
-untracked, staged, changed, conflicts = [], [], [], []
-ahead, behind = 0, 0
-status = [(line[0], line[1], line[2:]) for line in stdout.decode('utf-8').splitlines()]
-for st in status:
+
+def display_index_state(untracked, staged, changed, conflicts):
+    return ""
+
+
+def display_ahead_behind(ahead, behind):
+    # Accepts two ints representing the number of commits ahead and the number
+    # of commits behind the remote.
+    # Returns a string that is a visual representation of the
+    return ""
+
+
+def open_git_status():
+    """
+    `git status --porcelain --branch` can collect all information
+    branch, remote_branch, untracked, staged, changed, conflicts, ahead, behind
+    """
+    po = Popen(['git', 'status', '--porcelain', '--branch'], stdout=PIPE, stderr=PIPE)
+    stdout, _ = po.communicate()
+    if po.returncode != 0:
+        sys.exit(0)  # Not a git repository
+    return stdout
+
+
+def get_status_vector(line):
+    """
+    Accepts a line of status and produces a vector representing
+    (ahead, behind, untracked, staged, changed, conflicts)
+    """
+    st = (line[0], line[1], line[2:])
+
     if st[0] == '#' and st[1] == '#':
         if re.search('Initial commit on', st[2]):
             branch = st[2].split(' ')[-1]
@@ -76,13 +98,27 @@ for st in status:
         elif st[0] != ' ':
             staged.append(st)
 
+# collect git status information
+untracked, staged, changed, conflicts = [], [], [], []
+ahead, behind = 0, 0
+status_vectors = [
+    get_status_vector(line)
+    for line in stdout.decode('utf-8').splitlines()
+]
+
+
+# TODO sum the vectors
+
 out = ' '.join([
     branch,
+    "|",
     str(ahead),
     str(behind),
+
     str(len(staged)),
     str(len(conflicts)),
     str(len(changed)),
     str(len(untracked)),
 ])
+
 print(out, end='')

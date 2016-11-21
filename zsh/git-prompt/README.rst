@@ -9,7 +9,7 @@ In particular the branch name, difference with remote branch, number of files st
 Examples
 --------
 
-The prompt may look like the following: 
+The prompt may look like the following:
 
 * ``(master↑3|✚1)``: on branch ``master``, ahead of remote by 3 commits, 1 file changed but not staged
 * ``(status|●2)``: on branch ``status``, 2 files staged
@@ -48,20 +48,4 @@ The symbols are as follows:
 	:↓m↑n: branches diverged, other by ``m`` commits, yours by ``n`` commits
 
 * Branch Symbol
-	When the branch name starts with a colon ``:``, it means it's actually a hash, not a branch (although it should be pretty clear, unless you name your branches like hashes :-)
-
-Install
--------
-
-#. Create the directory ``~/.zsh/git-prompt`` if it does not exist (this location is customizable).
-#. Move the file ``gitstatus.py`` into ``~/.zsh/git-prompt/``.
-#. Source the file ``zshrc.sh`` from your ``~/.zshrc`` config file, and, configure your prompt. So, somewhere in ``~/.zshrc``, you should have::
-
-	source path/to/zshrc.sh
-	# an example prompt
-	PROMPT='%B%m%~%b$(git_super_status) %# '
-
-#. You may also redefine the function ``git_super_status`` (after the ``source`` statement) to adapt it to your needs (to change the order in which the information is displayed).  Define the variable ``ZSH_THEME_GIT_PROMPT_NOCACHE`` in order to disable caching.  You may also change a number of variables (which name start with ``ZSH_THEME_GIT_PROMPT_``) to change the appearance of the prompt.  Take a look in the file ``zshrc.sh`` to see how the function ``git_super_status`` is defined, and what variables are available.
-#. Go in a git repository and test it!
-
-**Enjoy!**
+	When the branch name starts with a colon ``:``, it means it's actually a hash, not a branch (although it should be pretty clear, unless you name your branches like hashes.
