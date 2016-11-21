@@ -98,6 +98,8 @@ def get_status_vector(line):
         elif st[0] != ' ':
             staged.append(st)
 
+stdout = open_git_status()
+
 # collect git status information
 untracked, staged, changed, conflicts = [], [], [], []
 ahead, behind = 0, 0
