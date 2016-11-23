@@ -1,14 +1,13 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from __future__ import print_function
-# -*- coding: UTF-8 -*-
-
-# This is from Kentaro Wada's modifications of Olivier Verdier's
-# "zsh-git-prompt": https://git.io/vXNYp
-
 import sys
 import re
 import shlex
 from subprocess import Popen, PIPE, check_output
+
+# This is from Kentaro Wada's modifications of Olivier Verdier's
+# "zsh-git-prompt": https://git.io/vXNYp
 
 
 def get_tagname_or_hash():
@@ -64,6 +63,9 @@ def get_status_vector(line):
     Accepts a line of status and produces a vector representing
     (ahead, behind, untracked, staged, changed, conflicts)
     """
+    branch = None
+    untracked, staged, changed, conflicts = [], [], [], []
+    ahead, behind = 0, 0
     st = (line[0], line[1], line[2:])
 
     if st[0] == '#' and st[1] == '#':
@@ -97,19 +99,22 @@ def get_status_vector(line):
             conflicts.append(st)
         elif st[0] != ' ':
             staged.append(st)
+    return branch, (ahead, behind, untracked, changed, conflicts)
 
 stdout = open_git_status()
 
 # collect git status information
-untracked, staged, changed, conflicts = [], [], [], []
-ahead, behind = 0, 0
 status_vectors = [
     get_status_vector(line)
     for line in stdout.decode('utf-8').splitlines()
 ]
 
 
-# TODO sum the vectors
+branch = status_vectors[0][0]
+ahead = zip
+print ahead
+
+
 
 out = ' '.join([
     branch,

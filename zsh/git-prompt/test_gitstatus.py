@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
+import unittest
 from mock import patch, Mock
-from unittest import TestCase
 from gitstatus import get_status_vector
 from gitstatus import ahead_behind, index_state
 
 
-class GitStatusProcessTestCase(object):
+class GitStatusProcessTestCase(unittest.TestCase):
     @patch("gitstatus.Popen")
     def test_open_git_status(self, pipe_open_cls_mock):
         status = StringIO("## single-git-call-prompt\n M zsh/git-prompt/tests_gitstatus.py")
@@ -67,7 +68,7 @@ class GitStatusProcessTestCase(object):
         )
 
 
-class GitStatusDisplayTestCase(object):
+class GitStatusDisplayTestCase(unittest.TestCase):
     def test_ahead_behind__upto_date(self):
         self.assertEqual(u"", ahead_behind(0, 0))
 
@@ -98,3 +99,7 @@ class GitStatusDisplayTestCase(object):
 
     def test_index_state__order(self):
         self.assertEqual(u"✖1●2✚3", index_state(0, 1, 2, 3))
+
+
+if __name__ == "__main__":
+    unittest.__main__()
