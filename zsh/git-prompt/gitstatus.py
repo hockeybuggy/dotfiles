@@ -31,12 +31,14 @@ def get_tagname_or_hash():
     return None
 
 
-def display_branch_name(branch):
-    return ""
-
-
 def display_index_state(untracked, staged, changed, conflicts):
-    return ""
+    return "asfd"
+    return " ".join([
+        str(staged),
+        str(conflicts),
+        str(changed),
+        str(untracked),
+    ])
 
 
 def display_ahead_behind(ahead, behind):
@@ -99,7 +101,7 @@ def get_status_vector(line):
             conflicts.append(st)
         elif st[0] != ' ':
             staged.append(st)
-    return branch, (ahead, behind, untracked, changed, conflicts)
+    return (branch, ahead, behind, staged, untracked, changed, conflicts)
 
 stdout = open_git_status()
 
@@ -110,22 +112,25 @@ status_vectors = [
 ]
 
 
-branch = status_vectors[0][0]
-ahead = zip
-print ahead
+# TODO this isn't great replace the lists and tuples with a dict
+branch = [status[0] for status in status_vectors if status[0]][0]
+
+ahead = sum(status[1] for status in status_vectors)
+behind = sum(status[2] for status in status_vectors)
+
+staged = sum(len(status[3]) for status in status_vectors)
+untracked = sum(len(status[4]) for status in status_vectors)
+changed = sum(len(status[5]) for status in status_vectors)
+conflicts = sum(len(status[6]) for status in status_vectors)
 
 
 
-out = ' '.join([
+out = ''.join([
     branch,
-    "|",
-    str(ahead),
-    str(behind),
+    " | ",
+    display_ahead_behind(ahead, behind),
+    display_index_state(untracked, staged, changed, conflicts),
 
-    str(len(staged)),
-    str(len(conflicts)),
-    str(len(changed)),
-    str(len(untracked)),
 ])
 
 print(out, end='')
