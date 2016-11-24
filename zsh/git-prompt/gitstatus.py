@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 import sys
@@ -32,12 +32,16 @@ def get_tagname_or_hash():
 
 
 def index_state(untracked, staged, changed, conflicts):
-    return " ".join([
-        str(staged),
-        str(conflicts),
-        str(changed),
-        str(untracked),
-    ])
+    state = u""
+    if conflicts:
+        state += u"✖{}".format(conflicts)
+    if staged:
+        state += u"●{}".format(staged)
+    if changed:
+        state += u"✚{}".format(changed)
+    if untracked:
+        state += u"…"
+    return state
 
 
 def ahead_behind(ahead, behind):
@@ -116,11 +120,9 @@ stdout = open_git_status()
 
 # collect git status information
 status_vectors = [
-    get_status_vector(line)
-    for line in stdout.decode('utf-8').splitlines()
+    get_status_vector(line) for line in stdout.decode('utf-8').splitlines()
 ]
 
-# TODO this isn't great replace the lists and tuples with a dict
 branch = [status["branch"] for status in status_vectors if status["branch"]][0]
 
 ahead = sum(status["ahead"] for status in status_vectors)
@@ -132,13 +134,13 @@ changed = sum(status["changed"] for status in status_vectors)
 conflicts = sum(status["conflicts"] for status in status_vectors)
 
 
-output = ''.join([
-    "(",
+output = u"".join([
+    u"(",
     branch,
-    " | ",
+    u" | ",
     ahead_behind(ahead, behind),
     index_state(untracked, staged, changed, conflicts),
-    ")",
+    u")",
 ])
 
 print(output)
