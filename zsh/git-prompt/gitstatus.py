@@ -100,7 +100,16 @@ def get_status_vector(line):
             conflicts.append(st)
         elif st[0] != ' ':
             staged.append(st)
-    return (branch, ahead, behind, staged, untracked, changed, conflicts)
+
+    return dict(
+        branch=branch,
+        ahead=ahead,
+        behind=behind,
+        staged=len(staged),
+        untracked=len(untracked),
+        changed=len(changed),
+        conflicts=len(conflicts),
+    )
 
 
 stdout = open_git_status()
@@ -112,15 +121,15 @@ status_vectors = [
 ]
 
 # TODO this isn't great replace the lists and tuples with a dict
-branch = [status[0] for status in status_vectors if status[0]][0]
+branch = [status["branch"] for status in status_vectors if status["branch"]][0]
 
-ahead = sum(status[1] for status in status_vectors)
-behind = sum(status[2] for status in status_vectors)
+ahead = sum(status["ahead"] for status in status_vectors)
+behind = sum(status["behind"] for status in status_vectors)
 
-staged = sum(len(status[3]) for status in status_vectors)
-untracked = sum(len(status[4]) for status in status_vectors)
-changed = sum(len(status[5]) for status in status_vectors)
-conflicts = sum(len(status[6]) for status in status_vectors)
+staged = sum(status["staged"] for status in status_vectors)
+untracked = sum(status["untracked"] for status in status_vectors)
+changed = sum(status["changed"] for status in status_vectors)
+conflicts = sum(status["conflicts"] for status in status_vectors)
 
 
 output = ''.join([

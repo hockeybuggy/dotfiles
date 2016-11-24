@@ -37,13 +37,13 @@ class GitStatusProcessTestCase(unittest.TestCase):
         self.fail()  # TODO improve
 
     def test_get_status_vector__ahead(self):
-        expected = dict(branch=None, ahead=1, behind=0, untracked=0, staged=0,
-                        changed=0, conflicts=0)
+        expected = dict(branch="branch-name", ahead=1, behind=0, untracked=0,
+                        staged=0, changed=0, conflicts=0)
         self.assertDictEqual(expected, get_status_vector("## branch-name"))
 
     def test_get_status_vector__behind(self):
-        expected = dict(branch=None, ahead=0, behind=1, untracked=0, staged=0,
-                        changed=0, conflicts=0)
+        expected = dict(branch="branch-name", ahead=0, behind=1, untracked=0,
+                        staged=0, changed=0, conflicts=0)
         self.assertDictEqual(expected, get_status_vector("## branch-name"))
 
     def test_get_status_vector__untracked(self):
