@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import unittest
+import StringIO
+
 from mock import patch, Mock
+
+from gitstatus import open_git_status
 from gitstatus import get_status_vector
 from gitstatus import ahead_behind, index_state
 
@@ -30,41 +34,48 @@ class GitStatusProcessTestCase(unittest.TestCase):
         self.assertTrue(self.sys_mock.called)
 
     def test_process_file(self):
-        self.fail() # TODO improve
+        self.fail()  # TODO improve
 
     def test_get_status_vector__ahead(self):
-        self.assertTupleEqual(
-            (1, 0, 0, 0, 0, 0),
-            get_status_vector("## branch-name")
-        )
+        expected = dict(branch=None, ahead=1, behind=0, untracked=0, staged=0,
+                        changed=0, conflicts=0)
+        self.assertDictEqual(expected, get_status_vector("## branch-name"))
 
     def test_get_status_vector__behind(self):
-        self.assertTupleEqual(
-            (0, 1, 0, 0, 0, 0),
-            get_status_vector("## branch-name")
-        )
+        expected = dict(branch=None, ahead=0, behind=1, untracked=0, staged=0,
+                        changed=0, conflicts=0)
+        self.assertDictEqual(expected, get_status_vector("## branch-name"))
 
     def test_get_status_vector__untracked(self):
-        self.assertTupleEqual(
-            (0, 0, 1, 0, 0, 0),
+        expected = dict(branch=None, ahead=0, behind=0, untracked=1, staged=0,
+                        changed=0, conflicts=0)
+        self.assertDictEqual(
+            expected,
             get_status_vector("?? zsh/git-prompt/tests_gitstatus.py")
         )
 
     def test_get_status_vector__staged(self):
-        self.assertTupleEqual(
-            (0, 0, 0, 1, 0, 0),
+        expected = dict(branch=None, ahead=0, behind=0, untracked=0, staged=1,
+                        changed=0, conflicts=0)
+        self.assertDictEqual(
+            expected,
             get_status_vector("M  zsh/git-prompt/README.rst")
         )
 
     def test_get_status_vector__changed(self):
-        self.assertTupleEqual(
-            (0, 0, 0, 0, 1, 0),
-            get_status_vector(" M zsh/git-prompt/gitstatus.py")
+        expected = dict(branch=None, ahead=0, behind=0, untracked=0, staged=0,
+                        changed=1, conflicts=0)
+        self.assertDictEqual(
+            expected,
+            get_status_vector(" M zsh/git-prompt/README.rst")
         )
+
     def test_get_status_vector__conflicts(self):
-        self.assertTupleEqual(
-            (0, 0, 0, 0, 0, 1),
-            get_status_vector("U  zsh/git-prompt/README.rst")
+        expected = dict(branch=None, ahead=0, behind=0, untracked=0, staged=0,
+                        changed=0, conflicts=1)
+        self.assertDictEqual(
+            expected,
+            get_status_vector("UU zsh/git-prompt/README.rst")
         )
 
 
@@ -80,7 +91,6 @@ class GitStatusDisplayTestCase(unittest.TestCase):
 
     def test_ahead_behind__mismatched(self):
         self.assertEqual(u"↓2↑3", ahead_behind(2, 3))
-
 
     def test_index_state__clean(self):
         self.assertEqual(u"✔ ", index_state(0, 0, 0, 0))
@@ -102,4 +112,4 @@ class GitStatusDisplayTestCase(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.__main__()
+    unittest.main()

@@ -31,7 +31,7 @@ def get_tagname_or_hash():
     return None
 
 
-def display_index_state(untracked, staged, changed, conflicts):
+def index_state(untracked, staged, changed, conflicts):
     return " ".join([
         str(staged),
         str(conflicts),
@@ -40,7 +40,7 @@ def display_index_state(untracked, staged, changed, conflicts):
     ])
 
 
-def display_ahead_behind(ahead, behind):
+def ahead_behind(ahead, behind):
     # Accepts two ints representing the number of commits ahead and the number
     # of commits behind the remote.
     # Returns a string that is a visual representation of the
@@ -127,8 +127,8 @@ output = ''.join([
     "(",
     branch,
     " | ",
-    display_ahead_behind(ahead, behind),
-    display_index_state(untracked, staged, changed, conflicts),
+    ahead_behind(ahead, behind),
+    index_state(untracked, staged, changed, conflicts),
     ")",
 ])
 
