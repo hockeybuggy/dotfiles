@@ -41,14 +41,16 @@ def index_state(untracked, staged, changed, conflicts):
         state += u"✚{}".format(changed)
     if untracked:
         state += u"…"
+    if not state:
+        state = u"✔ "
     return state
 
 
 def ahead_behind(ahead, behind):
     # Accepts two ints representing the number of commits ahead and the number
-    # of commits behind the remote.
-    # Returns a string that is a visual representation of the
-    return ""
+    # of commits behind the remote. Returns a string that is a visual
+    # representation of how ahead or behind it is
+    return u""
 
 
 def open_git_status():
@@ -84,7 +86,7 @@ def get_status_vector(line):
             # current and remote branch info
             branch, rest = st[2].strip().split('...')
             if len(rest.split(' ')) == 1:
-                # remote_branch = rest.split(' ')[0]
+                # remote_branch = rest.split(' ')[0]  # This was here before me
                 pass
             else:
                 # ahead or behind
