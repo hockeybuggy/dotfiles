@@ -36,6 +36,7 @@ export EXERCISM_CONFIG_FILE=$XDG_CONFIG_HOME/exercism
 alias -g L="| less"
 alias -g DN="> /dev/null"
 
+bindkey -s "^T" "^[Isudo ^[A" # "T" for "toughguy". credit -> thoughtbot
 
 #------------------------------
 # Settings
@@ -47,6 +48,7 @@ if [ "$(uname)" != "Darwin" ]; then
 fi
 
 source $ZSHDIR/git-prompt/zshrc.sh
+
 autoload -U colors && colors
 autoload -U compinit promptinit
 compinit
@@ -107,8 +109,6 @@ setprompt () {
     PS2=$'%_>'
 }
 setprompt
-
-bindkey -s "^T" "^[Isudo ^[A" # "T" for "toughguy". credit -> thoughtbot
 
 # Get Special keys working {{{2
 
