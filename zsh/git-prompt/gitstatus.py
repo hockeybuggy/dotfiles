@@ -32,7 +32,7 @@ def get_tagname_or_hash():
 
 
 def index_state(untracked, staged, changed, conflicts):
-    state = u""
+    state = u"" # TODO this name sucks
     if conflicts:
         state += u"✖{}".format(conflicts)
     if staged:
@@ -50,7 +50,12 @@ def ahead_behind(ahead, behind):
     # Accepts two ints representing the number of commits ahead and the number
     # of commits behind the remote. Returns a string that is a visual
     # representation of how ahead or behind it is
-    return u""
+    state = u""  # TODO this name sucks
+    if ahead:
+        state += u"↑{}".format(ahead)
+    if behind:
+        state += u"↓{}".format(behind)
+    return state
 
 
 def open_git_status():

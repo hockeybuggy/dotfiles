@@ -103,13 +103,13 @@ class GitStatusDisplayTestCase(unittest.TestCase):
         self.assertEqual(u"", ahead_behind(0, 0))
 
     def test_ahead_behind__ahead(self):
-        self.assertEqual(u"↓1", ahead_behind(1, 0))
+        self.assertEqual(u"↑1", ahead_behind(1, 0))
 
     def test_ahead_behind__behind(self):
-        self.assertEqual(u"↑2", ahead_behind(0, 2))
+        self.assertEqual(u"↓2", ahead_behind(0, 2))
 
     def test_ahead_behind__mismatched(self):
-        self.assertEqual(u"↓2↑3", ahead_behind(2, 3))
+        self.assertEqual(u"↑2↓3", ahead_behind(2, 3))
 
     def test_index_state__clean(self):
         self.assertEqual(u"✔ ", index_state(0, 0, 0, 0))
@@ -127,7 +127,7 @@ class GitStatusDisplayTestCase(unittest.TestCase):
         self.assertEqual(u"✖5", index_state(0, 0, 0, 5))
 
     def test_index_state__order(self):
-        self.assertEqual(u"✖1●2✚3", index_state(0, 1, 2, 3))
+        self.assertEqual(u"✖3●1✚2", index_state(0, 1, 2, 3))
 
 
 if __name__ == "__main__":
