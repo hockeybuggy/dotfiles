@@ -29,7 +29,7 @@ class GitStatusProcessTestCase(unittest.TestCase):
     def test_open_git_status__fail(self, sys_mock, pipe_open_cls_mock):
         popen_mock = Mock()
         popen_mock.returncode = 1
-        popen_mock.communicate.return_value = (status, None)
+        popen_mock.communicate.return_value = ("", None)
         pipe_open_cls_mock.return_value = popen_mock
 
         open_git_status()
@@ -42,19 +42,28 @@ class GitStatusProcessTestCase(unittest.TestCase):
         self.assertDictEqual(expected, get_status_vector("## branch-name"))
 
     def test_get_status_vector__ahead(self):
-        expected = dict(branch="branch-name", ahead=1, behind=0, untracked=0,
+        expected = dict(branch="master", ahead=1, behind=0, untracked=0,
                         staged=0, changed=0, conflicts=0)
-        self.assertDictEqual(expected, get_status_vector("## master...origin/master  [ahead 1]"))
+        self.assertDictEqual(
+            expected,
+            get_status_vector("## master...origin/master [ahead 1]")
+        )
 
     def test_get_status_vector__behind(self):
-        expected = dict(branch="branch-name", ahead=0, behind=1, untracked=0,
+        expected = dict(branch="master", ahead=0, behind=1, untracked=0,
                         staged=0, changed=0, conflicts=0)
-        self.assertDictEqual(expected, get_status_vector("## master...origin/master  [behind 1]"))
+        self.assertDictEqual(
+            expected,
+            get_status_vector("## master...origin/master [behind 1]")
+        )
 
     def test_get_status_vector__ahead_and_behind(self):
-        expected = dict(branch="branch-name", ahead=2, behind=3, untracked=0,
+        expected = dict(branch="master", ahead=2, behind=3, untracked=0,
                         staged=0, changed=0, conflicts=0)
-        self.assertDictEqual(expected, get_status_vector("## master...origin/master  [ahead 2, behind 3]"))
+        self.assertDictEqual(
+            expected,
+            get_status_vector("## master...origin/master [ahead 2, behind 3]")
+        )
 
     def test_get_status_vector__untracked(self):
         expected = dict(branch=None, ahead=0, behind=0, untracked=1, staged=0,
