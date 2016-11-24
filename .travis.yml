@@ -5,4 +5,4 @@ python:
   - "3.5"
 
 # Run the tests
-script: python scripts/test.py
+script: ./scripts/test
