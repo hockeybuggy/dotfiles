@@ -127,7 +127,7 @@ stdout = open_git_status()
 
 # collect git status information
 status_vectors = [
-    get_status_vector(line) for line in stdout.decode('utf-8').splitlines()
+    get_status_vector(line) for line in stdout.decode("utf-8").splitlines()
 ]
 
 branch = [status["branch"] for status in status_vectors if status["branch"]][0]

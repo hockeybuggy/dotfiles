@@ -26,15 +26,15 @@ class GitStatusProcessTestCase(unittest.TestCase):
 
     @patch("gitstatus.sys")
     @patch("gitstatus.Popen")
-    def test_open_git_status__fail(self, sys_mock, pipe_open_cls_mock):
+    def test_open_git_status__fail(self, pipe_open_cls_mock, sys_mock):
         popen_mock = Mock()
         popen_mock.returncode = 1
-        popen_mock.communicate.return_value = ("", None)
+        popen_mock.communicate.return_value = (" ", None)
         pipe_open_cls_mock.return_value = popen_mock
 
         open_git_status()
 
-        self.assertTrue(self.sys_mock.called)
+        self.assertTrue(sys_mock.exit.called)
 
     def test_get_status_vector__upto_date_and_clean(self):
         expected = dict(branch="branch-name", ahead=0, behind=0, untracked=0,
