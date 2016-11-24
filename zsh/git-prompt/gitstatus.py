@@ -32,7 +32,6 @@ def get_tagname_or_hash():
 
 
 def display_index_state(untracked, staged, changed, conflicts):
-    return "asfd"
     return " ".join([
         str(staged),
         str(conflicts),
@@ -103,6 +102,7 @@ def get_status_vector(line):
             staged.append(st)
     return (branch, ahead, behind, staged, untracked, changed, conflicts)
 
+
 stdout = open_git_status()
 
 # collect git status information
@@ -110,7 +110,6 @@ status_vectors = [
     get_status_vector(line)
     for line in stdout.decode('utf-8').splitlines()
 ]
-
 
 # TODO this isn't great replace the lists and tuples with a dict
 branch = [status[0] for status in status_vectors if status[0]][0]
@@ -124,13 +123,13 @@ changed = sum(len(status[5]) for status in status_vectors)
 conflicts = sum(len(status[6]) for status in status_vectors)
 
 
-
-out = ''.join([
+output = ''.join([
+    "(",
     branch,
     " | ",
     display_ahead_behind(ahead, behind),
     display_index_state(untracked, staged, changed, conflicts),
-
+    ")",
 ])
 
-print(out, end='')
+print(output)
