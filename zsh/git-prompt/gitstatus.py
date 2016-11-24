@@ -6,7 +6,7 @@ import re
 import shlex
 from subprocess import Popen, PIPE, check_output
 
-# This is from Kentaro Wada's modifications of Olivier Verdier's
+# This is based on Kentaro Wada's modifications of Olivier Verdier's
 # "zsh-git-prompt": https://git.io/vXNYp
 
 
@@ -22,7 +22,7 @@ def get_tagname_or_hash():
     # get tagname
     m = re.search('tag: .*[,\)]', output)
     if m:
-        tagname = 'tags/' + output[m.start()+len('tag: '): m.end()-1]
+        tagname = u'tags/' + output[m.start()+len('tag: '): m.end()-1]
 
     if tagname:
         return tagname
@@ -63,7 +63,7 @@ def open_git_status():
     `git status --porcelain --branch` can collect all information
     branch, remote_branch, untracked, staged, changed, conflicts, ahead, behind
     """
-    po = Popen(['git', 'status', '--porcelain', '--branch'], stdout=PIPE, stderr=PIPE)
+    po = Popen(["git", "status", "--porcelain", "--branch"], stdout=PIPE, stderr=PIPE)
     stdout, _ = po.communicate()
     if po.returncode != 0:
         sys.exit(0)  # Not a git repository
@@ -149,5 +149,6 @@ output = u"".join([
     index_state(untracked, staged, changed, conflicts),
     u")",
 ])
+
 
 print(output)
