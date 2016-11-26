@@ -119,7 +119,7 @@ cnoreabbrev Ag Ack
 " Airline
 set noshowmode " Hide the default mode display
 let g:airline_theme="solarized"
-"let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts=1
 
 " Speeds the timeout for the status line
 if ! has('gui_running')
