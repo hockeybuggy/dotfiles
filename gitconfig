@@ -45,5 +45,8 @@
 	pick   = cherry-pick
 	who   = blame
 
+[gpg]
+	program = gpg2
+
 [commit]
-	gpgsign = false
+	gpgsign = true
