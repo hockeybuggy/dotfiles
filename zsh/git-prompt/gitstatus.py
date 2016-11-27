@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-import os
 import re
 import shlex
 import sys
@@ -14,7 +13,7 @@ COLOR_OUTPUT = True
 
 
 class tcolors:
-    _RED =  '\033[0;31m'  # What the colours look like with Solarized on
+    _RED = '\033[0;31m'  # What the colours look like with Solarized on
     _BLUE = '\033[0;34m'
     _CYAN = '\033[0;36m'
     _PURPLE = '\033[1;35m'
@@ -65,30 +64,31 @@ def get_tagname_or_hash():
 
 
 def index_state(untracked, staged, changed, conflicts):
-    state = u""  # TODO this name sucks
+    outstr = u""
     if conflicts:
-        state += term_color(u"✖{}".format(conflicts), tcolors.CONFLICT)
+        outstr += term_color(u"✖{}".format(conflicts), tcolors.CONFLICT)
     if staged:
-        state += term_color(u"●{}".format(staged), tcolors.STAGED)
+        outstr += term_color(u"●{}".format(staged), tcolors.STAGED)
     if changed:
-        state += term_color(u"✚{}".format(changed), tcolors.CHANGED)
+        outstr += term_color(u"✚{}".format(changed), tcolors.CHANGED)
     if untracked:
-        state += term_color(u"…", tcolors.UNTRACKED)
-    if not state:
-        state = term_color(u"✔ ", tcolors.CLEAN)
-    return state
+        outstr += term_color(u"…", tcolors.UNTRACKED)
+    if not outstr:
+        outstr = term_color(u"✔ ", tcolors.CLEAN)
+    return outstr
 
 
 def ahead_behind(ahead, behind):
     # Accepts two ints representing the number of commits ahead and the number
-    # of commits behind the remote. Returns a string that is a visual
-    # representation of how ahead or behind it is
-    state = u""  # TODO this name sucks
+    # of commits behind the remote.
+    # Returns a string that is a visual representation of how many commits
+    # ahead or behind the current branch is compared to the remote.
+    outstr = u""
     if ahead:
-        state += term_color(u"↑{}".format(ahead), tcolors.AHEAD)
+        outstr += term_color(u"↑{}".format(ahead), tcolors.AHEAD)
     if behind:
-        state += term_color(u"↓{}".format(behind), tcolors.BEHIND)
-    return state
+        outstr += term_color(u"↓{}".format(behind), tcolors.BEHIND)
+    return outstr
 
 
 def open_git_status():
