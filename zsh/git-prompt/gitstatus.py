@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-import sys
+import os
 import re
 import shlex
+import sys
 from subprocess import Popen, PIPE, check_output
 
 # This is based on Kentaro Wada's modifications of Olivier Verdier's
@@ -166,13 +167,13 @@ branch_name = [status["branch"] for status in status_vectors if status["branch"]
 branch = term_color(branch_name, tcolors.BRANCH)
 
 
-ahead = sum(status["ahead"] for status in status_vectors) + 1
-behind = sum(status["behind"] for status in status_vectors) + 1
+ahead = sum(status["ahead"] for status in status_vectors)
+behind = sum(status["behind"] for status in status_vectors)
 
-staged = sum(status["staged"] for status in status_vectors) + 1
-untracked = sum(status["untracked"] for status in status_vectors) + 1
-changed = sum(status["changed"] for status in status_vectors) + 1
-conflicts = sum(status["conflicts"] for status in status_vectors) + 1
+staged = sum(status["staged"] for status in status_vectors)
+untracked = sum(status["untracked"] for status in status_vectors)
+changed = sum(status["changed"] for status in status_vectors)
+conflicts = sum(status["conflicts"] for status in status_vectors)
 
 
 output = u"".join([

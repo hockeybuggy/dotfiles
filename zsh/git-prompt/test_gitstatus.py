@@ -6,6 +6,7 @@ from mock import patch, Mock
 from gitstatus import open_git_status
 from gitstatus import get_status_vector
 from gitstatus import ahead_behind, index_state
+from gitstatus import term_color, tcolors
 
 
 class GitStatusProcessTestCase(unittest.TestCase):
@@ -103,31 +104,57 @@ class GitStatusDisplayTestCase(unittest.TestCase):
         self.assertEqual(u"", ahead_behind(0, 0))
 
     def test_ahead_behind__ahead(self):
-        self.assertEqual(u"↑1", ahead_behind(1, 0))
+        self.assertEqual(term_color(u"↑1", tcolors.AHEAD), ahead_behind(1, 0))
 
     def test_ahead_behind__behind(self):
-        self.assertEqual(u"↓2", ahead_behind(0, 2))
+        self.assertEqual(term_color(u"↓2", tcolors.BEHIND), ahead_behind(0, 2))
 
     def test_ahead_behind__mismatched(self):
-        self.assertEqual(u"↑2↓3", ahead_behind(2, 3))
+        self.assertEqual(
+            term_color(u"↑2", tcolors.AHEAD) + term_color(u"↓3", tcolors.BEHIND),
+            ahead_behind(2, 3)
+        )
 
     def test_index_state__clean(self):
-        self.assertEqual(u"✔ ", index_state(0, 0, 0, 0))
+        self.assertEqual(
+            term_color(u"✔ ", tcolors.CLEAN),
+            index_state(0, 0, 0, 0)
+        )
 
     def test_index_state__untracked(self):
-        self.assertEqual(u"…", index_state(2, 0, 0, 0))
+        self.assertEqual(
+            term_color(u"…", tcolors.UNTRACKED),
+            index_state(2, 0, 0, 0)
+        )
 
     def test_index_state__staged(self):
-        self.assertEqual(u"●3", index_state(0, 3, 0, 0))
+        self.assertEqual(
+            term_color(u"●3", tcolors.STAGED),
+            index_state(0, 3, 0, 0)
+        )
 
     def test_index_state__changed(self):
-        self.assertEqual(u"✚4", index_state(0, 0, 4, 0))
+        self.assertEqual(
+            term_color(u"✚4", tcolors.CHANGED),
+            index_state(0, 0, 4, 0)
+        )
 
     def test_index_state__conflicts(self):
-        self.assertEqual(u"✖5", index_state(0, 0, 0, 5))
+        self.assertEqual(
+            term_color(u"✖5", tcolors.CONFLICT),
+            index_state(0, 0, 0, 5)
+        )
 
     def test_index_state__order(self):
-        self.assertEqual(u"✖3●1✚2", index_state(0, 1, 2, 3))
+        self.assertEqual(
+            "".join([
+                term_color(u"✖3", tcolors.CONFLICT),
+                term_color(u"●1", tcolors.STAGED),
+                term_color(u"✚2", tcolors.CHANGED),
+            ]),
+            index_state(0, 1, 2, 3)
+        )
+
 
 
 if __name__ == "__main__":
