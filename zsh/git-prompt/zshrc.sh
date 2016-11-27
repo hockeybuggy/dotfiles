@@ -39,7 +39,6 @@ function update_current_git_vars() {
     local gitstatus="$__GIT_PROMPT_DIR/gitstatus.py"
     _GIT_STATUS=`${gitstatus}`
     __CURRENT_GIT_STATUS=("${(@f)_GIT_STATUS}")
-    echo $__CURRENT_GIT_STATUS
 }
 
 git_super_status() {

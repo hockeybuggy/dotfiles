@@ -13,26 +13,18 @@ COLOR_OUTPUT = True
 
 
 class tcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
     RESET = '\033[0m'
     SEPARATOR = '\033[92m'
 
-    BRANCH = '\033[95m'
-    AHEAD = '\033[94m'
-    BEHIND = '\033[94m'
+    BRANCH = '\033[1;35m'
+    AHEAD = '\033[0;34m'
+    BEHIND = '\033[0;31m'
 
-    CONFLICT = '\033[92m'
-    STAGED = '\033[92m'
-    CHANGED = '\033[95m'
-    UNTRACKED = '\033[95m'
-    CLEAN = '\033[92m'
+    CONFLICT = '\033[0;34m'
+    STAGED = '\033[0;32m'
+    CHANGED = '\033[0;34m'
+    UNTRACKED = '\033[0;33m'
+    CLEAN = '\033[0;32m'
 
 
 def term_color(message, color_code):
