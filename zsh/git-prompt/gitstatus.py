@@ -13,18 +13,26 @@ COLOR_OUTPUT = True
 
 
 class tcolors:
+    _RED =  '\033[0;31m'  # What the colours look like with Solarized on
+    _BLUE = '\033[0;34m'
+    _CYAN = '\033[0;36m'
+    _PURPLE = '\033[1;35m'
+    _GREEN = '\033[0;32m'
+    _YELLOW = '\033[0;33m'
+    _GREY = '\033[92m'
+
     RESET = '\033[0m'
-    SEPARATOR = '\033[92m'
+    SEPARATOR = _GREY
 
-    BRANCH = '\033[1;35m'
-    AHEAD = '\033[0;34m'
-    BEHIND = '\033[0;31m'
+    BRANCH = _PURPLE
+    AHEAD = _BLUE
+    BEHIND = _RED
 
-    CONFLICT = '\033[0;34m'
-    STAGED = '\033[0;32m'
-    CHANGED = '\033[0;34m'
-    UNTRACKED = '\033[0;33m'
-    CLEAN = '\033[0;32m'
+    CONFLICT = _RED
+    STAGED = _GREEN
+    CHANGED = _BLUE
+    UNTRACKED = _YELLOW
+    CLEAN = _GREEN
 
 
 def term_color(message, color_code):
@@ -157,20 +165,20 @@ branch_name = [status["branch"] for status in status_vectors if status["branch"]
 branch = term_color(branch_name, tcolors.BRANCH)
 
 
-ahead = sum(status["ahead"] for status in status_vectors)
-behind = sum(status["behind"] for status in status_vectors)
+ahead = sum(status["ahead"] for status in status_vectors) + 1
+behind = sum(status["behind"] for status in status_vectors) + 1
 
-staged = sum(status["staged"] for status in status_vectors)
-untracked = sum(status["untracked"] for status in status_vectors)
-changed = sum(status["changed"] for status in status_vectors)
-conflicts = sum(status["conflicts"] for status in status_vectors)
+staged = sum(status["staged"] for status in status_vectors) + 1
+untracked = sum(status["untracked"] for status in status_vectors) + 1
+changed = sum(status["changed"] for status in status_vectors) + 1
+conflicts = sum(status["conflicts"] for status in status_vectors) + 1
 
 
 output = u"".join([
     term_color(u"(", tcolors.SEPARATOR),
     branch,
-    term_color(u"|", tcolors.SEPARATOR),
     ahead_behind(ahead, behind),
+    term_color(u"|", tcolors.SEPARATOR),
     index_state(untracked, staged, changed, conflicts),
     term_color(u")", tcolors.SEPARATOR),
 ])
