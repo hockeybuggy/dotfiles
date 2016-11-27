@@ -144,7 +144,7 @@ conflicts = sum(status["conflicts"] for status in status_vectors)
 output = u"".join([
     u"(",
     branch,
-    u" | ",
+    u"|",
     ahead_behind(ahead, behind),
     index_state(untracked, staged, changed, conflicts),
     u")",
