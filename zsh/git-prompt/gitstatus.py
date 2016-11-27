@@ -17,6 +17,7 @@ class tcolors:
     _BLUE = '\033[0;34m'
     _CYAN = '\033[0;36m'
     _PURPLE = '\033[1;35m'
+    _PINK = '\033[0;35m'
     _GREEN = '\033[0;32m'
     _YELLOW = '\033[0;33m'
     _GREY = '\033[92m'
@@ -25,8 +26,8 @@ class tcolors:
     SEPARATOR = _GREY
 
     BRANCH = _PURPLE
-    AHEAD = _BLUE
-    BEHIND = _RED
+    AHEAD = _CYAN
+    BEHIND = _PINK
 
     CONFLICT = _RED
     STAGED = _GREEN
