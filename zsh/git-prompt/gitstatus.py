@@ -11,6 +11,7 @@ from subprocess import Popen, PIPE, check_output
 
 COLOR_OUTPUT = True
 
+
 class tcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -21,12 +22,17 @@ class tcolors:
     UNDERLINE = '\033[4m'
 
     RESET = '\033[0m'
+    SEPARATOR = '\033[92m'
 
-    BRANCH = '\033[91m'
+    BRANCH = '\033[95m'
     AHEAD = '\033[94m'
     BEHIND = '\033[94m'
 
-    CHECKMARK = '\033[92m'
+    CONFLICT = '\033[92m'
+    STAGED = '\033[92m'
+    CHANGED = '\033[95m'
+    UNTRACKED = '\033[95m'
+    CLEAN = '\033[92m'
 
 
 def term_color(message, color_code):
@@ -57,17 +63,17 @@ def get_tagname_or_hash():
 
 
 def index_state(untracked, staged, changed, conflicts):
-    state = u"" # TODO this name sucks
+    state = u""  # TODO this name sucks
     if conflicts:
-        state += u"✖{}".format(conflicts)
+        state += term_color(u"✖{}".format(conflicts), tcolors.CONFLICT)
     if staged:
-        state += u"●{}".format(staged)
+        state += term_color(u"●{}".format(staged), tcolors.STAGED)
     if changed:
-        state += u"✚{}".format(changed)
+        state += term_color(u"✚{}".format(changed), tcolors.CHANGED)
     if untracked:
-        state += u"…"
+        state += term_color(u"…", tcolors.UNTRACKED)
     if not state:
-        state = u"✔ "
+        state = term_color(u"✔ ", tcolors.CLEAN)
     return state
 
 
@@ -77,9 +83,9 @@ def ahead_behind(ahead, behind):
     # representation of how ahead or behind it is
     state = u""  # TODO this name sucks
     if ahead:
-        state += u"↑{}".format(ahead)
+        state += term_color(u"↑{}".format(ahead), tcolors.AHEAD)
     if behind:
-        state += u"↓{}".format(behind)
+        state += term_color(u"↓{}".format(behind), tcolors.BEHIND)
     return state
 
 
@@ -169,12 +175,12 @@ conflicts = sum(status["conflicts"] for status in status_vectors)
 
 
 output = u"".join([
-    u"(",
+    term_color(u"(", tcolors.SEPARATOR),
     branch,
-    u"|",
+    term_color(u"|", tcolors.SEPARATOR),
     ahead_behind(ahead, behind),
     index_state(untracked, staged, changed, conflicts),
-    u")",
+    term_color(u")", tcolors.SEPARATOR),
 ])
 
 print(output)
