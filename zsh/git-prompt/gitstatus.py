@@ -9,6 +9,31 @@ from subprocess import Popen, PIPE, check_output
 # This is based on Kentaro Wada's modifications of Olivier Verdier's
 # "zsh-git-prompt": https://git.io/vXNYp
 
+COLOR_OUTPUT = True
+
+class tcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+    RESET = '\033[0m'
+
+    BRANCH = '\033[91m'
+    AHEAD = '\033[94m'
+    BEHIND = '\033[94m'
+
+    CHECKMARK = '\033[92m'
+
+
+def term_color(message, color_code):
+    if not COLOR_OUTPUT:
+        return message
+    return color_code + message + tcolors.RESET
+
 
 def get_tagname_or_hash():
     """return tagname if exists else hash"""
@@ -130,7 +155,9 @@ status_vectors = [
     get_status_vector(line) for line in stdout.decode("utf-8").splitlines()
 ]
 
-branch = [status["branch"] for status in status_vectors if status["branch"]][0]
+branch_name = [status["branch"] for status in status_vectors if status["branch"]][0]
+branch = term_color(branch_name, tcolors.BRANCH)
+
 
 ahead = sum(status["ahead"] for status in status_vectors)
 behind = sum(status["behind"] for status in status_vectors)
