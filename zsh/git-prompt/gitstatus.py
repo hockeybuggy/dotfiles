@@ -156,33 +156,35 @@ def get_status_vector(line):
     )
 
 
-stdout = open_git_status()
+def git_status_string():
+    stdout = open_git_status()
 
-# collect git status information
-status_vectors = [
-    get_status_vector(line) for line in stdout.decode("utf-8").splitlines()
-]
+    # collect git status information
+    status_vectors = [
+        get_status_vector(line) for line in stdout.decode("utf-8").splitlines()
+    ]
 
-branch_name = [status["branch"] for status in status_vectors if status["branch"]][0]
-branch = term_color(branch_name, tcolors.BRANCH)
+    branch_name = [status["branch"] for status in status_vectors if status["branch"]][0]
+    branch = term_color(branch_name, tcolors.BRANCH)
+
+    ahead = sum(status["ahead"] for status in status_vectors)
+    behind = sum(status["behind"] for status in status_vectors)
+
+    staged = sum(status["staged"] for status in status_vectors)
+    untracked = sum(status["untracked"] for status in status_vectors)
+    changed = sum(status["changed"] for status in status_vectors)
+    conflicts = sum(status["conflicts"] for status in status_vectors)
+
+    return u"".join([
+        term_color(u"(", tcolors.SEPARATOR),
+        branch,
+        ahead_behind(ahead, behind),
+        term_color(u"|", tcolors.SEPARATOR),
+        index_state(untracked, staged, changed, conflicts),
+        term_color(u")", tcolors.SEPARATOR),
+    ])
 
 
-ahead = sum(status["ahead"] for status in status_vectors)
-behind = sum(status["behind"] for status in status_vectors)
-
-staged = sum(status["staged"] for status in status_vectors)
-untracked = sum(status["untracked"] for status in status_vectors)
-changed = sum(status["changed"] for status in status_vectors)
-conflicts = sum(status["conflicts"] for status in status_vectors)
-
-
-output = u"".join([
-    term_color(u"(", tcolors.SEPARATOR),
-    branch,
-    ahead_behind(ahead, behind),
-    term_color(u"|", tcolors.SEPARATOR),
-    index_state(untracked, staged, changed, conflicts),
-    term_color(u")", tcolors.SEPARATOR),
-])
-
-print(output)
+if __name__ == "__main__":
+    output = git_status_string()
+    print(output)
