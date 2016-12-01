@@ -31,6 +31,7 @@ alias pmm="python manage.py migrate"
 alias pmmm="python manage.py makemigrations"
 
 # Python aliases
+alias py="python3"
 alias ipy="ipython"
 alias nse="nosetests"
 alias pipir="pip install requirements.txt"
