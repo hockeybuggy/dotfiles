@@ -167,20 +167,26 @@ def git_status_string():
     branch_name = [status["branch"] for status in status_vectors if status["branch"]][0]
     branch = term_color(branch_name, tcolors.BRANCH)
 
-    ahead = sum(status["ahead"] for status in status_vectors)
-    behind = sum(status["behind"] for status in status_vectors)
+    metrics = ("ahead", "behind", "staged", "untracked", "changed", "conflicts")
+    result = dict()  # this name sucks
 
-    staged = sum(status["staged"] for status in status_vectors)
-    untracked = sum(status["untracked"] for status in status_vectors)
-    changed = sum(status["changed"] for status in status_vectors)
-    conflicts = sum(status["conflicts"] for status in status_vectors)
+    for metric in metrics:
+        result[metric] = sum(status[metric] for status in status_vectors)
 
     return u"".join([
         term_color(u"(", tcolors.SEPARATOR),
         branch,
-        ahead_behind(ahead, behind),
+        ahead_behind(
+            result["ahead"],
+            result["behind"]
+        ),
         term_color(u"|", tcolors.SEPARATOR),
-        index_state(untracked, staged, changed, conflicts),
+        index_state(
+            untracked=result["untracked"],
+            staged=result["staged"],
+            changed=result["changed"],
+            conflicts=result["conflicts"]
+        ),
         term_color(u")", tcolors.SEPARATOR),
     ])
 

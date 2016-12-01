@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
-
-from mock import patch, Mock
+try:
+    from unittest.mock import patch, Mock
+except ImportError:
+    from mock import patch, Mock
 
 from gitstatus import open_git_status
 from gitstatus import get_status_vector
