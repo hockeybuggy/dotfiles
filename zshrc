@@ -105,7 +105,7 @@ setprompt () {
     fi
 
     # set the prompt
-    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}]\ $(git_super_status) ${PR_CYAN}%~${PR_NO_COLOR}  \n${PR_USER_OP} '
+    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]${PR_NO_COLOR}\ $(git_super_status) ${PR_CYAN}%~${PR_NO_COLOR}  \n${PR_USER_OP} '
     PS2=$'%_>'
 }
 setprompt
