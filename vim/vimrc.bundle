@@ -48,6 +48,7 @@ Plugin 'tpope/vim-vinegar'
 Plugin 'mileszs/ack.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-scripts/gitignore'
+Plugin 'justinmk/vim-sneak'
 
 syntax on
 filetype plugin indent on
