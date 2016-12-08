@@ -49,6 +49,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-scripts/gitignore'
 Plugin 'justinmk/vim-sneak'
+Plugin 'neomake/neomake'
 
 syntax on
 filetype plugin indent on
