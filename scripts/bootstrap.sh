@@ -12,6 +12,7 @@ echo "\nInstalling Bundles\n"
 vim +BundleInstall +qall
 
 echo "\nLinking dotfiles...\n"
+
 # Shells
 ln -sf $DIR/bashrc $HOME/.bashrc
 ln -sf $DIR/bash_profile $HOME/.bash_profile
@@ -41,14 +42,17 @@ ln -sf $DIR/gitconfig $HOME/.gitconfig
 ln -sf $DIR/dircolors.256dark $HOME/.dircolors.256dark
 ln -sf $DIR/Xdefaults $HOME/.Xdefaults
 ln -sf $DIR/Xresources $HOME/.Xresources
+mkdir -p $HOME/.terminfo/r
+ln -sf $DIR/terminfo/rxvt-unicode-256color $HOME/.terminfo/r/rxvt-unicode-256color
 
 # Tmux
 ln -sf $DIR/tmux.conf $HOME/.tmux.conf
 ln -sf $DIR/tmux-osx.conf $HOME/.tmux-osx.conf
 
-mkdir -p $HOME/.terminfo/r
-ln -sf $DIR/terminfo/rxvt-unicode-256color $HOME/.terminfo/r/rxvt-unicode-256color
-
+# Executables
 ln -s $DIR/bin $HOME/.bin
+
+# Python
+ln -sf ~/.dotfiles/flake8 ~/.config/flake8
 
 echo "Done"

@@ -21,6 +21,9 @@ ln -sf $DIR/gitconfig $HOME/.gitconfig
 # Tmux
 ln -sf $DIR/tmux.conf $HOME/.tmux.conf
 
+# Python
+ln -sf ~/.dotfiles/flake8 ~/.config/flake8
+
 # Switch back to starting directory
 cd -
 
