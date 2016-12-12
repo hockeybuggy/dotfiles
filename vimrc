@@ -100,7 +100,7 @@ map <leader>b :b
 map <leader>- :sp<bar>b
 map <leader>\ :vsp<bar>b
 map <leader>t :tabe<bar>b
-map <leader>m :make<CR>
+map <leader>m :Neomake<CR>
 
 " External copy paste
 nmap <C-P> "+gp
