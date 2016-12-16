@@ -26,7 +26,8 @@
 
 # Rebase aliases
 	rb   = rebase
-	rbi  = rebase -i
+	rbi  = rebase --interactive
+	rbc  = rebase --continue
 	rbm  = rebase master
 
 # Push-Pull aliases
