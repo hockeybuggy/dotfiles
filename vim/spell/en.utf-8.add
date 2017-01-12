@@ -130,6 +130,7 @@ offensive
 Slackbot
 Laika
 async
+await
 README
 TODO
 virtualenv
@@ -169,6 +170,7 @@ URIs
 sharded
 subclassed
 Etsy
+Etsy's
 OAuth
 chunnel
 krumkake
