@@ -42,6 +42,11 @@ alias mkvenv="python3 -m venv .venv && source .venv/bin/activate && pip install 
 # Rust aliases
 alias car="cargo"
 
+# 'Scripts to Rule Them All' aliases
+# usage: `rta <script name>` e.g. `rta test`
+# mnemonic: (R)ule (T)hem (A)ll
+alias rta="./scripts/"
+
 # Assorted
 alias hidemyshame="git commit -am 'SHAME' && git rebase -i HEAD~2"
 alias vg="vagrant"
