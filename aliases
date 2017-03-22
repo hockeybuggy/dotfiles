@@ -56,7 +56,6 @@ alias rta="./scripts/"
 # Assorted
 alias hidemyshame="git commit -am 'SHAME' && git rebase -i HEAD~2"
 alias vg="vagrant"
-alias clr="clear"
 alias scr="scratch"
 alias server="python -m SimpleHTTPServer"
 alias tlf="tail -f"
