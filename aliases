@@ -42,6 +42,12 @@ alias mkvenv="python3 -m venv .venv && source .venv/bin/activate && pip install 
 # Rust aliases
 alias car="cargo"
 
+# JavaScript aliases
+alias jss="npm start"     # mnemonic: (J)ava(S)cript (S)erver
+alias jst="npm test"      # mnemonic: (J)ava(S)cript (T)est
+alias jsr="npm run "      # mnemonic: (J)ava(S)cript (R)un
+alias jsl="npm run lint"  # mnemonic: (J)ava(S)cript (L)int
+
 # 'Scripts to Rule Them All' aliases
 # usage: `rta <script name>` e.g. `rta test`
 # mnemonic: (R)ule (T)hem (A)ll
