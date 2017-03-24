@@ -141,7 +141,6 @@ let g:neomake_highlight_columns = 0
 " Javascript
 autocmd BufNewFile,BufRead *.json set ft=javascript
 autocmd! BufWritePost *.js Neomake
-let g:neomake_javascript_enabled_makers = ['eslint']
 
 " Python
 autocmd! BufWritePost *.py Neomake

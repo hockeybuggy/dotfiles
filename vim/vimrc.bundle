@@ -52,6 +52,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-scripts/gitignore'
 Plugin 'justinmk/vim-sneak'
 Plugin 'neomake/neomake'
+Plugin 'benjie/neomake-local-eslint.vim'
 
 syntax on
 filetype plugin indent on
