@@ -195,3 +195,4 @@ validators
 atomicity
 protobuf
 deserialized
+codec
