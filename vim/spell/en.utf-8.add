@@ -163,9 +163,9 @@ spellfile
 filename
 serializer
 deserializer
-yaml
+Yaml
 sharding
-Demeter
+demeter
 URIs
 sharded
 subclassed
@@ -196,3 +196,5 @@ atomicity
 protobuf
 deserialized
 codec
+codecs
+struct
