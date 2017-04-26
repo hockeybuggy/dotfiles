@@ -61,5 +61,5 @@ if dein#load_state('~/.vim/bundles')
   call dein#save_state()
 endif
 
-syntax on  " TODO switch to syntax enable
+syntax enable
 filetype plugin indent on
