@@ -4,8 +4,9 @@
 
 set nocompatible    " Pffft... vi... Please...
 
-if filereadable(expand("~/.vim/vimrc.bundle"))
-    source ~/.vim/vimrc.bundle
+" Load plugins
+if filereadable(expand("~/.vim/bundle.vim"))
+  source ~/.vim/bundle.vim
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""

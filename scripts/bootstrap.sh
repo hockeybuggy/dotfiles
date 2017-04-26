@@ -2,14 +2,9 @@
 
 DIR="$HOME/.dotfiles"
 
-if [ ! -d "$HOME/.vim/bundle/vundle" ]; then
-    echo "\nGrabing Vundle\n"
-    mkdir -p $DIR/vim/bundle
-    git clone https://github.com/gmarik/Vundle.git $DIR/vim/bundle/Vundle.vim
-fi
-
-echo "\nInstalling Bundles\n"
-vim +BundleInstall +qall
+echo "\nInstalling Vim Bundler Dein\n"
+sh $DIR/scripts/dein-install.sh $DIR/vim/bundles
+vim "+call dein#install()"
 
 echo "\nLinking dotfiles...\n"
 

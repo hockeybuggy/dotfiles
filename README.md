@@ -17,9 +17,10 @@ Clone dah repo. I like to clone put it at `~/.dotlinker`
 
     ./scripts/bootstrap.sh
 
-### 3. May need to install the vim deps via Vundle
+### 3. May need to install the vim deps via [dein](https://github.com/Shougo/dein.vim)
 
-    ./scripts/vundle.sh
+    [within vim]
+    :call dein#install
 
 
 ## Dependencies
@@ -27,15 +28,16 @@ Clone dah repo. I like to clone put it at `~/.dotlinker`
 #### Minimum:
 
 1. vim  - 7.4
-2. bash - (whatever is installed)
-3. git  - 2.*
-4. python - 2.7 and 3.5
+1. bash - (whatever is installed)
+1. git  - 2.*
+1. python - 2.7 and 3.5
 
 #### Ideal:
 
+1. vim - 8.0
 1. tmux - 1.9
-2. zsh  - 5.0
-3. urxvt or iter2
-4. ripgrep
-5. silver searcher
-6. inconsolata font
+1. zsh  - 5.0
+1. urxvt or iterm2
+1. ripgrep
+1. silver searcher
+1. Inconsolata font

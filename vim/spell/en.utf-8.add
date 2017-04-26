@@ -198,3 +198,6 @@ deserialized
 codec
 codecs
 struct
+Inconsolata
+ripgrep
+dein
