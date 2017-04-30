@@ -1,5 +1,3 @@
-" This file holds bundles for Vundle
-
 filetype off
 
 set runtimepath+=~/.vim/bundles/repos/github.com/Shougo/dein.vim
