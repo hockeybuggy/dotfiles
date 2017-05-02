@@ -28,6 +28,7 @@ if dein#load_state('~/.vim/bundles')
   call dein#add('cespare/vim-toml')
   call dein#add('pangloss/vim-javascript')
   call dein#add('mxw/vim-jsx')
+  call dein#add('leafgarland/typescript-vim')
   call dein#add('tikhomirov/vim-glsl')
   call dein#add('dleonard0/pony-vim-syntax')
 
