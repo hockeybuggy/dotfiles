@@ -9,6 +9,7 @@ if filereadable(expand("~/.vim/bundle.vim"))
   source ~/.vim/bundle.vim
 endif
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " General Preferences
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -80,6 +81,7 @@ if has('persistent_undo')
     set undoreload=10000
 endif
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -113,6 +115,7 @@ elseif executable('ag')
   let g:ackprg='ag --vimgrep'
 endif
 cnoreabbrev Ag Ack
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
