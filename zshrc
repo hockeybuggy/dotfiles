@@ -25,6 +25,7 @@ export WORKON_HOME="$HOME/devel/envs"
 export GREP_OPTIONS="--color=auto"
 export XDG_CONFIG_HOME="~/.config"
 export EXERCISM_CONFIG_FILE=$XDG_CONFIG_HOME/exercism
+export RUST_SRC_PATH=$HOME/programs/rust/src
 
 
 #------------------------------
