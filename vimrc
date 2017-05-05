@@ -139,12 +139,15 @@ endif
 let g:neomake_highlight_lines = 0
 let g:neomake_highlight_columns = 0
 
-" Javascript
+" JavaScript
 autocmd BufNewFile,BufRead *.json set ft=javascript
-autocmd! BufWritePost *.js Neomake
+autocmd! BufWritePost,BufRead *.js Neomake
 
 " Python
-autocmd! BufWritePost *.py Neomake
+autocmd! BufWritePost,BufRead *.py Neomake
+
+" Rust
+autocmd! BufWritePost *.rs Neomake
 
 " Markdown
 let g:vim_markdown_conceal = 0
