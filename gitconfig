@@ -36,7 +36,9 @@
 	phm  = push heroku master
 	pl   = pull
 	plo  = pull origin
+	plu  = pull upstream
 	plom = pull origin master
+	plum = pull upstream master
 
 # Cloneing aliases
 	cl   = clone
