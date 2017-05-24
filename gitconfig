@@ -45,8 +45,8 @@
 	clo  = clone
 
 # Other aliases
-	pick   = cherry-pick
-	who   = blame
+	pick = cherry-pick
+	who  = blame
 
 [gpg]
 	program = gpg2
