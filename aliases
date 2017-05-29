@@ -51,7 +51,7 @@ alias jsl="npm run lint"  # mnemonic: (J)ava(S)cript (L)int
 # 'Scripts to Rule Them All' aliases
 # usage: `rta <script name>` e.g. `rta test`
 # mnemonic: (R)ule (T)hem (A)ll
-alias rta="./scripts/"
+alias rta="./script/"
 
 # Assorted
 alias hidemyshame="git commit -am 'SHAME' && git rebase -i HEAD~2"
