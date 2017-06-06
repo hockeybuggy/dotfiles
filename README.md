@@ -30,7 +30,7 @@ Clone dah repo. I like to clone put it at `~/.dotlinker`
 1. vim  - 7.4
 1. bash - (whatever is installed)
 1. git  - 2.*
-1. python - 2.7 and 3.5
+1. python - 2.7 and 3.6
 
 #### Ideal:
 
@@ -38,6 +38,5 @@ Clone dah repo. I like to clone put it at `~/.dotlinker`
 1. tmux - 1.9
 1. zsh  - 5.0
 1. urxvt or iterm2
-1. ripgrep
-1. silver searcher
-1. Inconsolata font
+1. ripgrep or the silver searcher
+1. Inconsolata font (maybe patched with powerline font)
