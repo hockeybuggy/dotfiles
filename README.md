@@ -20,7 +20,7 @@ Clone dah repo. I like to clone put it at `~/.dotlinker`
 ### 3. May need to install the vim deps via [dein](https://github.com/Shougo/dein.vim)
 
     [within vim]
-    :call dein#install
+    :call dein#install()
 
 
 ## Dependencies
