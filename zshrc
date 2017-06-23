@@ -153,3 +153,6 @@ function zle-line-finish () {
 
 zle -N zle-line-init
 zle -N zle-line-finish
+
+# added by travis gem
+[ -f /Users/dev1/.travis/travis.sh ] && source /Users/dev1/.travis/travis.sh

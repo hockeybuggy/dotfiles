@@ -66,3 +66,6 @@ case "$TERM" in
     *)
         ;;
 esac
+
+# added by travis gem
+[ -f /Users/dev1/.travis/travis.sh ] && source /Users/dev1/.travis/travis.sh
