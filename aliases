@@ -5,10 +5,13 @@ alias :q="echo 'Nope. Not vim dummy.' && sleep 1 && exit"
 alias :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
 
 # Common shorthands
-alias v="vim"
 alias l="less"
 alias g="git"
 alias t="tmux"
+
+# Vim aliases
+alias vi="nvim"
+alias vim="nvim"
 
 # LS aliases
 alias lla="ls -lhA | less"
