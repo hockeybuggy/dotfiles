@@ -7,7 +7,7 @@ SCRIPTDIR=$DOTDIR/scripts
 ZDIR=$SCRIPTDIR/z
 
 # Set up terminal and editor
-export EDITOR="vim"
+export EDITOR="nvim"
 export TERMINAL="urxvt"
 
 export PATH="$HOME/.bin:$PATH"
