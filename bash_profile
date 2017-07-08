@@ -2,7 +2,7 @@
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # Set up terminal and editor
-export EDITOR="vim"
+export EDITOR="nvim"
 export TERMINAL="urxvt"
 export GREP_OPTIONS="--color=auto"
 export XDG_CONFIG_HOME="~/.config"
