@@ -35,6 +35,7 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
+
 #------------------------------
 # Program specific
 #------------------------------
@@ -47,6 +48,8 @@ PATH="$PATH:/usr/local/heroku/bin"
 
 ## Added by RVM
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+
 #------------------------------
 # Prompt
 #------------------------------
