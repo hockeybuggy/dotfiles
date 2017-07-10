@@ -35,8 +35,11 @@ Clone dah repo. I like to clone put it at `~/.dotlinker`
 #### Ideal:
 
 1. vim - 8.0
-1. tmux - 1.9
+1. neovim
+1. tmux - 2.3
 1. zsh  - 5.0
-1. urxvt or iterm2
-1. ripgrep or the silver searcher
+1. iterm2 or urxvt
 1. Inconsolata font (maybe patched with powerline font)
+1. rustup, cargo, rustc
+1. ripgrep
+1. hub (command line github)
