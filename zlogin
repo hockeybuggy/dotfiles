@@ -11,6 +11,3 @@ fi
 ### Start up a gpg-agent to avoid typing it repeatedly.
 export GPG_TTY=`tty`
 eval $(gpg-agent --daemon)
-
-# Load hub
-eval "$(hub alias -s)"
