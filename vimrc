@@ -29,6 +29,7 @@ set mouse=""                   " I don't really like the mouse much...
 set ttyfast                    " Send characters to the screen faster
 set backspace=indent,eol,start " Change the backspace mode
 set autoread                   " Update the buffer when the file changed externally
+set scrolloff=1                " Always show at least one line above the cursor
 
 " Disable man mode and ex mode. I was finding them not useful
 noremap K <nop>
