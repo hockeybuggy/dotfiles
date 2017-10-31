@@ -59,6 +59,9 @@ autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 " Alias Ls to ls
 cnoreabbrev Ls ls
 
+" Forcing myself to use :x
+cmap wq echo "SHAME! use :x dood"
+
 " Colour scheme
 if has("gui_running")
     set background=light
