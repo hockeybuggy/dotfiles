@@ -11,7 +11,7 @@ if dein#load_state('~/.vim/bundles')
   " Style
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
-  call dein#add('altercation/vim-colors-solarized')
+  call dein#add('lifepillar/vim-solarized8')
   call dein#add('ap/vim-css-color')
 
   " Language

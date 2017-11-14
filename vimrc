@@ -64,16 +64,11 @@ cnoreabbrev Ls ls
 cmap wq echo "SHAME! use :x dood"
 
 " Colour scheme
-if has("gui_running")
-    set background=light
-else
-    set background=dark
-endif
+set background=dark
+let g:solarized_use16 = 1
+colorscheme solarized8
+syntax on
 
-colorscheme solarized
-let g:solarized_termcolors = 256
-let g:solarized_termtrans = 1
-let g:solarized_visibility = "high"
 if $TERM_PROGRAM =~ "screen-256color"
     let s:terminal_italic=1
 endif
