@@ -17,6 +17,7 @@ let mapleader      = ','
 let maplocalleader = ','
 
 set incsearch                  " Incremental search
+set inccommand=nosplit         " Incremental substitute preview
 set nohlsearch                 " Don't highlight searches
 set hidden                     " Allow navigating away from unsaved buffers
 set relativenumber             " Relative numbers are the bomb
