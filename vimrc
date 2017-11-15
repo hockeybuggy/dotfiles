@@ -105,7 +105,6 @@ map <leader>b :b
 map <leader>- :sp<bar>b
 map <leader>\ :vsp<bar>b
 map <leader>t :tabe<bar>b
-map <leader>m :Neomake<CR>
 
 " External copy paste
 nmap <C-P> "+gp
@@ -137,9 +136,20 @@ if ! has('gui_running')
   augroup END
 endif
 
+let g:airline#extensions#ale#enabled = 1
 
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" Language Specific settings
-""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:neomake_highlight_lines = 0
-let g:neomake_highlight_columns = 0
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['flake8'],
+\   'rust': ['rls'],
+\   'sql': ['sqlint'],
+\   'yaml': ['yaml'],
+\   'css': ['stylelint'],
+\   'scss': ['stylelint'],
+\}
+
+let g:ale_fixers = {
+\   'rust': ['rustfmt'],
+\}
+" Fix files automatically on save.
+let g:ale_fix_on_save = 1
