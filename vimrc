@@ -66,7 +66,7 @@ cmap wq echo "SHAME! use :x dood"
 " Colour scheme
 set background=dark
 let g:solarized_use16 = 1
-colorscheme solarized8
+colorscheme solarized8_high
 syntax on
 
 if $TERM_PROGRAM =~? 'screen-256color'
