@@ -141,15 +141,11 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8'],
-\   'rust': ['rls'],
+\   'rust': ['cargo', 'rls'],
 \   'sql': ['sqlint'],
 \   'yaml': ['yaml'],
 \   'css': ['stylelint'],
 \   'scss': ['stylelint'],
 \}
 
-let g:ale_fixers = {
-\   'rust': ['rustfmt'],
-\}
-" Fix files automatically on save.
 let g:ale_fix_on_save = 1
