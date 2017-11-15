@@ -41,7 +41,7 @@ set list
 set listchars=tab:▸\ ,eol:¬,trail:¤
 
 " Set Spelling. Proud of my Canadian heritage.
-set spell spelllang=en_ca
+set spelllang=en_ca
 set spellfile=~/.vim/spell/en.utf-8.add
 
 " My preferred splitting behaviour.
