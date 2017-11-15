@@ -5,7 +5,7 @@
 set nocompatible    " Pffft... vi... Please...
 
 " Load plugins
-if filereadable(expand("~/.vim/bundle.vim"))
+if filereadable(expand('~/.vim/bundle.vim'))
   source ~/.vim/bundle.vim
 endif
 
@@ -13,8 +13,8 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " General Preferences
 """"""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader      = ','
-let maplocalleader = ','
+let g:mapleader      = ','
+let g:maplocalleader = ','
 
 set incsearch                  " Incremental search
 set inccommand=nosplit         " Incremental substitute preview
@@ -69,7 +69,7 @@ let g:solarized_use16 = 1
 colorscheme solarized8
 syntax on
 
-if $TERM_PROGRAM =~ "screen-256color"
+if $TERM_PROGRAM =~? 'screen-256color'
     let s:terminal_italic=1
 endif
 
@@ -123,7 +123,7 @@ cnoreabbrev Ag Ack
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Airline
 set noshowmode " Hide the default mode display
-let g:airline_theme="solarized"
+let g:airline_theme='solarized'
 let g:airline_powerline_fonts=1
 
 " Speeds the timeout for the status line
@@ -139,13 +139,14 @@ endif
 let g:airline#extensions#ale#enabled = 1
 
 let g:ale_linters = {
+\   'css': ['stylelint'],
 \   'javascript': ['eslint'],
 \   'python': ['flake8'],
 \   'rust': ['cargo', 'rls'],
-\   'sql': ['sqlint'],
-\   'yaml': ['yaml'],
-\   'css': ['stylelint'],
 \   'scss': ['stylelint'],
+\   'sql': ['sqlint'],
+\   'vim': ['vint'],
+\   'yaml': ['yaml'],
 \}
 
 let g:ale_fix_on_save = 1
