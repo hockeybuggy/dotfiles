@@ -119,8 +119,26 @@ nnoremap <leader>G :Grepper -tool rg -buffers<cr>
 nmap gs  <plug>(GrepperOperator)
 xmap gs  <plug>(GrepperOperator)
 
-command! Todo :Grepper -tool rg -query '\(TODO\)'
+command! Todo :Grepper -tool rg -query 'TODO'
 
+" Linting tools
+let g:ale_linters = {
+\   'css': ['stylelint'],
+\   'javascript': ['eslint'],
+\   'python': ['flake8'],
+\   'rust': ['cargo', 'rls'],
+\   'scss': ['stylelint'],
+\   'sql': ['sqlint'],
+\   'vim': ['vint'],
+\   'yaml': ['yaml'],
+\   'html': [],
+\}
+let g:ale_fix_on_save = 1
+" Unimpaired style mappings for ALE
+nmap [w <Plug>(ale_previous_wrap)
+nmap ]w <Plug>(ale_next_wrap)
+nmap [W <Plug>(ale_first)
+nmap ]W <Plug>(ale_last)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
@@ -141,17 +159,3 @@ if ! has('gui_running')
 endif
 
 let g:airline#extensions#ale#enabled = 1
-
-let g:ale_linters = {
-\   'css': ['stylelint'],
-\   'javascript': ['eslint'],
-\   'python': ['flake8'],
-\   'rust': ['cargo', 'rls'],
-\   'scss': ['stylelint'],
-\   'sql': ['sqlint'],
-\   'vim': ['vint'],
-\   'yaml': ['yaml'],
-\   'html': [],
-\}
-
-let g:ale_fix_on_save = 1
