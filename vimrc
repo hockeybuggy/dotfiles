@@ -96,7 +96,6 @@ nnoremap <C-l> <C-W>l
 " Current file directory expand (http://vimcasts.org/episodes/the-edit-command/)
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 
-" -----  Shortcuts -----
 " List current buffers
 map <leader>l :ls<CR>
 
@@ -110,12 +109,17 @@ map <leader>t :tabe<bar>b
 nmap <C-P> "+gp
 vmap <C-C> "+y
 
-if executable('rg')
-  let g:ackprg='rg --vimgrep'
-elseif executable('ag')
-  let g:ackprg='ag --vimgrep'
-endif
-cnoreabbrev Ag Ack
+" Search tools
+let g:grepper = {}
+let g:grepper.tools = ['rg']
+" Grep for selection
+nnoremap <leader>g :Grepper -tool rg<cr>
+nnoremap <leader>G :Grepper -tool rg -buffers<cr>
+" Grep for selection
+nmap gs  <plug>(GrepperOperator)
+xmap gs  <plug>(GrepperOperator)
+
+command! Todo :Grepper -tool rg -query '\(TODO\)'
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
