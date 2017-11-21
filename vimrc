@@ -61,7 +61,7 @@ autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 cnoreabbrev Ls ls
 
 " Forcing myself to use :x
-cmap wq echo "SHAME! use :x dood"
+cmap wq echo "SHAME! use :x dood"<CR>
 
 " Colour scheme
 set background=dark
@@ -147,6 +147,7 @@ let g:ale_linters = {
 \   'sql': ['sqlint'],
 \   'vim': ['vint'],
 \   'yaml': ['yaml'],
+\   'html': [],
 \}
 
 let g:ale_fix_on_save = 1
