@@ -83,6 +83,11 @@ if has('persistent_undo')
     set undoreload=10000
 endif
 
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  " mnemonic verbatium e
+  tnoremap <C-v><Esc> <Esc>
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
