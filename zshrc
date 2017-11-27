@@ -1,6 +1,9 @@
 # The zshrc of Douglas James Anderson
 # vim:fdm=marker fdl=1
 
+# Use 'emacs' bindings
+bindkey -e
+
 ZSHDIR=$HOME/.zsh
 DOTDIR=$HOME/.dotfiles
 SCRIPTDIR=$DOTDIR/scripts
@@ -39,6 +42,7 @@ alias -g DN="> /dev/null"
 
 bindkey -s "^T" "^[Isudo ^[A" # "T" for "toughguy". credit -> thoughtbot
 
+
 #------------------------------
 # Settings
 #------------------------------
@@ -69,6 +73,7 @@ setopt hist_verify
 setopt inc_append_history
 setopt share_history # share command history data
 
+
 #------------------------------
 # Program Specific
 #------------------------------
@@ -78,6 +83,8 @@ source $ZDIR/z.sh
 
 ### Added by RVM
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+
 #------------------------------
 # Prompt
 #------------------------------
