@@ -120,10 +120,12 @@ let g:grepper.tools = ['rg']
 " Grep for selection
 nnoremap <leader>g :Grepper -tool rg<cr>
 nnoremap <leader>G :Grepper -tool rg -buffers<cr>
+" Grep for word under cursor
+nnoremap <leader>* :Grepper -cword -noprompt<CR>
 " Grep for selection
-nmap gs  <plug>(GrepperOperator)
-xmap gs  <plug>(GrepperOperator)
-
+nmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
+" Grep outstanding items
 command! Todo :Grepper -tool rg -query 'TODO'
 
 " Linting tools
