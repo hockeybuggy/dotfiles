@@ -18,7 +18,10 @@
 	ca   = commit -a
 	cam  = commit -am
 	sta  = status -s
+
+# Logging aliases
 	lg   = log --oneline
+	lgbr = log --oneline master..
 
 # Branching aliases
 	bra  = branch
