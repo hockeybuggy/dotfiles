@@ -140,6 +140,9 @@ let g:ale_linters = {
 \   'yaml': ['yaml'],
 \   'html': [],
 \}
+let g:ale_fixers = {
+\   'javascript': ['prettier', 'eslint'],
+\}
 let g:ale_fix_on_save = 1
 " Unimpaired style mappings for ALE
 nmap [w <Plug>(ale_previous_wrap)
