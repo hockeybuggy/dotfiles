@@ -142,6 +142,7 @@ let g:ale_linters = {
 \}
 let g:ale_fixers = {
 \   'javascript': ['prettier', 'eslint'],
+\   'rust': ['rustfmt'],
 \}
 let g:ale_fix_on_save = 1
 " Unimpaired style mappings for ALE
@@ -149,6 +150,7 @@ nmap [w <Plug>(ale_previous_wrap)
 nmap ]w <Plug>(ale_next_wrap)
 nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
+nnoremap <leader>f :ALEFix<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
