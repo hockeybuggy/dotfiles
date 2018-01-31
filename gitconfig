@@ -8,9 +8,6 @@
 	diff = auto
 	status = auto
 
-[push]
-	default = current
-
 [alias]
 # Basic action aliases
 	co   = commit
@@ -54,5 +51,11 @@
 [gpg]
 	program = gpg2
 
+[push]
+	default = current
+
 [commit]
 	gpgsign = true
+
+[rebase]
+	autosquash = true
