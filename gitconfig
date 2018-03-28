@@ -29,6 +29,7 @@
 	rbi  = rebase --interactive
 	rbc  = rebase --continue
 	rbm  = rebase master
+	rbim  = rebase --interactive master
 
 # Push-Pull aliases
 	po   = push origin
