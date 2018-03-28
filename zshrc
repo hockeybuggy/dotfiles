@@ -10,6 +10,7 @@ SCRIPTDIR=$DOTDIR/scripts
 ZDIR=$SCRIPTDIR/z
 
 # Set up terminal and editor
+export SHELL="/bin/zsh"
 export EDITOR="nvim"
 export TERMINAL="urxvt"
 
@@ -18,6 +19,8 @@ export PATH="$HOME/.bin:$PATH"
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.yarn/bin
 export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+
 export NVM_DIR="/Users/dev1/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
