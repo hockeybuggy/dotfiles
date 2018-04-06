@@ -9,12 +9,15 @@
 	status = auto
 
 [alias]
-# Basic action aliases
+# Commit aliases
 	co   = commit
 	com  = commit -m
 	ca   = commit -a
 	cam  = commit -am
+
+# Local status aliases
 	sta  = status -s
+	diff  = diff --color-moved
 
 # Logging aliases
 	lg   = log --oneline
