@@ -110,10 +110,6 @@ map <leader>- :sp<bar>b
 map <leader>\ :vsp<bar>b
 map <leader>t :tabe<bar>b
 
-" External copy paste
-nmap <C-P> "+gp
-vmap <C-C> "+y
-
 " Search tools
 let g:grepper = {}
 let g:grepper.tools = ['rg']
