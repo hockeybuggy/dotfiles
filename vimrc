@@ -128,6 +128,10 @@ xmap gs <plug>(GrepperOperator)
 " Grep outstanding items
 command! Todo :Grepper -tool rg -query 'TODO'
 
+" Enable syntax highlighting of Pipfiles
+autocmd BufNewFile,BufRead Pipfile set ft=toml
+autocmd BufNewFile,BufRead Pipfile.lock set ft=javascript
+
 " Linting tools
 let g:ale_linters = {
 \   'css': ['stylelint'],
