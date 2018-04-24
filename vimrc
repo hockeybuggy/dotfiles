@@ -60,9 +60,6 @@ autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 " Alias Ls to ls
 cnoreabbrev Ls ls
 
-" Forcing myself to use :x
-cmap wq echo "SHAME! use :x dood"<CR>
-
 " Colour scheme
 set background=dark
 let g:solarized_use16 = 1
