@@ -121,8 +121,7 @@ xmap gs <plug>(GrepperOperator)
 " Grep outstanding items
 command! Todo :Grepper -tool rg -query 'TODO'
 
-" Enable syntax highlighting of Pipfiles
-autocmd BufNewFile,BufRead Pipfile set ft=toml
+" Enable syntax highlighting of Pipfile.lock files
 autocmd BufNewFile,BufRead Pipfile.lock set ft=javascript
 
 " Linting tools
