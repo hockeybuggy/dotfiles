@@ -4,12 +4,11 @@
 
 This repository is for managing my configuration files.
 
-
 ## Installation
 
 ### 1.Clone this repo
 
-Clone dah repo. I like to clone put it at `~/.dotlinker`
+Clone the repo. I like to clone put it at `~/.dotfiles`
 
     git clone git@github.com:hockeybuggy/dotfiles.git .dotfiles && cd .dotfiles
 
@@ -22,17 +21,16 @@ Clone dah repo. I like to clone put it at `~/.dotlinker`
     [within vim]
     :call dein#install()
 
-
 ## Dependencies
 
-#### Minimum:
+### Minimum
 
 1. vim  - 7.4
 1. bash - (whatever is installed)
 1. git  - 2.*
 1. python - 2.7 and 3.6
 
-#### Ideal:
+### Ideal
 
 1. vim - 8.0
 1. neovim
