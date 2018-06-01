@@ -16,7 +16,7 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 
     ./scripts/bootstrap.sh
 
-### 3. May need to install the vim deps via [dein](https://github.com/Shougo/dein.vim)
+### 3. May need to install the vim dependencies via [dein](https://github.com/Shougo/dein.vim)
 
     [within vim]
     :call dein#install()
@@ -41,3 +41,4 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 1. rustup, cargo, rustc
 1. ripgrep
 1. hub (command line github)
+1. [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)

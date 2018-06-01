@@ -48,7 +48,8 @@ ln -sf $DIR/tmux-osx.conf $HOME/.tmux-osx.conf
 # Executables
 ln -s $DIR/bin $HOME/.bin
 
-# Python
+# Linters
 ln -sf ~/.dotfiles/flake8 ~/.config/flake8
+ln -sf ~/.dotfiles/markdownlintrc ~/.config/markdownlint
 
 echo "Done"
