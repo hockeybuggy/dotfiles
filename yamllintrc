@@ -1,0 +1,10 @@
+# vi: ft=yaml
+# My configuration for https://github.com/adrienverge/yamllint
+
+extends: default
+
+rules:
+  line-length:
+    max: 100
+    level: warning
+  document-start: disable

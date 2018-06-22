@@ -51,5 +51,6 @@ ln -s $DIR/bin $HOME/.bin
 # Linters
 ln -sf ~/.dotfiles/flake8 ~/.config/flake8
 ln -sf ~/.dotfiles/markdownlintrc ~/.config/markdownlint
+ln -sf ~/.dotfiles/yamllintrc ~/.config/yamllint
 
 echo "Done"

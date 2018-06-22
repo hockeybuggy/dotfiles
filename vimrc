@@ -48,7 +48,7 @@ set spellfile=~/.vim/spell/en.utf-8.add
 set splitright
 set splitbelow
 
-" Set Indentation preferences
+" Set default indentation preferences
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -133,7 +133,7 @@ let g:ale_linters = {
 \   'scss': ['stylelint'],
 \   'sql': ['sqlint'],
 \   'vim': ['vint'],
-\   'yaml': ['yaml'],
+\   'yaml': ['yamllint'],
 \   'html': [],
 \}
 let g:ale_fixers = {
