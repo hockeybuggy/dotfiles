@@ -148,6 +148,11 @@ nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
 nnoremap <leader>f :ALEFix<CR>
 
+" Finder tool
+let g:fzf_nvim_statusline = 0 " disable statusline overwriting
+nnoremap <c-p> :FZF<cr>
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Status Line
 """"""""""""""""""""""""""""""""""""""""""""""""""
