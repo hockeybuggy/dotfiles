@@ -97,12 +97,6 @@ cnoremap %% <C-R>=expand('%:h').'/'<CR>
 " List current buffers
 map <leader>l :ls<CR>
 
-" Open a new split from an open buffer
-map <leader>b :b
-map <leader>- :sp<bar>b
-map <leader>\ :vsp<bar>b
-map <leader>t :tabe<bar>b
-
 " Some things to make terminal buffers a little easier
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
@@ -169,7 +163,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 nnoremap <c-p> :FZF<cr>
-nnoremap <c-p> :FZF<cr>
+nnoremap <leader>b :Buffers<cr>
 
 " Airline - a Status Line
 set noshowmode " Hide the default mode display
