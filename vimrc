@@ -94,9 +94,6 @@ nnoremap <C-l> <C-W>l
 " Current file directory expand (http://vimcasts.org/episodes/the-edit-command/)
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 
-" List current buffers
-map <leader>l :ls<CR>
-
 " Some things to make terminal buffers a little easier
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
