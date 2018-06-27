@@ -87,6 +87,8 @@ source $ZDIR/z.sh
 ### Added by RVM
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
+# Setting fd as the default source for fzf
+export FZF_DEFAULT_COMMAND='fd --type f'
 
 #------------------------------
 # Prompt

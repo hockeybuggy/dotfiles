@@ -42,4 +42,5 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 1. ripgrep
 1. hub (command line github)
 1. [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
+1. [fd](https://github.com/sharkdp/fd)
 1. [fzf](https://github.com/junegunn/fzf)
