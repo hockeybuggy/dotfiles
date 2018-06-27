@@ -56,6 +56,8 @@ set expandtab
 
 " Turn off automatic comment continuation on newlines.
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
+" Enable syntax highlighting of Pipfile.lock files
+autocmd BufNewFile,BufRead Pipfile.lock set ft=javascript
 
 " Alias Ls to ls
 cnoreabbrev Ls ls
@@ -65,7 +67,6 @@ set background=dark
 let g:solarized_use16 = 1
 colorscheme solarized8_high
 syntax on
-
 if $TERM_PROGRAM =~? 'screen-256color'
     let s:terminal_italic=1
 endif
@@ -80,11 +81,6 @@ if has('persistent_undo')
     set undoreload=10000
 endif
 
-if has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-  " mnemonic verbatium e
-  tnoremap <C-v><Esc> <Esc>
-endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
@@ -107,7 +103,18 @@ map <leader>- :sp<bar>b
 map <leader>\ :vsp<bar>b
 map <leader>t :tabe<bar>b
 
-" Search tools
+" Some things to make terminal buffers a little easier
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  " mnemonic verbatium e
+  tnoremap <C-v><Esc> <Esc>
+endif
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tools
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" Grepper - a search tools
 let g:grepper = {}
 let g:grepper.tools = ['rg']
 " Grep for selection
@@ -121,10 +128,7 @@ xmap gs <plug>(GrepperOperator)
 " Grep outstanding items
 command! Todo :Grepper -tool rg -query 'TODO'
 
-" Enable syntax highlighting of Pipfile.lock files
-autocmd BufNewFile,BufRead Pipfile.lock set ft=javascript
-
-" Linting tools
+" ALE - linting and fixing tool
 let g:ale_linters = {
 \   'css': ['stylelint'],
 \   'javascript': ['eslint'],
@@ -148,7 +152,7 @@ nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
 nnoremap <leader>f :ALEFix<CR>
 
-" Finder tool
+" fzf - a fuzzy finder tool
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -165,16 +169,12 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 nnoremap <c-p> :FZF<cr>
+nnoremap <c-p> :FZF<cr>
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" Status Line
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" Airline
+" Airline - a Status Line
 set noshowmode " Hide the default mode display
 let g:airline_theme='solarized'
 let g:airline_powerline_fonts=1
-
 " Speeds the timeout for the status line
 if ! has('gui_running')
   set ttimeoutlen=10
@@ -184,5 +184,4 @@ if ! has('gui_running')
     au InsertLeave * set timeoutlen=1000
   augroup END
 endif
-
 let g:airline#extensions#ale#enabled = 1
