@@ -141,7 +141,7 @@ nmap [w <Plug>(ale_previous_wrap)
 nmap ]w <Plug>(ale_next_wrap)
 nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
-nnoremap <leader>f :ALEFix<CR>
+nnoremap <leader>x :ALEFix<CR>
 
 " fzf - a fuzzy finder tool
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
@@ -159,7 +159,7 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
-nnoremap <c-p> :FZF<cr>
+nnoremap <leader>f :FZF<cr>
 nnoremap <leader>b :Buffers<cr>
 
 " Airline - a Status Line
