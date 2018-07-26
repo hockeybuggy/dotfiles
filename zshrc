@@ -45,6 +45,8 @@ alias -g DN="> /dev/null"
 
 bindkey -s "^T" "^[Isudo ^[A" # "T" for "toughguy". credit -> thoughtbot
 
+alias edit-conflicts="\$EDITOR \$(git conflicts)"
+
 
 #------------------------------
 # Settings

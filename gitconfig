@@ -52,6 +52,7 @@
 # Other aliases
 	pick = cherry-pick
 	who  = blame
+	conflicts  = diff --name-only --diff-filter=U
 
 [gpg]
 	program = gpg2
