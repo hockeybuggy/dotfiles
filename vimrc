@@ -161,6 +161,9 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 nnoremap <leader>f :FZF<cr>
 nnoremap <leader>b :Buffers<cr>
+" Disable my remapping for escape for terminal buffers.
+autocmd! FileType fzf tnoremap <ESC> <ESC>
+
 
 " Airline - a Status Line
 set noshowmode " Hide the default mode display
