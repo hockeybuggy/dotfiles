@@ -119,6 +119,7 @@ xmap gs <plug>(GrepperOperator)
 " Grep outstanding items
 command! Todo :Grepper -tool rg -query 'TODO'
 
+
 " ALE - linting and fixing tool
 let g:ale_linters = {
 \   'css': ['stylelint'],
@@ -143,6 +144,7 @@ nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
 nnoremap <leader>x :ALEFix<CR>
 
+
 " fzf - a fuzzy finder tool
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
 let g:fzf_colors =
@@ -163,6 +165,33 @@ nnoremap <leader>f :FZF<cr>
 nnoremap <leader>b :Buffers<cr>
 " Disable my remapping for escape for terminal buffers.
 autocmd! FileType fzf tnoremap <ESC> <ESC>
+
+
+" Language Server
+set pumheight=8
+let g:asyncomplete_auto_popup = 0
+let g:asyncomplete_smart_completion = 1
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+if executable('pyls')
+  " pip install python-language-server
+  au User lsp_setup call lsp#register_server({
+      \ 'name': 'pyls',
+      \ 'cmd': {server_info->['pyls']},
+      \ 'whitelist': ['python'],
+      \ })
+endif
+autocmd FileType python setlocal omnifunc=lsp#complete
+
+if executable('rls')
+  " rustup update && rustup component add rls-preview rust-analysis rust-src
+  au User lsp_setup call lsp#register_server({
+      \ 'name': 'rls',
+      \ 'cmd': {server_info->['rls']},
+      \ 'whitelist': ['rust'],
+      \ })
+endif
+autocmd FileType rust setlocal omnifunc=lsp#complete
 
 
 " Airline - a Status Line
