@@ -31,7 +31,10 @@ if dein#load_state('~/.vim/bundles')
   call dein#add('leafgarland/typescript-vim')
   call dein#add('tikhomirov/vim-glsl')
   call dein#add('dleonard0/pony-vim-syntax')
-  call dein#add('racer-rust/vim-racer')
+  call dein#add('prabirshrestha/asyncomplete.vim')
+  call dein#add('prabirshrestha/async.vim')
+  call dein#add('prabirshrestha/vim-lsp')
+  call dein#add('prabirshrestha/asyncomplete-lsp.vim')
 
   " Textobjs
   runtime macros/matchit.vim
