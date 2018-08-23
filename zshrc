@@ -16,12 +16,13 @@ export TERMINAL="urxvt"
 
 export PATH="$HOME/.bin:$PATH"
 # Add some package managers to the path
+export PATH=$PATH:/usr/local/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.yarn/bin
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
 
-export NVM_DIR="/Users/dev1/.nvm"
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
@@ -169,4 +170,4 @@ zle -N zle-line-init
 zle -N zle-line-finish
 
 # added by travis gem
-[ -f /Users/dev1/.travis/travis.sh ] && source /Users/dev1/.travis/travis.sh
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
