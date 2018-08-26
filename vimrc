@@ -124,6 +124,7 @@ command! Todo :Grepper -tool rg -query 'TODO'
 let g:ale_linters = {
 \   'css': ['stylelint'],
 \   'javascript': ['eslint'],
+\   'typescript': ['tslint', 'tsserver'],
 \   'python': ['flake8'],
 \   'rust': ['cargo', 'rls'],
 \   'scss': ['stylelint'],
@@ -172,6 +173,15 @@ set pumheight=8
 let g:asyncomplete_auto_popup = 0
 let g:asyncomplete_smart_completion = 1
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+if executable('typescript-language-server')
+  au User lsp_setup call lsp#register_server({
+      \ 'name': 'typescript-language-server',
+      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+      \ 'whitelist': ['typescript'],
+      \ })
+endif
+autocmd FileType typescript setlocal omnifunc=lsp#complete
 
 if executable('pyls')
   " pip install python-language-server
