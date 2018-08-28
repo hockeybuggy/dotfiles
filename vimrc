@@ -123,7 +123,7 @@ command! Todo :Grepper -tool rg -query 'TODO'
 " ALE - linting and fixing tool
 let g:ale_linters = {
 \   'css': ['stylelint'],
-\   'javascript': ['eslint'],
+\   'javascript': ['eslint', 'tsserver'],
 \   'typescript': ['tslint', 'tsserver'],
 \   'python': ['flake8'],
 \   'rust': ['cargo', 'rls'],
