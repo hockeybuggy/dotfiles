@@ -44,6 +44,7 @@
 	plu  = pull upstream
 	plom = pull origin master
 	plum = pull upstream master
+	pof   = push origin --force
 
 # Cloneing aliases
 	cl   = clone
