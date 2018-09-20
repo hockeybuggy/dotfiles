@@ -22,7 +22,7 @@
 
 # Logging aliases
 	lg   = log --oneline
-	lgbr = log --oneline master..
+	lgbr = log master..
 
 # Branching aliases
 	bra  = branch
