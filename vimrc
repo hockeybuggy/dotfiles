@@ -64,6 +64,9 @@ cnoreabbrev Ls ls
 
 " Colour scheme
 set background=dark
+if $BACKGROUND_COLOR ==? 'light'
+  set background=light
+endif
 let g:solarized_use16 = 1
 colorscheme solarized8_high
 syntax on
