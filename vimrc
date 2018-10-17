@@ -148,6 +148,7 @@ nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
 nnoremap <leader>x :ALEFix<CR>
 nnoremap <leader>d :ALEGoToDefinition<cr>
+nnoremap <leader>h :ALEHover<cr>
 
 
 " fzf - a fuzzy finder tool
