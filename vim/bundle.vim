@@ -35,6 +35,7 @@ if dein#load_state('~/.vim/bundles')
   call dein#add('prabirshrestha/async.vim')
   call dein#add('prabirshrestha/vim-lsp')
   call dein#add('prabirshrestha/asyncomplete-lsp.vim')
+  call dein#add('b4b4r07/vim-hcl')
 
   " Textobjs
   runtime macros/matchit.vim
