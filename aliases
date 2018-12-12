@@ -60,6 +60,7 @@ alias rta="./script/"
 alias hidemyshame="git commit -am 'SHAME' && git rebase -i HEAD~2"
 alias server="python -m SimpleHTTPServer"
 alias tlf="tail -f"
+alias uuid="uuidgen | tr '[:upper:]' '[:lower:]'"
 
 mkcd() {
     mkdir -p "$*"
