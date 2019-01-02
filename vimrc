@@ -128,7 +128,7 @@ let g:ale_linters = {
 \   'css': ['stylelint'],
 \   'javascript': ['eslint', 'tsserver'],
 \   'typescript': ['tslint', 'tsserver'],
-\   'python': ['flake8'],
+\   'python': ['pylint', 'mypy'],
 \   'rust': ['cargo', 'rls'],
 \   'scss': ['stylelint'],
 \   'sql': ['sqlint'],
