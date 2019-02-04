@@ -56,6 +56,7 @@
 	conflicts  = diff --name-only --diff-filter=U
 	edit-conflicts = !"editconflicts() { $EDITOR $(git conflicts); }; editconflicts"
 	merge-pr = !"mergepr() { git checkout master && git pull && git checkout $1 && git rebase master && git checkout master && git merge $1 && git push --no-verify && git branch --delete $1 && git push --no-verify --delete origin $1 && git pull; }; mergepr"
+	tag-release =!"tagrelease() { git checkout master; git tag --sign --message \"Version $1\" v$1; git push --tags; }; tagrelease"
 
 [gpg]
 	program = gpg
