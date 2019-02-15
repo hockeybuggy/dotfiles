@@ -10,11 +10,11 @@
 
 [alias]
 # Commit aliases
-	co   = commit
-	com  = commit -m
-	ca   = commit -a
-	caa  = commit -a --amend
-	cam  = commit -am
+	co   = commit -v
+	com  = commit -mv
+	ca   = commit -av
+	caa  = commit -av --amend
+	cam  = commit -amv
 
 # Local status aliases
 	sta  = status -s
