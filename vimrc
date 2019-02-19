@@ -137,10 +137,9 @@ let g:ale_linters = {
 \   'html': [],
 \}
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
 \   'rust': ['rustfmt'],
 \}
-let g:ale_fix_on_save = 0
+let g:ale_fix_on_save = 1
 " Unimpaired style mappings for ALE
 nmap [w <Plug>(ale_previous_wrap)
 nmap ]w <Plug>(ale_next_wrap)
