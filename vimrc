@@ -57,7 +57,9 @@ set expandtab
 " Turn off automatic comment continuation on newlines.
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 " Enable syntax highlighting of Pipfile.lock files
-autocmd BufNewFile,BufRead Pipfile.lock set ft=javascript
+autocmd BufNewFile,BufRead Pipfile.lock set filetype=javascript
+autocmd BufNewFile,BufRead *.workflow   set filetype=tf
+
 
 " Alias Ls to ls
 cnoreabbrev Ls ls
