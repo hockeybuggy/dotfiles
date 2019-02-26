@@ -21,8 +21,8 @@
 	diff  = diff --color-moved
 
 # Logging aliases
-	lg   = log --oneline
-	lgbr = log master..
+	lg   = log --oneline --date=human
+	lgbr = log master.. --date=human
 
 # Branching aliases
 	bra  = branch
