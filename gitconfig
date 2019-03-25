@@ -7,6 +7,7 @@
 	branch = auto
 	diff = auto
 	status = auto
+	ui = true
 
 [alias]
 # Commit aliases
@@ -78,3 +79,20 @@
 
 [log]
 	date = human
+
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow
+	old = red
+	new = green
+	whitespace = red reverse
+
+[color "diff-highlight"]
+	oldNormal = red
+	oldHighlight = red 52
+	newNormal = green
+	newHighlight = green 22
