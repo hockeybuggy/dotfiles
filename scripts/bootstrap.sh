@@ -31,6 +31,11 @@ ln -s $DIR/vim $HOME/.vim
 mkdir $XDG_CONFIG_HOME/nvim
 ln -sf $DIR/nvimrc $XDG_CONFIG_HOME/nvim/init.vim
 
+# Kakoune
+mkdir $XDG_CONFIG_HOME/kak
+# ln -sf $DIR/kakrc $XDG_CONFIG_HOME/kak/kakrc
+# TODO this doesn't seem to work with the homebrew version of kakoune. By install
+
 # Git
 ln -sf $DIR/gitconfig $HOME/.gitconfig
 
