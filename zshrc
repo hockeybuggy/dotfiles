@@ -11,7 +11,7 @@ ZDIR=$SCRIPTDIR/z
 
 # Set up terminal and editor
 export SHELL="/bin/zsh"
-export EDITOR="nvim"
+export EDITOR="kak"
 export TERMINAL="urxvt"
 
 export PATH="$HOME/.bin:$PATH"
