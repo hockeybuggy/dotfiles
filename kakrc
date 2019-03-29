@@ -7,11 +7,12 @@ set global ui_options ncurses_assistant=none
 colorscheme solarized-dark-termcolors
 
 # Commands
+define-command -override -docstring "write-quit" x %{write-quit}
+
 define-command -override -docstring "split tmux vertically" \
 vsp -params .. -command-completion %{
     tmux-terminal-horizontal kak -c %val{session} -e "%arg{@}"
 }
-
 define-command -override  -docstring "split tmux horizontally" \
 sp -params .. -command-completion %{
     tmux-terminal-vertical kak -c %val{session} -e "%arg{@}"
@@ -25,6 +26,29 @@ map global user -docstring "grep" g ":grep "
 # Normal mode mappings
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global normal '<a-#>' :comment-block<ret> -docstring 'comment block'
+
+# File specific
+hook global WinSetOption filetype=git-commit %{
+    set window autowrap_column 72
+    autowrap-enable
+}
+set global tabstop 4
+set global indentwidth 4
+
+hook global WinSetOption filetype=python %{
+    set-option buffer formatcmd 'black -q -'
+    hook buffer -group format BufWritePre .* format
+
+    set-option buffer lintcmd 'pylint --msg-template="{path}:{line}:{column}: {category}: {msg}" -rn -sn'
+    lint-enable
+    lint
+    hook buffer -group lint BufWritePost .* lint
+}
+
+hook global WinSetOption filetype=(javascript|typescript|css|scss|markdown) %{
+    set-option buffer formatcmd "prettier --stdin-filepath=${kak_buffile}"
+    hook buffer -group format BufWritePre .* format
+}
 
 # Plugins
 # TODO get plug working
