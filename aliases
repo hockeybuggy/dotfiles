@@ -61,6 +61,16 @@ alias hidemyshame="git commit -am 'SHAME' && git rebase -i HEAD~2"
 alias server="python -m SimpleHTTPServer"
 alias tlf="tail -f"
 alias uuid="uuidgen | tr '[:upper:]' '[:lower:]'"
+alias tat="tmux new-session -As '$(basename "$PWD" | tr . -)'"
+kat () {
+    SESSION_NAME=$(basename "$PWD" | tr . _)
+    echo $SESSION_NAME
+    if $(kak -l | grep -q "$SESSION_NAME"); then
+        kak -c "$SESSION_NAME"
+    else
+        kak -s "$SESSION_NAME"
+    fi
+}
 
 mkcd() {
     mkdir -p "$*"
