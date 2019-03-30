@@ -66,9 +66,9 @@ kat () {
     SESSION_NAME=$(basename "$PWD" | tr . _)
     echo $SESSION_NAME
     if $(kak -l | grep -q "$SESSION_NAME"); then
-        kak -c "$SESSION_NAME"
+        kak -c "$SESSION_NAME" $@
     else
-        kak -s "$SESSION_NAME"
+        kak -s "$SESSION_NAME" $@
     fi
 }
 
