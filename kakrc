@@ -81,3 +81,6 @@ hook -once global WinCreate .* %{
     powerline-toggle line_column off
     powerline-toggle line_column position
 }
+
+eval %sh{kak-lsp --kakoune -s $kak_session}
+lsp-enable
