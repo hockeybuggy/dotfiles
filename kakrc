@@ -84,3 +84,4 @@ hook -once global WinCreate .* %{
 
 eval %sh{kak-lsp --kakoune -s $kak_session}
 lsp-enable
+lsp-auto-hover-enable
