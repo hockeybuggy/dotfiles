@@ -170,8 +170,8 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
-nnoremap <leader>f :FZF<cr>
-nnoremap <leader>b :Buffers<cr>
+nnoremap <leader>ff :FZF<cr>
+nnoremap <leader>fb :Buffers<cr>
 " Disable my remapping for escape for terminal buffers.
 autocmd! FileType fzf tnoremap <ESC> <ESC>
 
