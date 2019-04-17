@@ -70,7 +70,7 @@ if $BACKGROUND_COLOR ==? 'light'
   set background=light
 endif
 let g:solarized_use16 = 1
-colorscheme solarized8_high
+colorscheme solarized8
 syntax on
 if $TERM_PROGRAM =~? 'screen-256color'
     let s:terminal_italic=1
