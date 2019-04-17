@@ -60,6 +60,7 @@ if dein#load_state('~/.vim/bundles')
   call dein#add('mhinz/vim-grepper')
   call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
   call dein#add('junegunn/fzf.vim')
+  call dein#add('ruanyl/vim-gh-line')
 
   call dein#end()
   call dein#save_state()

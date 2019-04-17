@@ -144,6 +144,7 @@ let g:ale_fixers = {
 \   'typescript': ['prettier'],
 \}
 let g:ale_fix_on_save = 1
+
 " Unimpaired style mappings for ALE
 nmap [w <Plug>(ale_previous_wrap)
 nmap ]w <Plug>(ale_next_wrap)
@@ -151,7 +152,6 @@ nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
 nnoremap <leader>x :ALEFix<CR>
 nnoremap <leader>d :ALEGoToDefinition<cr>
-nnoremap <leader>h :ALEHover<cr>
 
 
 " fzf - a fuzzy finder tool
@@ -174,6 +174,12 @@ nnoremap <leader>ff :FZF<cr>
 nnoremap <leader>fb :Buffers<cr>
 " Disable my remapping for escape for terminal buffers.
 autocmd! FileType fzf tnoremap <ESC> <ESC>
+
+let g:gh_line_map_default = 0
+let g:gh_line_blame_map_default = 0
+let g:gh_line_map = '<leader>hh'
+let g:gh_line_blame_map = '<leader>hb'
+let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn'
 
 
 " Language Server
