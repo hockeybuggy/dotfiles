@@ -179,7 +179,7 @@ let g:gh_line_map_default = 0
 let g:gh_line_blame_map_default = 0
 let g:gh_line_map = '<leader>hh'
 let g:gh_line_blame_map = '<leader>hb'
-let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn'
+let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn '
 
 
 " Language Server
