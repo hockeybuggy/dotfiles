@@ -10,4 +10,6 @@ fi
 
 ### Start up a gpg-agent to avoid typing it repeatedly.
 export GPG_TTY=`tty`
-eval $(gpg-agent --daemon)
+if [ -z "$(pgrep gpg-agent)" ]; then
+    eval $(gpg-agent --daemon)
+fi
