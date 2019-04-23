@@ -170,6 +170,11 @@ nmap ]W <Plug>(ale_last)
 nnoremap <leader>x :ALEFix<CR>
 nnoremap <leader>d :ALEGoToDefinition<cr>
 
+" Dispatch
+autocmd FileType typescript let b:dispatch = 'npm run test -- --color=false %'
+autocmd FileType typescript let errorformat='%.%#\ at\ %f:%l:%c,%.%#\ at\ %.%#(%f:%l:%c)'
+autocmd FileType rust let b:dispatch = 'cargo test'
+
 
 " fzf - a fuzzy finder tool
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
