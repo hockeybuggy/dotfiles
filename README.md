@@ -39,9 +39,11 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 1. iterm2 or urxvt
 1. Inconsolata font (maybe patched with powerline font)
 1. rustup, cargo, rustc
-1. ripgrep  -- File searcher
-1. bat -- File viewer with syntax highlighting
-1. [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
+1. [ripgrep](https://github.com/BurntSushi/ripgrep) -- Grep replacement
 1. [fd](https://github.com/sharkdp/fd) -- `find` replacement
 1. [fzf](https://github.com/junegunn/fzf) -- Fuzzy finder
+1. [bat](https://github.com/sharkdp/bat) -- `cat` replacement
+1. [exa](https://the.exa.website/) -- `ls` replacement
+1. [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
 1. hub (command line github)
+1. diff-so-fancy

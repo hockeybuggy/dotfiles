@@ -14,16 +14,13 @@ alias vi="nvim"
 alias vim="nvim"
 
 # LS aliases
-alias lla="ls -lhA | less"
-if [ "$(uname)" = "Darwin" ]; then
-    alias ls="ls -lhG"
-    alias la="ls -lhAG"
-    alias ll="ls -lhG"
-else
-    alias ls="ls -lh --color=always"
-    alias la="ls -lhA --color=always"
-    alias ll="ls -lh --color=always"
-fi
+alias ls="exa --long"
+alias la="exa --long --all"
+alias ll="exa --long"
+alias lt="exa --tree --git-ignore | bat"
+alias lg="exa --long --git-ignore --git"
+alias lla="exa --long --all | bat"
+
 
 # Django aliases
 alias pm="python manage.py"
