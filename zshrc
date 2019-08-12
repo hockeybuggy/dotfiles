@@ -170,3 +170,6 @@ zle -N zle-line-finish
 
 # added by travis gem
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+
+# wave autocomplete setup
+WAVE_AC_ZSH_SETUP_PATH=/Users/danderson/Library/Caches/wave/autocomplete/zsh_setup && test -f $WAVE_AC_ZSH_SETUP_PATH && source $WAVE_AC_ZSH_SETUP_PATH;
