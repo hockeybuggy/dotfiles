@@ -169,6 +169,7 @@ nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
 nnoremap <leader>x :ALEFix<CR>
 nnoremap <leader>d :ALEGoToDefinition<cr>
+nnoremap <leader>t :Dispatch<cr>
 
 
 " fzf - a fuzzy finder tool
@@ -237,6 +238,7 @@ if executable('rls')
       \ })
 endif
 autocmd FileType rust setlocal omnifunc=lsp#complete
+autocmd FileType rust let b:dispatch='cargo test --quiet --message-format=short'
 
 
 " Airline - a Status Line
