@@ -238,7 +238,7 @@ if executable('rls')
       \ })
 endif
 autocmd FileType rust setlocal omnifunc=lsp#complete
-autocmd FileType rust let b:dispatch='cargo test --quiet --message-format=short'
+autocmd FileType rust let b:dispatch='cargo test --lib --quiet --message-format=short'
 
 
 " Airline - a Status Line
