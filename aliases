@@ -33,8 +33,6 @@ alias pmmm="python manage.py makemigrations"
 # Python aliases
 alias py="python3"
 alias ipy="ipython"
-alias nse="nosetests"
-alias pipir="pip install requirements.txt"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
 alias srcvenv="source .venv/bin/activate"
 alias mkvenv="python3 -m venv .venv && source .venv/bin/activate && pip install --upgrade pip"
@@ -54,7 +52,6 @@ alias jsl="npm run lint"  # mnemonic: (J)ava(S)cript (L)int
 alias rta="./script/"
 
 # Assorted
-alias hidemyshame="git commit -am 'SHAME' && git rebase -i HEAD~2"
 alias server="python3 -m http.server"
 alias tlf="tail -f"
 alias uuid="uuidgen | tr '[:upper:]' '[:lower:]'"
