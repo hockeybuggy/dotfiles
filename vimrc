@@ -169,7 +169,7 @@ nmap ]w <Plug>(ale_next_wrap)
 nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
 nnoremap <leader>x :ALEFix<CR>
-nnoremap <leader>d :ALEGoToDefinition<cr>
+nnoremap <leader>d :ALEDetail<cr>
 nnoremap <leader>t :Dispatch<cr>
 
 
