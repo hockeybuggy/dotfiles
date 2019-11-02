@@ -170,7 +170,7 @@ nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
 nnoremap <leader>x :ALEFix<CR>
 nnoremap <leader>d :ALEDetail<cr>
-nnoremap <leader>t :Dispatch<cr>
+nnoremap <leader>t :ALEHover<cr>
 
 
 " fzf - a fuzzy finder tool
