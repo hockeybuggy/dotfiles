@@ -31,7 +31,6 @@
 
 # Branching aliases
 	bra = branch
-	che = checkout
 	sw  = switch
 
 # Rebase aliases
