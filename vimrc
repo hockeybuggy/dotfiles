@@ -168,8 +168,15 @@ nmap [w <Plug>(ale_previous_wrap)
 nmap ]w <Plug>(ale_next_wrap)
 nmap [W <Plug>(ale_first)
 nmap ]W <Plug>(ale_last)
+" mnemonic: fi(x)
 nnoremap <leader>x :ALEFix<CR>
+" mnemonic: (d)etail
 nnoremap <leader>d :ALEDetail<cr>
+" mnemonic: (r)eferences
+nnoremap <leader>r :ALEFindReferences<cr>
+" mnemonic: (w)hat
+nnoremap <leader>w :ALEGoToDefinition<cr>
+" mnemonic: (t)ype
 nnoremap <leader>t :ALEHover<cr>
 
 
