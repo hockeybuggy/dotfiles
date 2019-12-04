@@ -33,6 +33,7 @@ ln -sf $DIR/nvimrc $XDG_CONFIG_HOME/nvim/init.vim
 
 # Git
 ln -sf $DIR/gitconfig $HOME/.gitconfig
+ln -sf $DIR/gitmessage $HOME/.gitmessage
 
 # Terminals
 ln -sf $DIR/dircolors.256dark $HOME/.dircolors.256dark

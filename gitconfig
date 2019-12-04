@@ -73,6 +73,7 @@
 	default = current
 
 [commit]
+	template = ~/.gitmessage
 	gpgsign = true
 
 [rebase]
