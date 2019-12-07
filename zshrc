@@ -22,11 +22,8 @@ export PATH=$PATH:$HOME/.yarn/bin
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-eval "$(nodenv init -)"
+# fnm https://github.com/Schniz/fnm
+eval "$(fnm env --multi)"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
