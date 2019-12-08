@@ -1,0 +1,7 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+      "css", "javascript", "javascriptreact", "typescript", "typescriptreact"
+  ],
+  "suggest.timeout": 1000,
+  "suggest.autoTrigger": "trigger"
+}

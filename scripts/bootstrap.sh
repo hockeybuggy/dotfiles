@@ -30,6 +30,7 @@ ln -s $DIR/vim $HOME/.vim
 # Neovim
 mkdir $XDG_CONFIG_HOME/nvim
 ln -sf $DIR/nvimrc $XDG_CONFIG_HOME/nvim/init.vim
+ln -sf $DIR/coc-settings.json $XDG_CONFIG_HOME/nvim/coc-settings.json
 
 # Git
 ln -sf $DIR/gitconfig $HOME/.gitconfig
