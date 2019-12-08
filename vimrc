@@ -181,10 +181,10 @@ inoremap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 inoremap <expr> <TAB> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<TAB>"
-
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Slightly faster rechecking for the dianostics
@@ -215,6 +215,14 @@ function! s:show_documentation()
   endif
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" I was having trouble with getting `coc.preferences.formatOnSaveFiletypes`
+" working. This is a bit of a cheap work around for now
+autocmd BufWritePre *.css call CocAction("format")
+autocmd BufWritePre *.js call CocAction("format")
+autocmd BufWritePre *.jsx call CocAction("format")
+autocmd BufWritePre *.ts call CocAction("format")
+autocmd BufWritePre *.tsx call CocAction("format")
 
 
 " Airline - a Status Line

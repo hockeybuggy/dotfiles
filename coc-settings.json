@@ -1,7 +1,16 @@
 {
   "coc.preferences.formatOnSaveFiletypes": [
-      "css", "javascript", "javascriptreact", "typescript", "typescriptreact"
+      "css",
+      "json",
+      "graphql",
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
   ],
-  "suggest.timeout": 1000,
-  "suggest.autoTrigger": "trigger"
+  "coc.preferences.formatOnType": false,
+  "javascript.format.enabled": false,
+  "typescript.format.enabled": false,
+  "suggest.timeout": 2000,
+  "suggest.autoTrigger": "none"
 }
