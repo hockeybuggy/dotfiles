@@ -142,44 +142,6 @@ xmap gs <plug>(GrepperOperator)
 command! Todo :Grepper -tool rg -query 'TODO'
 
 
-" ALE - linting and fixing tool
-let g:ale_linters = {
-\   'css': ['stylelint'],
-\   'javascript': ['eslint', 'tsserver'],
-\   'typescript': ['tslint', 'tsserver'],
-\   'python': ['pylint', 'mypy'],
-\   'rust': ['cargo', 'rls'],
-\   'scss': ['stylelint'],
-\   'sql': ['sqlint'],
-\   'vim': ['vint'],
-\   'yaml': ['yamllint'],
-\   'html': [],
-\}
-let g:ale_fixers = {
-\   'rust': ['rustfmt'],
-\   'css': ['prettier'],
-\   'javascript': ['prettier'],
-\   'typescript': ['prettier'],
-\}
-let g:ale_fix_on_save = 1
-
-" Unimpaired style mappings for ALE
-nmap [w <Plug>(ale_previous_wrap)
-nmap ]w <Plug>(ale_next_wrap)
-nmap [W <Plug>(ale_first)
-nmap ]W <Plug>(ale_last)
-" mnemonic: fi(x)
-nnoremap <leader>x :ALEFix<CR>
-" mnemonic: (d)etail
-nnoremap <leader>d :ALEDetail<cr>
-" mnemonic: (r)eferences
-nnoremap <leader>r :ALEFindReferences<cr>
-" mnemonic: (w)hat
-nnoremap <leader>w :ALEGoToDefinition<cr>
-" mnemonic: (t)ype
-nnoremap <leader>t :ALEHover<cr>
-
-
 " fzf - a fuzzy finder tool
 let g:fzf_nvim_statusline = 0 " disable statusline overwriting
 let g:fzf_colors =
@@ -215,52 +177,36 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-inoremap <silent><expr> <Tab>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<Tab>" :
-    \ coc#refresh()
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+inoremap <expr> <TAB> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<TAB>"
 
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
+" Slightly faster rechecking for the dianostics
+set updatetime=300
 
-" let g:lsp_diagnostics_enabled = 0
-" set pumheight=8
-" let g:asyncomplete_auto_popup = 0
-" let g:asyncomplete_smart_completion = 1
-" let g:lsp_highlight_references_enabled = 1
-" highlight lspReference ctermbg=green guibg=green
-" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
 
-" if executable('typescript-language-server')
-"     au User lsp_setup call lsp#register_server({
-"         \ 'name': 'typescript-language-server',
-"         \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-"         \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-"         \ 'whitelist': ['typescript'],
-"         \ })
-" endif
-" autocmd FileType typescript setlocal omnifunc=lsp#complete
+" Unimpaired style mappings for CoC
+nmap <silent> [w <Plug>(coc-diagnostic-prev)
+nmap <silent> ]w <Plug>(coc-diagnostic-next)
 
-" if executable('pyls')
-"   " pip install python-language-server
-"   au User lsp_setup call lsp#register_server({
-"       \ 'name': 'pyls',
-"       \ 'cmd': {server_info->['pyls']},
-"       \ 'whitelist': ['python'],
-"       \ })
-" endif
-" autocmd FileType python setlocal omnifunc=lsp#complete
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-" if executable('rls')
-"   " rustup update && rustup component add rls-preview rust-analysis rust-src
-"   au User lsp_setup call lsp#register_server({
-"       \ 'name': 'rls',
-"       \ 'cmd': {server_info->['rls']},
-"       \ 'whitelist': ['rust'],
-"       \ })
-" endif
-" autocmd FileType rust setlocal omnifunc=lsp#complete
-" autocmd FileType rust let b:dispatch='cargo test --lib --quiet --message-format=short'
+" show documentation
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 
 " Airline - a Status Line
