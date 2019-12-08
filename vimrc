@@ -209,44 +209,58 @@ let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn '
 
 
 " Language Server
-let g:lsp_diagnostics_enabled = 0
-set pumheight=8
-let g:asyncomplete_auto_popup = 0
-let g:asyncomplete_smart_completion = 1
-let g:lsp_highlight_references_enabled = 1
-highlight lspReference ctermbg=green guibg=green
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
-if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'typescript-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-        \ 'whitelist': ['typescript'],
-        \ })
-endif
-autocmd FileType typescript setlocal omnifunc=lsp#complete
+inoremap <silent><expr> <Tab>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<Tab>" :
+    \ coc#refresh()
 
-if executable('pyls')
-  " pip install python-language-server
-  au User lsp_setup call lsp#register_server({
-      \ 'name': 'pyls',
-      \ 'cmd': {server_info->['pyls']},
-      \ 'whitelist': ['python'],
-      \ })
-endif
-autocmd FileType python setlocal omnifunc=lsp#complete
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-if executable('rls')
-  " rustup update && rustup component add rls-preview rust-analysis rust-src
-  au User lsp_setup call lsp#register_server({
-      \ 'name': 'rls',
-      \ 'cmd': {server_info->['rls']},
-      \ 'whitelist': ['rust'],
-      \ })
-endif
-autocmd FileType rust setlocal omnifunc=lsp#complete
-autocmd FileType rust let b:dispatch='cargo test --lib --quiet --message-format=short'
+
+" let g:lsp_diagnostics_enabled = 0
+" set pumheight=8
+" let g:asyncomplete_auto_popup = 0
+" let g:asyncomplete_smart_completion = 1
+" let g:lsp_highlight_references_enabled = 1
+" highlight lspReference ctermbg=green guibg=green
+" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" if executable('typescript-language-server')
+"     au User lsp_setup call lsp#register_server({
+"         \ 'name': 'typescript-language-server',
+"         \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+"         \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+"         \ 'whitelist': ['typescript'],
+"         \ })
+" endif
+" autocmd FileType typescript setlocal omnifunc=lsp#complete
+
+" if executable('pyls')
+"   " pip install python-language-server
+"   au User lsp_setup call lsp#register_server({
+"       \ 'name': 'pyls',
+"       \ 'cmd': {server_info->['pyls']},
+"       \ 'whitelist': ['python'],
+"       \ })
+" endif
+" autocmd FileType python setlocal omnifunc=lsp#complete
+
+" if executable('rls')
+"   " rustup update && rustup component add rls-preview rust-analysis rust-src
+"   au User lsp_setup call lsp#register_server({
+"       \ 'name': 'rls',
+"       \ 'cmd': {server_info->['rls']},
+"       \ 'whitelist': ['rust'],
+"       \ })
+" endif
+" autocmd FileType rust setlocal omnifunc=lsp#complete
+" autocmd FileType rust let b:dispatch='cargo test --lib --quiet --message-format=short'
 
 
 " Airline - a Status Line
