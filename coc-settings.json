@@ -1,5 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": [
+      "elm",
       "css",
       "json",
       "graphql",
@@ -12,5 +13,15 @@
   "javascript.format.enabled": false,
   "typescript.format.enabled": false,
   "suggest.timeout": 2000,
-  "suggest.autoTrigger": "none"
+  "suggest.autoTrigger": "none",
+  "languageserver": {
+    "elmLS": {
+      "command": "elm-language-server",
+      "filetypes": ["elm"],
+      "rootPatterns": ["elm.json"],
+      "initializationOptions": {
+        "elmAnalyseTrigger": "change"
+      }
+    }
+  }
 }
