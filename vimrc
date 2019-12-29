@@ -223,6 +223,7 @@ autocmd BufWritePre *.js call CocAction("format")
 autocmd BufWritePre *.jsx call CocAction("format")
 autocmd BufWritePre *.ts call CocAction("format")
 autocmd BufWritePre *.tsx call CocAction("format")
+autocmd BufWritePre *.rs call CocAction("format")
 
 
 " Airline - a Status Line
