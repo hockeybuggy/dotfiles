@@ -3,7 +3,7 @@
 DIR="$HOME/.dotfiles"
 
 echo "\nInstalling Vim Bundler Dein\n"
-sh $DIR/scripts/dein-install.sh $DIR/vim/bundles
+sh $DIR/scripts/dein-installer.sh $DIR/vim/bundles
 vim "+call dein#install()"
 
 echo "\nLinking dotfiles...\n"
