@@ -27,8 +27,8 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 
 1. vim  - 7.4
 1. bash - (whatever is installed)
-1. git  - 2.19.1+
-1. python - 2.7 and 3.6
+1. git  - 2.24.1+
+1. python - 3.6+
 
 ### Ideal
 
@@ -36,7 +36,7 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 1. neovim
 1. tmux - 2.3
 1. zsh  - 5.0
-1. iterm2 or urxvt
+1. iterm2 or gnome terminal
 1. Inconsolata font (maybe patched with powerline font)
 1. rustup, cargo, rustc
 1. [ripgrep](https://github.com/BurntSushi/ripgrep) -- Grep replacement
@@ -47,3 +47,5 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 1. [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
 1. hub (command line github)
 1. diff-so-fancy
+1. reattach-to-user-namespace
+1. gnupg

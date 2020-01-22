@@ -66,3 +66,9 @@ endif
 
 syntax enable
 filetype plugin indent on
+
+" CocInstall coc-prettier
+" CocInstall coc-eslint
+" CocInstall coc-tsserver
+" CocInstall coc-python
+" CocInstall coc-rls
