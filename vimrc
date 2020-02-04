@@ -219,6 +219,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 " I was having trouble with getting `coc.preferences.formatOnSaveFiletypes`
 " working. This is a bit of a cheap work around for now
 autocmd BufWritePre *.css call CocAction("format")
+autocmd BufWritePre *.scss call CocAction("format")
 autocmd BufWritePre *.js call CocAction("format")
 autocmd BufWritePre *.jsx call CocAction("format")
 autocmd BufWritePre *.ts call CocAction("format")
