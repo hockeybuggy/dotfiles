@@ -1,0 +1,13 @@
+add_newline = false
+
+[character]
+style_success = "green"
+
+[git_branch]
+style = "bold green"
+truncation_length = 32
+
+[git_status]
+style = "yellow"
+prefix = "("
+suffix = ")"
