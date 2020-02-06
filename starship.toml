@@ -13,8 +13,11 @@ truncation_length = 32
 [git_status]
 style = "yellow"
 prefix = "("
-suffix = ")"
+suffix = ") "
 
 [time]
 disabled = false
 format = "%R"
+
+[package]
+disabled = true
