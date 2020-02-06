@@ -55,8 +55,6 @@ if [ "$(uname)" != "Darwin" ]; then
     eval `dircolors $DOTDIR/dircolors.256dark`
 fi
 
-source $ZSHDIR/git-prompt/zshrc.sh
-
 autoload -U colors && colors
 autoload -U compinit promptinit
 compinit

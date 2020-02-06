@@ -1,5 +1,8 @@
 add_newline = false
 
+[directory]
+style = "green"
+
 [character]
 style_success = "green"
 
@@ -11,3 +14,7 @@ truncation_length = 32
 style = "yellow"
 prefix = "("
 suffix = ")"
+
+[time]
+disabled = false
+format = "%R"
