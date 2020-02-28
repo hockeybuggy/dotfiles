@@ -10,6 +10,9 @@ style_success = "green"
 style = "bold green"
 truncation_length = 32
 
+[git_state]
+style = "magenta"
+
 [git_status]
 style = "yellow"
 prefix = "("
