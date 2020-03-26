@@ -55,8 +55,6 @@ if [ "$(uname)" != "Darwin" ]; then
     eval `dircolors $DOTDIR/dircolors.256dark`
 fi
 
-source $ZSHDIR/git-prompt/zshrc.sh
-
 autoload -U colors && colors
 autoload -U compinit promptinit
 compinit
@@ -94,35 +92,7 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 # Prompt
 #------------------------------
 
-setprompt () {
-    # load some modules
-    autoload -U colors zsh/terminfo # Used in the colour alias below
-    colors
-    setopt prompt_subst
-
-    # make some aliases for the colours: (could use normal escape sequence's too)
-    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-        eval PR_$color='%{$fg[${(L)color}]%}'
-    done
-    PR_NO_COLOR="%{$terminfo[sgr0]%}"
-
-    eval PR_USER='%(!.${PR_RED}.${PR_GREEN})%n${PR_NO_COLOR}'
-    eval PR_USER_OP='${PR_RED}%(!.#.➤)${PR_NO_COLOR}'
-
-    # Check if we are on SSH or not
-    if [[ -n "$SSH_CLIENT" || -n "$SSH2_CLIENT" ]]; then
-        eval PR_HOST='${PR_YELLOW}%M${PR_NO_COLOR}' #SSH
-    else
-        eval PR_HOST='${PR_GREEN}%M${PR_NO_COLOR}' # no SSH
-    fi
-
-    # set the prompt
-    PS1=$'${PR_CYAN}[${PR_USER}${PR_CYAN}@${PR_HOST}${PR_CYAN}]${PR_NO_COLOR}\ $(git_super_status) ${PR_CYAN}%~${PR_NO_COLOR}  \n${PR_USER_OP} '
-    PS2=$'%_>'
-
-    RPROMPT="${PR_GREEN}%T${PR_NO_COLOR}"
-}
-setprompt
+eval "$(starship init zsh)"
 
 # Get Special keys working {{{2
 

@@ -34,8 +34,8 @@ alias pmmm="python manage.py makemigrations"
 alias py="python3"
 alias ipy="ipython"
 alias rmpyc="find . -name \*.pyc -delete && echo 'pyc files removed.'"
-alias srcvenv="source .venv/bin/activate"
-alias mkvenv="python3 -m venv .venv && source .venv/bin/activate && pip install --upgrade pip"
+alias srcvenv="source venv/bin/activate"
+alias mkvenv="python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip"
 
 # Rust aliases
 alias car="cargo"

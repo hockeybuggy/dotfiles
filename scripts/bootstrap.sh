@@ -18,6 +18,7 @@ if [ -d "$HOME/.zsh" ]; then
     mv $HOME/.zsh $HOME/.zsh.bak
 fi
 ln -s $DIR/zsh $HOME/.zsh
+ln -s $DIR/starship $XDG_CONFIG_HOME/starship.toml
 
 # Vim
 ln -sf $DIR/vimrc $HOME/.vimrc

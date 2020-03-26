@@ -1,0 +1,26 @@
+add_newline = false
+
+[directory]
+style = "green"
+
+[character]
+style_success = "green"
+
+[git_branch]
+style = "bold green"
+truncation_length = 32
+
+[git_state]
+style = "magenta"
+
+[git_status]
+style = "yellow"
+prefix = "("
+suffix = ") "
+
+[time]
+disabled = false
+format = "%R"
+
+[package]
+disabled = true
