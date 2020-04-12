@@ -10,10 +10,19 @@
       "typescriptreact"
   ],
   "coc.preferences.formatOnType": false,
+
   "javascript.format.enabled": false,
   "typescript.format.enabled": false,
+
+  "python.formatting.enabled": true,
+  "python.formatting.provider": "black",
+  "python.jediEnabled": false,
+  "python.linting.enabled": true,
+  "python.linting.pep8Path": "pycodestyle",
+
   "suggest.timeout": 2000,
   "suggest.autoTrigger": "none",
+
   "languageserver": {
     "elmLS": {
       "command": "elm-language-server",

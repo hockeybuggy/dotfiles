@@ -72,4 +72,4 @@ filetype plugin indent on
 " CocInstall coc-tsserver
 " CocInstall coc-css
 " CocInstall coc-python
-" CocInstall coc-rls
+" CocInstall coc-rust-analyzer
