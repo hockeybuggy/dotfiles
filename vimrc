@@ -9,7 +9,6 @@ if filereadable(expand('~/.vim/bundle.vim'))
   source ~/.vim/bundle.vim
 endif
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " General Preferences
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -100,27 +99,25 @@ nnoremap <C-l> <C-W>l
 cnoremap %% <C-R>=expand('%:h').'/'<CR>
 
 " Some things to make terminal buffers a little easier
-if has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-  tnoremap <A-]> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
+tnoremap <A-]> <C-\><C-n>
 
-  " mnemonic verbatium esc
-  tnoremap <C-v><Esc> <Esc>
+" mnemonic verbatium esc
+tnoremap <C-v><Esc> <Esc>
 
-  " move around terminal buffers
-  tnoremap <A-h> <C-\><C-N><C-w>h
-  tnoremap <A-j> <C-\><C-N><C-w>j
-  tnoremap <A-k> <C-\><C-N><C-w>k
-  tnoremap <A-l> <C-\><C-N><C-w>l
-  inoremap <A-h> <C-\><C-N><C-w>h
-  inoremap <A-j> <C-\><C-N><C-w>j
-  inoremap <A-k> <C-\><C-N><C-w>k
-  inoremap <A-l> <C-\><C-N><C-w>l
-  nnoremap <A-h> <C-w>h
-  nnoremap <A-j> <C-w>j
-  nnoremap <A-k> <C-w>k
-  nnoremap <A-l> <C-w>l
-endif
+" move around terminal buffers
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 au TermOpen * setlocal norelativenumber nonumber
 
 
@@ -171,6 +168,8 @@ let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn '
 
 
 " Language Server
+let g:coc_node_path = '/usr/local/bin/node'
+
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -231,6 +230,7 @@ autocmd BufWritePre *.rs call CocAction("format")
 set noshowmode " Hide the default mode display
 let g:airline_theme='solarized'
 let g:airline_powerline_fonts=1
+let g:airline_section_y=''
 " Speeds the timeout for the status line
 if ! has('gui_running')
   set ttimeoutlen=10
