@@ -34,6 +34,7 @@ ln -sf $DIR/nvimrc $XDG_CONFIG_HOME/nvim/init.vim
 ln -sf $DIR/coc-settings.json $XDG_CONFIG_HOME/nvim/coc-settings.json
 
 # Git
+ln -s $DIR/git $XDG_CONFIG_HOME/git
 ln -sf $DIR/gitconfig $HOME/.gitconfig
 ln -sf $DIR/gitmessage $HOME/.gitmessage
 
