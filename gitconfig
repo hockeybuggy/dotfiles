@@ -58,6 +58,7 @@
 	merge-pr         = !"mergepr() { git checkout main && git pull && git checkout $1 && git rebase main && git checkout main && git merge $1 && git push --no-verify && git branch --delete $1 && git push --no-verify --delete origin $1 && git pull; }; mergepr"
 	tag-release      = !"tagrelease() { git fetch && git checkout main && git tag --sign --message \"Version $1\" v$1 && git push --tags; }; tagrelease"
 	rebase-to-main = !"rebasetomain() { git checkout main && git pull origin main && git checkout - && git rebase main; }; rebasetomain"
+	modernize-branch-names = !"modernizebranchnames() { git branch -m master main &&  git push -u origin main; }; modernizebranchnames"
 
 [gpg]
 	program = gpg
