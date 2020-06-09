@@ -21,15 +21,6 @@ alias lt="exa --tree --git-ignore | bat"
 alias lg="exa --long --git-ignore --git"
 alias lla="exa --long --all | bat"
 
-
-# Django aliases
-alias pm="python manage.py"
-alias pmsh="python manage.py shell"
-alias pmt="python manage.py test"
-alias pmrs="python manage.py runserver"
-alias pmm="python manage.py migrate"
-alias pmmm="python manage.py makemigrations"
-
 # Python aliases
 alias py="python3"
 alias ipy="ipython"
