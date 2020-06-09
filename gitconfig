@@ -27,7 +27,7 @@
 	slp  = log --oneline --decorate
 	sla  = log --oneline --decorate --graph --all -20
 	slap = log --oneline --decorate --graph --all
-	lgbr = log master..
+	lgbr = log main..
 
 # Branching aliases
 	bra = branch
@@ -37,18 +37,14 @@
 	rb   = rebase
 	rbi  = rebase --interactive
 	rbc  = rebase --continue
-	rbm  = rebase master
-	rbim = rebase --interactive master
+	rbm  = rebase main
+	rbim = rebase --interactive main
 
 # Push-Pull aliases
 	po   = push origin
-	pom  = push origin master
-	phm  = push heroku master
 	pl   = pull
 	plo  = pull origin
 	plu  = pull upstream
-	plom = pull origin master
-	plum = pull upstream master
 	pof  = push origin --force
 
 # Cloneing aliases
@@ -59,9 +55,9 @@
 	pick             = cherry-pick
 	who              = blame
 	edit-conflicts   = !"editconflicts() { $EDITOR $(git diff --name-only --diff-filter=U); }; editconflicts"
-	merge-pr         = !"mergepr() { git checkout master && git pull && git checkout $1 && git rebase master && git checkout master && git merge $1 && git push --no-verify && git branch --delete $1 && git push --no-verify --delete origin $1 && git pull; }; mergepr"
-	tag-release      = !"tagrelease() { git fetch && git checkout master && git tag --sign --message \"Version $1\" v$1 && git push --tags; }; tagrelease"
-	rebase-to-master = !"rebasetomaster() { git checkout master && git pull origin master && git checkout - && git rebase master; }; rebasetomaster"
+	merge-pr         = !"mergepr() { git checkout main && git pull && git checkout $1 && git rebase main && git checkout main && git merge $1 && git push --no-verify && git branch --delete $1 && git push --no-verify --delete origin $1 && git pull; }; mergepr"
+	tag-release      = !"tagrelease() { git fetch && git checkout main && git tag --sign --message \"Version $1\" v$1 && git push --tags; }; tagrelease"
+	rebase-to-main = !"rebasetomain() { git checkout main && git pull origin main && git checkout - && git rebase main; }; rebasetomain"
 
 [gpg]
 	program = gpg
