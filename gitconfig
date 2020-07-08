@@ -73,6 +73,9 @@
 [push]
 	default = current
 
+[pull]
+	ff = only
+
 [commit]
 	template = ~/.gitmessage
 	gpgsign = true
