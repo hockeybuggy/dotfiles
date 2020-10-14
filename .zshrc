@@ -4,11 +4,6 @@
 # Use 'emacs' bindings
 bindkey -e
 
-ZSHDIR=$HOME/.zsh
-DOTDIR=$HOME/.dotfiles
-SCRIPTDIR=$DOTDIR/scripts
-ZDIR=$SCRIPTDIR/z
-
 # Set up terminal and editor
 export SHELL="/bin/zsh"
 export EDITOR="nvim"
@@ -38,7 +33,7 @@ export RUST_SRC_PATH=$HOME/programs/rust/src
 #------------------------------
 # Aliases
 #------------------------------
-[[ -f $DOTDIR/aliases ]] && source $DOTDIR/aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
 
 # Zsh only piping aliases
 alias -g L="| less"
@@ -51,10 +46,6 @@ bindkey -s "^T" "^[Isudo ^[A" # "T" for "toughguy". credit -> thoughtbot
 #------------------------------
 
 # Style
-if [ "$(uname)" != "Darwin" ]; then
-    eval `dircolors $DOTDIR/dircolors.256dark`
-fi
-
 autoload -U colors && colors
 autoload -U compinit promptinit
 compinit
@@ -62,7 +53,7 @@ promptinit
 setopt correct
 
 # History
-HISTFILE=$ZSHDIR/.zsh_history
+HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt append_history
@@ -78,9 +69,6 @@ setopt share_history # share command history data
 #------------------------------
 # Program Specific
 #------------------------------
-# z : a file jumper based on Frecency
-export _Z_DATA="$ZDIR/.z"
-source $ZDIR/z.sh
 
 ### Added by RVM
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
@@ -141,3 +129,10 @@ zle -N zle-line-finish
 
 # wave autocomplete setup
 WAVE_AC_ZSH_SETUP_PATH=/Users/danderson/Library/Caches/wave/autocomplete/zsh_setup && test -f $WAVE_AC_ZSH_SETUP_PATH && source $WAVE_AC_ZSH_SETUP_PATH;
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/danderson/work/home-showing-calendar/showing/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/danderson/work/home-showing-calendar/showing/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/danderson/work/home-showing-calendar/showing/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/danderson/work/home-showing-calendar/showing/node_modules/tabtab/.completions/sls.zsh

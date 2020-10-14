@@ -11,11 +11,11 @@
 *.o
 *.so
 
-vim/.netrwhist
-vim/temp
-vim/bundles
+.vim/.netrwhist
+.vim/temp
+.vim/bundles
 
-zsh/.zsh_history*
+.zsh/.zsh_history*
 
 scripts/z/.z
 scripts/z/.z.*
