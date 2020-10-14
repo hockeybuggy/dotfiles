@@ -14,7 +14,7 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 
 ### 2. Automagically Link the files
 
-    ./scripts/bootstrap.sh
+    ./bootstrap.sh
 
 ### 3. May need to install the vim dependencies via [dein](https://github.com/Shougo/dein.vim)
 

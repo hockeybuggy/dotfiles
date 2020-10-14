@@ -1,16 +1,12 @@
 # The bashrc of Douglas James Anderson
 
-DOTDIR=$HOME/.dotfiles
-SCRIPTDIR=$DOTDIR/scripts
-ZDIR=$SCRIPTDIR/z
-
 export PATH="$HOME/.bin:$PATH"
 
 
 #------------------------------
 # Aliases
 #------------------------------
-[[ -f $DOTDIR/aliases ]] && source $DOTDIR/aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
 
 
 #------------------------------
@@ -39,10 +35,6 @@ fi
 #------------------------------
 # Program specific
 #------------------------------
-# z : a file jumper based on Frecency
-export _Z_DATA="$ZDIR/.z"
-source $ZDIR/z.sh
-
 ## Added by the Heroku Toolbelt
 PATH="$PATH:/usr/local/heroku/bin"
 
