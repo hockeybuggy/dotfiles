@@ -102,3 +102,18 @@
 	oldHighlight = red 52
 	newNormal    = green
 	newHighlight = green 22
+
+[protocol "http"]
+	allow = never
+
+[protocol "git"]
+	allow = never
+
+[fetch]
+	fsckObjects = true
+
+[transfer]
+	fsckObjects = true
+
+[receive]
+	fsckObjects = true
