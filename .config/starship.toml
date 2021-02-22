@@ -18,8 +18,7 @@ style = "magenta"
 
 [git_status]
 style = "yellow"
-prefix = "("
-suffix = ") "
+format = '([\($all_status$ahead_behind\)]($style) )'
 
 [time]
 disabled = false
