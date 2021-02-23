@@ -168,7 +168,6 @@ let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn '
 
 
 " Language Server
-let g:coc_node_path = '/usr/local/bin/node'
 nnoremap <leader>c :CocCommand<cr>
 
 " use <tab> for trigger completion and navigate to the next complete item
