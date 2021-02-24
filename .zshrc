@@ -18,7 +18,7 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
 
 # fnm https://github.com/Schniz/fnm
-eval "$(fnm env --multi)"
+eval "$(fnm env)"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
