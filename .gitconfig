@@ -67,9 +67,6 @@
 [protocol]
 	version = 2
 
-[init]
-	templateDir = ~/.config/git/template
-
 [push]
 	default = current
 

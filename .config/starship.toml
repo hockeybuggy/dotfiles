@@ -7,7 +7,7 @@ disabled = true
 style = "green"
 
 [character]
-style_success = "green"
+sucess_symbol = "[❯](bold green)"
 
 [git_branch]
 style = "bold green"
@@ -22,7 +22,8 @@ format = '([\($all_status$ahead_behind\)]($style) )'
 
 [time]
 disabled = false
-format = "%R"
+time_format = "%R"
+format = "[$time]($style) "
 
 [package]
 disabled = true
