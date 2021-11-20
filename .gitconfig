@@ -9,6 +9,9 @@
 	status = auto
 	ui     = true
 
+[init]
+	defaultBranch = main
+
 [alias]
 # Commit aliases
 	co   = commit -v
