@@ -16,10 +16,10 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 
     ./bootstrap.sh
 
-### 3. May need to install the vim dependencies via [dein](https://github.com/Shougo/dein.vim)
+### 3. May need to install the vim dependencies via [vim-plug](https://github.com/junegunn/vim-plug)
 
     [within vim]
-    :call dein#install()
+    :PlugInstall
 
 ## Dependencies
 

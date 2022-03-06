@@ -13,7 +13,8 @@ function doIt() {
     source ~/.bash_profile;
 
     # Install Vim packages
-    sh ./scripts/dein-installer.sh ~/.vim/bundles
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then

@@ -1,68 +1,56 @@
-filetype off
 
-set runtimepath+=~/.vim/bundles/repos/github.com/Shougo/dein.vim
+" This requires that the plug is installed first see: https://github.com/junegunn/vim-plug#neovim
 
-if dein#load_state('~/.vim/bundles')
-  call dein#begin('~/.vim/bundles')
+call plug#begin()
 
-  " Plugin manager
-  call dein#add('~/.vim/bundles/repos/github.com/Shougo/dein.vim')
+" Style
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'lifepillar/vim-solarized8'
+Plug 'ap/vim-css-color'
 
-  " Style
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('vim-airline/vim-airline-themes')
-  call dein#add('lifepillar/vim-solarized8')
-  call dein#add('ap/vim-css-color')
+" Language
+Plug 'tpope/vim-git'
+Plug 'plasticboy/vim-markdown'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'andersoncustodio/vim-tmux'
+Plug 'derekwyatt/vim-scala'
+Plug 'fatih/vim-go'
+Plug 'groenewege/vim-less'
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'tikhomirov/vim-glsl'
+Plug 'dleonard0/pony-vim-syntax'
+Plug 'b4b4r07/vim-hcl'
+Plug 'elmcast/elm-vim'
 
-  " Language
-  call dein#add('tpope/vim-git')
-  call dein#add('plasticboy/vim-markdown')
-  call dein#add('mustache/vim-mustache-handlebars')
-  call dein#add('LaTeX-Box-Team/LaTeX-Box')
-  call dein#add('andersoncustodio/vim-tmux')
-  call dein#add('derekwyatt/vim-scala')
-  call dein#add('fatih/vim-go')
-  call dein#add('groenewege/vim-less')
-  call dein#add('rust-lang/rust.vim')
-  call dein#add('cespare/vim-toml')
-  call dein#add('pangloss/vim-javascript')
-  call dein#add('mxw/vim-jsx')
-  call dein#add('leafgarland/typescript-vim')
-  call dein#add('tikhomirov/vim-glsl')
-  call dein#add('dleonard0/pony-vim-syntax')
-  call dein#add('b4b4r07/vim-hcl')
-  call dein#add('elmcast/elm-vim')
+" Textobjs
+runtime macros/matchit.vim
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-entire'
+Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'lucapette/vim-textobj-underscore'
 
-  " Textobjs
-  runtime macros/matchit.vim
-  call dein#add('kana/vim-textobj-user')
-  call dein#add('kana/vim-textobj-line')
-  call dein#add('kana/vim-textobj-indent')
-  call dein#add('kana/vim-textobj-entire')
-  call dein#add('nelstrom/vim-textobj-rubyblock')
-  call dein#add('lucapette/vim-textobj-underscore')
+" Utility
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-sneak'
+Plug 'mhinz/vim-grepper'
+Plug 'junegunn/fzf', { 'build': './install', 'merged': 0 }
+Plug 'junegunn/fzf.vim'
+Plug 'ruanyl/vim-gh-line'
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
 
-  " Utility
-  call dein#add('christoomey/vim-tmux-navigator')
-  call dein#add('nelstrom/vim-visual-star-search')
-  call dein#add('tpope/vim-commentary')
-  call dein#add('tpope/vim-dispatch')
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('tpope/vim-repeat')
-  call dein#add('tpope/vim-surround')
-  call dein#add('tpope/vim-unimpaired')
-  call dein#add('tpope/vim-vinegar')
-  call dein#add('vim-scripts/gitignore')
-  call dein#add('justinmk/vim-sneak')
-  call dein#add('mhinz/vim-grepper')
-  call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
-  call dein#add('junegunn/fzf.vim')
-  call dein#add('ruanyl/vim-gh-line')
-  call dein#add('neoclide/coc.nvim', {'merged': 0, 'rev': 'release'})
-
-  call dein#end()
-  call dein#save_state()
-endif
-
-syntax enable
-filetype plugin indent on
+call plug#end()
