@@ -15,6 +15,8 @@ export PATH="/usr/local/bin:$PATH"
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.yarn/bin
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/Library/Android/sdk/tools
+export PATH=$PATH:~/Library/Android/sdk/platform-tools
 export GOPATH=$HOME/go
 
 # fnm https://github.com/Schniz/fnm
