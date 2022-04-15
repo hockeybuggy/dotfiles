@@ -19,8 +19,11 @@ export PATH=$PATH:~/Library/Android/sdk/tools
 export PATH=$PATH:~/Library/Android/sdk/platform-tools
 export GOPATH=$HOME/go
 
-# fnm https://github.com/Schniz/fnm
+# fnm (node version manager) https://github.com/Schniz/fnm
 eval "$(fnm env)"
+
+# zoxide (directory jumper) https://github.com/ajeetdsouza/zoxide
+eval "$(zoxide init zsh)"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
