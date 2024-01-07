@@ -6,7 +6,7 @@ call plug#begin()
 " Style
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'lifepillar/vim-solarized8'
+Plug 'ericbn/vim-solarized'
 Plug 'ap/vim-css-color'
 
 " Language

@@ -65,15 +65,10 @@ cnoreabbrev Ls ls
 
 " Colour scheme
 set background=dark
-if $BACKGROUND_COLOR ==? 'light'
-  set background=light
-endif
 let g:solarized_use16 = 1
-colorscheme solarized8
+colorscheme solarized
 syntax on
-if $TERM_PROGRAM =~? 'screen-256color'
-    let s:terminal_italic=1
-endif
+let s:terminal_italic=1
 
 " Disable swap files. Enables backups. Enable undo
 set noswapfile
