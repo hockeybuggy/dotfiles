@@ -12,6 +12,8 @@ export TERMINAL="urxvt"
 export PATH="$HOME/.bin:$PATH"
 # Add some package managers to the path
 export PATH="/usr/local/bin:$PATH"
+# uutils-coreutils
+export PATH="/opt/homebrew/opt/uutils-coreutils/libexec/uubin:$PATH"
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.yarn/bin
 export PATH=$PATH:/usr/local/go/bin

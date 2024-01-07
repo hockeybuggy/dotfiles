@@ -36,8 +36,9 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 1. neovim
 1. tmux - 2.3
 1. zsh  - 5.0
-1. iterm2 or gnome terminal
-1. Inconsolata font (maybe patched with powerline font)
+1. iterm2
+1. node
+1. Inconsolata font (nerdfont variant)
 1. rustup, cargo, rustc
 1. [ripgrep](https://github.com/BurntSushi/ripgrep) -- Grep replacement
 1. [fd](https://github.com/sharkdp/fd) -- `find` replacement
@@ -48,4 +49,9 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
 1. hub (command line github)
 1. diff-so-fancy
 1. reattach-to-user-namespace
+1. starship
 1. gnupg
+1. fnm
+1. zoxide
+1. gpg-agent
+1. uutils-coreutils
