@@ -13,6 +13,9 @@
 	defaultBranch = main
 
 [alias]
+# Ultility aliases. I am unlikely to call this myself, but other scripts use this.
+	default-branch = "!git remote show origin | sed -n '/HEAD branch/s/.*: //p'"
+
 # Commit aliases
 	co   = commit -v
 	com  = commit -m
@@ -30,7 +33,7 @@
 	slp  = log --oneline --decorate
 	sla  = log --oneline --decorate --graph --all -20
 	slap = log --oneline --decorate --graph --all
-	lgbr = log main..
+	lgbr = "!f() { default=$(git default-branch) && git log $default..; }; f"
 
 # Branching aliases
 	bra = branch
@@ -40,14 +43,14 @@
 	rb   = rebase
 	rbi  = rebase --interactive
 	rbc  = rebase --continue
-	rbm  = rebase main
-	rbim = rebase --interactive main
+	rbm  = "!f() { default=$(git default-branch) && git rebase $default; }; f"
+	rbim = "!f() { default=$(git default-branch) && git rebase --interactive $default; }; f"
 
 # Push-Pull aliases
 	po   = push origin
 	pl   = pull
 	plo  = pull origin
-	plom  = pull origin main
+	plom = "!f() { default=$(git default-branch) && git pull origin $default; }; f"
 	plu  = pull upstream
 	pof  = push origin --force
 
@@ -59,7 +62,6 @@
 	pick             = cherry-pick
 	who              = blame
 	edit-conflicts   = !"editconflicts() { $EDITOR $(git diff --name-only --diff-filter=U); }; editconflicts"
-    default-branch = "!git remote show origin | sed -n '/HEAD branch/s/.*: //p'"
     swm = "!switchtodefault() { \
         default=$(git default-branch) && \
         git switch $default \
@@ -86,7 +88,7 @@
         git push --tags; \
     }; tagrelease"
 
-    rebase-to-main = "!rebasetomain() { \
+    rebase-to-default = "!rebasetomain() { \
         default=$(git default-branch) && \
         git checkout $default && \
         git pull origin $default && \
