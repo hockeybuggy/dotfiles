@@ -16,6 +16,7 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="/opt/homebrew/opt/uutils-coreutils/libexec/uubin:$PATH"
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.yarn/bin
+export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/Library/Android/sdk/tools
 export PATH=$PATH:~/Library/Android/sdk/platform-tools
@@ -26,8 +27,6 @@ eval "$(fnm env)"
 
 # zoxide (directory jumper) https://github.com/ajeetdsouza/zoxide
 eval "$(zoxide init zsh)"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # Set up other config vars
 export WORKON_HOME="$HOME/devel/envs"
