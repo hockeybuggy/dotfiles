@@ -64,7 +64,7 @@
 	edit-conflicts   = !"editconflicts() { $EDITOR $(git diff --name-only --diff-filter=U); }; editconflicts"
     swm = "!switchtodefault() { \
         default=$(git default-branch) && \
-        git switch $default \
+        git switch $default; \
     }; switchtodefault"
     merge-pr = "!mergepr() { \
         default=$(git default-branch) && \
