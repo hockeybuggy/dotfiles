@@ -14,7 +14,7 @@
 
 [alias]
 # Ultility aliases. I am unlikely to call this myself, but other scripts use this.
-	default-branch = "!git remote show origin | sed -n '/HEAD branch/s/.*: //p'"
+	default-branch = "!git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'"
 
 # Commit aliases
 	co   = commit -v
