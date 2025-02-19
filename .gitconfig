@@ -52,7 +52,7 @@
 	plo  = pull origin
 	plom = "!f() { default=$(git default-branch) && git pull origin $default; }; f"
 	plu  = pull upstream
-	pof  = push origin --force
+	pof  = push origin --force-with-lease
 
 # Cloneing aliases
 	cl  = clone
