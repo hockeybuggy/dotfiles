@@ -72,6 +72,10 @@ vim.opt.confirm = true
 -- " Mappings
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 
+-- " Disable man mode and ex mode. I was finding them not useful
+vim.keymap.set('n', 'K', '<nop>', { desc = 'Disable Manual mode' })
+vim.keymap.set('n', 'Q', '<nop>', { desc = 'Disable Ex mode' })
+
 -- Window switching
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -86,20 +90,19 @@ require('lazy').setup {
   spec = {
     'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
-    'ericbn/vim-solarized',
+    'tpope/vim-vinegar', -- Improvements to netrw
 
-    { -- Adds git related signs to the gutter, as well as utilities for managing changes
-      'lewis6991/gitsigns.nvim',
-      opts = {
-        signs = {
-          add = { text = '+' },
-          change = { text = '~' },
-          delete = { text = '_' },
-          topdelete = { text = '‾' },
-          changedelete = { text = '~' },
-        },
-      },
+    {
+      'ericbn/vim-solarized',
+      priority = 1000, -- Make sure to load this before all the other start plugins.
+      config = function()
+        vim.cmd.colorscheme 'solarized'
+      end,
     },
+
+    'ruanyl/vim-gh-line', -- Copy GitHub permalinks
+
+    'christoomey/vim-tmux-navigator', -- Navigate between tmux panes and Vim windows
 
     { -- Fuzzy Finder (files, lsp, etc)
       'nvim-telescope/telescope.nvim',
@@ -326,7 +329,7 @@ require('lazy').setup {
     },
   },
 
-  install = { colorscheme = { 'habamax' } },
+  install = { colorscheme = { 'solarized' } },
   -- automatically check for plugin updates
   checker = { enabled = true },
 }
