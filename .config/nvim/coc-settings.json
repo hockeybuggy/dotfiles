@@ -1,13 +1,14 @@
 {
   "coc.preferences.formatOnSaveFiletypes": [
-      "elm",
-      "css",
-      "json",
-      "graphql",
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact"
+    "elm",
+    "css",
+    "json",
+    "graphql",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "python"
   ],
   "coc.preferences.formatOnType": false,
 
@@ -19,6 +20,9 @@
   "python.jediEnabled": false,
   "python.linting.enabled": true,
   "python.linting.pep8Path": "pycodestyle",
+  "pyright.inlayHints.functionReturnTypes": false,
+  "pyright.inlayHints.variableTypes": false,
+  "pyright.inlayHints.parameterTypes": false,
 
   "suggest.timeout": 2000,
   "suggest.autoTrigger": "none",
