@@ -126,9 +126,31 @@ vim.lsp.config['pyright'] = {
     },
   },
 }
-
--- Enable the server
 vim.lsp.enable 'pyright'
+
+vim.lsp.config['rust_analyzer'] = {
+  -- Command to start the server
+  cmd = { 'rust-analyzer' },
+
+  -- Filetypes this server should be used for
+  filetypes = { 'rust' },
+
+  -- Find project root based on these markers
+  root_markers = { 'Cargo.toml', 'rust-project.json', '.git' },
+
+  -- Server-specific settings
+  settings = {
+    ['rust-analyzer'] = {
+      cargo = {
+        allFeatures = true,
+      },
+      checkOnSave = {
+        command = 'clippy',
+      },
+    },
+  },
+}
+vim.lsp.enable 'rust_analyzer'
 
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 -- " Plugins
@@ -291,9 +313,9 @@ require('lazy').setup {
           lua = { 'stylua' },
           -- Conform can also run multiple formatters sequentially
           python = { 'black' },
-          --
           -- You can use 'stop_after_first' to run the first available formatter from the list
           javascript = { 'prettierd', 'prettier', stop_after_first = true },
+          rust = { 'rustfmt' },
         },
       },
     },
