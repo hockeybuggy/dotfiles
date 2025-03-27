@@ -72,15 +72,63 @@ vim.opt.confirm = true
 -- " Mappings
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 
--- " Disable man mode and ex mode. I was finding them not useful
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- Disable man mode and ex mode. I was finding them not useful
 vim.keymap.set('n', 'K', '<nop>', { desc = 'Disable Manual mode' })
 vim.keymap.set('n', 'Q', '<nop>', { desc = 'Disable Ex mode' })
+
+-- GitHub copy line tool
+vim.g.gh_line_map_default = 0
+vim.g.gh_line_blame_map_default = 0
+vim.g.gh_line_map = '<leader>hh'
+vim.g.gh_line_blame_map = '<leader>hb'
+vim.g.gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn '
+
+-- LSP plugins
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+-- Simple navigation between diagnostics with ]w and [w
+vim.keymap.set('n', ']w', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
+vim.keymap.set('n', '[w', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show diagnostics' })
 
 -- Window switching
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- """"""""""""""""""""""""""""""""""""""""""""""""""
+-- " Language Server
+-- """"""""""""""""""""""""""""""""""""""""""""""""""
+
+vim.lsp.config['pyright'] = {
+  -- Command to start the server
+  cmd = { 'basedpyright-langserver', '--stdio' },
+
+  -- Filetypes this server should be used for
+  filetypes = { 'python' },
+
+  -- Find project root based on these markers
+  root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', 'Pipfile', '.git' },
+
+  -- Server-specific settings
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = 'workspace',
+        useLibraryCodeForTypes = true,
+      },
+    },
+  },
+}
+
+-- Enable the server
+vim.lsp.enable 'pyright'
 
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 -- " Plugins
@@ -129,7 +177,7 @@ require('lazy').setup {
         { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
       },
       config = function()
-        -- Telescope is a fuzzy finder that comes with a lot of different things that
+        -- Telescope is a fuzzy finder that comes with a lot of different things than
         -- it can fuzzy find! It's more than just a "file finder", it can search
         -- many different aspects of Neovim, your workspace, LSP, and more!
         --
@@ -242,10 +290,10 @@ require('lazy').setup {
         formatters_by_ft = {
           lua = { 'stylua' },
           -- Conform can also run multiple formatters sequentially
-          -- python = { "isort", "black" },
+          python = { 'black' },
           --
           -- You can use 'stop_after_first' to run the first available formatter from the list
-          -- javascript = { "prettierd", "prettier", stop_after_first = true },
+          javascript = { 'prettierd', 'prettier', stop_after_first = true },
         },
       },
     },
@@ -314,6 +362,8 @@ require('lazy').setup {
           'query',
           'vim',
           'vimdoc',
+          'rust',
+          'python',
         },
         -- Autoinstall languages that are not installed
         auto_install = true,
