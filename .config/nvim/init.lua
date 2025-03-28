@@ -35,6 +35,12 @@ vim.opt.showmode = false
 -- Enable break indent
 vim.opt.breakindent = true
 
+-- Configure some default tab vs spaces behaviour
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
 -- Don't Save undo history
 vim.opt.undofile = false
 
