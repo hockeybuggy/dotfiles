@@ -84,6 +84,9 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('n', 'K', '<nop>', { desc = 'Disable Manual mode' })
 vim.keymap.set('n', 'Q', '<nop>', { desc = 'Disable Ex mode' })
 
+-- Git Blame
+vim.keymap.set('n', '<leader>gb', '<cmd>BlameToggle<CR>', { desc = '[G]it [B]lame' })
+
 -- GitHub copy line tool
 vim.g.gh_line_map_default = 0
 vim.g.gh_line_blame_map_default = 0
@@ -496,7 +499,16 @@ require('lazy').setup({
       'FabijanZulj/blame.nvim',
       lazy = false,
       config = function()
-        require('blame').setup({})
+        require('blame').setup({
+          date_format = '%Y.%m.%d',
+          mappings = {
+            commit_info = 'i',
+            stack_push = '<TAB>',
+            stack_pop = '<BS>',
+            show_commit = '<CR>',
+            close = { '<esc>', 'q' },
+          },
+        })
       end,
     },
   },
