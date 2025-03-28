@@ -491,6 +491,14 @@ require('lazy').setup({
         indent = { enable = true, disable = { 'ruby' } },
       },
     },
+
+    {
+      'FabijanZulj/blame.nvim',
+      lazy = false,
+      config = function()
+        require('blame').setup({})
+      end,
+    },
   },
 
   install = { colorscheme = { 'solarized' } },
