@@ -34,9 +34,10 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
     1. [eza](https://eza.rocks/) -- `ls` replacement
 1. Language things
     1. rustup, cargo, rustc
-    1. python
-    1. node
-    1. fnm
+    1. python, black
+    1. node, fnm, prettier
+    1. luarocks, stylua
+    1. rbenv, rubocop, solargraph
 1. code formatters
     1. stylua
     1. black

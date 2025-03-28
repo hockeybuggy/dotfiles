@@ -4,10 +4,10 @@
 -- This is a lua config based off of kickstart.nvim and my vimscript vimrc
 
 -- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  local out = vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
@@ -68,6 +68,10 @@ vim.opt.scrolloff = 10
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
+-- Configure ripgrep as the grep program
+vim.opt.grepprg = 'rg --vimgrep --smart-case --follow'
+vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 -- " Mappings
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -101,6 +105,24 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Map visual selection to ripgrep search via Telescope
+vim.keymap.set('v', 'gs', function()
+  local saved_reg = vim.fn.getreg('"')
+  vim.cmd('noau normal! "vy"')
+  local selection = vim.fn.getreg('v')
+  vim.fn.setreg('"', saved_reg)
+
+  -- Replace newlines with spaces
+  selection = selection:gsub('\n', ' ')
+  -- Escape special characters for shell
+  selection = selection:gsub('([\'"])', '\\%1')
+
+  -- Execute ripgrep and directly populate quickfix list
+  vim.cmd('silent grep! "' .. selection .. '"')
+  -- Open the quickfix list
+  vim.cmd('copen')
+end, { desc = '[S]earch with [G]rep using visual selection' })
+
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 -- " Language Server
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -126,7 +148,7 @@ vim.lsp.config['pyright'] = {
     },
   },
 }
-vim.lsp.enable 'pyright'
+vim.lsp.enable('pyright')
 
 vim.lsp.config['rust_analyzer'] = {
   -- Command to start the server
@@ -150,13 +172,81 @@ vim.lsp.config['rust_analyzer'] = {
     },
   },
 }
-vim.lsp.enable 'rust_analyzer'
+vim.lsp.enable('rust_analyzer')
+
+vim.lsp.config['tsserver'] = {
+  -- Command to start the server
+  cmd = { 'typescript-language-server', '--stdio' },
+
+  -- Filetypes this server should be used for
+  filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+
+  -- Find project root based on these markers
+  root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
+
+  -- Server-specific settings
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+  },
+
+  -- Optional: configure init options
+  init_options = {
+    hostInfo = 'neovim',
+    preferences = {
+      includeCompletionsForModuleExports = true,
+    },
+  },
+}
+vim.lsp.enable('tsserver')
+
+-- Ruby LSP configuration
+vim.lsp.config['solargraph'] = {
+  -- Command to start the server
+  cmd = { 'solargraph', 'stdio' },
+
+  -- Filetypes this server should be used for
+  filetypes = { 'ruby' },
+
+  -- Find project root based on these markers
+  root_markers = { 'Gemfile', '.git' },
+
+  -- Server-specific settings
+  settings = {
+    solargraph = {
+      diagnostics = true,
+      completion = true,
+      useBundler = false, -- Set to true if solargraph is installed via bundle
+    },
+  },
+}
+vim.lsp.enable('solargraph')
 
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 -- " Plugins
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 
-require('lazy').setup {
+require('lazy').setup({
   spec = {
     'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -166,7 +256,7 @@ require('lazy').setup {
       'ericbn/vim-solarized',
       priority = 1000, -- Make sure to load this before all the other start plugins.
       config = function()
-        vim.cmd.colorscheme 'solarized'
+        vim.cmd.colorscheme('solarized')
       end,
     },
 
@@ -190,7 +280,7 @@ require('lazy').setup {
           -- `cond` is a condition used to determine whether this plugin should be
           -- installed and loaded.
           cond = function()
-            return vim.fn.executable 'make' == 1
+            return vim.fn.executable('make') == 1
           end,
         },
         { 'nvim-telescope/telescope-ui-select.nvim' },
@@ -220,7 +310,7 @@ require('lazy').setup {
 
         -- [[ Configure Telescope ]]
         -- See `:help telescope` and `:help telescope.setup()`
-        require('telescope').setup {
+        require('telescope').setup({
           -- You can put your default mappings / updates / etc. in here
           --  All the info you're looking for is in `:help telescope.setup()`
           --
@@ -235,20 +325,20 @@ require('lazy').setup {
               require('telescope.themes').get_dropdown(),
             },
           },
-        }
+        })
 
         -- Enable Telescope extensions if they are installed
         pcall(require('telescope').load_extension, 'fzf')
         pcall(require('telescope').load_extension, 'ui-select')
 
         -- See `:help telescope.builtin`
-        local builtin = require 'telescope.builtin'
+        local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
         vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
         vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
         vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-        vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-        vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+        vim.keymap.set('n', '<leader>gw', builtin.grep_string, { desc = '[G]rep current [W]ord' })
+        vim.keymap.set('n', '<leader>gs', builtin.live_grep, { desc = '[G]rep [S]earch' })
         vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
         vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
         vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
@@ -257,24 +347,24 @@ require('lazy').setup {
         -- Slightly advanced example of overriding default behavior and theme
         vim.keymap.set('n', '<leader>/', function()
           -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-          builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+          builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
             winblend = 10,
             previewer = false,
-          })
+          }))
         end, { desc = '[/] Fuzzily search in current buffer' })
 
         -- It's also possible to pass additional configuration options.
         --  See `:help telescope.builtin.live_grep()` for information about particular keys
         vim.keymap.set('n', '<leader>s/', function()
-          builtin.live_grep {
+          builtin.live_grep({
             grep_open_files = true,
             prompt_title = 'Live Grep in Open Files',
-          }
+          })
         end, { desc = '[S]earch [/] in Open Files' })
 
         -- Shortcut for searching your Neovim configuration files
         vim.keymap.set('n', '<leader>sn', function()
-          builtin.find_files { cwd = vim.fn.stdpath 'config' }
+          builtin.find_files({ cwd = vim.fn.stdpath('config') })
         end, { desc = '[S]earch [N]eovim files' })
       end,
     },
@@ -287,7 +377,7 @@ require('lazy').setup {
         {
           '<leader>f',
           function()
-            require('conform').format { async = true, lsp_format = 'fallback' }
+            require('conform').format({ async = true, lsp_format = 'fallback' })
           end,
           mode = '',
           desc = '[F]ormat buffer',
@@ -316,6 +406,7 @@ require('lazy').setup {
           -- You can use 'stop_after_first' to run the first available formatter from the list
           javascript = { 'prettierd', 'prettier', stop_after_first = true },
           rust = { 'rustfmt' },
+          ruby = { 'rubocop' },
         },
       },
     },
@@ -337,7 +428,7 @@ require('lazy').setup {
         --  - va)  - [V]isually select [A]round [)]paren
         --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
         --  - ci'  - [C]hange [I]nside [']quote
-        require('mini.ai').setup { n_lines = 500 }
+        require('mini.ai').setup({ n_lines = 500 })
 
         -- Add/delete/replace surroundings (brackets, quotes, etc.)
         --
@@ -349,9 +440,9 @@ require('lazy').setup {
         -- Simple and easy statusline.
         --  You could remove this setup call if you don't like it,
         --  and try some other statusline plugin
-        local statusline = require 'mini.statusline'
+        local statusline = require('mini.statusline')
         -- set use_icons to true if you have a Nerd Font
-        statusline.setup { use_icons = vim.g.have_nerd_font }
+        statusline.setup({ use_icons = vim.g.have_nerd_font })
 
         -- You can configure sections in the statusline by overriding their
         -- default behavior. For example, here we set the section for
@@ -386,6 +477,7 @@ require('lazy').setup {
           'vimdoc',
           'rust',
           'python',
+          'ruby',
         },
         -- Autoinstall languages that are not installed
         auto_install = true,
@@ -404,4 +496,4 @@ require('lazy').setup {
   install = { colorscheme = { 'solarized' } },
   -- automatically check for plugin updates
   checker = { enabled = true },
-}
+})
