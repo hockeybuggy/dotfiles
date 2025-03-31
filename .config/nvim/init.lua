@@ -69,7 +69,7 @@ vim.opt.cursorline = false
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
--- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+-- If performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.opt.confirm = true
@@ -77,6 +77,16 @@ vim.opt.confirm = true
 -- Configure ripgrep as the grep program
 vim.opt.grepprg = 'rg --vimgrep --smart-case --follow'
 vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+
+-- Don't automatically continue comment blocks. This is done by removing:
+--   The o option, which would normally insert a comment leader when using the "o" or "O" command in normal mode
+--   The r option, which would normally continue comments when pressing Enter in insert mode
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    vim.opt_local.formatoptions:remove({ 'o', 'r' })
+  end,
+})
 
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 -- " Mappings
