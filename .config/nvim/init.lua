@@ -124,7 +124,13 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- Map visual selection to ripgrep search via Telescope
+-- Access the current directory of the file in command mode
+-- Inspired by http://vimcasts.org/episodes/the-edit-command/
+vim.keymap.set('c', '%%', function()
+  return vim.fn.expand('%:h') .. '/'
+end, { expr = true, noremap = true })
+
+-- Map visual selection to ripgrep search
 vim.keymap.set('v', 'gs', function()
   local saved_reg = vim.fn.getreg('"')
   vim.cmd('noau normal! "vy"')
