@@ -43,6 +43,8 @@ vim.opt.expandtab = true
 
 -- Don't Save undo history
 vim.opt.undofile = false
+-- Don't have swap files
+vim.opt.swapfile = false
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
