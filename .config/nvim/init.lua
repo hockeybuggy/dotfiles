@@ -60,7 +60,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 vim.opt.list = true
-vim.opt.listchars = { tab = '▸ ', trail = '¬', nbsp = '¤' }
+vim.opt.listchars = { tab = '▸ ', eol = '¬', trail = '¤' }
 
 vim.opt.spelllang = 'en_ca'
 vim.opt.spellfile = '~/.vim/spell/en.utf-8.add'
@@ -70,6 +70,9 @@ vim.opt.cursorline = false
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Don't have mouse support. This was preventing my previous method of copying values (using the terminal)
+vim.opt.mouse = ''
 
 -- If performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -149,6 +152,44 @@ vim.keymap.set('v', 'gs', function()
   -- Open the quickfix list
   vim.cmd('copen')
 end, { desc = '[S]earch with [G]rep using visual selection' })
+
+vim.keymap.set('n', 'yol', function()
+  -- Toggle number
+  vim.opt.number = not vim.opt.number:get()
+
+  -- Toggle relativenumber
+  vim.opt.relativenumber = not vim.opt.relativenumber:get()
+
+  -- Toggle listchars
+  vim.opt.list = not vim.opt.list:get()
+
+  -- Toggle signcolumn
+  local current_signcolumn = vim.opt.signcolumn:get()
+  if current_signcolumn == 'yes' then
+    vim.opt.signcolumn = 'no'
+  else
+    vim.opt.signcolumn = 'yes'
+  end
+
+  -- Show current state
+  local state = {
+    number = vim.opt.number:get(),
+    relativenumber = vim.opt.relativenumber:get(),
+    list = vim.opt.list:get(),
+    signcolumn = vim.opt.signcolumn:get(),
+  }
+
+  print(
+    'number: '
+      .. tostring(state.number)
+      .. ', relativenumber: '
+      .. tostring(state.relativenumber)
+      .. ', list: '
+      .. tostring(state.list)
+      .. ', signcolumn: '
+      .. state.signcolumn
+  )
+end, { noremap = true, silent = true, desc = 'Toggle number, relativenumber, listchars, and signcolumn' })
 
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 -- " Language Server
