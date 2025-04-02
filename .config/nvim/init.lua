@@ -80,7 +80,7 @@ vim.opt.mouse = ''
 vim.opt.confirm = true
 
 -- Configure ripgrep as the grep program
-vim.opt.grepprg = 'rg --vimgrep --smart-case --follow'
+vim.opt.grepprg = 'rg --vimgrep --smart-case --follow --hidden'
 vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
 
 -- Don't automatically continue comment blocks. This is done by removing:
