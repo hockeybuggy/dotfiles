@@ -191,6 +191,15 @@ vim.keymap.set('n', 'yol', function()
   )
 end, { noremap = true, silent = true, desc = 'Toggle number, relativenumber, listchars, and signcolumn' })
 
+vim.keymap.set('n', 'yos', function()
+  -- Toggle spell checking
+  vim.opt.spell = not vim.opt.spell:get()
+
+  -- Show current state
+  local spell_state = vim.opt.spell:get()
+  print('spell: ' .. tostring(spell_state))
+end, { noremap = true, silent = true, desc = 'Toggle spell checking' })
+
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
 -- " Language Server
 -- """"""""""""""""""""""""""""""""""""""""""""""""""
