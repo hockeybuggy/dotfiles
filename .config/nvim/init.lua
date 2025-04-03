@@ -376,6 +376,18 @@ require('lazy').setup({
               require('telescope.themes').get_dropdown(),
             },
           },
+          pickers = {
+            live_grep = {
+              file_ignore_patterns = { 'node_modules', '.git/', '.venv' },
+              additional_args = function(_)
+                return { '--hidden', '--glob', '!.git/*' }
+              end,
+            },
+            find_files = {
+              file_ignore_patterns = { 'node_modules', '.git/', '.venv' },
+              hidden = true,
+            },
+          },
         })
 
         -- Enable Telescope extensions if they are installed
