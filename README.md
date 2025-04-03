@@ -38,9 +38,6 @@ Clone the repo. I like to clone put it at `~/.dotfiles`
     1. node, fnm, prettier
     1. luarocks, stylua
     1. rbenv, rubocop, solargraph
-1. code formatters
-    1. stylua
-    1. black
 1. [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
 1. Git related
     1. gnupg

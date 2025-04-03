@@ -1,29 +1,34 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-cd "$(dirname "${BASH_SOURCE}")";
+set -euo pipefail
+IFS=$'\n\t'
 
 function doIt() {
-    rsync --exclude ".git/" \
-        --exclude ".DS_Store" \
-        --exclude "bootstrap.sh" \
-        --exclude "scripts" \
-        --exclude "README.md" \
-        -avh --no-perms . ~;
+    # Array of excluded files/directories (in addition to .gitignore)
+    excluded=(
+        ".git"
+        "bootstrap.sh"
+        "README.md"
+    )
+    # Create a fd command with exclusions from the array. We use fd instead of
+    # find because it respects .gitignore
+    fd_cmd="fd --type f --hidden"
+    for excl in "${excluded[@]}"; do
+        fd_cmd+=" --exclude \"$excl\""
+    done
 
-    source ~/.bash_profile;
+    # Create symbolic links for all dotfiles
+    for raw_file in $(eval $fd_cmd); do
+        if [ -n "$raw_file" ]; then
+            file=${raw_file:2} # Remove a leading "./"
 
-    # Install Vim packages
-    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+            mkdir -p "$(dirname "$HOME/$file")"
+            ln -sf "$PWD/$file" "$HOME/$file"
+            echo "Linked: $PWD/$file -> $HOME/$file"
+        fi
+    done
 }
 
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
-    doIt;
-else
-    read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
-    echo "";
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        doIt;
-    fi;
-fi;
+doIt;
+
 unset doIt;

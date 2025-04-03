@@ -129,16 +129,3 @@ function zle-line-finish () {
 
 zle -N zle-line-init
 zle -N zle-line-finish
-
-# added by travis gem
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
-
-# wave autocomplete setup
-WAVE_AC_ZSH_SETUP_PATH=/Users/danderson/Library/Caches/wave/autocomplete/zsh_setup && test -f $WAVE_AC_ZSH_SETUP_PATH && source $WAVE_AC_ZSH_SETUP_PATH;
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/danderson/work/home-showing-calendar/showing/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/danderson/work/home-showing-calendar/showing/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/danderson/work/home-showing-calendar/showing/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/danderson/work/home-showing-calendar/showing/node_modules/tabtab/.completions/sls.zsh
