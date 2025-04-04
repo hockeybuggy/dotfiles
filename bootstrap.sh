@@ -43,7 +43,7 @@ function doIt() {
     # Create symbolic links for all dotfiles
     for raw_file in $(eval $fd_cmd); do
         if [ -n "$raw_file" ]; then
-            file=${raw_file:2} # Remove a leading "./"
+            file=${raw_file#./} # Remove a leading "./"
 
             mkdir -p "$(dirname "$HOME/$file")"
             ln -sf "$PWD/$file" "$HOME/$file"
