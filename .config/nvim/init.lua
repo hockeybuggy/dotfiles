@@ -81,7 +81,11 @@ vim.opt.confirm = true
 
 -- Configure ripgrep as the grep program
 vim.opt.grepprg = 'rg --vimgrep --smart-case --follow --hidden'
+-- vim.opt.grepprg = 'rg --vimgrep --smart-case --follow --hidden --glob=!.git/*'
 vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+
+-- Add the cfilter command for filtering quicklists
+vim.cmd('packadd cfilter')
 
 -- Don't automatically continue comment blocks. This is done by removing:
 --   The o option, which would normally insert a comment leader when using the "o" or "O" command in normal mode
