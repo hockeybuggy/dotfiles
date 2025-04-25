@@ -64,6 +64,19 @@ vim.opt.listchars = { tab = '▸ ', eol = '¬', trail = '¤' }
 
 vim.opt.spelllang = 'en_ca'
 vim.opt.spellfile = '~/.vim/spell/en.utf-8.add'
+vim.opt.spell = false
+
+-- Create an autocommand group
+local spell_group = vim.api.nvim_create_augroup('SpellCheck', { clear = true })
+
+-- Enable spelling for markdown, text, and git commit messages
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'markdown', 'text', 'gitcommit' },
+  callback = function()
+    vim.opt_local.spell = true
+  end,
+  group = spell_group,
+})
 
 -- Show which line your cursor is on
 vim.opt.cursorline = false
