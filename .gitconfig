@@ -61,6 +61,7 @@
 # Other aliases
 	pick             = cherry-pick
 	who              = blame
+	files-changed    = "!fileschanged() { default=$(git default-branch) && git diff --name-only $default; }; fileschanged"
 	edit-conflicts   = !"editconflicts() { $EDITOR $(git diff --name-only --diff-filter=U); }; editconflicts"
     swm = "!switchtodefault() { \
         default=$(git default-branch) && \
