@@ -62,7 +62,14 @@
 	pick             = cherry-pick
 	who              = blame
 	files-changed    = "!fileschanged() { default=$(git default-branch) && git diff --name-only $default; }; fileschanged"
-	edit-conflicts   = !"editconflicts() { $EDITOR $(git diff --name-only --diff-filter=U); }; editconflicts"
+	edit-conflicts   = "!editconflicts() { \
+		conflicts=$(git diff --name-only --diff-filter=U); \
+		if [ -z \"$conflicts\" ]; then \
+			echo 'No files in conflict.'; \
+		else \
+			$EDITOR $conflicts; \
+		fi; \
+	}; editconflicts"
     swm = "!switchtodefault() { \
         default=$(git default-branch) && \
         git switch $default; \
