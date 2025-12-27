@@ -130,4 +130,13 @@ function zle-line-finish () {
 zle -N zle-line-init
 zle -N zle-line-finish
 
-eval "$(dev _hook)"
+if command -v dev > /dev/null 2>&1; then
+  eval "$(dev _hook)"
+fi
+
+# fnm
+FNM_PATH="/home/hockeybuggy/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
+fi

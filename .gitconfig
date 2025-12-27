@@ -1,7 +1,6 @@
 [user]
 	name       = Douglas Anderson
 	email      = hockeybuggy@gmail.com
-	signingkey = 9892CB4012843ABE
 
 [color]
 	branch = auto
@@ -119,7 +118,6 @@
 
 [commit]
 	template = ~/.gitmessage
-	gpgsign = true
 
 [rebase]
 	autosquash = true
@@ -128,7 +126,7 @@
 	date = human
 
 [core]
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = ~/dotfiles/.bin/git-pager.sh
 
 [color "diff"]
 	meta       = yellow
@@ -158,3 +156,7 @@
 
 [receive]
 	fsckObjects = true
+
+# Include local config for machine-specific settings (e.g., GPG signing)
+[include]
+	path = ~/.gitconfig.local

@@ -19,3 +19,5 @@
 
 scripts/z/.z
 scripts/z/.z.*
+
+.gitconfig.local

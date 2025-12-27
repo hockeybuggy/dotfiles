@@ -1,0 +1,8 @@
+# Local git configuration for machines with GPG key setup
+# Only create/symlink this file on machines where you have your GPG key
+
+[user]
+	signingkey = 9892CB4012843ABE
+
+[commit]
+	gpgsign = true
