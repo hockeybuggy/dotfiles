@@ -2,8 +2,8 @@
 # copys the piped text to the clipboard
 
 if [ "$(uname)" == "Darwin" ]; then
-    cat $* | pbcopy
+    cat "$@" | pbcopy
 else
-    xclip -i -selection clipboard $*
+    xclip -i -selection clipboard "$@"
 fi
 
