@@ -21,3 +21,4 @@ scripts/z/.z
 scripts/z/.z.*
 
 .gitconfig.local
+.claude/settings.local.json
