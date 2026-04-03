@@ -126,7 +126,7 @@
 	date = human
 
 [core]
-	pager = ~/dotfiles/.bin/git-pager.sh
+	pager = ~/.dotfiles/.bin/git-pager.sh
 
 [color "diff"]
 	meta       = yellow

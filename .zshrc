@@ -131,12 +131,13 @@ zle -N zle-line-init
 zle -N zle-line-finish
 
 if command -v dev > /dev/null 2>&1; then
-  eval "$(dev _hook)"
+    eval "$(dev _hook)"
+    [[ -d "/opt/clio/bin/devxp" ]] && export PATH="/opt/clio/bin/devxp:$PATH"
 fi
 
 # fnm
 FNM_PATH="/home/hockeybuggy/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "`fnm env`"
+    export PATH="$FNM_PATH:$PATH"
+    eval "`fnm env`"
 fi
