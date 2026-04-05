@@ -26,6 +26,8 @@ vim.g.maplocalleader = ','
 
 vim.g.have_nerd_font = true
 
+vim.opt.termguicolors = true -- Enable 24-bit color
+
 vim.opt.number = true -- Show current line number rather than zero
 vim.opt.relativenumber = true -- Relative numbers are the bomb
 
