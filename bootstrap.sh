@@ -64,6 +64,16 @@ function doIt() {
     ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
     echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.claude/CLAUDE.md"
 
+    # Symlink skills from ~/.agent-stuff into ~/.claude/skills/
+    if [ -d "$HOME/.agent-stuff/skills" ]; then
+        mkdir -p "$HOME/.claude/skills"
+        for skill_dir in "$HOME/.agent-stuff/skills"/*/; do
+            skill_name=$(basename "$skill_dir")
+            ln -sf "$skill_dir" "$HOME/.claude/skills/$skill_name"
+            echo "Linked skill: $skill_dir -> $HOME/.claude/skills/$skill_name"
+        done
+    fi
+
     if [ -f ".claude/settings.local.json" ]; then
         python3 -c "
 import json, sys

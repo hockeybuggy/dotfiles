@@ -1,6 +1,3 @@
 {
-  "model": "sonnet",
-  "skillDirectories": [
-    "~/.agent-stuff/skills"
-  ]
+  "model": "sonnet"
 }
