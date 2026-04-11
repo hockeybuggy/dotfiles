@@ -1,3 +1,6 @@
 {
-  "model": "opus"
+  "model": "sonnet",
+  "skillDirectories": [
+    "~/.agent-stuff/skills"
+  ]
 }
