@@ -1,0 +1,24 @@
+// cmux settings — keybindings mirror ~/.tmux.conf where possible
+{
+  "keybindings": {
+    // Pane splits (C-s prefix, like tmux)
+    "splitDown": ["ctrl+s", "-"],
+    "splitRight": ["ctrl+s", "\\"],
+
+    // Pane navigation without prefix (mirrors vim-tmux-navigator)
+    "focusPaneLeft": "ctrl+h",
+    "focusPaneDown": "ctrl+j",
+    "focusPaneUp": "ctrl+k",
+    "focusPaneRight": "ctrl+l",
+
+    // Tab/workspace management
+    "newSurface": ["ctrl+s", "c"],
+    "nextWorkspace": ["ctrl+s", "n"],
+    "previousWorkspace": ["ctrl+s", "p"],
+    "toggleSidebar": ["ctrl+s", "b"],
+    "togglePaneZoom": ["ctrl+s", "z"],
+
+    // App
+    "reloadConfiguration": ["ctrl+s", "r"]
+  }
+}
