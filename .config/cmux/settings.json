@@ -11,10 +11,15 @@
     "focusPaneUp": "ctrl+k",
     "focusPaneRight": "ctrl+l",
 
-    // Tab/workspace management
+    // Tab/surface management (surfaces = windows in tmux terms)
     "newSurface": ["ctrl+s", "c"],
-    "nextWorkspace": ["ctrl+s", "n"],
-    "previousWorkspace": ["ctrl+s", "p"],
+    "nextSurface": ["ctrl+s", "n"],
+    "previousSurface": ["ctrl+s", "p"],
+    "selectSurfaceByNumber": [
+      ["ctrl+s", "1"], ["ctrl+s", "2"], ["ctrl+s", "3"],
+      ["ctrl+s", "4"], ["ctrl+s", "5"], ["ctrl+s", "6"],
+      ["ctrl+s", "7"], ["ctrl+s", "8"], ["ctrl+s", "9"]
+    ],
     "toggleSidebar": ["ctrl+s", "b"],
     "togglePaneZoom": ["ctrl+s", "z"],
 
