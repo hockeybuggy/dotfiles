@@ -16,13 +16,26 @@ Use backticks around commands, file names, and aliases in subjects:
 
     Fix the quoting of the `clip` command
 
-Include a body (~72 char wrap) for non-trivial changes. The body
-should answer: what was the state before, how does this address it,
-and are there side effects. Skip the body when the subject says it all.
+Include a body (~72 char wrap) for non-trivial changes. Commit
+message bodies should have at least two paragraphs: a problem
+paragraph describing the prior state, then one or more solution
+paragraphs explaining how this change addresses it. Complex changes
+often need multiple solution paragraphs. Optionally add a final
+"alternatives considered" paragraph when the chosen approach isn't
+obvious. Bullet points are fine when they genuinely fit. Skip the
+body when the subject says it all.
 
 Keep commit messages high-level and summary-focused, not exhaustive
-detail dumps. Aim for a clear subject and a few bullets of intent,
-not a changelog of every edit.
+detail dumps. The body explains intent, not a changelog of every edit.
+
+## Pull request bodies
+
+Do not hard-wrap PR descriptions. Reflow each paragraph onto a single
+line and let Markdown handle wrapping — GitHub renders hard line
+breaks as paragraph-internal line breaks, which looks bad. Hard
+wrapping at ~72 is only for commit message bodies. When reusing a
+commit message as a PR description, strip the hard line breaks within
+each paragraph but keep blank lines between paragraphs.
 
 ## General
 
