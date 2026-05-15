@@ -30,6 +30,10 @@ detail dumps. The body explains intent, not a changelog of every edit.
 
 ## Pull request bodies
 
+For single-commit PRs, reuse the commit message: the commit subject
+becomes the PR title and the commit body becomes the PR body. Don't
+write a separate PR description that says the same thing differently.
+
 Do not hard-wrap PR descriptions. Reflow each paragraph onto a single
 line and let Markdown handle wrapping — GitHub renders hard line
 breaks as paragraph-internal line breaks, which looks bad. Hard
