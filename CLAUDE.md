@@ -8,3 +8,5 @@ bootstrap script handles it specially — it symlinks `CLAUDE.md` and
 merges `settings.json` with `settings.local.json` (if present).
 
 Keep changes focused. Don't over-engineer things.
+
+Please use Canadian spelling (e.g., colour, centre, travelling, defence) in your responses and when writing code/documentation.
