@@ -64,6 +64,12 @@ function doIt() {
     ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
     echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.claude/CLAUDE.md"
 
+    # Pi coding agent: share the same CLAUDE.md as global context
+    echo "\n${GREEN}Setting up pi config${RESET}"
+    mkdir -p "$HOME/.pi/agent"
+    ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.pi/agent/CLAUDE.md"
+    echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.pi/agent/CLAUDE.md"
+
     # Symlink skills from ~/.agent-stuff into ~/.claude/skills/
     if [ -d "$HOME/.agent-stuff/skills" ]; then
         mkdir -p "$HOME/.claude/skills"
