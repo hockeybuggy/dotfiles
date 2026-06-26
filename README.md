@@ -4,9 +4,9 @@ This repository is for managing my configuration files.
 
 ## Installation
 
-### 1.Clone this repo
+### 1. Clone this repo
 
-Clone the repo. I like to clone put it at `~/.dotfiles`
+Clone the repo. I like to put it at `~/.dotfiles`
 
     git clone git@github.com:hockeybuggy/dotfiles.git .dotfiles && cd .dotfiles
 

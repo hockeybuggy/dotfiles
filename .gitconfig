@@ -12,7 +12,7 @@
 	defaultBranch = main
 
 [alias]
-# Ultility aliases. I am unlikely to call this myself, but other scripts use this.
+# Utility aliases. I am unlikely to call this myself, but other scripts use this.
 	default-branch = "!git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'"
 
 # Commit aliases
@@ -53,7 +53,7 @@
 	plu  = pull upstream
 	pof  = push origin --force-with-lease
 
-# Cloneing aliases
+# Cloning aliases
 	cl  = clone
 	clo = clone
 
