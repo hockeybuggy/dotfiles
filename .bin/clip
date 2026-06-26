@@ -1,5 +1,5 @@
 #!/bin/sh
-# copys the piped text to the clipboard
+# copies the piped text to the clipboard
 
 if [ "$(uname)" == "Darwin" ]; then
     cat "$@" | pbcopy
