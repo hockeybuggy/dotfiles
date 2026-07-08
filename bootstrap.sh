@@ -70,6 +70,16 @@ function doIt() {
     ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.pi/agent/CLAUDE.md"
     echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.pi/agent/CLAUDE.md"
 
+    # Symlink hooks
+    if [ -d ".claude/hooks" ]; then
+        mkdir -p "$HOME/.claude/hooks"
+        for hook in .claude/hooks/*.sh; do
+            hook_name=$(basename "$hook")
+            ln -sf "$PWD/$hook" "$HOME/.claude/hooks/$hook_name"
+            echo "Linked: $PWD/$hook -> $HOME/.claude/hooks/$hook_name"
+        done
+    fi
+
     # Symlink skills from ~/.agent-stuff into ~/.claude/skills/
     if [ -d "$HOME/.agent-stuff/skills" ]; then
         mkdir -p "$HOME/.claude/skills"

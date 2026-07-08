@@ -1,3 +1,57 @@
 {
-  "model": "sonnet"
+  "model": "sonnet",
+  "permissions": {
+    "ask": [
+      "Bash(gh pr comment)",
+      "Bash(gh pr comment:*)",
+      "Bash(gh issue comment)",
+      "Bash(gh issue comment:*)",
+      "Bash(gh pr review)",
+      "Bash(gh pr review:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/notify.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(gh api:*)",
+            "command": "jq -r '.tool_input.command' | grep -qE 'gh api[^|;&]*(comments|reviews)' && printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"gh api comment/review endpoint — confirm to proceed\"}}' || true"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/notify.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/done.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
