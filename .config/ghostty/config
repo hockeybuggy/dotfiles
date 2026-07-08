@@ -1,3 +1,7 @@
 theme = dark:iTerm2 Solarized Dark,light:iTerm2 Solarized Light
 font-family = InconsolataLGC Nerd Font
 font-size = 17
+
+# Treat Option as Alt/Meta so Option-key shortcuts work (e.g. Claude
+# Code's Option+Enter for newlines and Option+P to switch models).
+macos-option-as-alt = true
