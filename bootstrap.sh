@@ -93,9 +93,20 @@ function doIt() {
     if [ -f ".claude/settings.local.json" ]; then
         python3 -c "
 import json, sys
+
+def deep_merge(base, local):
+    # Recursively merge so nested dicts (e.g. permissions.ask and
+    # permissions.allow) are combined rather than wholesale replaced.
+    for key, value in local.items():
+        if isinstance(value, dict) and isinstance(base.get(key), dict):
+            deep_merge(base[key], value)
+        else:
+            base[key] = value
+    return base
+
 base = json.load(open('.claude/settings.json'))
 local = json.load(open('.claude/settings.local.json'))
-base.update(local)
+deep_merge(base, local)
 json.dump(base, open(sys.argv[1], 'w'), indent=2)
 print('Merged .claude/settings.json + settings.local.json -> ' + sys.argv[1])
 " "$HOME/.claude/settings.json"
