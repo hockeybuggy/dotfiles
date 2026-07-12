@@ -22,6 +22,18 @@ only installs tools -- it does not link any config.
 
     ./bootstrap.sh
 
+## Checking a machine with `doctor.sh`
+
+Run the doctor after installation to check required tools, linked config,
+shell setup, environment variables, Git configuration, and optional
+dependencies:
+
+    ./doctor.sh
+
+Checks report OK, WARN, or FAIL with a suggested fix. The command exits
+non-zero for any required failure. Use `--strict` to also treat warnings as
+failures, or `--ci` to skip checks that only apply to a personal machine.
+
 ## Testing `setup.sh`
 
 You can exercise `setup.sh` on a clean Debian container. This builds a minimal
