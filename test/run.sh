@@ -33,12 +33,15 @@ docker build -t "$IMAGE" "$REPO_ROOT/test"
 # variables must expand inside the container, not on the host.
 # shellcheck disable=SC2016
 PROVISION='set -e
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/share/fnm:$PATH"
 case "${TERM:-}" in ""|dumb) export TERM=xterm ;; esac   # bootstrap.sh/verify.sh call tput; a non-tty run gives TERM=dumb, which has no colour caps
 cp -r /dotfiles "$HOME/.dotfiles"
 cd "$HOME/.dotfiles"
 ./setup.sh
-./bootstrap.sh'
+./bootstrap.sh
+export EDITOR=nvim
+eval "$(fnm env --shell bash)"
+fnm use lts-latest >/dev/null'
 
 if [ "$INTERACTIVE" -eq 1 ]; then
     echo "==> Provisioning, then dropping into an interactive shell"
@@ -51,5 +54,6 @@ else
     echo "==> Provisioning and verifying"
     docker run --rm -v "$REPO_ROOT:/dotfiles:ro" "$IMAGE" bash -lc "
 $PROVISION
-exec ./test/verify.sh"
+./test/verify.sh
+./doctor.sh --ci"
 fi
