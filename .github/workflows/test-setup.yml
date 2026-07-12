@@ -5,11 +5,14 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   test-setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install and verify tools in a clean Debian container
         run: ./test/run.sh
 
@@ -17,11 +20,12 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install and verify macOS tools
         run: |
           export TERM=xterm
           ./test/setup-script-name.sh
+          ./test/setup-policy.sh
           ./setup.sh
           ./bootstrap.sh
           ./test/verify.sh

@@ -14,6 +14,7 @@ set -euo pipefail
 
 REPO_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 "$REPO_ROOT/test/setup-script-name.sh"
+"$REPO_ROOT/test/setup-policy.sh"
 
 IMAGE=dotfiles-test
 INTERACTIVE=0

@@ -49,8 +49,7 @@ setup_macos() {
     info "Installing formulae with Homebrew"
     brew install \
         neovim tmux zsh git fzf ripgrep fd bat eza bottom starship zoxide \
-        uv fnm gnupg diff-so-fancy node markdownlint-cli \
-        reattach-to-user-namespace uutils-coreutils
+        uv gnupg reattach-to-user-namespace uutils-coreutils
 
     info "Installing the Inconsolata Nerd Font"
     brew install --cask font-inconsolata-nerd-font || warn "Font install failed (continuing)"
@@ -89,8 +88,7 @@ arch_nvim() {
 # the named binary. Args: <repo> <asset-url> <binary-name>
 install_release_binary() {
     local name="$1" url="$2" bin="$3" tmp
-    if have "$bin"; then skip "$name already installed"; return; fi
-    info "Installing $name"
+    info "Installing or updating $name"
     tmp=$(mktemp -d)
     download "$url" "$tmp/dl.tar.gz"
     tar -xzf "$tmp/dl.tar.gz" -C "$tmp"
@@ -107,19 +105,30 @@ apt_install() {
     sudo apt-get update -qq
     sudo apt-get install -y --no-install-recommends \
         zsh tmux git gnupg curl ca-certificates build-essential \
-        python3 python3-pip python3-venv ripgrep fd-find bat fzf unzip tar
+        python3 python3-pip python3-venv unzip tar
 }
 
-# Debian ships fd as `fdfind` and bat as `batcat`; expose the usual names.
-link_debian_aliases() {
-    if have fdfind && ! have fd; then
-        info "Linking fdfind -> fd"
-        ln -sf "$(command -v fdfind)" "$LOCAL_BIN/fd"
-    fi
-    if have batcat && ! have bat; then
-        info "Linking batcat -> bat"
-        ln -sf "$(command -v batcat)" "$LOCAL_BIN/bat"
-    fi
+latest_release_version() {
+    local repo="$1" tag
+    tag=$(basename "$(curl -fsSLI -o /dev/null -w '%{url_effective}' \
+        "https://github.com/$repo/releases/latest")")
+    echo "${tag#v}"
+}
+
+arch_go() {
+    case "$(uname -m)" in
+        x86_64|amd64) echo "amd64" ;;
+        aarch64|arm64) echo "arm64" ;;
+        *) warn "Unsupported architecture: $(uname -m)"; return 1 ;;
+    esac
+}
+
+arch_ripgrep() {
+    case "$(uname -m)" in
+        x86_64|amd64) echo "x86_64-unknown-linux-musl" ;;
+        aarch64|arm64) echo "aarch64-unknown-linux-gnu" ;;
+        *) warn "Unsupported architecture: $(uname -m)"; return 1 ;;
+    esac
 }
 
 setup_linux() {
@@ -130,11 +139,12 @@ setup_linux() {
 
     mkdir -p "$LOCAL_BIN"
     apt_install
-    link_debian_aliases
 
-    local ra na
+    local ra na ga rga version
     ra=$(arch_rust)
     na=$(arch_nvim)
+    ga=$(arch_go)
+    rga=$(arch_ripgrep)
 
     # rustup / cargo
     if ! have cargo && ! have rustup; then
@@ -168,7 +178,23 @@ setup_linux() {
         skip "uv already installed"
     fi
 
-    # eza and bottom (prebuilt release binaries)
+    # Portable tools from upstream releases instead of Debian's older packages.
+    version=$(latest_release_version "sharkdp/bat")
+    install_release_binary "bat" \
+        "https://github.com/sharkdp/bat/releases/latest/download/bat-v${version}-${ra}-unknown-linux-gnu.tar.gz" \
+        "bat"
+    version=$(latest_release_version "BurntSushi/ripgrep")
+    install_release_binary "ripgrep" \
+        "https://github.com/BurntSushi/ripgrep/releases/latest/download/ripgrep-${version}-${rga}.tar.gz" \
+        "rg"
+    version=$(latest_release_version "sharkdp/fd")
+    install_release_binary "fd" \
+        "https://github.com/sharkdp/fd/releases/latest/download/fd-v${version}-${ra}-unknown-linux-gnu.tar.gz" \
+        "fd"
+    version=$(latest_release_version "junegunn/fzf")
+    install_release_binary "fzf" \
+        "https://github.com/junegunn/fzf/releases/latest/download/fzf-${version}-linux_${ga}.tar.gz" \
+        "fzf"
     install_release_binary "eza" \
         "https://github.com/eza-community/eza/releases/latest/download/eza_${ra}-unknown-linux-gnu.tar.gz" \
         "eza"
@@ -188,41 +214,46 @@ setup_linux() {
         skip "neovim already installed"
     fi
 
-    # fnm + node + npm-distributed tools (markdownlint-cli, diff-so-fancy)
-    if ! have fnm; then
-        info "Installing fnm"
-        curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "$HOME/.local/share/fnm" --skip-shell
-    else
-        skip "fnm already installed"
-    fi
-    export PATH="$HOME/.local/share/fnm:$LOCAL_BIN:$PATH"
-    if have fnm; then
-        # --shell bash: fnm can't infer the shell from a non-interactive script.
-        eval "$(fnm env --shell bash)"
-        if ! fnm ls 2>/dev/null | grep -q 'v[0-9]'; then
-            info "Installing the LTS Node via fnm"
-            fnm install --lts
-        fi
-        fnm use lts-latest >/dev/null 2>&1 || true
-        fnm default lts-latest >/dev/null 2>&1 || true
-        if have npm; then
-            have markdownlint || { info "Installing markdownlint-cli"; npm install -g markdownlint-cli; }
-            have diff-so-fancy || { info "Installing diff-so-fancy"; npm install -g diff-so-fancy; }
-        fi
-    fi
-
     skip "reattach-to-user-namespace, uutils-coreutils and Nerd Font are macOS-only"
 }
 
 # ---------------------------------------------------------------------------
-# Python tools (uv)
+# Shared language runtimes and tools
 # ---------------------------------------------------------------------------
+
+setup_node_tools() {
+    if ! have fnm; then
+        info "Installing fnm"
+        mkdir -p "$HOME/.local/share/fnm"
+        curl -fsSL https://fnm.vercel.app/install | bash -s -- \
+            --install-dir "$HOME/.local/share/fnm" --skip-shell
+    else
+        skip "fnm already installed"
+    fi
+
+    export PATH="$HOME/.local/share/fnm:$LOCAL_BIN:$PATH"
+    eval "$(fnm env --shell bash)"
+    info "Installing the LTS Node via fnm"
+    fnm install --lts
+    fnm use lts-latest
+    fnm default lts-latest
+
+    info "Installing npm tools"
+    npm install -g markdownlint-cli diff-so-fancy
+}
+
+update_rust() {
+    info "Updating the stable Rust toolchain"
+    rustup update stable
+}
 
 setup_python_tools() {
     info "Installing Python 3.14, ruff and ty"
     uv python install 3.14
+    uv python upgrade 3.14
     uv tool install --python 3.14 ruff
     uv tool install --python 3.14 ty
+    uv tool upgrade ruff ty
 }
 
 main() {
@@ -232,6 +263,8 @@ main() {
         *) warn "Unsupported OS: $(uname -s)"; exit 1 ;;
     esac
 
+    update_rust
+    setup_node_tools
     setup_python_tools
 
     echo
