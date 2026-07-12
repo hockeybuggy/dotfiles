@@ -10,9 +10,30 @@ Clone the repo. I like to put it at `~/.dotfiles`
 
     git clone git@github.com:hockeybuggy/dotfiles.git .dotfiles && cd .dotfiles
 
-### 2. Automagically Link the files
+### 2. Install the tools
+
+`setup.sh` installs the dependencies listed below. It works on macOS (via
+Homebrew) and Debian/Ubuntu (via apt plus a few official installers). It
+only installs tools -- it does not link any config.
+
+    ./setup.sh
+
+### 3. Automagically Link the files
 
     ./bootstrap.sh
+
+## Testing `setup.sh`
+
+You can exercise `setup.sh` on a clean Debian container. This builds a minimal
+image, runs `setup.sh` and `bootstrap.sh` inside it, then drives a tmux session
+to confirm each tool actually runs:
+
+    ./test/run.sh
+
+Pass `--interactive` to provision the container and drop into a shell so you
+can poke around in tmux yourself:
+
+    ./test/run.sh --interactive
 
 ## Dependencies
 
@@ -32,6 +53,7 @@ Clone the repo. I like to put it at `~/.dotfiles`
     1. [fzf](https://github.com/junegunn/fzf) -- Fuzzy finder
     1. [bat](https://github.com/sharkdp/bat) -- `cat` replacement
     1. [eza](https://eza.rocks/) -- `ls` replacement
+    1. [bottom](https://github.com/ClementTsang/bottom) -- `top` replacement (`btm`)
 1. Language things
     1. rustup, cargo, rustc
     1. python, black
