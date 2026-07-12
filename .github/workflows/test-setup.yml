@@ -21,8 +21,6 @@ jobs:
       - name: Install and verify macOS tools
         run: |
           export TERM=xterm
-          export HOME="$RUNNER_TEMP/home"
-          mkdir -p "$HOME"
           ./test/setup-script-name.sh
           ./setup.sh
           ./bootstrap.sh
