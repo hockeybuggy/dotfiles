@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install and verify tools in a clean Debian container
+      - name: Install and verify the environment in a clean Debian container
         run: ./test/run.sh
 
   test-macos:
@@ -24,4 +24,9 @@ jobs:
           ./test/setup-script-name.sh
           ./setup.sh
           ./bootstrap.sh
+          export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/share/fnm:$PATH"
+          export EDITOR=nvim
+          eval "$(fnm env --shell bash)"
+          fnm use lts-latest >/dev/null
           ./test/verify.sh
+          ./doctor.sh --ci

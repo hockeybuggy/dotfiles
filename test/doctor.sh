@@ -77,4 +77,7 @@ status=$?
 set -e
 [ "$status" -eq 1 ] || fail "expected --strict to reject optional dependency warnings"
 
+grep -q './doctor.sh --ci' "$ROOT/test/run.sh" || fail "Debian verification does not run doctor"
+grep -q './doctor.sh --ci' "$ROOT/.github/workflows/test-setup.yml" || fail "macOS verification does not run doctor"
+
 echo "doctor tests passed"
