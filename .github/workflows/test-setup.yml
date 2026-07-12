@@ -26,7 +26,5 @@ jobs:
           ./bootstrap.sh
           export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/share/fnm:$PATH"
           export EDITOR=nvim
-          eval "$(fnm env --shell bash)"
-          fnm use lts-latest >/dev/null
           ./test/verify.sh
           ./doctor.sh --ci

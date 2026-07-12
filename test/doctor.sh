@@ -79,5 +79,8 @@ set -e
 
 grep -q './doctor.sh --ci' "$ROOT/test/run.sh" || fail "Debian verification does not run doctor"
 grep -q './doctor.sh --ci' "$ROOT/.github/workflows/test-setup.yml" || fail "macOS verification does not run doctor"
+if grep -q 'fnm use lts-latest' "$ROOT/.github/workflows/test-setup.yml"; then
+    fail "macOS verification activates an fnm version that setup.sh does not install"
+fi
 
 echo "doctor tests passed"
