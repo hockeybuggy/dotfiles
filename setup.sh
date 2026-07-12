@@ -55,7 +55,7 @@ setup_macos() {
     info "Installing the Inconsolata Nerd Font"
     brew install --cask font-inconsolata-nerd-font || warn "Font install failed (continuing)"
 
-    if ! have rustup && ! have cargo; then
+    if ! have rustup || ! have cargo; then
         info "Installing rustup"
         brew install rustup
         rustup default stable
