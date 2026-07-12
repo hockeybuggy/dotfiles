@@ -215,6 +215,15 @@ setup_linux() {
 }
 
 # ---------------------------------------------------------------------------
+# Python tools (uv)
+# ---------------------------------------------------------------------------
+
+setup_python_tools() {
+    info "Installing Python 3.14, ruff and ty"
+    uv python install 3.14
+    uv tool install --python 3.14 ruff
+    uv tool install --python 3.14 ty
+}
 
 main() {
     case "$(uname -s)" in
@@ -222,6 +231,8 @@ main() {
         Linux)  info "Detected Linux";  setup_linux ;;
         *) warn "Unsupported OS: $(uname -s)"; exit 1 ;;
     esac
+
+    setup_python_tools
 
     echo
     info "Done. Tools installed."
