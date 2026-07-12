@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# run.sh -- test ./setup on a clean Debian container.
+# run.sh -- test ./setup.sh on a clean Debian container.
 #
-# Builds a minimal Debian image, runs ./setup and ./bootstrap.sh inside a fresh
+# Builds a minimal Debian image, runs ./setup.sh and ./bootstrap.sh inside a fresh
 # container, then drives a tmux session (via verify.sh) to prove each installed
 # tool actually runs.
 #
@@ -13,6 +13,8 @@
 set -euo pipefail
 
 REPO_ROOT=$(cd "$(dirname "$0")/.." && pwd)
+"$REPO_ROOT/test/setup-script-name.sh"
+
 IMAGE=dotfiles-test
 INTERACTIVE=0
 
@@ -35,7 +37,7 @@ export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 case "${TERM:-}" in ""|dumb) export TERM=xterm ;; esac   # bootstrap.sh/verify.sh call tput; a non-tty run gives TERM=dumb, which has no colour caps
 cp -r /dotfiles "$HOME/.dotfiles"
 cd "$HOME/.dotfiles"
-./setup
+./setup.sh
 ./bootstrap.sh'
 
 if [ "$INTERACTIVE" -eq 1 ]; then

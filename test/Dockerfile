@@ -1,7 +1,7 @@
-# Minimal Debian image for testing ./setup from a near-bare system.
+# Minimal Debian image for testing ./setup.sh from a near-bare system.
 #
 # We install only what's needed to *bootstrap* the setup script (curl, git,
-# sudo, locales); everything else is left for ./setup to install, so the test
+# sudo, locales); everything else is left for ./setup.sh to install, so the test
 # exercises the real install path.
 FROM debian:stable-slim
 

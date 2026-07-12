@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# setup -- install the tools this dotfiles repo expects.
+# setup.sh -- install the tools this dotfiles repo expects.
 #
 # Cross-platform: macOS (via Homebrew) and Debian/Ubuntu (via apt plus a few
 # official installers / prebuilt binaries). This script only *installs* tools;

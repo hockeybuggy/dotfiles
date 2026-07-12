@@ -12,20 +12,20 @@ Clone the repo. I like to put it at `~/.dotfiles`
 
 ### 2. Install the tools
 
-`setup` installs the dependencies listed below. It works on macOS (via
+`setup.sh` installs the dependencies listed below. It works on macOS (via
 Homebrew) and Debian/Ubuntu (via apt plus a few official installers). It
 only installs tools -- it does not link any config.
 
-    ./setup
+    ./setup.sh
 
 ### 3. Automagically Link the files
 
     ./bootstrap.sh
 
-## Testing `setup`
+## Testing `setup.sh`
 
-You can exercise `setup` on a clean Debian container. This builds a minimal
-image, runs `setup` and `bootstrap.sh` inside it, then drives a tmux session
+You can exercise `setup.sh` on a clean Debian container. This builds a minimal
+image, runs `setup.sh` and `bootstrap.sh` inside it, then drives a tmux session
 to confirm each tool actually runs:
 
     ./test/run.sh

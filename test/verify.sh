@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# verify.sh -- run inside the test container after ./setup and ./bootstrap.sh.
+# verify.sh -- run inside the test container after ./setup.sh and ./bootstrap.sh.
 #
 # Drives a tmux session running a login zsh and exercises each installed tool,
 # capturing its output to prove it actually runs. Prints a pass/fail summary
