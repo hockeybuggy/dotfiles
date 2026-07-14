@@ -52,6 +52,8 @@ checks=(
     "npm|npm --version"
     "diff-so-fancy|command -v diff-so-fancy"
     "markdownlint|markdownlint --version"
+    "Claude Code|claude --version"
+    "Pi|pi --version"
 )
 
 SOCK="verify"

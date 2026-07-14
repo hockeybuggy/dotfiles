@@ -50,7 +50,7 @@ esac
 exit 0
 EOF
 chmod +x "$fake_bin/tool"
-for command_name in nvim tmux zsh git fzf rg fd bat eza btm starship zoxide uv fnm gpg diff-so-fancy node npm markdownlint cargo rustc python3 ruff ty pip reattach-to-user-namespace brew; do
+for command_name in nvim tmux zsh git fzf rg fd bat eza btm starship zoxide uv fnm gpg diff-so-fancy node npm markdownlint cargo rustc python3 ruff ty pip reattach-to-user-namespace brew claude pi; do
     ln -s tool "$fake_bin/$command_name"
 done
 
@@ -62,6 +62,11 @@ for hook in "$ROOT"/.claude/hooks/*.sh; do
     ln -s "$hook" "$healthy_home/.claude/hooks/$(basename "$hook")"
 done
 echo '{}' > "$healthy_home/.claude/settings.json"
+mkdir -p "$healthy_home/.claude/skills"
+for skill_dir in "$ROOT"/agents/skills/*/; do
+    ln -s "$skill_dir" "$healthy_home/.claude/skills/$(basename "$skill_dir")"
+done
+ln -s "$ROOT/agents/skills" "$healthy_home/.pi/agent/skills"
 
 env_path="$fake_bin:/usr/bin:/bin"
 set +e

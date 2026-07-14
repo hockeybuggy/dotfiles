@@ -81,6 +81,9 @@ can poke around in tmux yourself:
     1. node, fnm, prettier
     1. luarocks, stylua
     1. rbenv, rubocop, solargraph
+1. Coding agents
+    1. [Claude Code](https://claude.com/claude-code)
+    1. [Pi](https://pi.dev)
 1. [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
 1. Git related
     1. gnupg
