@@ -8,6 +8,8 @@
 *.pyc
 *.pyo
 
+node_modules/
+
 *.o
 *.so
 

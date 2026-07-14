@@ -211,6 +211,30 @@ else
     fail "Claude settings" "missing; run ./bootstrap.sh"
 fi
 
+section "Coding agents"
+check_tool "Claude Code" claude
+check_tool "Pi" pi
+# Skills are shared by both agents; bootstrap links them per-agent from
+# agents/skills — per-skill into ~/.claude/skills/, one dir into ~/.pi/agent.
+if [ -d "$DOTFILES/agents/skills" ]; then
+    total=0; linked=0
+    for skill_dir in "$DOTFILES"/agents/skills/*/; do
+        [ -d "$skill_dir" ] || continue
+        total=$((total + 1))
+        case "$(readlink "$HOME/.claude/skills/$(basename "$skill_dir")" 2>/dev/null)" in
+            "$DOTFILES"/*) linked=$((linked + 1)) ;;
+        esac
+    done
+    if [ "$total" -gt 0 ] && [ "$linked" -eq "$total" ]; then
+        pass "Claude skills linked" "$linked/$total from agents/skills"
+    else
+        warn "Claude skills linked" "$linked/$total linked; run ./bootstrap.sh"
+    fi
+    check_repo_link "Pi skills" "$HOME/.pi/agent/skills"
+else
+    warn "Agent skills" "agents/skills missing from repo"
+fi
+
 section "Shell & environment"
 if [ "$CI" -eq 1 ]; then
     note "Default login shell" "skipped with --ci"
@@ -276,7 +300,6 @@ check_optional_tool "prettier" prettier
 if [ "$CI" -eq 1 ]; then
     note "Machine-only checks" "skipped with --ci"
 else
-    if [ -d "$HOME/.agent-stuff/skills" ]; then pass "agent-stuff skills" "$HOME/.agent-stuff/skills"; else warn "agent-stuff skills" "clone agent-stuff into ~/.agent-stuff"; fi
     if [ "$(uname -s)" = "Darwin" ]; then
         if find "$HOME/Library/Fonts" /Library/Fonts -iname '*Inconsolata*Nerd*' -print 2>/dev/null | grep -q .; then
             pass "Inconsolata Nerd Font" "installed"

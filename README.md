@@ -22,6 +22,15 @@ only installs tools -- it does not link any config.
 
     ./bootstrap.sh
 
+## Agent skills
+
+The `agents/skills/` directory holds [Agent Skills](https://agentskills.io)
+(one `SKILL.md` per subdirectory) shared by
+[Claude Code](https://claude.ai/code) and the
+[Pi coding agent](https://shittycodingagent.ai). `bootstrap.sh` links each into
+`~/.claude/skills/` for Claude and points `~/.pi/agent/skills` at the directory
+for Pi.
+
 ## Checking a machine with `doctor.sh`
 
 Run the doctor after installation to check required tools, linked config,
@@ -72,8 +81,9 @@ can poke around in tmux yourself:
     1. node, fnm, prettier
     1. luarocks, stylua
     1. rbenv, rubocop, solargraph
-1. Coding Agents
-    1. [agent-stuff](https://github.com/hockeybuggy/agent-stuff)
+1. Coding agents
+    1. [Claude Code](https://claude.com/claude-code)
+    1. [Pi](https://pi.dev)
 1. [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
 1. Git related
     1. gnupg

@@ -225,6 +225,31 @@ setup_python_tools() {
     uv tool install --python 3.14 ty
 }
 
+# ---------------------------------------------------------------------------
+# Coding agents (Claude Code, Pi)
+# ---------------------------------------------------------------------------
+
+setup_agents() {
+    # Claude Code: official native installer, drops `claude` into ~/.local/bin.
+    if have claude; then
+        skip "Claude Code already installed"
+    else
+        info "Installing Claude Code"
+        curl -fsSL https://claude.ai/install.sh | bash || warn "Claude Code install failed (continuing)"
+    fi
+
+    # Pi coding agent: npm-distributed, exposes the `pi` command. Needs node/npm,
+    # which the macOS and Linux paths above install.
+    if have pi; then
+        skip "Pi coding agent already installed"
+    elif have npm; then
+        info "Installing the Pi coding agent"
+        npm install -g --ignore-scripts @earendil-works/pi-coding-agent || warn "Pi install failed (continuing)"
+    else
+        warn "npm unavailable; cannot install the Pi coding agent"
+    fi
+}
+
 main() {
     case "$(uname -s)" in
         Darwin) info "Detected macOS"; setup_macos ;;
@@ -233,6 +258,7 @@ main() {
     esac
 
     setup_python_tools
+    setup_agents
 
     echo
     info "Done. Tools installed."

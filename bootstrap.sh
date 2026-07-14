@@ -31,6 +31,7 @@ function doIt() {
     excluded=(
         ".git"
         ".claude"
+        "agents"
         "bootstrap.sh"
         "CLAUDE.md"
         "README.md"
@@ -80,14 +81,20 @@ function doIt() {
         done
     fi
 
-    # Symlink skills from ~/.agent-stuff into ~/.claude/skills/
-    if [ -d "$HOME/.agent-stuff/skills" ]; then
+    # Agent skills live in agents/skills and are shared by Claude Code and the
+    # Pi coding agent. Claude discovers them via per-skill symlinks in
+    # ~/.claude/skills/; Pi discovers them via a single ~/.pi/agent/skills link.
+    if [ -d "agents/skills" ]; then
         mkdir -p "$HOME/.claude/skills"
-        for skill_dir in "$HOME/.agent-stuff/skills"/*/; do
+        for skill_dir in "$PWD/agents/skills"/*/; do
             skill_name=$(basename "$skill_dir")
-            ln -sf "$skill_dir" "$HOME/.claude/skills/$skill_name"
+            ln -sfn "$skill_dir" "$HOME/.claude/skills/$skill_name"
             echo "Linked skill: $skill_dir -> $HOME/.claude/skills/$skill_name"
         done
+
+        mkdir -p "$HOME/.pi/agent"
+        ln -sfn "$PWD/agents/skills" "$HOME/.pi/agent/skills"
+        echo "Linked skills: $PWD/agents/skills -> $HOME/.pi/agent/skills"
     fi
 
     if [ -f ".claude/settings.local.json" ]; then
