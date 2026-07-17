@@ -1,6 +1,16 @@
 {
   "model": "sonnet",
   "permissions": {
+    "allow": [
+      "Bash(bundle exec rspec)",
+      "Bash(bundle exec rspec:*)",
+      "Bash(uv run pytest)",
+      "Bash(uv run pytest:*)",
+      "Bash(uv run pyright)",
+      "Bash(uv run pyright:*)",
+      "Bash(uv run black --check)",
+      "Bash(uv run black --check:*)"
+    ],
     "ask": [
       "Bash(gh pr comment)",
       "Bash(gh pr comment:*)",
@@ -47,7 +57,7 @@
           {
             "type": "command",
             "if": "Bash(gh api:*)",
-            "command": "jq -r '.tool_input.command' | grep -qE 'gh api[^|;&]*(comments|reviews)' && printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"gh api comment/review endpoint — confirm to proceed\"}}' || true"
+            "command": "cmd=$(jq -r '.tool_input.command'); echo \"$cmd\" | grep -qE 'gh api[^|;&]*(comments|reviews)' && echo \"$cmd\" | grep -qE '(-X|--method)[ =]+(POST|PATCH|PUT|DELETE)|(^| )(-f|-F|--field|--raw-field|--input)[ =]' && printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"Mutating gh api comment/review call — confirm to proceed\"}}' || true"
           }
         ]
       }

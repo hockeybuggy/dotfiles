@@ -107,6 +107,11 @@ def deep_merge(base, local):
     for key, value in local.items():
         if isinstance(value, dict) and isinstance(base.get(key), dict):
             deep_merge(base[key], value)
+        elif isinstance(value, list) and isinstance(base.get(key), list):
+            # Union lists (e.g. permissions.allow) so tracked base entries
+            # and machine-local entries combine instead of local replacing
+            # base wholesale.
+            base[key] = base[key] + [v for v in value if v not in base[key]]
         else:
             base[key] = value
     return base
