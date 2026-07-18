@@ -168,6 +168,7 @@ check_tool "rustc" rustc
 check_tool "python3" python3
 check_tool "ruff" ruff
 check_tool "ty" ty
+check_tool "pgcli" pgcli
 if have pip; then
     pass "pip" "$(command -v pip)"
 elif have pip3; then

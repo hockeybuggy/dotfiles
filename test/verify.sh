@@ -47,6 +47,7 @@ checks=(
     "python3|python3 --version"
     "ruff|ruff --version"
     "ty|ty --version"
+    "pgcli|pgcli --version"
     "pip|pip3 --version"
     "node|node --version"
     "npm|npm --version"

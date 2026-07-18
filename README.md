@@ -77,7 +77,7 @@ can poke around in tmux yourself:
     1. [bottom](https://github.com/ClementTsang/bottom) -- `top` replacement (`btm`)
 1. Language things
     1. rustup, cargo, rustc
-    1. Python 3.14, ruff, ty
+    1. Python 3.14, ruff, ty, pgcli
     1. node, fnm, prettier
     1. luarocks, stylua
     1. rbenv, rubocop, solargraph

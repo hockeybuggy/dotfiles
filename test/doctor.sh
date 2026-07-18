@@ -50,7 +50,7 @@ esac
 exit 0
 EOF
 chmod +x "$fake_bin/tool"
-for command_name in nvim tmux zsh git fzf rg fd bat eza btm starship zoxide uv fnm gpg diff-so-fancy node npm markdownlint cargo rustc python3 ruff ty pip reattach-to-user-namespace brew claude pi; do
+for command_name in nvim tmux zsh git fzf rg fd bat eza btm starship zoxide uv fnm gpg diff-so-fancy node npm markdownlint cargo rustc python3 ruff ty pgcli pip reattach-to-user-namespace brew claude pi; do
     ln -s tool "$fake_bin/$command_name"
 done
 
@@ -75,6 +75,7 @@ status=$?
 set -e
 [ "$status" -eq 0 ] || fail "expected a healthy CI setup to exit 0, got $status: $output"
 printf '%s\n' "$output" | grep -q "0 FAIL" || fail "healthy summary contains failures"
+printf '%s\n' "$output" | grep -Eq '^[[:space:]]+✓[[:space:]]+pgcli[[:space:]]' || fail "missing pgcli check"
 
 set +e
 HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci --strict >/dev/null 2>&1
