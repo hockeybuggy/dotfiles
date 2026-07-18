@@ -21,10 +21,11 @@ work done, the plain [[use-pi-subagent]] skill is simpler (no tmux needed).
 
 - splits a new tmux pane and runs pi there with the canonical headless flags
   (`--mode json --print --approve --no-session`);
-- the pane shows a readable, prose-only view via `pretty.jq` (text and
-  reasoning as it streams, plus tool markers) — `tee` sits **upstream** of the
-  pretty-printer, so the raw `.jsonl` log is captured in full even if the view
-  hiccups;
+- the pane shows a readable activity stream via `pretty.jq`: text and
+  reasoning as it arrives, plus one concise summary for each tool execution
+  with its name, most useful argument, and any failure — `tee` sits
+  **upstream** of the pretty-printer, so the raw `.jsonl` log is captured in
+  full even if the view hiccups;
 - it **blocks until pi exits**, then prints `KEY=VALUE` lines back to you;
 - the pane stays open afterward so the user can scroll the transcript — they
   close it themselves with `Ctrl-D`.
