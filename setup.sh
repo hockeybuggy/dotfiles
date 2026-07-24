@@ -49,7 +49,7 @@ setup_macos() {
     info "Installing formulae with Homebrew"
     brew install \
         neovim tmux zsh git fzf ripgrep fd bat eza bottom starship zoxide \
-        uv fnm gnupg diff-so-fancy node markdownlint-cli \
+        uv fnm gnupg diff-so-fancy node markdownlint-cli duti \
         reattach-to-user-namespace uutils-coreutils
 
     info "Installing the Inconsolata Nerd Font"
@@ -62,6 +62,63 @@ setup_macos() {
     else
         skip "rustup/cargo already installed"
     fi
+
+    setup_macos_markdown_handler
+}
+
+# ---------------------------------------------------------------------------
+# macOS: open Markdown files in Neovim (in a new Ghostty window)
+# ---------------------------------------------------------------------------
+#
+# `open foo.md` asks LaunchServices for the default handler, so a shell alias
+# can't change it. Instead we compile a tiny AppleScript app whose `on open`
+# handler launches Ghostty running Neovim on the file, then make it the default
+# Markdown handler with `duti`.
+
+MD_HANDLER_APP="$HOME/Applications/Open in Neovim.app"
+MD_HANDLER_ID="com.hockeybuggy.open-in-neovim"
+
+setup_macos_markdown_handler() {
+    have duti || { warn "duti unavailable; skipping Markdown handler setup"; return; }
+
+    info "Building the 'Open in Neovim' Markdown handler app"
+    local tmpdir src
+    tmpdir=$(mktemp -d)
+    src="$tmpdir/open-in-neovim.applescript"
+    # Ghostty spawns a login shell, so `nvim` resolves via the usual PATH even
+    # though `do shell script` runs with a minimal one. Detach with nohup/& so
+    # the handler returns immediately instead of blocking until Neovim quits.
+    cat > "$src" <<'APPLESCRIPT'
+on open theFiles
+    repeat with f in theFiles
+        set p to POSIX path of f
+        do shell script "nohup /Applications/Ghostty.app/Contents/MacOS/ghostty -e nvim " & quoted form of p & " >/dev/null 2>&1 &"
+    end repeat
+end open
+APPLESCRIPT
+
+    mkdir -p "$HOME/Applications"
+    rm -rf "$MD_HANDLER_APP"
+    osacompile -o "$MD_HANDLER_APP" "$src"
+    rm -rf "$tmpdir"
+
+    # osacompile leaves no bundle id and a catch-all Viewer document type. Give
+    # it a stable id and declare it a Markdown editor so it can be the handler.
+    local plist="$MD_HANDLER_APP/Contents/Info.plist"
+    /usr/libexec/PlistBuddy \
+        -c "Add :CFBundleIdentifier string $MD_HANDLER_ID" \
+        -c "Set :CFBundleDocumentTypes:0:CFBundleTypeRole Editor" \
+        -c "Add :CFBundleDocumentTypes:0:LSItemContentTypes array" \
+        -c "Add :CFBundleDocumentTypes:0:LSItemContentTypes:0 string net.daringfireball.markdown" \
+        "$plist" >/dev/null
+
+    # Register the new bundle id with LaunchServices before duti references it.
+    local lsregister="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
+    "$lsregister" -f "$MD_HANDLER_APP"
+
+    # net.daringfireball.markdown is the UTI macOS assigns to .md/.markdown.
+    info "Setting 'Open in Neovim' as the default Markdown handler"
+    duti -s "$MD_HANDLER_ID" net.daringfireball.markdown all
 }
 
 # ---------------------------------------------------------------------------
