@@ -29,6 +29,16 @@ View logs for failed steps only:
 gh run view <run-id> --repo owner/repo --log-failed
 ```
 
+## Returning URLs to the user
+
+When you hand back a PR or any URL the user will click, print it as a **bare
+plain-text URL on its own line** — not a Markdown link. A bare URL is
+unambiguous and reliably clickable in a terminal; `[text](url)` is not.
+
+```
+https://github.com/owner/repo/pull/55
+```
+
 ## API for Advanced Queries
 
 The `gh api` command is useful for accessing data not available through other subcommands.

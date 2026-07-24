@@ -120,6 +120,37 @@ Because `--no-session` gives pi a cold start, the prompt must be complete:
   relying on parsing prose. See `prompt.md` in this repo for the full
   coder/reviewer/supervisor protocol.
 
+## Supervisor autonomy
+
+When you're supervising a multi-plan or multi-agent run, keep it moving — don't
+stop for approval on routine, reversible steps:
+
+- Proceed without asking on: worktree creation, rebases, test runs, and opening
+  or merging a PR once CI is green. Batch any genuine questions and surface them
+  together rather than interrupting per-step.
+- **Only stop for decisions that are destructive, irreversible, or
+  scope-changing.** `--force` on a throwaway container or worktree is fine
+  without asking; anything touching real data or `main` history needs explicit
+  confirmation first.
+
+## Definition of done
+
+A delegated plan is complete only when **all** of these hold — report the PR
+number and a one-line summary of what you actually verified:
+
+- Tests pass in an **isolated stack** (see [[isolating-test-stacks]]), not
+  against shared or live services.
+- The diff is **independently re-verified** — you read it yourself, not just
+  trusting the coder subagent's final text.
+- **CI is green** on the PR.
+- The PR is **merged**.
+
+## Output hygiene
+
+- **Never glob or `cat` secret stores into tool output** — anything under
+  `~/.pi/`, `~/.config/`, or any `*credentials*` / `*.json` secret file. Use
+  `jq` to extract only the specific non-secret field you need.
+
 ## Gotchas
 
 - **Prefer `"$(cat file)"` over pi's `@file` include syntax.** `@file` silently

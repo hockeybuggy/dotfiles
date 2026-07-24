@@ -70,6 +70,25 @@ bash "$skill_dir/run-pi-pane.sh" "$prompt_file" "$json_log" \
 Resolve the wrapper's absolute path from this skill's directory — don't hardcode
 `~/.agent-stuff/...`.
 
+## Launching into a fresh worktree
+
+Each run should start from a clean, up-to-date base — don't reuse a stale
+worktree from an earlier attempt:
+
+- Create a **fresh worktree rebased on `origin/main`** immediately before
+  launching pi, so the pane starts from current `main`.
+- **Prefix the launch with `cd <worktree-path> && `.** The pane does not inherit
+  your working directory — without the `cd` it runs pi from the wrong cwd and
+  its relative paths and context-file discovery resolve against the wrong repo:
+
+  ```bash
+  cd "$worktree_path" && bash "$skill_dir/run-pi-pane.sh" "$prompt_file" "$json_log" ...
+  ```
+
+- If you self-test the tmux wiring, use an **isolated tmux server**
+  (`tmux -L test-$$`), never the user's default server, so a test pane can't
+  disturb their live session.
+
 ## Reading the result
 
 The wrapper prints, on its own stdout:
@@ -108,6 +127,10 @@ files pi claims to have changed, run the relevant tests/lint yourself, and check
 - **The pane lingers on purpose.** After pi exits, the pane drops to a shell so
   the user can read the transcript. That's intended; the user closes it. You are
   already unblocked and holding the log — don't wait on the pane.
+- **Pane closure is an unreliable signal.** Don't infer success or failure from
+  the pane disappearing. Rely on the exit sentinel / `STATUS` line, and before
+  declaring an abort or failure, re-verify with `git log` in the worktree — the
+  work may have committed even if the pane closed early.
 - **Give unique log filenames per attempt** so retries don't clobber the audit
   trail. The wrapper derives `STDERR_LOG`, the exit-code file, and its sentinel
   from the log path.
