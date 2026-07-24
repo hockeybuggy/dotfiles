@@ -568,6 +568,7 @@ require('lazy').setup({
   },
 
   install = { colorscheme = { 'solarized' } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+  -- automatically check for plugin updates, but don't pop up a
+  -- notification on startup; updates still show in the `:Lazy` UI
+  checker = { enabled = true, notify = false },
 })
