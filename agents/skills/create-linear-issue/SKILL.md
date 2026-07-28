@@ -10,10 +10,11 @@ Create a Linear issue from the current conversation. Triggers on
 ## Load the tools first
 
 The Linear MCP tools are deferred and must be loaded before they can
-be called. Run:
+be called. The exact tool namespace depends on how Linear is connected
+on this machine, so search rather than hardcoding names:
 
 ```
-ToolSearch query="select:mcp__claude_ai_Linear__save_issue,mcp__claude_ai_Linear__get_issue"
+ToolSearch query="+linear save_issue get_issue"
 ```
 
 Calling either tool without loading its schema first will fail with
@@ -28,8 +29,8 @@ line breaks.
 ## Inherit context from a related issue
 
 If the new issue is a follow-up, cleanup, child, or otherwise tied to
-an existing issue, call `mcp__claude_ai_Linear__get_issue` on that
-issue first and reuse:
+an existing issue, call the Linear `get_issue` tool on that issue
+first and reuse:
 
 - `team` ID
 - `project` ID
@@ -39,7 +40,7 @@ issue first and reuse:
 Don't ask the user for fields you can pull from the related issue.
 
 When the user references issues for `parent`, `blocks`, or `related`,
-use the Linear identifier format (e.g. `DRWFA-1234`), not the internal
+use the Linear identifier format (e.g. `ABC-1234`), not the internal
 UUID.
 
 ## Required fields
@@ -85,6 +86,6 @@ about the team or project if you inherited them.
 4. Show the user the proposed title, description, and metadata, and
    wait for approval before creating. If the user explicitly opts out
    ("just create it"), skip the prompt.
-5. Call `mcp__claude_ai_Linear__save_issue` with the collected fields.
+5. Call the Linear `save_issue` tool with the collected fields.
 6. Return the issue URL and a one-line summary:
-   `DRWFA-1234 — <title> (assignee: X, priority: Y, due: Z)`.
+   `ABC-1234 — <title> (assignee: X, priority: Y, due: Z)`.

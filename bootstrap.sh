@@ -81,21 +81,29 @@ function doIt() {
         done
     fi
 
-    # Agent skills live in agents/skills and are shared by Claude Code and the
-    # Pi coding agent. Claude discovers them via per-skill symlinks in
-    # ~/.claude/skills/; Pi discovers them via a single ~/.pi/agent/skills link.
-    if [ -d "agents/skills" ]; then
-        mkdir -p "$HOME/.claude/skills"
-        for skill_dir in "$PWD/agents/skills"/*/; do
+    # Agent skills are shared by Claude Code and the Pi coding agent. Tracked
+    # skills live in agents/skills; agents/skills-local is untracked, for
+    # work-specific skills that must not be published. Both agents discover
+    # skills through per-skill symlinks, so a skill in either directory works
+    # the same way.
+    #
+    # ~/.pi/agent/skills used to be a single symlink to agents/skills; replace
+    # it with a real directory so local skills can live alongside tracked ones.
+    if [ -L "$HOME/.pi/agent/skills" ]; then
+        rm -f "$HOME/.pi/agent/skills"
+    fi
+    mkdir -p "$HOME/.claude/skills" "$HOME/.pi/agent/skills"
+
+    for skills_root in "agents/skills" "agents/skills-local"; do
+        [ -d "$skills_root" ] || continue
+        for skill_dir in "$PWD/$skills_root"/*/; do
+            [ -d "$skill_dir" ] || continue
             skill_name=$(basename "$skill_dir")
             ln -sfn "$skill_dir" "$HOME/.claude/skills/$skill_name"
-            echo "Linked skill: $skill_dir -> $HOME/.claude/skills/$skill_name"
+            ln -sfn "$skill_dir" "$HOME/.pi/agent/skills/$skill_name"
+            echo "Linked skill: $skill_dir -> ~/.claude/skills/$skill_name, ~/.pi/agent/skills/$skill_name"
         done
-
-        mkdir -p "$HOME/.pi/agent"
-        ln -sfn "$PWD/agents/skills" "$HOME/.pi/agent/skills"
-        echo "Linked skills: $PWD/agents/skills -> $HOME/.pi/agent/skills"
-    fi
+    done
 
     if [ -f ".claude/settings.local.json" ]; then
         python3 -c "

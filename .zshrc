@@ -130,16 +130,14 @@ function zle-line-finish () {
 zle -N zle-line-init
 zle -N zle-line-finish
 
-if command -v dev > /dev/null 2>&1; then
-    eval "$(dev _hook)"
-    [[ -d "/opt/clio/bin/devxp" ]] && export PATH="/opt/clio/bin/devxp:$PATH"
-fi
-
 # fnm
 FNM_PATH="/home/hockeybuggy/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
     export PATH="$FNM_PATH:$PATH"
     eval "`fnm env`"
 fi
-
 [[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+
+# Machine-local config (work tooling, private paths). Untracked; sourced last
+# so it can override anything above. See .zshrc.local.example.
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

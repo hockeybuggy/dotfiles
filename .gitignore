@@ -23,4 +23,10 @@ scripts/z/.z
 scripts/z/.z.*
 
 .gitconfig.local
+.zshrc.local
 .claude/settings.local.json
+
+# Machine-local skills (work-specific, never published)
+agents/skills-local/
+
+.log
