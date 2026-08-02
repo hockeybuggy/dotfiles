@@ -31,6 +31,12 @@ The `agents/skills/` directory holds [Agent Skills](https://agentskills.io)
 `~/.claude/skills/` for Claude and points `~/.pi/agent/skills` at the directory
 for Pi.
 
+## Pi extensions
+
+The `agents/extensions/` directory holds global Pi extensions. `bootstrap.sh`
+symlinks each extension into `~/.pi/agent/extensions/`; reload Pi with `/reload`
+after changing one.
+
 ## Checking a machine with `doctor.sh`
 
 Run the doctor after installation to check required tools, linked config,

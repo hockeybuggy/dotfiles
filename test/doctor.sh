@@ -27,7 +27,7 @@ printf '%s\n' "$output" | grep -q "Summary" || fail "missing summary"
 
 fake_bin="$TMPDIR_ROOT/bin"
 healthy_home="$TMPDIR_ROOT/healthy-home"
-mkdir -p "$fake_bin" "$healthy_home/.claude/hooks" "$healthy_home/.pi/agent"
+mkdir -p "$fake_bin" "$healthy_home/.claude/hooks" "$healthy_home/.pi/agent/extensions"
 cat > "$fake_bin/tool" <<'EOF'
 #!/bin/sh
 name=${0##*/}
@@ -58,6 +58,7 @@ ln -s "$ROOT/.gitmessage" "$healthy_home/.gitmessage"
 echo "$healthy_home/.gitmessage" > "$healthy_home/.dotfiles_linked_files"
 ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.claude/CLAUDE.md"
 ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.pi/agent/CLAUDE.md"
+ln -s "$ROOT/agents/extensions/clear.ts" "$healthy_home/.pi/agent/extensions/clear.ts"
 for hook in "$ROOT"/.claude/hooks/*.sh; do
     ln -s "$hook" "$healthy_home/.claude/hooks/$(basename "$hook")"
 done
@@ -76,6 +77,7 @@ set -e
 [ "$status" -eq 0 ] || fail "expected a healthy CI setup to exit 0, got $status: $output"
 printf '%s\n' "$output" | grep -q "0 FAIL" || fail "healthy summary contains failures"
 printf '%s\n' "$output" | grep -Eq '^[[:space:]]+✓[[:space:]]+pgcli[[:space:]]' || fail "missing pgcli check"
+printf '%s\n' "$output" | grep -q "Pi extensions linked" || fail "missing Pi extensions check"
 
 set +e
 HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci --strict >/dev/null 2>&1

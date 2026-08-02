@@ -235,6 +235,21 @@ if [ -d "$DOTFILES/agents/skills" ]; then
 else
     warn "Agent skills" "agents/skills missing from repo"
 fi
+if [ -d "$DOTFILES/agents/extensions" ]; then
+    total=0; linked=0
+    for extension in "$DOTFILES"/agents/extensions/*.ts; do
+        [ -f "$extension" ] || continue
+        total=$((total + 1))
+        case "$(readlink "$HOME/.pi/agent/extensions/$(basename "$extension")" 2>/dev/null)" in
+            "$DOTFILES"/*) linked=$((linked + 1)) ;;
+        esac
+    done
+    if [ "$total" -gt 0 ] && [ "$linked" -eq "$total" ]; then
+        pass "Pi extensions linked" "$linked/$total from agents/extensions"
+    else
+        warn "Pi extensions linked" "$linked/$total linked; run ./bootstrap.sh"
+    fi
+fi
 
 section "Shell & environment"
 if [ "$CI" -eq 1 ]; then
