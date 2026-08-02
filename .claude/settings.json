@@ -12,6 +12,7 @@
     "chrome-devtools-mcp@chrome-devtools-plugins": true
   },
   "permissions": {
+    "defaultMode": "auto",
     "allow": [
       "Bash(bundle exec rspec)",
       "Bash(bundle exec rspec:*)",
