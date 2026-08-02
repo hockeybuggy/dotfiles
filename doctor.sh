@@ -268,6 +268,14 @@ else
     warn ".zshrc loads cleanly" "zsh is unavailable"
 fi
 
+if [ "$CI" -eq 1 ]; then
+    note "Zsh local config" "skipped with --ci"
+elif [ -f "$HOME/.zshrc.local" ]; then
+    pass "Zsh local config" "$HOME/.zshrc.local"
+else
+    note "Zsh local config" "optional; copy ~/.dotfiles/.zshrc.local.example"
+fi
+
 section "Git configuration"
 git_name=$(git config --global --get user.name 2>/dev/null || true)
 git_email=$(git config --global --get user.email 2>/dev/null || true)

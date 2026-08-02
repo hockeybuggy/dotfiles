@@ -1,0 +1,17 @@
+# Machine-local zsh configuration
+#
+# Copy this to ~/.zshrc.local on machines that need extra setup. It is sourced
+# at the end of .zshrc, so it can override anything the tracked config sets.
+# This file is untracked on purpose — keep employer tooling, private paths,
+# hostnames, and tokens here rather than in .zshrc.
+
+# Company or client CLI hooks
+# if command -v some-tool > /dev/null 2>&1; then
+#     eval "$(some-tool _hook)"
+# fi
+
+# Extra PATH entries
+# [[ -d "/opt/vendor/bin" ]] && export PATH="/opt/vendor/bin:$PATH"
+
+# Environment variables
+# export SOME_API_URL="https://internal.example.com"

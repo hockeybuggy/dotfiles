@@ -16,8 +16,21 @@ merges `settings.json` with `settings.local.json` (if present).
 
 The `agents/skills/` directory holds Agent Skills (one `SKILL.md` per
 subdirectory) shared by Claude Code and the Pi coding agent. Bootstrap
-links each into `~/.claude/skills/` for Claude and points
-`~/.pi/agent/skills` at the directory for Pi.
+links each into both `~/.claude/skills/` and `~/.pi/agent/skills/`.
+
+This repo is public. Anything employer-specific — internal tool paths,
+hostnames, ticket prefixes, private MCP servers — belongs in an
+untracked local file, never in a tracked one:
+
+- `~/.zshrc.local` for shell setup (sourced last by `.zshrc`)
+- `~/.gitconfig.local` for Git identity and signing
+- `.claude/settings.local.json` for Claude plugins and permissions
+- `agents/skills-local/` for work-specific skills
+
+Each has a tracked `.example` counterpart where one makes sense. When
+writing a skill or config that a stranger will read, keep it generic:
+use placeholder identifiers (`ABC-1234`) and describe tools by role
+rather than hardcoding private namespaces.
 
 Keep changes focused. Don't over-engineer things.
 
