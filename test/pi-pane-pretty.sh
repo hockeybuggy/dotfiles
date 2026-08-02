@@ -3,7 +3,7 @@
 set -euo pipefail
 
 REPO_ROOT=$(cd "$(dirname "$0")/.." && pwd)
-FILTER="$REPO_ROOT/agents/skills/use-pi-in-pane/pretty.jq"
+FILTER="$REPO_ROOT/agents/skills-claude/use-pi-in-pane/pretty.jq"
 
 actual=$(mktemp)
 expected=$(mktemp)

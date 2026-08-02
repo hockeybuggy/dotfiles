@@ -3,6 +3,12 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# Unmatched globs expand to nothing rather than aborting. Every glob loop below
+# guards each entry with a [ -f ]/[ -d ]/[ -L ] test, which is only reachable if
+# an empty directory yields zero iterations instead of a "no matches found"
+# error — an empty agents/skills-pi is a normal state, not a failure.
+setopt null_glob
+
 LINKED_FILES="$HOME/.dotfiles_linked_files"
 
 # Define color variables
@@ -103,11 +109,17 @@ function doIt() {
         done
     fi
 
-    # Agent skills are shared by Claude Code and the Pi coding agent. Tracked
-    # skills live in agents/skills; agents/skills-local is untracked, for
-    # work-specific skills that must not be published. Both agents discover
-    # skills through per-skill symlinks, so a skill in either directory works
-    # the same way.
+    # Agent skills. Most are shared by Claude Code and the Pi coding agent, but
+    # some only make sense for one of them, so each source directory declares
+    # which agents it links into:
+    #
+    #   agents/skills          both agents (tracked)
+    #   agents/skills-claude   Claude Code only (tracked)
+    #   agents/skills-pi       Pi only (tracked)
+    #   agents/skills-local    both agents (untracked, work-specific)
+    #
+    # Both agents discover skills through per-skill symlinks, so a skill works
+    # the same way whichever directory it lives in.
     #
     # ~/.pi/agent/skills used to be a single symlink to agents/skills; replace
     # it with a real directory so local skills can live alongside tracked ones.
@@ -116,14 +128,43 @@ function doIt() {
     fi
     mkdir -p "$HOME/.claude/skills" "$HOME/.pi/agent/skills"
 
-    for skills_root in "agents/skills" "agents/skills-local"; do
+    for skills_spec in \
+        "agents/skills:both" \
+        "agents/skills-claude:claude" \
+        "agents/skills-pi:pi" \
+        "agents/skills-local:both"; do
+        skills_root=${skills_spec%:*}
+        skills_agents=${skills_spec##*:}
         [ -d "$skills_root" ] || continue
         for skill_dir in "$PWD/$skills_root"/*/; do
             [ -d "$skill_dir" ] || continue
             skill_name=$(basename "$skill_dir")
-            ln -sfn "$skill_dir" "$HOME/.claude/skills/$skill_name"
-            ln -sfn "$skill_dir" "$HOME/.pi/agent/skills/$skill_name"
-            echo "Linked skill: $skill_dir -> ~/.claude/skills/$skill_name, ~/.pi/agent/skills/$skill_name"
+            targets=""
+            case "$skills_agents" in
+                both|claude)
+                    ln -sfn "$skill_dir" "$HOME/.claude/skills/$skill_name"
+                    targets="~/.claude/skills/$skill_name"
+                    ;;
+            esac
+            case "$skills_agents" in
+                both|pi)
+                    ln -sfn "$skill_dir" "$HOME/.pi/agent/skills/$skill_name"
+                    targets="${targets:+$targets, }~/.pi/agent/skills/$skill_name"
+                    ;;
+            esac
+            echo "Linked skill: $skill_dir -> $targets"
+        done
+    done
+
+    # Moving a skill between those directories leaves the old symlink behind,
+    # pointing at a path that no longer exists. A dangling link is invisible to
+    # the agent, so the skill silently stops loading; prune them here.
+    for skills_dest in "$HOME/.claude/skills" "$HOME/.pi/agent/skills"; do
+        for skill_link in "$skills_dest"/*; do
+            [ -L "$skill_link" ] || continue
+            [ -e "$skill_link" ] && continue
+            rm -f "$skill_link"
+            echo "Pruned stale skill link: $skill_link"
         done
     done
 

@@ -28,8 +28,19 @@ The `agents/skills/` directory holds [Agent Skills](https://agentskills.io)
 (one `SKILL.md` per subdirectory) shared by
 [Claude Code](https://claude.ai/code) and the
 [Pi coding agent](https://shittycodingagent.ai). `bootstrap.sh` links each into
-`~/.claude/skills/` for Claude and points `~/.pi/agent/skills` at the directory
-for Pi.
+`~/.claude/skills/` for Claude and `~/.pi/agent/skills/` for Pi.
+
+Skills that only make sense for one agent go in a sibling directory instead:
+
+| Directory | Linked into |
+| --- | --- |
+| `agents/skills/` | both agents |
+| `agents/skills-claude/` | Claude Code only |
+| `agents/skills-pi/` | Pi only |
+| `agents/skills-local/` | both agents (untracked) |
+
+Move a skill between them with `git mv`, then re-run `bootstrap.sh` — it prunes
+the symlink the skill left behind in the agent that no longer gets it.
 
 ## Pi extensions
 

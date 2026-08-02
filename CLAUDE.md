@@ -17,6 +17,10 @@ merges `settings.json` with `settings.local.json` (if present).
 The `agents/skills/` directory holds Agent Skills (one `SKILL.md` per
 subdirectory) shared by Claude Code and the Pi coding agent. Bootstrap
 links each into both `~/.claude/skills/` and `~/.pi/agent/skills/`.
+Single-agent skills live in `agents/skills-claude/` or `agents/skills-pi/`
+instead, and link into only that agent. Moving a skill between these
+directories strips it from the other agent, so re-run `bootstrap.sh` after
+a `git mv` to prune the symlink left behind.
 
 The `agents/hooks/` directory holds the sound, tmux-title, and
 notification-log scripts, also shared by both agents. `done.sh` and

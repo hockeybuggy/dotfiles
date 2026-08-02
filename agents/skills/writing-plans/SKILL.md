@@ -24,7 +24,7 @@ Save to: `docs/plans/YYYY-MM-DD-<feature-name>.md`
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For implementors:** Work through tasks using the executing-plans or subagent-driven-development skill.
+> **For implementors:** Work through tasks using the executing-plans skill.
 
 **Goal:** [One sentence]  
 **Architecture:** [2–3 sentences]  

@@ -216,30 +216,62 @@ fi
 section "Coding agents"
 check_tool "Claude Code" claude
 check_tool "Pi" pi
-# Skills are shared by both agents; bootstrap links each skill per-agent from
-# agents/skills into ~/.claude/skills/ and ~/.pi/agent/skills/.
+# Skills link per-agent: agents/skills goes to both agents, agents/skills-claude
+# to Claude Code only, agents/skills-pi to Pi only. Count each agent only
+# against the directories that target it.
 if [ -d "$DOTFILES/agents/skills" ]; then
-    total=0; claude_linked=0; pi_linked=0
-    for skill_dir in "$DOTFILES"/agents/skills/*/; do
-        [ -d "$skill_dir" ] || continue
-        total=$((total + 1))
-        skill_name=$(basename "$skill_dir")
-        case "$(readlink "$HOME/.claude/skills/$skill_name" 2>/dev/null)" in
-            "$DOTFILES"/*) claude_linked=$((claude_linked + 1)) ;;
-        esac
-        case "$(readlink "$HOME/.pi/agent/skills/$skill_name" 2>/dev/null)" in
-            "$DOTFILES"/*) pi_linked=$((pi_linked + 1)) ;;
-        esac
+    claude_total=0; claude_linked=0; pi_total=0; pi_linked=0
+    for skills_spec in \
+        "agents/skills:both" \
+        "agents/skills-claude:claude" \
+        "agents/skills-pi:pi"; do
+        skills_root="$DOTFILES/${skills_spec%:*}"
+        skills_agents=${skills_spec##*:}
+        [ -d "$skills_root" ] || continue
+        for skill_dir in "$skills_root"/*/; do
+            [ -d "$skill_dir" ] || continue
+            skill_name=$(basename "$skill_dir")
+            case "$skills_agents" in
+                both|claude)
+                    claude_total=$((claude_total + 1))
+                    case "$(readlink "$HOME/.claude/skills/$skill_name" 2>/dev/null)" in
+                        "$DOTFILES"/*) claude_linked=$((claude_linked + 1)) ;;
+                    esac
+                    ;;
+            esac
+            case "$skills_agents" in
+                both|pi)
+                    pi_total=$((pi_total + 1))
+                    case "$(readlink "$HOME/.pi/agent/skills/$skill_name" 2>/dev/null)" in
+                        "$DOTFILES"/*) pi_linked=$((pi_linked + 1)) ;;
+                    esac
+                    ;;
+            esac
+        done
     done
-    if [ "$total" -gt 0 ] && [ "$claude_linked" -eq "$total" ]; then
-        pass "Claude skills linked" "$claude_linked/$total from agents/skills"
+    if [ "$claude_total" -gt 0 ] && [ "$claude_linked" -eq "$claude_total" ]; then
+        pass "Claude skills linked" "$claude_linked/$claude_total"
     else
-        warn "Claude skills linked" "$claude_linked/$total linked; run ./bootstrap.sh"
+        warn "Claude skills linked" "$claude_linked/$claude_total linked; run ./bootstrap.sh"
     fi
-    if [ "$total" -gt 0 ] && [ "$pi_linked" -eq "$total" ]; then
-        pass "Pi skills linked" "$pi_linked/$total from agents/skills"
+    if [ "$pi_total" -gt 0 ] && [ "$pi_linked" -eq "$pi_total" ]; then
+        pass "Pi skills linked" "$pi_linked/$pi_total"
     else
-        warn "Pi skills linked" "$pi_linked/$total linked; run ./bootstrap.sh"
+        warn "Pi skills linked" "$pi_linked/$pi_total linked; run ./bootstrap.sh"
+    fi
+    # A skill moved between those directories leaves a dangling symlink, which
+    # the agent silently ignores. Bootstrap prunes them; report any that remain.
+    stale=0
+    for skills_dest in "$HOME/.claude/skills" "$HOME/.pi/agent/skills"; do
+        for skill_link in "$skills_dest"/*; do
+            [ -L "$skill_link" ] || continue
+            [ -e "$skill_link" ] || stale=$((stale + 1))
+        done
+    done
+    if [ "$stale" -eq 0 ]; then
+        pass "Skill links resolve" "no dangling links"
+    else
+        warn "Skill links resolve" "$stale dangling; run ./bootstrap.sh"
     fi
 else
     warn "Agent skills" "agents/skills missing from repo"

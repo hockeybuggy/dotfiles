@@ -1,6 +1,6 @@
 ---
 name: executing-plans
-description: Executes an implementation plan in batches with human checkpoints between each batch. Use when a plan exists and should be worked through with periodic human review rather than full automation. Triggers on "execute this plan", "work through the plan", "implement step by step", or when the user wants to be involved at each checkpoint rather than letting it run fully autonomous. Prefer subagent-driven-development for full task-by-task review; use this when batch checkpoints are preferred.
+description: Executes an implementation plan in batches with human checkpoints between each batch. Use when a plan exists and should be worked through with periodic human review rather than full automation. Triggers on "execute this plan", "work through the plan", "implement step by step", or when the user wants to be involved at each checkpoint rather than letting it run fully autonomous.
 ---
 
 # Executing Plans
