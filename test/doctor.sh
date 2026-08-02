@@ -67,7 +67,10 @@ mkdir -p "$healthy_home/.claude/skills"
 for skill_dir in "$ROOT"/agents/skills/*/; do
     ln -s "$skill_dir" "$healthy_home/.claude/skills/$(basename "$skill_dir")"
 done
-ln -s "$ROOT/agents/skills" "$healthy_home/.pi/agent/skills"
+mkdir -p "$healthy_home/.pi/agent/skills"
+for skill_dir in "$ROOT"/agents/skills/*/; do
+    ln -s "$skill_dir" "$healthy_home/.pi/agent/skills/$(basename "$skill_dir")"
+done
 
 env_path="$fake_bin:/usr/bin:/bin"
 set +e
@@ -77,6 +80,7 @@ set -e
 [ "$status" -eq 0 ] || fail "expected a healthy CI setup to exit 0, got $status: $output"
 printf '%s\n' "$output" | grep -q "0 FAIL" || fail "healthy summary contains failures"
 printf '%s\n' "$output" | grep -Eq '^[[:space:]]+✓[[:space:]]+pgcli[[:space:]]' || fail "missing pgcli check"
+printf '%s\n' "$output" | grep -q "Pi skills linked" || fail "missing Pi skills check"
 printf '%s\n' "$output" | grep -q "Pi extensions linked" || fail "missing Pi extensions check"
 
 set +e
