@@ -16,12 +16,12 @@ Worktrees let you work on a feature branch in a separate directory without distu
 git status
 
 # 2. Create a worktree for the feature
-git worktree add ../project-feature-name feature/feature-name
-# This creates: a new directory at ../project-feature-name
+git worktree add .worktrees/feature-name feature/feature-name
+# This creates: a new directory at .worktrees/feature-name
 #               a new branch: feature/feature-name
 
 # 3. Move into the worktree
-cd ../project-feature-name
+cd .worktrees/feature-name
 
 # 4. Run your project setup (install deps, etc.)
 # e.g.: npm install / pip install -r requirements.txt / bundle install
@@ -32,8 +32,12 @@ cd ../project-feature-name
 
 ## Naming Convention
 
-- Directory: `../project-<feature-name>` (sibling of your main project dir)
+- Directory: `.worktrees/<feature-name>` (repo root, alongside `.git`)
 - Branch: `feature/<feature-name>` or `fix/<bug-name>`
+
+Make sure `.worktrees/` is git-ignored (add it to `.gitignore` or
+`.git/info/exclude` if it isn't already) so the nested worktrees don't
+show up as untracked content in the main tree.
 
 ## Working in the Worktree
 
@@ -44,8 +48,8 @@ All development happens in the worktree directory. Your main branch directory is
 git worktree list
 
 # Remove a worktree when done (after merge)
-cd ../project-main
-git worktree remove ../project-feature-name
+cd /path/to/main/repo
+git worktree remove .worktrees/feature-name
 git branch -d feature/feature-name
 ```
 

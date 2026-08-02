@@ -44,9 +44,9 @@ Present these options to the user:
 
 **A) Merge directly**
 ```bash
-cd ../project-main
+cd /path/to/main/repo
 git merge feature/feature-name
-git worktree remove ../project-feature-name
+git worktree remove .worktrees/feature-name
 git branch -d feature/feature-name
 ```
 
@@ -61,13 +61,13 @@ git push origin feature/feature-name
 ```bash
 git push origin feature/feature-name
 # Worktree can stay or be removed
-git worktree remove ../project-feature-name  # optional
+git worktree remove .worktrees/feature-name  # optional
 ```
 
 **D) Discard the work**
 ```bash
-cd ../project-main
-git worktree remove ../project-feature-name
+cd /path/to/main/repo
+git worktree remove .worktrees/feature-name
 git branch -D feature/feature-name  # -D forces deletion
 ```
 
@@ -77,7 +77,7 @@ After merge (options A or after B's PR merges):
 
 ```bash
 # Remove the worktree directory
-git worktree remove ../project-feature-name
+git worktree remove .worktrees/feature-name
 
 # Delete the local branch
 git branch -d feature/feature-name
