@@ -51,3 +51,8 @@ things done over getting things perfect.
 Don't reply to PR review comments. When asked to address feedback,
 make the code changes and push them — let the diff speak. I'll write
 the replies myself.
+
+## Shell commands
+
+Always use `python3`, never the bare `python` command — it isn't
+guaranteed to exist or point at Python 3.
