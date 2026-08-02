@@ -18,8 +18,12 @@ The `agents/skills/` directory holds Agent Skills (one `SKILL.md` per
 subdirectory) shared by Claude Code and the Pi coding agent. Bootstrap
 links each into both `~/.claude/skills/` and `~/.pi/agent/skills/`.
 
-The `agents/hooks/` directory holds the sound and tmux-title scripts, also
-shared by both agents. Claude Code runs them from the hook table in
+The `agents/hooks/` directory holds the sound, tmux-title, and
+notification-log scripts, also shared by both agents. `done.sh` and
+`notify.sh` call `log-event.sh`, which appends a colour-coded line
+(agent, project, `session:window.pane`, state) to
+`~/devel/AGENT_NOTIFICATIONS.log`; the `agent-notifications` skill opens a
+Ghostty window tailing it. Claude Code runs them from the hook table in
 `.claude/settings.json`; Pi has no hook table, so
 `agents/extensions/notifications.ts` binds the same scripts to the
 equivalent Pi events.

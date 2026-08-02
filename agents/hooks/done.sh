@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Completion sound for when a coding agent finishes its turn.
 # On macOS plays a system sound; elsewhere falls back to a terminal bell.
+
+# Also record the turn in the shared notification log.
+bash "$(dirname "${BASH_SOURCE[0]}")/log-event.sh" done
+
 if [[ "$(uname)" == "Darwin" ]]; then
     afplay /System/Library/Sounds/Hero.aiff
 else
