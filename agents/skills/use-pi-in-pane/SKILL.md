@@ -1,19 +1,18 @@
 ---
 name: use-pi-in-pane
-description: Run the `pi` coding agent as a headless subagent (--mode json) inside a visible tmux pane so the user can watch it stream while the agent still captures and verifies its structured output. Use when asked to "run pi in a pane", "let me watch pi work", "run pi where I can see it", or to delegate to pi with a live view. Requires running inside tmux. For a fully headless run with no pane, use use-pi-subagent instead.
+description: Run the `pi` coding agent as a headless subagent (--mode json) inside a visible tmux pane so the user can watch it stream while the agent still captures and verifies its structured output. Use when asked to "run pi", "run pi in a pane", "let me watch pi work", "run pi where I can see it", or to delegate to pi with a live view. Requires running inside tmux.
 allowed-tools: Bash
 ---
 
 # Running pi in a visible tmux pane
 
-This is the [[use-pi-subagent]] flow with a window into it. pi still runs
-**headless in JSON mode** — you drive it, capture the full event stream, and
-verify the result — but it runs in a new tmux pane so the user can watch it
-stream in real time. When pi exits, control returns to you with the JSON log to
-parse, exactly as in the headless skill.
+Use this whenever you delegate a discrete task to pi. pi runs **headless in
+JSON mode** — you drive it, capture the full event stream, and verify the
+result — but it runs in a new tmux pane so the user can watch it stream in real
+time. When pi exits, control returns to you with the JSON log to parse.
 
-Reach for this when the user wants to *see* pi work. When they just want the
-work done, the plain [[use-pi-subagent]] skill is simpler (no tmux needed).
+The visible pane makes delegation auditable and lets the user follow along
+without sacrificing structured output.
 
 ## How it works
 
@@ -36,17 +35,18 @@ for you.
 ## Prerequisites
 
 - **Must be inside tmux.** The wrapper needs `$TMUX` to split a pane, and it
-  uses the **user's own tmux server** so the pane is visible to them. Without
-  `$TMUX` it exits with a clear error — fall back to [[use-pi-subagent]].
+  uses the **user's own tmux server** so the pane is visible to them. Start the
+  agent from tmux before delegating.
 - `pi` and `jq` on `PATH`. The wrapper resolves `pi` absolutely from your
   shell, so fnm's shim works even though the pane's shell may have a leaner
   `PATH`.
 
 ## How to invoke
 
-Write the full task prompt to a file first (a cold `--no-session` run carries no
-context — see [[use-pi-subagent]] for what a good delegation prompt must
-include), then hand it and a unique log path to the wrapper:
+Write the full task prompt to a file first. A cold `--no-session` run carries
+no context, so include the exact task and scope, relevant repository conventions,
+files to inspect, required validation, and the expected output. Then hand it and
+a unique log path to the wrapper:
 
 ```bash
 skill_dir="$AGENT_STUFF/skills/use-pi-in-pane"   # resolve from where SKILL.md lives
@@ -102,7 +102,7 @@ STATUS=complete      # "complete", or "aborted" if the user closed the pane earl
 
 `STATUS=aborted` (wrapper exit 1) means the pane was closed before pi finished —
 the run is incomplete; do not treat its output as done. On `STATUS=complete`,
-parse the log the same way as [[use-pi-subagent]]:
+parse the log:
 
 ```bash
 # The agent's final answer text
@@ -123,7 +123,7 @@ files pi claims to have changed, run the relevant tests/lint yourself, and check
 ## Pitfalls
 
 - **No `$TMUX`.** The wrapper can't open a pane; it exits 1 with a clear
-  message. Use [[use-pi-subagent]] instead — don't try to force a pane.
+  message. Start the agent from tmux, then retry — don't try to force a pane.
 - **The pane lingers on purpose.** After pi exits, the pane drops to a shell so
   the user can read the transcript. That's intended; the user closes it. You are
   already unblocked and holding the log — don't wait on the pane.

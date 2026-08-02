@@ -8,8 +8,7 @@
 # The pane shows a pretty, prose-only view (pretty.jq); the log gets the
 # raw JSONL. tee sits upstream of jq, so the log is captured even if the
 # pretty view errors. This blocks until pi exits, then returns — the same
-# "kick it off, wait, read the result" contract as the headless
-# use-pi-subagent skill, just visible.
+# "kick it off, wait, read the result" contract, just visible.
 #
 # Usage:
 #   run-pi-pane.sh <prompt_file> <json_log> [extra pi flags...]
@@ -40,7 +39,7 @@ fi
 
 if [ -z "${TMUX:-}" ]; then
   echo "run-pi-pane.sh: not inside a tmux session, cannot open a pane" >&2
-  echo "Run the agent from inside tmux, or use the headless use-pi-subagent skill instead." >&2
+  echo "Run the agent from inside tmux, then try again." >&2
   exit 1
 fi
 
