@@ -6,7 +6,10 @@
 bash "$(dirname "${BASH_SOURCE[0]}")/log-event.sh" done
 
 if [[ "$(uname)" == "Darwin" ]]; then
-    afplay /System/Library/Sounds/Hero.aiff
+    # Backgrounded: afplay blocks for the length of the sound, which would
+    # otherwise delay the end of every turn by ~2s. Detach stdio too, or the
+    # caller reading our output to EOF would keep waiting on the child anyway.
+    afplay /System/Library/Sounds/Hero.aiff >/dev/null 2>&1 &
 else
     printf '\a'
 fi

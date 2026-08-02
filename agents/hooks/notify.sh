@@ -7,7 +7,10 @@
 bash "$(dirname "${BASH_SOURCE[0]}")/log-event.sh" attention
 
 if [[ "$(uname)" == "Darwin" ]]; then
-    afplay /System/Library/Sounds/Bottle.aiff
+    # Backgrounded: afplay blocks for the length of the sound, which would
+    # otherwise stall the tool call that triggered the prompt. Detach stdio
+    # too, or the caller reading our output to EOF would keep waiting on it.
+    afplay /System/Library/Sounds/Bottle.aiff >/dev/null 2>&1 &
 else
     printf '\a'
 fi
