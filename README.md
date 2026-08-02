@@ -37,6 +37,14 @@ The `agents/extensions/` directory holds global Pi extensions. `bootstrap.sh`
 symlinks each extension into `~/.pi/agent/extensions/`; reload Pi with `/reload`
 after changing one.
 
+## Agent hooks
+
+The `agents/hooks/` directory holds the scripts that play notification sounds
+and rename the tmux window as an agent works. `bootstrap.sh` links them into
+both `~/.claude/hooks/` and `~/.pi/agent/hooks/`. Claude Code wires them up
+through the hook table in `.claude/settings.json`; Pi has no such table, so
+`agents/extensions/notifications.ts` subscribes to the equivalent events.
+
 ## Checking a machine with `doctor.sh`
 
 Run the doctor after installation to check required tools, linked config,

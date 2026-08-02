@@ -202,9 +202,10 @@ else
 fi
 check_repo_link "Claude CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 check_repo_link "pi CLAUDE.md" "$HOME/.pi/agent/CLAUDE.md"
-for hook in "$DOTFILES"/.claude/hooks/*.sh; do
+for hook in "$DOTFILES"/agents/hooks/*.sh; do
     [ -e "$hook" ] || continue
     check_repo_link "Claude hook $(basename "$hook")" "$HOME/.claude/hooks/$(basename "$hook")"
+    check_repo_link "Pi hook $(basename "$hook")" "$HOME/.pi/agent/hooks/$(basename "$hook")"
 done
 if [ -f "$HOME/.claude/settings.json" ]; then
     pass "Claude settings" "$HOME/.claude/settings.json exists"

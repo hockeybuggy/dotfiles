@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-# Rename the current tmux window to reflect Claude Code's state.
+# Rename the current tmux window to reflect a coding agent's state.
 #
 # tmux's automatic-rename names each window after the pane's running process,
 # but Claude Code sets its process title to its version string (e.g. 2.1.206),
 # so the window ends up labelled with a version number instead of anything
 # useful. These hooks override that with a status emoji plus the project name,
 # and restore automatic-rename when the session ends.
+#
+# Shared by Claude Code (via settings.json hooks) and pi (via the
+# notifications extension).
 #
 # Usage: tmux-title.sh <emoji>   # rename window to "<emoji> <project>"
 #        tmux-title.sh --reset   # re-enable tmux automatic-rename
@@ -27,7 +30,7 @@ if [ "$1" = "--reset" ]; then
 fi
 
 emoji="${1:-🤖}"
-project=$(basename "${CLAUDE_PROJECT_DIR:-$PWD}")
+project=$(basename "${AGENT_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$PWD}}")
 
 # Pin the name so automatic-rename can't clobber it with the version string.
 tmux set-window-option -t "$window" automatic-rename off

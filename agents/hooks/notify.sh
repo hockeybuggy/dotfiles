@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Completion sound for when Claude stops.
+# Notification sound for questions and permission prompts.
+# Shared by Claude Code and pi; see agents/hooks/tmux-title.sh.
 # On macOS plays a system sound; elsewhere falls back to a terminal bell.
 if [[ "$(uname)" == "Darwin" ]]; then
-    afplay /System/Library/Sounds/Hero.aiff
+    afplay /System/Library/Sounds/Bottle.aiff
 else
     printf '\a'
 fi

@@ -82,13 +82,16 @@ function doIt() {
         done
     fi
 
-    # Symlink hooks
-    if [ -d ".claude/hooks" ]; then
-        mkdir -p "$HOME/.claude/hooks"
-        for hook in .claude/hooks/*.sh; do
+    # Hook scripts (sounds, tmux window titles) are shared: Claude Code runs
+    # them from its settings.json hook table, pi from the notifications
+    # extension. Link the same files into both agents' config directories.
+    if [ -d "agents/hooks" ]; then
+        mkdir -p "$HOME/.claude/hooks" "$HOME/.pi/agent/hooks"
+        for hook in agents/hooks/*.sh; do
             hook_name=$(basename "$hook")
             ln -sf "$PWD/$hook" "$HOME/.claude/hooks/$hook_name"
-            echo "Linked: $PWD/$hook -> $HOME/.claude/hooks/$hook_name"
+            ln -sf "$PWD/$hook" "$HOME/.pi/agent/hooks/$hook_name"
+            echo "Linked hook: $PWD/$hook -> ~/.claude/hooks/$hook_name, ~/.pi/agent/hooks/$hook_name"
         done
     fi
 

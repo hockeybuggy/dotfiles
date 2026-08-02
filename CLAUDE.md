@@ -18,6 +18,12 @@ The `agents/skills/` directory holds Agent Skills (one `SKILL.md` per
 subdirectory) shared by Claude Code and the Pi coding agent. Bootstrap
 links each into both `~/.claude/skills/` and `~/.pi/agent/skills/`.
 
+The `agents/hooks/` directory holds the sound and tmux-title scripts, also
+shared by both agents. Claude Code runs them from the hook table in
+`.claude/settings.json`; Pi has no hook table, so
+`agents/extensions/notifications.ts` binds the same scripts to the
+equivalent Pi events.
+
 This repo is public. Anything employer-specific — internal tool paths,
 hostnames, ticket prefixes, private MCP servers — belongs in an
 untracked local file, never in a tracked one:

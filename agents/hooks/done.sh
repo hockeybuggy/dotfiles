@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Notification sound for questions and permission prompts.
+# Completion sound for when a coding agent finishes its turn.
 # On macOS plays a system sound; elsewhere falls back to a terminal bell.
 if [[ "$(uname)" == "Darwin" ]]; then
-    afplay /System/Library/Sounds/Bottle.aiff
+    afplay /System/Library/Sounds/Hero.aiff
 else
     printf '\a'
 fi
