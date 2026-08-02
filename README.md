@@ -37,6 +37,22 @@ The `agents/extensions/` directory holds global Pi extensions. `bootstrap.sh`
 symlinks each extension into `~/.pi/agent/extensions/`; reload Pi with `/reload`
 after changing one.
 
+## MCP servers
+
+`.config/mcp/mcp.json` is the shared, tool-agnostic MCP server list; it links
+to `~/.config/mcp/mcp.json`, the highest-precedence source for Pi's
+[`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter) package. Install the
+adapter once per machine (it records itself in the untracked
+`~/.pi/agent/settings.json`):
+
+    pi install npm:pi-mcp-adapter
+
+Claude Code does not read that file, so it gets the same servers through
+plugins instead. `.claude/settings.json` declares the marketplaces and enabled
+plugins, which means `bootstrap.sh` restores them on a new machine — Chrome
+DevTools is wired up this way, per
+[Chrome's agent docs](https://developer.chrome.com/docs/devtools/agents).
+
 ## Agent hooks
 
 The `agents/hooks/` directory holds the scripts that play notification sounds

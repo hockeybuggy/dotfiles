@@ -24,6 +24,12 @@ shared by both agents. Claude Code runs them from the hook table in
 `agents/extensions/notifications.ts` binds the same scripts to the
 equivalent Pi events.
 
+`.config/mcp/mcp.json` is the shared MCP server list, read by Pi through the
+`pi-mcp-adapter` package (install with `pi install npm:pi-mcp-adapter`). Claude
+Code ignores that file, so its equivalent servers come from plugins declared in
+`.claude/settings.json` under `extraKnownMarketplaces` and `enabledPlugins`.
+Adding a server usually means touching both.
+
 This repo is public. Anything employer-specific — internal tool paths,
 hostnames, ticket prefixes, private MCP servers — belongs in an
 untracked local file, never in a tracked one:
