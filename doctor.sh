@@ -215,25 +215,48 @@ fi
 section "Coding agents"
 check_tool "Claude Code" claude
 check_tool "Pi" pi
-# Skills are shared by both agents; bootstrap links them per-agent from
-# agents/skills — per-skill into ~/.claude/skills/, one dir into ~/.pi/agent.
+# Skills are shared by both agents; bootstrap links each skill per-agent from
+# agents/skills into ~/.claude/skills/ and ~/.pi/agent/skills/.
 if [ -d "$DOTFILES/agents/skills" ]; then
-    total=0; linked=0
+    total=0; claude_linked=0; pi_linked=0
     for skill_dir in "$DOTFILES"/agents/skills/*/; do
         [ -d "$skill_dir" ] || continue
         total=$((total + 1))
-        case "$(readlink "$HOME/.claude/skills/$(basename "$skill_dir")" 2>/dev/null)" in
+        skill_name=$(basename "$skill_dir")
+        case "$(readlink "$HOME/.claude/skills/$skill_name" 2>/dev/null)" in
+            "$DOTFILES"/*) claude_linked=$((claude_linked + 1)) ;;
+        esac
+        case "$(readlink "$HOME/.pi/agent/skills/$skill_name" 2>/dev/null)" in
+            "$DOTFILES"/*) pi_linked=$((pi_linked + 1)) ;;
+        esac
+    done
+    if [ "$total" -gt 0 ] && [ "$claude_linked" -eq "$total" ]; then
+        pass "Claude skills linked" "$claude_linked/$total from agents/skills"
+    else
+        warn "Claude skills linked" "$claude_linked/$total linked; run ./bootstrap.sh"
+    fi
+    if [ "$total" -gt 0 ] && [ "$pi_linked" -eq "$total" ]; then
+        pass "Pi skills linked" "$pi_linked/$total from agents/skills"
+    else
+        warn "Pi skills linked" "$pi_linked/$total linked; run ./bootstrap.sh"
+    fi
+else
+    warn "Agent skills" "agents/skills missing from repo"
+fi
+if [ -d "$DOTFILES/agents/extensions" ]; then
+    total=0; linked=0
+    for extension in "$DOTFILES"/agents/extensions/*.ts; do
+        [ -f "$extension" ] || continue
+        total=$((total + 1))
+        case "$(readlink "$HOME/.pi/agent/extensions/$(basename "$extension")" 2>/dev/null)" in
             "$DOTFILES"/*) linked=$((linked + 1)) ;;
         esac
     done
     if [ "$total" -gt 0 ] && [ "$linked" -eq "$total" ]; then
-        pass "Claude skills linked" "$linked/$total from agents/skills"
+        pass "Pi extensions linked" "$linked/$total from agents/extensions"
     else
-        warn "Claude skills linked" "$linked/$total linked; run ./bootstrap.sh"
+        warn "Pi extensions linked" "$linked/$total linked; run ./bootstrap.sh"
     fi
-    check_repo_link "Pi skills" "$HOME/.pi/agent/skills"
-else
-    warn "Agent skills" "agents/skills missing from repo"
 fi
 
 section "Shell & environment"

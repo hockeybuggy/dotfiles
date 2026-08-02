@@ -71,6 +71,17 @@ function doIt() {
     ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.pi/agent/CLAUDE.md"
     echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.pi/agent/CLAUDE.md"
 
+    # Pi extensions are global and load from per-extension symlinks.
+    if [ -d "agents/extensions" ]; then
+        mkdir -p "$HOME/.pi/agent/extensions"
+        for extension in "$PWD"/agents/extensions/*.ts; do
+            [ -f "$extension" ] || continue
+            extension_name=$(basename "$extension")
+            ln -sfn "$extension" "$HOME/.pi/agent/extensions/$extension_name"
+            echo "Linked extension: $extension -> ~/.pi/agent/extensions/$extension_name"
+        done
+    fi
+
     # Symlink hooks
     if [ -d ".claude/hooks" ]; then
         mkdir -p "$HOME/.claude/hooks"

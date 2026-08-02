@@ -56,6 +56,7 @@ else
     echo "==> Provisioning and verifying"
     docker run --rm -v "$REPO_ROOT:/dotfiles:ro" "$IMAGE" bash -lc "
 $PROVISION
+./test/pi-clear-alias.sh
 ./test/verify.sh
 ./doctor.sh --ci"
 fi
