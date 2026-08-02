@@ -41,7 +41,7 @@ after changing one.
 
 The `agents/hooks/` directory holds the scripts that play notification sounds
 and rename the tmux window as an agent works. `bootstrap.sh` links them into
-both `~/.claude/hooks/` and `~/.pi/agent/hooks/`. Claude Code wires them up
+both `~/.claude/hooks/` and `~/.pi/agent/scripts/`. Claude Code wires them up
 through the hook table in `.claude/settings.json`; Pi has no such table, so
 `agents/extensions/notifications.ts` subscribes to the equivalent events.
 

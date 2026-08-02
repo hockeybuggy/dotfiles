@@ -61,10 +61,10 @@ ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.pi/agent/CLAUDE.md"
 for extension in "$ROOT"/agents/extensions/*.ts; do
     ln -s "$extension" "$healthy_home/.pi/agent/extensions/$(basename "$extension")"
 done
-mkdir -p "$healthy_home/.pi/agent/hooks"
+mkdir -p "$healthy_home/.pi/agent/scripts"
 for hook in "$ROOT"/agents/hooks/*.sh; do
     ln -s "$hook" "$healthy_home/.claude/hooks/$(basename "$hook")"
-    ln -s "$hook" "$healthy_home/.pi/agent/hooks/$(basename "$hook")"
+    ln -s "$hook" "$healthy_home/.pi/agent/scripts/$(basename "$hook")"
 done
 echo '{}' > "$healthy_home/.claude/settings.json"
 mkdir -p "$healthy_home/.claude/skills"

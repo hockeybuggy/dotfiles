@@ -85,13 +85,21 @@ function doIt() {
     # Hook scripts (sounds, tmux window titles) are shared: Claude Code runs
     # them from its settings.json hook table, pi from the notifications
     # extension. Link the same files into both agents' config directories.
+    #
+    # Pi renamed hooks to extensions and warns on startup if ~/.pi/agent/hooks
+    # still exists, so its copies live in ~/.pi/agent/scripts instead. Remove
+    # the old directory if a previous bootstrap created it.
     if [ -d "agents/hooks" ]; then
-        mkdir -p "$HOME/.claude/hooks" "$HOME/.pi/agent/hooks"
+        if [ -d "$HOME/.pi/agent/hooks" ]; then
+            rm -rf "$HOME/.pi/agent/hooks"
+            echo "Removed deprecated ~/.pi/agent/hooks"
+        fi
+        mkdir -p "$HOME/.claude/hooks" "$HOME/.pi/agent/scripts"
         for hook in agents/hooks/*.sh; do
             hook_name=$(basename "$hook")
             ln -sf "$PWD/$hook" "$HOME/.claude/hooks/$hook_name"
-            ln -sf "$PWD/$hook" "$HOME/.pi/agent/hooks/$hook_name"
-            echo "Linked hook: $PWD/$hook -> ~/.claude/hooks/$hook_name, ~/.pi/agent/hooks/$hook_name"
+            ln -sf "$PWD/$hook" "$HOME/.pi/agent/scripts/$hook_name"
+            echo "Linked hook: $PWD/$hook -> ~/.claude/hooks/$hook_name, ~/.pi/agent/scripts/$hook_name"
         done
     fi
 

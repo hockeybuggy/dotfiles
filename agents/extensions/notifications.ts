@@ -5,8 +5,10 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 // Pi has no settings.json hook table like Claude Code, so the equivalent
 // wiring lives here. Both agents run the same scripts from agents/hooks;
-// bootstrap links them into ~/.pi/agent/hooks and ~/.claude/hooks.
-const HOOKS = join(homedir(), ".pi", "agent", "hooks");
+// bootstrap links them into ~/.pi/agent/scripts and ~/.claude/hooks. Pi
+// reserves ~/.pi/agent/hooks as the deprecated name for extensions and warns
+// when it exists, hence the scripts/ directory.
+const HOOKS = join(homedir(), ".pi", "agent", "scripts");
 
 const STARTED = "🤖";
 const WORKING = "⚡";
