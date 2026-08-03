@@ -32,6 +32,9 @@ alias mkvenv="python3 -m venv venv && source venv/bin/activate && pip install --
 # Rust aliases
 alias car="cargo"
 
+# Terraform aliases
+alias tf="terraform"
+
 # JavaScript aliases
 alias jss="npm start"     # mnemonic: (J)ava(S)cript (S)erver
 alias jst="npm test"      # mnemonic: (J)ava(S)cript (T)est
