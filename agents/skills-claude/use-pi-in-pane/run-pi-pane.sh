@@ -2,24 +2,28 @@
 # run-pi-pane.sh
 #
 # Run `pi` as a headless subagent (--mode json) inside a visible tmux
-# pane so the user can watch it work, while the full JSON event stream is
+# window so the user can watch it work, while the full JSON event stream is
 # still captured to a log the calling agent parses afterward.
 #
-# The pane shows a pretty, prose-only view (pretty.jq); the log gets the
+# The window shows a pretty, prose-only view (pretty.jq); the log gets the
 # raw JSONL. tee sits upstream of jq, so the log is captured even if the
 # pretty view errors. This blocks until pi exits, then returns — the same
 # "kick it off, wait, read the result" contract, just visible.
 #
 # Usage:
-#   run-pi-pane.sh <prompt_file> <json_log> [extra pi flags...]
+#   TASK_NAME=<short-slug> run-pi-pane.sh <prompt_file> <json_log> [extra pi flags...]
+#
+# TASK_NAME (optional) names the new tmux window so the user can tell what
+# it's for at a glance. Set it to a short slug describing the task, e.g.
+# "fix-login-bug". Defaults to "pi-task" if unset.
 #
 # Example:
-#   run-pi-pane.sh task.prompt.md run.jsonl \
+#   TASK_NAME=fix-login-bug run-pi-pane.sh task.prompt.md run.jsonl \
 #     --model openai-codex/gpt-5.6-terra --thinking high
 #
 # Prints KEY=VALUE lines on stdout (JSON_LOG, STDERR_LOG, PI_EXIT,
 # STATUS) for the caller to read. Exits non-zero if pi could not be run
-# to completion (missing tmux, aborted pane); pi's own exit code is
+# to completion (missing tmux, aborted window); pi's own exit code is
 # reported via PI_EXIT / the printed STATUS, not this script's status.
 
 set -euo pipefail
@@ -38,10 +42,14 @@ if [ ! -f "$PROMPT_FILE" ]; then
 fi
 
 if [ -z "${TMUX:-}" ]; then
-  echo "run-pi-pane.sh: not inside a tmux session, cannot open a pane" >&2
+  echo "run-pi-pane.sh: not inside a tmux session, cannot open a window" >&2
   echo "Run the agent from inside tmux, then try again." >&2
   exit 1
 fi
+
+# Sanitize into a valid, readable tmux window name.
+WINDOW_NAME="$(printf '%s' "${TASK_NAME:-pi-task}" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//')"
+WINDOW_NAME="${WINDOW_NAME:-pi-task}"
 
 # Resolve tooling absolutely in the agent's shell (which has the right
 # PATH, e.g. fnm's pi shim). The tmux pane inherits the server's
@@ -81,10 +89,10 @@ touch '$SENTINEL'
 exec "\${SHELL:-/bin/sh}"
 EOF
 
-# -v: stacked top/bottom split so a long stream is easy to watch below the
-#     agent. -c: start in the current repo so pi's relative paths and
+# -n: name the window after the task so the user can spot it at a glance.
+#     -c: start in the current repo so pi's relative paths and
 #     context-file discovery resolve correctly.
-PANE=$(tmux split-window -v -P -F '#{pane_id}' -c "$PWD" "bash \"$PANE_SCRIPT\"")
+WINDOW=$(tmux new-window -P -F '#{window_id}' -c "$PWD" -n "$WINDOW_NAME" "bash \"$PANE_SCRIPT\"")
 
 # Block until pi finishes (sentinel appears). The dead-pane guard means
 # this can never hang: if the pane exits early — whether it vanishes
@@ -92,7 +100,7 @@ PANE=$(tmux split-window -v -P -F '#{pane_id}' -c "$PWD" "bash \"$PANE_SCRIPT\""
 # stops being "0" and we stop waiting. Missing sentinel afterward == the
 # run was aborted before pi completed.
 while [ ! -f "$SENTINEL" ]; do
-  dead="$(tmux display-message -p -t "$PANE" '#{pane_dead}' 2>/dev/null || echo gone)"
+  dead="$(tmux display-message -p -t "$WINDOW" '#{pane_dead}' 2>/dev/null || echo gone)"
   [ "$dead" != "0" ] && break
   sleep 0.3
 done
@@ -109,7 +117,7 @@ echo "STDERR_LOG=$STDERR_LOG"
 echo "PI_EXIT=$PI_EXIT"
 if [ "$aborted" = 1 ]; then
   echo "STATUS=aborted"
-  echo "run-pi-pane.sh: pane closed before pi finished; run is incomplete" >&2
+  echo "run-pi-pane.sh: window closed before pi finished; run is incomplete" >&2
   exit 1
 fi
 echo "STATUS=complete"
