@@ -55,6 +55,7 @@ checks=(
     "markdownlint|markdownlint --version"
     "Claude Code|claude --version"
     "Pi|pi --version"
+    "Antigravity CLI (agy)|agy --version"
 )
 
 SOCK="verify"

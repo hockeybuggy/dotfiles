@@ -228,6 +228,7 @@ else
 fi
 check_repo_link "Claude CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 check_repo_link "pi CLAUDE.md" "$HOME/.pi/agent/CLAUDE.md"
+check_repo_link "agy GEMINI.md" "$HOME/.gemini/config/GEMINI.md"
 for hook in "$DOTFILES"/agents/hooks/*.sh; do
     [ -e "$hook" ] || continue
     check_repo_link "Claude hook $(basename "$hook")" "$HOME/.claude/hooks/$(basename "$hook")"
@@ -238,15 +239,33 @@ if [ -f "$HOME/.claude/settings.json" ]; then
 else
     fail "Claude settings" "missing; run ./bootstrap.sh"
 fi
+if [ -f "$DOTFILES/agents/agy/hooks.json" ]; then
+    check_repo_link "agy hooks.json" "$HOME/.gemini/config/hooks.json"
+fi
+if [ -f "$DOTFILES/.config/mcp/mcp.json" ]; then
+    check_repo_link "agy mcp_config.json" "$HOME/.gemini/config/mcp_config.json"
+fi
+agy_settings="$HOME/.gemini/antigravity-cli/settings.json"
+if [ -f "$agy_settings" ] && python3 -c "
+import json, sys
+rule = 'read_file(' + sys.argv[2] + ')'
+allow = json.load(open(sys.argv[1])).get('permissions', {}).get('allow', [])
+sys.exit(0 if rule in allow else 1)
+" "$agy_settings" "$DOTFILES" 2>/dev/null; then
+    pass "agy read_file allow-rule" "$DOTFILES"
+else
+    warn "agy read_file allow-rule" "missing; run ./bootstrap.sh (needed to read shared skills)"
+fi
 
 section "Coding agents"
 check_tool "Claude Code" claude
 check_tool "Pi" pi
-# Skills link per-agent: agents/skills goes to both agents, agents/skills-claude
-# to Claude Code only, agents/skills-pi to Pi only. Count each agent only
-# against the directories that target it.
+check_tool "Antigravity CLI (agy)" agy
+# Skills link per-agent: agents/skills goes to all three agents,
+# agents/skills-claude to Claude Code only, agents/skills-pi to Pi only.
+# Count each agent only against the directories that target it.
 if [ -d "$DOTFILES/agents/skills" ]; then
-    claude_total=0; claude_linked=0; pi_total=0; pi_linked=0
+    claude_total=0; claude_linked=0; pi_total=0; pi_linked=0; agy_total=0; agy_linked=0
     for skills_spec in \
         "agents/skills:both" \
         "agents/skills-claude:claude" \
@@ -273,6 +292,14 @@ if [ -d "$DOTFILES/agents/skills" ]; then
                     esac
                     ;;
             esac
+            case "$skills_agents" in
+                both)
+                    agy_total=$((agy_total + 1))
+                    case "$(readlink "$HOME/.gemini/config/skills/$skill_name" 2>/dev/null)" in
+                        "$DOTFILES"/*) agy_linked=$((agy_linked + 1)) ;;
+                    esac
+                    ;;
+            esac
         done
     done
     if [ "$claude_total" -gt 0 ] && [ "$claude_linked" -eq "$claude_total" ]; then
@@ -285,10 +312,15 @@ if [ -d "$DOTFILES/agents/skills" ]; then
     else
         warn "Pi skills linked" "$pi_linked/$pi_total linked; run ./bootstrap.sh"
     fi
+    if [ "$agy_total" -gt 0 ] && [ "$agy_linked" -eq "$agy_total" ]; then
+        pass "agy skills linked" "$agy_linked/$agy_total"
+    else
+        warn "agy skills linked" "$agy_linked/$agy_total linked; run ./bootstrap.sh"
+    fi
     # A skill moved between those directories leaves a dangling symlink, which
     # the agent silently ignores. Bootstrap prunes them; report any that remain.
     stale=0
-    for skills_dest in "$HOME/.claude/skills" "$HOME/.pi/agent/skills"; do
+    for skills_dest in "$HOME/.claude/skills" "$HOME/.pi/agent/skills" "$HOME/.gemini/config/skills"; do
         for skill_link in "$skills_dest"/*; do
             [ -L "$skill_link" ] || continue
             [ -e "$skill_link" ] || stale=$((stale + 1))

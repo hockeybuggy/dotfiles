@@ -7,8 +7,8 @@
 # useful. These hooks override that with a status emoji plus the project name,
 # and restore automatic-rename when the session ends.
 #
-# Shared by Claude Code (via settings.json hooks) and pi (via the
-# notifications extension).
+# Shared by Claude Code (via settings.json hooks), pi (via the notifications
+# extension), and agy (via hooks.json, see agents/hooks/agy-*.sh).
 #
 # Usage: tmux-title.sh <emoji>   # rename window to "<emoji> <project>"
 #        tmux-title.sh --reset   # re-enable tmux automatic-rename
@@ -30,7 +30,7 @@ if [ "$1" = "--reset" ]; then
 fi
 
 emoji="${1:-🤖}"
-project=$(basename "${AGENT_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$PWD}}")
+project=$(basename "${AGENT_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-${AGY_PROJECT_DIR:-$PWD}}}")
 
 # Pin the name so automatic-rename can't clobber it with the version string.
 tmux set-window-option -t "$window" automatic-rename off
