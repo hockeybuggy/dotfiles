@@ -26,18 +26,24 @@ only installs tools -- it does not link any config.
 
 The `agents/skills/` directory holds [Agent Skills](https://agentskills.io)
 (one `SKILL.md` per subdirectory) shared by
-[Claude Code](https://claude.ai/code) and the
-[Pi coding agent](https://shittycodingagent.ai). `bootstrap.sh` links each into
-`~/.claude/skills/` for Claude and `~/.pi/agent/skills/` for Pi.
+[Claude Code](https://claude.ai/code), the
+[Pi coding agent](https://shittycodingagent.ai), and Google's
+[Antigravity CLI](https://antigravity.google/docs/cli/overview) (`agy`).
+`bootstrap.sh` links each into `~/.claude/skills/` for Claude,
+`~/.pi/agent/skills/` for Pi, and `~/.gemini/config/skills/` for agy.
 
 Skills that only make sense for one agent go in a sibling directory instead:
 
 | Directory | Linked into |
 | --- | --- |
-| `agents/skills/` | both agents |
+| `agents/skills/` | Claude, Pi, and agy |
 | `agents/skills-claude/` | Claude Code only |
 | `agents/skills-pi/` | Pi only |
-| `agents/skills-local/` | both agents (untracked) |
+| `agents/skills-local/` | Claude, Pi, and agy (untracked) |
+
+agy has no agy-only sibling directory yet -- `use-agy-in-pane`, the skill that
+drives it, is Claude-only by nature (it's Claude delegating to a headless
+agy), so it lives in `agents/skills-claude/`.
 
 Move a skill between them with `git mv`, then re-run `bootstrap.sh` — it prunes
 the symlink the skill left behind in the agent that no longer gets it.
@@ -64,6 +70,10 @@ plugins, which means `bootstrap.sh` restores them on a new machine — Chrome
 DevTools is wired up this way, per
 [Chrome's agent docs](https://developer.chrome.com/docs/devtools/agents).
 
+agy also reads `mcpServers` config directly (its own copy lives at
+`~/.gemini/config/mcp_config.json`), so `bootstrap.sh` symlinks the same
+`.config/mcp/mcp.json` there too.
+
 ## Agent hooks
 
 The `agents/hooks/` directory holds the scripts that play notification sounds
@@ -71,6 +81,35 @@ and rename the tmux window as an agent works. `bootstrap.sh` links them into
 both `~/.claude/hooks/` and `~/.pi/agent/scripts/`. Claude Code wires them up
 through the hook table in `.claude/settings.json`; Pi has no such table, so
 `agents/extensions/notifications.ts` subscribes to the equivalent events.
+
+agy has its own lifecycle-hooks system (`hooks.json`), but only a couple of
+its events map cleanly onto "agent is working" / "agent is done" —
+`agents/agy/hooks.json` wires those two (`PreInvocation` and `Stop`) to
+`agents/hooks/agy-working.sh` and `agents/hooks/agy-done.sh`, thin wrappers
+that read agy's stdin JSON payload and call the same shared `tmux-title.sh`
+and `done.sh` scripts. `bootstrap.sh` symlinks it to
+`~/.gemini/config/hooks.json`.
+
+## Antigravity CLI (agy)
+
+`setup.sh` installs [agy](https://antigravity.google/docs/cli/overview)
+alongside Claude Code and Pi. `bootstrap.sh` links `CLAUDE.md` to
+`~/.gemini/config/GEMINI.md` (agy's name for the same global-rules file), so
+all three agents follow the same conventions.
+
+agy sandboxes file reads to the current project by default, and the shared
+skills it gets from `~/.gemini/config/skills/` are symlinks that resolve
+outside of it -- so `bootstrap.sh` also adds a `read_file()` allow-rule
+scoped to this repo's path in agy's personal
+`~/.gemini/antigravity-cli/settings.json`, alongside whatever prefs (colour
+scheme, model, `trustedWorkspaces`) already live there.
+
+To delegate a task to agy the way you'd delegate to Pi, use the
+`use-agy-in-pane` skill (`agents/skills-claude/use-agy-in-pane/`) -- it runs
+`agy --output-format stream-json` headless inside a visible, named tmux
+window, mirroring `use-pi-in-pane`. See
+[Antigravity's headless-mode docs](https://antigravity.google/docs/cli/headless)
+for the underlying flags.
 
 ## Checking a machine with `doctor.sh`
 
@@ -125,6 +164,7 @@ can poke around in tmux yourself:
 1. Coding agents
     1. [Claude Code](https://claude.com/claude-code)
     1. [Pi](https://pi.dev)
+    1. [Antigravity CLI (agy)](https://antigravity.google/docs/cli/overview)
 1. [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
 1. Git related
     1. gnupg

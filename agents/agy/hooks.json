@@ -1,0 +1,10 @@
+{
+  "notifications": {
+    "PreInvocation": [
+      { "command": "bash ~/.claude/hooks/agy-working.sh", "timeout": 10 }
+    ],
+    "Stop": [
+      { "command": "bash ~/.claude/hooks/agy-done.sh", "timeout": 10 }
+    ]
+  }
+}

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Append a coding-agent status line to the shared notification log.
 #
-# Both Claude Code and pi call this through done.sh and notify.sh, so a single
-# `tail -F` on the log shows every agent across every tmux pane. See the
+# Claude Code, pi, and agy all call this through done.sh and notify.sh, so a
+# single `tail -F` on the log shows every agent across every tmux pane. See the
 # agent-notifications skill for the Ghostty window that watches it.
 #
 # Usage: log-event.sh done       # the agent finished its turn
@@ -33,13 +33,18 @@ case "$state" in
         ;;
 esac
 
-# Claude Code exports CLAUDE_PROJECT_DIR; pi exports AGENT_PROJECT_DIR.
+# Claude Code exports CLAUDE_PROJECT_DIR; pi exports AGENT_PROJECT_DIR. agy
+# has no such env var, so its hook wrappers (agy-working.sh/agy-done.sh)
+# derive one from the hook payload and export AGY_PROJECT_DIR themselves.
 if [ -n "${CLAUDE_PROJECT_DIR:-}" ]; then
     agent="claude"
     project_dir="$CLAUDE_PROJECT_DIR"
 elif [ -n "${AGENT_PROJECT_DIR:-}" ]; then
     agent="pi"
     project_dir="$AGENT_PROJECT_DIR"
+elif [ -n "${AGY_PROJECT_DIR:-}" ]; then
+    agent="agy"
+    project_dir="$AGY_PROJECT_DIR"
 else
     agent="agent"
     project_dir="$PWD"

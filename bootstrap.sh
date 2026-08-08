@@ -77,6 +77,51 @@ function doIt() {
     ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.pi/agent/CLAUDE.md"
     echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.pi/agent/CLAUDE.md"
 
+    # Antigravity CLI (agy): share the same CLAUDE.md as global rules (agy
+    # calls this GEMINI.md), share the MCP server list, and wire lifecycle
+    # hooks for the same sound/tmux-title notifications as Claude Code and pi.
+    echo "\n${GREEN}Setting up agy config${RESET}"
+    mkdir -p "$HOME/.gemini/config"
+    ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.gemini/config/GEMINI.md"
+    echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.gemini/config/GEMINI.md"
+
+    if [ -f ".config/mcp/mcp.json" ]; then
+        ln -sf "$PWD/.config/mcp/mcp.json" "$HOME/.gemini/config/mcp_config.json"
+        echo "Linked: $PWD/.config/mcp/mcp.json -> $HOME/.gemini/config/mcp_config.json"
+    fi
+
+    if [ -f "agents/agy/hooks.json" ]; then
+        ln -sf "$PWD/agents/agy/hooks.json" "$HOME/.gemini/config/hooks.json"
+        echo "Linked: $PWD/agents/agy/hooks.json -> $HOME/.gemini/config/hooks.json"
+    fi
+
+    # ~/.gemini/config/skills/* are symlinks that resolve into this repo, which
+    # agy treats as a real path outside whatever project it's running in. By
+    # default it denies (interactively: prompts "outside workspace" for) any
+    # read of a path outside the current workspace, which would otherwise
+    # make every shared skill unreadable. A read_file() allow-rule scoped to
+    # this repo's own path fixes that without loosening access anywhere else
+    # on disk -- add it to agy's personal settings file if it isn't there
+    # already; everything else in that file (colorScheme, model,
+    # trustedWorkspaces) is the user's own and stays untouched.
+    mkdir -p "$HOME/.gemini/antigravity-cli"
+    python3 -c "
+import json, os
+
+path = os.path.expanduser('~/.gemini/antigravity-cli/settings.json')
+settings = {}
+if os.path.exists(path):
+    with open(path) as f:
+        settings = json.load(f)
+rule = 'read_file(' + os.getcwd() + ')'
+allow = settings.setdefault('permissions', {}).setdefault('allow', [])
+if rule not in allow:
+    allow.append(rule)
+with open(path, 'w') as f:
+    json.dump(settings, f, indent=2)
+"
+    echo "Added a read_file() allow-rule for $PWD to ~/.gemini/antigravity-cli/settings.json"
+
     # Pi extensions are global and load from per-extension symlinks.
     if [ -d "agents/extensions" ]; then
         mkdir -p "$HOME/.pi/agent/extensions"
@@ -127,6 +172,7 @@ function doIt() {
         rm -f "$HOME/.pi/agent/skills"
     fi
     mkdir -p "$HOME/.claude/skills" "$HOME/.pi/agent/skills"
+    mkdir -p "$HOME/.gemini/config/skills"
 
     for skills_spec in \
         "agents/skills:both" \
@@ -156,10 +202,22 @@ function doIt() {
         done
     done
 
+    # agy only understands agent-agnostic skills, so it gets the shared and
+    # local directories -- not agents/skills-claude or agents/skills-pi.
+    for skills_root in "agents/skills" "agents/skills-local"; do
+        [ -d "$skills_root" ] || continue
+        for skill_dir in "$PWD/$skills_root"/*/; do
+            [ -d "$skill_dir" ] || continue
+            skill_name=$(basename "$skill_dir")
+            ln -sfn "$skill_dir" "$HOME/.gemini/config/skills/$skill_name"
+            echo "Linked skill: $skill_dir -> ~/.gemini/config/skills/$skill_name"
+        done
+    done
+
     # Moving a skill between those directories leaves the old symlink behind,
     # pointing at a path that no longer exists. A dangling link is invisible to
     # the agent, so the skill silently stops loading; prune them here.
-    for skills_dest in "$HOME/.claude/skills" "$HOME/.pi/agent/skills"; do
+    for skills_dest in "$HOME/.claude/skills" "$HOME/.pi/agent/skills" "$HOME/.gemini/config/skills"; do
         for skill_link in "$skills_dest"/*; do
             [ -L "$skill_link" ] || continue
             [ -e "$skill_link" ] && continue

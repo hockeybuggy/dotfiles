@@ -284,7 +284,7 @@ setup_python_tools() {
 }
 
 # ---------------------------------------------------------------------------
-# Coding agents (Claude Code, Pi)
+# Coding agents (Claude Code, Pi, Antigravity CLI)
 # ---------------------------------------------------------------------------
 
 setup_agents() {
@@ -305,6 +305,15 @@ setup_agents() {
         npm install -g --ignore-scripts @earendil-works/pi-coding-agent || warn "Pi install failed (continuing)"
     else
         warn "npm unavailable; cannot install the Pi coding agent"
+    fi
+
+    # Antigravity CLI (agy): Google's native installer, drops `agy` into
+    # ~/.local/bin (its default target, already on PATH via .zshrc).
+    if have agy; then
+        skip "Antigravity CLI (agy) already installed"
+    else
+        info "Installing the Antigravity CLI (agy)"
+        curl -fsSL https://antigravity.google/cli/install.sh | bash || warn "Antigravity CLI install failed (continuing)"
     fi
 }
 
