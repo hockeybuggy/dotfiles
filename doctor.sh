@@ -109,6 +109,30 @@ check_min_version() {
     fi
 }
 
+check_python_on_path() {
+    label="$1"
+    command_name="$2"
+    if ! have "$command_name"; then
+        return
+    fi
+    resolved=$(command -v "$command_name")
+    actual=$("$command_name" --version 2>&1 | awk '{print $2}')
+    newest=""
+    if have uv; then
+        newest=$(uv python list --only-installed 2>/dev/null \
+            | awk '$1 ~ /^cpython-/ {print $1}' \
+            | sed -E 's/^cpython-([0-9]+\.[0-9]+\.[0-9]+).*/\1/' \
+            | sort -V | tail -1)
+    fi
+    if [ -z "$actual" ]; then
+        fail "$label" "could not determine version"
+    elif [ -n "$newest" ] && ! version_ge "$actual" "$newest"; then
+        warn "$label" "$actual is outdated; $newest is installed (try 'uv python upgrade' or check PATH order)"
+    else
+        pass "$label" "$resolved ($actual)"
+    fi
+}
+
 check_repo_link() {
     label="$1"
     link="$2"
@@ -181,6 +205,8 @@ if have uv && uv python find --managed-python 3.14 --show-version 2>/dev/null | 
 else
     fail "uv-managed Python 3.14" "missing; run uv python install 3.14"
 fi
+check_python_on_path "python3 (PATH)" python3
+check_python_on_path "python (PATH)" python
 if [ "$(uname -s)" = "Darwin" ]; then
     check_tool "reattach-to-user-namespace" reattach-to-user-namespace
     if have brew && brew list --versions uutils-coreutils 2>/dev/null | grep -q .; then
