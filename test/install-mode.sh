@@ -59,4 +59,9 @@ set -e
 [ "$status" -ne 0 ] || fail "bootstrap ignored setup failure"
 [ ! -e "$failed_home/.dotfiles_mode" ] || fail "mode was written after setup failure"
 
+grep -q './bootstrap.sh --minimal' "$ROOT/README.md" || fail "README omits minimal bootstrap"
+grep -q './bootstrap.sh --work' "$ROOT/README.md" || fail "README omits work bootstrap"
+grep -q './bootstrap.sh --personal' "$ROOT/README.md" || fail "README omits personal bootstrap"
+grep -q '~/.dotfiles_mode' "$ROOT/README.md" || fail "README omits persisted mode"
+
 echo "install mode tests passed"

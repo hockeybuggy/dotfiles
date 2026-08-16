@@ -10,17 +10,31 @@ Clone the repo. I like to put it at `~/.dotfiles`
 
     git clone git@github.com:hockeybuggy/dotfiles.git .dotfiles && cd .dotfiles
 
-### 2. Install the tools
+### 2. Install and link
 
-`setup.sh` installs the dependencies listed below. It works on macOS (via
-Homebrew) and Debian/Ubuntu (via apt plus a few official installers). It
-only installs tools -- it does not link any config.
+Choose one installation mode. `bootstrap.sh` installs its tools, links the
+configuration, and records the selected mode in `~/.dotfiles_mode` only after
+all steps succeed.
 
-    ./setup.sh
+    ./bootstrap.sh --minimal
+    ./bootstrap.sh --work
+    ./bootstrap.sh --personal
 
-### 3. Automagically Link the files
+| Capability | Minimal | Work | Personal |
+| --- | --- | --- | --- |
+| Core terminal tools and Node | Required | Required | Required |
+| Development toolchains and linters | — | Required | Required |
+| Coding agents | — | Required | Required |
+| macOS workstation support | — | Required | Required |
+| Personal macOS Markdown integration | — | — | Required |
 
-    ./bootstrap.sh
+Use `minimal` for a hosted VM, `work` for a work computer, and `personal` for
+a personal computer. Re-running bootstrap with another mode installs any newly
+required programs but does not remove extras from the old mode.
+
+`setup.sh --minimal`, `setup.sh --work`, and `setup.sh --personal` remain
+available when only installing tools is useful; they do not link configuration
+or record a mode.
 
 ## Agent skills
 
@@ -119,17 +133,23 @@ dependencies:
 
     ./doctor.sh
 
-Checks report OK, WARN, or FAIL with a suggested fix. The command exits
-non-zero for any required failure. Use `--strict` to also treat warnings as
-failures, or `--ci` to skip checks that only apply to a personal machine.
+Doctor reads `~/.dotfiles_mode` and checks only that profile's required tools.
+On a machine linked before install modes existed, it reports the missing marker
+and asks you to run bootstrap once with a chosen mode. Checks report OK, WARN,
+or FAIL with a suggested fix. The command exits non-zero for any required
+failure. Use `--strict` to also treat warnings as failures, or `--ci` to skip
+checks that only apply to a personal machine.
 
 ## Testing `setup.sh`
 
-You can exercise `setup.sh` on a clean Debian container. This builds a minimal
-image, runs `setup.sh` and `bootstrap.sh` inside it, then drives a tmux session
-to confirm each tool actually runs:
+You can exercise a profile on a clean Debian container. This builds a minimal
+image, runs bootstrap inside it, then drives a tmux session to confirm each
+expected tool actually runs:
 
-    ./test/run.sh
+    ./test/run.sh --mode personal
+
+GitHub Actions runs this test for all three Linux modes. The macOS job exercises
+the complete personal mode.
 
 Pass `--interactive` to provision the container and drop into a shell so you
 can poke around in tmux yourself:

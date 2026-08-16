@@ -1,14 +1,13 @@
 # Dotfiles
 
 Personal config files for neovim, tmux, zsh, git, and friends.
-Use `setup.sh` to install dependencies on macOS or Debian/Ubuntu. It
-installs tools only; it does not link configuration. Use `bootstrap.sh`
-to symlink tracked files into `$HOME`.
-
-Run `doctor.sh` after setup or configuration changes to check tools,
-symlinks, shell setup, environment variables, and Git configuration.
-Use `doctor.sh --strict` when warnings should also fail. Use
-`doctor.sh --ci` for checks in CI.
+Use `bootstrap.sh --minimal`, `bootstrap.sh --work`, or
+`bootstrap.sh --personal` to install that mode's dependencies, link
+configuration, and record the mode in `~/.dotfiles_mode`. `setup.sh` accepts
+the same required mode flags for installation-only use. Run `doctor.sh` after
+setup or configuration changes; it reads the recorded mode and checks only
+that profile's expected tools and configuration. Use `doctor.sh --strict` when
+warnings should also fail. Use `doctor.sh --ci` for checks in CI.
 
 The `.claude/` directory contains global Claude Code config. The
 bootstrap script handles it specially — it symlinks `CLAUDE.md` and
