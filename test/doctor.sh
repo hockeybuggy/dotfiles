@@ -19,10 +19,10 @@ output=$(HOME="$home" "$ROOT/doctor.sh" --ci 2>&1)
 status=$?
 set -e
 
-[ "$status" -eq 1 ] || fail "expected a missing manifest to exit 1, got $status"
-printf '%s\n' "$output" | grep -q "Config linked correctly" || fail "missing config section"
+[ "$status" -eq 1 ] || fail "expected an unbootstrapped home to exit 1, got $status"
+printf '%s\n' "$output" | grep -q "Install mode" || fail "missing install mode check"
+printf '%s\n' "$output" | grep -q "bootstrap.sh --minimal" || fail "missing mode selection hint"
 printf '%s\n' "$output" | grep -q "Linked-files manifest" || fail "missing manifest check"
-printf '%s\n' "$output" | grep -q "run ./bootstrap.sh" || fail "missing bootstrap fix hint"
 printf '%s\n' "$output" | grep -q "Summary" || fail "missing summary"
 
 fake_bin="$TMPDIR_ROOT/bin"
@@ -50,14 +50,33 @@ esac
 exit 0
 EOF
 chmod +x "$fake_bin/tool"
-for command_name in nvim tmux zsh git fzf rg fd bat eza btm starship zoxide uv fnm gpg diff-so-fancy node npm markdownlint cargo rustc python3 ruff ty pgcli pip reattach-to-user-namespace brew claude pi; do
+
+core_commands="nvim tmux zsh git fzf rg fd bat eza btm starship zoxide fnm node npm python3 pip"
+development_commands="uv gpg diff-so-fancy markdownlint cargo rustc ruff ty pgcli claude"
+minimal_agent_commands="pi agy"
+for command_name in $core_commands; do
     ln -s tool "$fake_bin/$command_name"
 done
+if [ "$(uname -s)" = Darwin ]; then
+    for command_name in reattach-to-user-namespace brew; do
+        ln -s tool "$fake_bin/$command_name"
+    done
+fi
 
 ln -s "$ROOT/.gitmessage" "$healthy_home/.gitmessage"
 echo "$healthy_home/.gitmessage" > "$healthy_home/.dotfiles_linked_files"
 ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.claude/CLAUDE.md"
+mkdir -p "$healthy_home/.pi/agent" "$healthy_home/.gemini/config" "$healthy_home/.gemini/antigravity-cli"
 ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.pi/agent/CLAUDE.md"
+ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.gemini/config/GEMINI.md"
+ln -s "$ROOT/agents/agy/hooks.json" "$healthy_home/.gemini/config/hooks.json"
+ln -s "$ROOT/.config/mcp/mcp.json" "$healthy_home/.gemini/config/mcp_config.json"
+python3 - "$healthy_home/.gemini/antigravity-cli/settings.json" "$ROOT" <<'PY'
+import json
+import sys
+json.dump({"permissions": {"allow": [f"read_file({sys.argv[2]})"]}}, open(sys.argv[1], "w"))
+PY
+
 for extension in "$ROOT"/agents/extensions/*.ts; do
     ln -s "$extension" "$healthy_home/.pi/agent/extensions/$(basename "$extension")"
 done
@@ -67,34 +86,90 @@ for hook in "$ROOT"/agents/hooks/*.sh; do
     ln -s "$hook" "$healthy_home/.pi/agent/scripts/$(basename "$hook")"
 done
 echo '{}' > "$healthy_home/.claude/settings.json"
-mkdir -p "$healthy_home/.claude/skills"
-for skill_dir in "$ROOT"/agents/skills/*/; do
+mkdir -p "$healthy_home/.claude/skills" "$healthy_home/.pi/agent/skills" "$healthy_home/.gemini/config/skills"
+for skill_dir in "$ROOT"/agents/skills/*/ "$ROOT"/agents/skills-claude/*/; do
+    [ -d "$skill_dir" ] || continue
     ln -s "$skill_dir" "$healthy_home/.claude/skills/$(basename "$skill_dir")"
 done
-mkdir -p "$healthy_home/.pi/agent/skills"
-for skill_dir in "$ROOT"/agents/skills/*/; do
+for skill_dir in "$ROOT"/agents/skills/*/ "$ROOT"/agents/skills-pi/*/; do
+    [ -d "$skill_dir" ] || continue
     ln -s "$skill_dir" "$healthy_home/.pi/agent/skills/$(basename "$skill_dir")"
+done
+for skill_dir in "$ROOT"/agents/skills/*/; do
+    [ -d "$skill_dir" ] || continue
+    ln -s "$skill_dir" "$healthy_home/.gemini/config/skills/$(basename "$skill_dir")"
 done
 
 env_path="$fake_bin:/usr/bin:/bin"
+printf 'minimal\n' > "$healthy_home/.dotfiles_mode"
 set +e
 output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
 status=$?
 set -e
-[ "$status" -eq 0 ] || fail "expected a healthy CI setup to exit 0, got $status: $output"
+[ "$status" -eq 1 ] || fail "minimal mode accepted a setup without Pi and agy"
+printf '%s\n' "$output" | grep -Eq '✗[[:space:]]+Pi' || fail "minimal mode did not require Pi"
+
+for command_name in $minimal_agent_commands; do
+    ln -s tool "$fake_bin/$command_name"
+done
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+status=$?
+[ "$status" -eq 0 ] || fail "expected a healthy minimal setup to exit 0, got $status: $output"
+printf '%s\n' "$output" | grep -q "Mode.*minimal" || fail "minimal mode is not displayed"
+if printf '%s\n' "$output" | grep -Eq '✗[[:space:]]+(uv|Claude Code|cargo)'; then
+    fail "minimal mode requires a development-only tool"
+fi
+
+rm "$fake_bin/pi" "$fake_bin/agy"
+printf 'work\n' > "$healthy_home/.dotfiles_mode"
+set +e
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+status=$?
+set -e
+[ "$status" -eq 1 ] || fail "work mode accepted a minimal tool set"
+printf '%s\n' "$output" | grep -Eq '✗[[:space:]]+uv' || fail "work mode did not require uv"
+
+for command_name in $development_commands; do
+    ln -s tool "$fake_bin/$command_name"
+done
+
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+status=$?
+[ "$status" -eq 0 ] || fail "expected a healthy work setup without Pi and agy, got $status: $output"
 printf '%s\n' "$output" | grep -q "0 FAIL" || fail "healthy summary contains failures"
 printf '%s\n' "$output" | grep -Eq '^[[:space:]]+✓[[:space:]]+pgcli[[:space:]]' || fail "missing pgcli check"
 printf '%s\n' "$output" | grep -q "Pi skills linked" || fail "missing Pi skills check"
 printf '%s\n' "$output" | grep -q "Pi extensions linked" || fail "missing Pi extensions check"
+if printf '%s\n' "$output" | grep -q "luarocks"; then
+    fail "work mode checks personal Lua tools"
+fi
 
+printf 'personal\n' > "$healthy_home/.dotfiles_mode"
 set +e
-HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci --strict >/dev/null 2>&1
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
 status=$?
 set -e
-[ "$status" -eq 1 ] || fail "expected --strict to reject optional dependency warnings"
+[ "$status" -eq 1 ] || fail "personal mode accepted a setup without Pi and agy"
+for command_name in $minimal_agent_commands; do
+    ln -s tool "$fake_bin/$command_name"
+done
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+status=$?
+[ "$status" -eq 0 ] || fail "expected a healthy personal setup to exit 0, got $status: $output"
+printf '%s\n' "$output" | grep -q "luarocks" || fail "personal mode omits Lua tool checks"
 
-grep -q './doctor.sh --ci' "$ROOT/test/run.sh" || fail "Debian verification does not run doctor"
-grep -q './doctor.sh --ci' "$ROOT/.github/workflows/test-setup.yml" || fail "macOS verification does not run doctor"
+printf 'invalid\n' > "$healthy_home/.dotfiles_mode"
+set +e
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+status=$?
+set -e
+[ "$status" -eq 1 ] || fail "invalid mode exited $status instead of 1"
+printf '%s\n' "$output" | grep -qi "invalid" || fail "invalid mode lacks diagnostic"
+
+grep -q 'doctor.sh' "$ROOT/test/run.sh" || fail "Debian verification does not run doctor"
+grep -q 'matrix:' "$ROOT/.github/workflows/test-setup.yml" || fail "Linux workflow has no mode matrix"
+grep -Fq 'mode: [minimal, work, personal]' "$ROOT/.github/workflows/test-setup.yml" || fail "Linux workflow omits an install mode"
+grep -q './bootstrap.sh --personal' "$ROOT/.github/workflows/test-setup.yml" || fail "macOS verification does not bootstrap personal mode"
 if grep -q 'fnm use lts-latest' "$ROOT/.github/workflows/test-setup.yml"; then
     fail "macOS verification activates an fnm version that setup.sh does not install"
 fi

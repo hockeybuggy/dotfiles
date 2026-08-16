@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 set -euo pipefail
 IFS=$'\n\t'
@@ -7,13 +7,53 @@ IFS=$'\n\t'
 # guards each entry with a [ -f ]/[ -d ]/[ -L ] test, which is only reachable if
 # an empty directory yields zero iterations instead of a "no matches found"
 # error — an empty agents/skills-pi is a normal state, not a failure.
-setopt null_glob
+shopt -s nullglob
 
+DOTFILES=$(cd "$(dirname "$0")" && pwd)
 LINKED_FILES="$HOME/.dotfiles_linked_files"
+MODE_FILE="$HOME/.dotfiles_mode"
+INSTALL_MODE=""
+
+source "$DOTFILES/lib/install-mode.sh"
 
 # Define color variables
 GREEN=$(tput setaf 2)
 RESET=$(tput sgr0)
+
+function usage() {
+    install_mode_usage "./bootstrap.sh"
+}
+
+function parseArgs() {
+    for arg in "$@"; do
+        case "$arg" in
+            --minimal|--work|--personal)
+                mode=${arg#--}
+                if [ -n "$INSTALL_MODE" ]; then
+                    echo "Choose exactly one install mode." >&2
+                    usage >&2
+                    return 2
+                fi
+                INSTALL_MODE=$mode
+                ;;
+            -h|--help)
+                usage
+                return 64
+                ;;
+            *)
+                echo "Unknown argument: $arg" >&2
+                usage >&2
+                return 2
+                ;;
+        esac
+    done
+
+    if ! install_mode_is_valid "$INSTALL_MODE"; then
+        echo "An install mode is required." >&2
+        usage >&2
+        return 2
+    fi
+}
 
 function doIt() {
     # Clean up old symlinks first
@@ -259,6 +299,26 @@ print('Merged .claude/settings.json + settings.local.json -> ' + sys.argv[1])
     echo "\n${GREEN}Done${RESET}"
 }
 
-doIt;
+if parseArgs "$@"; then
+    parse_status=0
+else
+    parse_status=$?
+fi
+if [ "$parse_status" -eq 64 ]; then
+    exit 0
+elif [ "$parse_status" -ne 0 ]; then
+    exit "$parse_status"
+fi
 
-unset doIt;
+cd "$DOTFILES"
+setup_script=${DOTFILES_SETUP_SCRIPT:-"$DOTFILES/setup.sh"}
+"$setup_script" "--$INSTALL_MODE"
+
+doIt
+
+mode_tmp="$MODE_FILE.tmp.$$"
+printf '%s\n' "$INSTALL_MODE" > "$mode_tmp"
+mv "$mode_tmp" "$MODE_FILE"
+echo "Recorded install mode: $INSTALL_MODE ($MODE_FILE)"
+
+unset doIt
