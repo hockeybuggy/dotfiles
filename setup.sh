@@ -10,6 +10,11 @@
 
 set -euo pipefail
 
+DOTFILES=${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}
+# shellcheck source=lib/install-mode.sh
+. "$DOTFILES/lib/install-mode.sh"
+INSTALL_MODE=""
+
 # Colours, matching bootstrap.sh's style.
 if [ -t 1 ] && command -v tput >/dev/null 2>&1; then
     GREEN=$(tput setaf 2); YELLOW=$(tput setaf 3); RED=$(tput setaf 1); RESET=$(tput sgr0)
@@ -35,6 +40,74 @@ download() {
 }
 
 # ---------------------------------------------------------------------------
+# Package profiles
+# ---------------------------------------------------------------------------
+
+macos_formulae() {
+    mode=$1
+    cat <<'EOF'
+neovim
+tmux
+zsh
+git
+fzf
+ripgrep
+fd
+bat
+eza
+bottom
+starship
+zoxide
+fnm
+node
+python
+EOF
+    if install_mode_has "$mode" development; then
+        cat <<'EOF'
+uv
+gnupg
+diff-so-fancy
+markdownlint-cli
+EOF
+    fi
+    if install_mode_has "$mode" workstation; then
+        cat <<'EOF'
+reattach-to-user-namespace
+uutils-coreutils
+EOF
+    fi
+    if install_mode_has "$mode" personal; then
+        echo duti
+    fi
+}
+
+linux_apt_packages() {
+    mode=$1
+    cat <<'EOF'
+zsh
+tmux
+git
+curl
+ca-certificates
+python3
+python3-pip
+python3-venv
+ripgrep
+fd-find
+bat
+fzf
+unzip
+tar
+EOF
+    if install_mode_has "$mode" development; then
+        cat <<'EOF'
+gnupg
+build-essential
+EOF
+    fi
+}
+
+# ---------------------------------------------------------------------------
 # macOS (Homebrew)
 # ---------------------------------------------------------------------------
 
@@ -46,24 +119,29 @@ setup_macos() {
         skip "Homebrew already installed"
     fi
 
-    info "Installing formulae with Homebrew"
-    brew install \
-        neovim tmux zsh git fzf ripgrep fd bat eza bottom starship zoxide \
-        uv fnm gnupg diff-so-fancy node markdownlint-cli duti \
-        reattach-to-user-namespace uutils-coreutils
+    info "Installing $INSTALL_MODE formulae with Homebrew"
+    # Intentional word splitting: macos_formulae emits one formula per line.
+    # shellcheck disable=SC2046
+    brew install $(macos_formulae "$INSTALL_MODE")
 
-    info "Installing the Inconsolata Nerd Font"
-    brew install --cask font-inconsolata-nerd-font || warn "Font install failed (continuing)"
-
-    if ! have rustup || ! have cargo; then
-        info "Installing rustup"
-        brew install rustup
-        rustup default stable
-    else
-        skip "rustup/cargo already installed"
+    if install_mode_has "$INSTALL_MODE" workstation; then
+        info "Installing the Inconsolata Nerd Font"
+        brew install --cask font-inconsolata-nerd-font || warn "Font install failed (continuing)"
     fi
 
-    setup_macos_markdown_handler
+    if install_mode_has "$INSTALL_MODE" development; then
+        if ! have rustup || ! have cargo; then
+            info "Installing rustup"
+            brew install rustup
+            rustup default stable
+        else
+            skip "rustup/cargo already installed"
+        fi
+    fi
+
+    if install_mode_has "$INSTALL_MODE" personal; then
+        setup_macos_markdown_handler
+    fi
 }
 
 # ---------------------------------------------------------------------------
@@ -160,11 +238,11 @@ install_release_binary() {
 }
 
 apt_install() {
-    info "Updating apt and installing base packages"
+    info "Updating apt and installing $INSTALL_MODE packages"
     sudo apt-get update -qq
-    sudo apt-get install -y --no-install-recommends \
-        zsh tmux git gnupg curl ca-certificates build-essential \
-        python3 python3-pip python3-venv ripgrep fd-find bat fzf unzip tar
+    # Intentional word splitting: linux_apt_packages emits one package per line.
+    # shellcheck disable=SC2046
+    sudo apt-get install -y --no-install-recommends $(linux_apt_packages "$INSTALL_MODE")
 }
 
 # Debian ships fd as `fdfind` and bat as `batcat`; expose the usual names.
@@ -193,12 +271,14 @@ setup_linux() {
     ra=$(arch_rust)
     na=$(arch_nvim)
 
-    # rustup / cargo
-    if ! have cargo && ! have rustup; then
-        info "Installing rustup"
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
-    else
-        skip "rustup/cargo already installed"
+    if install_mode_has "$INSTALL_MODE" development; then
+        # rustup / cargo
+        if ! have cargo && ! have rustup; then
+            info "Installing rustup"
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+        else
+            skip "rustup/cargo already installed"
+        fi
     fi
 
     # starship
@@ -217,12 +297,14 @@ setup_linux() {
         skip "zoxide already installed"
     fi
 
-    # uv
-    if ! have uv; then
-        info "Installing uv"
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-    else
-        skip "uv already installed"
+    if install_mode_has "$INSTALL_MODE" development; then
+        # uv
+        if ! have uv; then
+            info "Installing uv"
+            curl -LsSf https://astral.sh/uv/install.sh | sh
+        else
+            skip "uv already installed"
+        fi
     fi
 
     # eza and bottom (prebuilt release binaries)
@@ -262,7 +344,7 @@ setup_linux() {
         fi
         fnm use lts-latest >/dev/null 2>&1 || true
         fnm default lts-latest >/dev/null 2>&1 || true
-        if have npm; then
+        if install_mode_has "$INSTALL_MODE" development && have npm; then
             have markdownlint || { info "Installing markdownlint-cli"; npm install -g markdownlint-cli; }
             have diff-so-fancy || { info "Installing diff-so-fancy"; npm install -g diff-so-fancy; }
         fi
@@ -317,21 +399,50 @@ setup_agents() {
     fi
 }
 
+parse_mode() {
+    if [ "$#" -ne 1 ]; then
+        install_mode_usage "./setup.sh" >&2
+        return 2
+    fi
+    case "$1" in
+        --minimal|--work|--personal) INSTALL_MODE=${1#--} ;;
+        -h|--help) install_mode_usage "./setup.sh"; return 64 ;;
+        *) install_mode_usage "./setup.sh" >&2; return 2 ;;
+    esac
+}
+
 main() {
+    if parse_mode "$@"; then
+        parse_status=0
+    else
+        parse_status=$?
+    fi
+    if [ "$parse_status" -eq 64 ]; then
+        return 0
+    elif [ "$parse_status" -ne 0 ]; then
+        return "$parse_status"
+    fi
+
     case "$(uname -s)" in
         Darwin) info "Detected macOS"; setup_macos ;;
         Linux)  info "Detected Linux";  setup_linux ;;
-        *) warn "Unsupported OS: $(uname -s)"; exit 1 ;;
+        *) warn "Unsupported OS: $(uname -s)"; return 1 ;;
     esac
 
-    setup_python_tools
-    setup_agents
+    if install_mode_has "$INSTALL_MODE" development; then
+        setup_python_tools
+    fi
+    if install_mode_has "$INSTALL_MODE" agents; then
+        setup_agents
+    fi
 
     echo
     info "Done. Tools installed."
     echo "${YELLOW}Note:${RESET} some tools install into ~/.local/bin, ~/.cargo/bin and"
     echo "      ~/.local/share/fnm -- the dotfiles' .zshrc adds these to PATH."
-    echo "      Run ${GREEN}./bootstrap.sh${RESET} next to symlink the config files."
+    echo "      Run ${GREEN}./doctor.sh${RESET} to check this $INSTALL_MODE setup."
 }
 
-main "$@"
+if [ "${DOTFILES_SETUP_SOURCE_ONLY:-0}" -ne 1 ]; then
+    main "$@"
+fi
