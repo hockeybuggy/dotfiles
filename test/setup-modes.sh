@@ -19,6 +19,9 @@ work_macos=$(macos_formulae work)
 personal_macos=$(macos_formulae personal)
 minimal_linux=$(linux_apt_packages minimal)
 work_linux=$(linux_apt_packages work)
+minimal_agents=$(agent_commands minimal)
+work_agents=$(agent_commands work)
+personal_agents=$(agent_commands personal)
 
 printf '%s\n' "$minimal_macos" | grep -qw neovim || fail "minimal macOS omits neovim"
 printf '%s\n' "$minimal_macos" | grep -qw fnm || fail "minimal macOS omits fnm"
@@ -35,6 +38,15 @@ printf '%s\n' "$minimal_linux" | grep -qw python3 || fail "minimal Linux omits b
 ! printf '%s\n' "$minimal_linux" | grep -qw build-essential || fail "minimal Linux includes build tools"
 printf '%s\n' "$work_linux" | grep -qw build-essential || fail "work Linux omits build tools"
 printf '%s\n' "$work_linux" | grep -qw gnupg || fail "work Linux omits GnuPG"
+printf '%s\n' "$minimal_agents" | grep -qw pi || fail "minimal omits Pi"
+printf '%s\n' "$minimal_agents" | grep -qw agy || fail "minimal omits agy"
+! printf '%s\n' "$minimal_agents" | grep -qw claude || fail "minimal includes Claude Code"
+printf '%s\n' "$work_agents" | grep -qw claude || fail "work omits Claude Code"
+! printf '%s\n' "$work_agents" | grep -qw pi || fail "work includes Pi"
+! printf '%s\n' "$work_agents" | grep -qw agy || fail "work includes agy"
+printf '%s\n' "$personal_agents" | grep -qw claude || fail "personal omits Claude Code"
+printf '%s\n' "$personal_agents" | grep -qw pi || fail "personal omits Pi"
+printf '%s\n' "$personal_agents" | grep -qw agy || fail "personal omits agy"
 
 set +e
 output=$("$ROOT/setup.sh" 2>&1)

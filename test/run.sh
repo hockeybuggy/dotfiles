@@ -72,8 +72,8 @@ eval "$(fnm env --shell bash)"
 fnm use lts-latest >/dev/null'
 
 case "$mode" in
-    work|personal) agent_test='./test/pi-clear-alias.sh' ;;
-    minimal) agent_test=':' ;;
+    minimal|personal) agent_test='./test/pi-clear-alias.sh' ;;
+    work) agent_test=':' ;;
 esac
 
 if [ "$INTERACTIVE" -eq 1 ]; then

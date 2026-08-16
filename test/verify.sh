@@ -74,6 +74,12 @@ checks_for_mode() {
                 "diff-so-fancy|command -v diff-so-fancy"
                 "markdownlint|markdownlint --version"
                 "Claude Code|claude --version"
+            )
+            ;;
+    esac
+    case "$1" in
+        minimal|personal)
+            checks+=(
                 "Pi|pi --version"
                 "Antigravity CLI (agy)|agy --version"
             )

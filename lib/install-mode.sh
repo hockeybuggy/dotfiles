@@ -15,9 +15,15 @@ install_mode_has() {
         core)
             install_mode_is_valid "$mode"
             ;;
-        development|agents|workstation)
+        development|claude|workstation)
             case "$mode" in
                 work|personal) return 0 ;;
+                *) return 1 ;;
+            esac
+            ;;
+        pi|agy)
+            case "$mode" in
+                minimal|personal) return 0 ;;
                 *) return 1 ;;
             esac
             ;;

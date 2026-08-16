@@ -52,7 +52,8 @@ EOF
 chmod +x "$fake_bin/tool"
 
 core_commands="nvim tmux zsh git fzf rg fd bat eza btm starship zoxide fnm node npm python3 pip"
-development_commands="uv gpg diff-so-fancy markdownlint cargo rustc ruff ty pgcli claude pi agy"
+development_commands="uv gpg diff-so-fancy markdownlint cargo rustc ruff ty pgcli claude"
+minimal_agent_commands="pi agy"
 for command_name in $core_commands; do
     ln -s tool "$fake_bin/$command_name"
 done
@@ -105,12 +106,21 @@ set +e
 output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
 status=$?
 set -e
+[ "$status" -eq 1 ] || fail "minimal mode accepted a setup without Pi and agy"
+printf '%s\n' "$output" | grep -Eq '✗[[:space:]]+Pi' || fail "minimal mode did not require Pi"
+
+for command_name in $minimal_agent_commands; do
+    ln -s tool "$fake_bin/$command_name"
+done
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+status=$?
 [ "$status" -eq 0 ] || fail "expected a healthy minimal setup to exit 0, got $status: $output"
 printf '%s\n' "$output" | grep -q "Mode.*minimal" || fail "minimal mode is not displayed"
 if printf '%s\n' "$output" | grep -Eq '✗[[:space:]]+(uv|Claude Code|cargo)'; then
     fail "minimal mode requires a development-only tool"
 fi
 
+rm "$fake_bin/pi" "$fake_bin/agy"
 printf 'work\n' > "$healthy_home/.dotfiles_mode"
 set +e
 output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
@@ -125,11 +135,28 @@ done
 
 output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
 status=$?
-[ "$status" -eq 0 ] || fail "expected a healthy work setup to exit 0, got $status: $output"
+[ "$status" -eq 0 ] || fail "expected a healthy work setup without Pi and agy, got $status: $output"
 printf '%s\n' "$output" | grep -q "0 FAIL" || fail "healthy summary contains failures"
 printf '%s\n' "$output" | grep -Eq '^[[:space:]]+✓[[:space:]]+pgcli[[:space:]]' || fail "missing pgcli check"
 printf '%s\n' "$output" | grep -q "Pi skills linked" || fail "missing Pi skills check"
 printf '%s\n' "$output" | grep -q "Pi extensions linked" || fail "missing Pi extensions check"
+if printf '%s\n' "$output" | grep -q "luarocks"; then
+    fail "work mode checks personal Lua tools"
+fi
+
+printf 'personal\n' > "$healthy_home/.dotfiles_mode"
+set +e
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+status=$?
+set -e
+[ "$status" -eq 1 ] || fail "personal mode accepted a setup without Pi and agy"
+for command_name in $minimal_agent_commands; do
+    ln -s tool "$fake_bin/$command_name"
+done
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+status=$?
+[ "$status" -eq 0 ] || fail "expected a healthy personal setup to exit 0, got $status: $output"
+printf '%s\n' "$output" | grep -q "luarocks" || fail "personal mode omits Lua tool checks"
 
 printf 'invalid\n' > "$healthy_home/.dotfiles_mode"
 set +e

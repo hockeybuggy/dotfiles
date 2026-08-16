@@ -24,7 +24,8 @@ all steps succeed.
 | --- | --- | --- | --- |
 | Core terminal tools and Node | Required | Required | Required |
 | Development toolchains and linters | — | Required | Required |
-| Coding agents | — | Required | Required |
+| Claude Code | — | Required | Required |
+| Pi and Antigravity CLI (`agy`) | Required | — | Required |
 | macOS workstation support | — | Required | Required |
 | Personal macOS Markdown integration | — | — | Required |
 

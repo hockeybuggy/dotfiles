@@ -21,6 +21,6 @@ grep -q './bootstrap.sh --personal' "$workflow" || fail "macOS job does not boot
 grep -q './bootstrap.sh --"$MODE"' "$ROOT/test/run.sh" || fail "container provisioner does not forward mode to bootstrap"
 grep -q './test/verify.sh --mode \\"$mode\\"' "$ROOT/test/run.sh" || fail "container provisioner does not forward mode to verification"
 grep -q 'checks_for_mode' "$ROOT/test/verify.sh" || fail "verification has no mode-specific checks"
-grep -Fq 'work|personal)' "$ROOT/test/run.sh" || fail "container tests do not gate agent checks by mode"
+grep -Fq 'minimal|personal)' "$ROOT/test/run.sh" || fail "container tests do not gate Pi checks by mode"
 
 echo "mode CI tests passed"

@@ -278,12 +278,20 @@ else
 fi
 
 section "Coding agents"
-if install_mode_has "$INSTALL_MODE" agents; then
+if install_mode_has "$INSTALL_MODE" claude; then
     check_tool "Claude Code" claude
+else
+    note "Claude Code" "not required for $INSTALL_MODE mode"
+fi
+if install_mode_has "$INSTALL_MODE" pi; then
     check_tool "Pi" pi
+else
+    note "Pi" "not required for $INSTALL_MODE mode"
+fi
+if install_mode_has "$INSTALL_MODE" agy; then
     check_tool "Antigravity CLI (agy)" agy
 else
-    note "Coding-agent executables" "not required for $INSTALL_MODE mode"
+    note "Antigravity CLI (agy)" "not required for $INSTALL_MODE mode"
 fi
 # Skills link per-agent: agents/skills goes to all three agents,
 # agents/skills-claude to Claude Code only, agents/skills-pi to Pi only.
@@ -439,8 +447,10 @@ fi
 
 section "Optional dependencies"
 if install_mode_has "$INSTALL_MODE" development; then
-    check_optional_tool "luarocks" luarocks
-    check_optional_tool "stylua" stylua
+    if install_mode_has "$INSTALL_MODE" personal; then
+        check_optional_tool "luarocks" luarocks
+        check_optional_tool "stylua" stylua
+    fi
     check_optional_tool "rbenv" rbenv
     check_optional_tool "rubocop" rubocop
     check_optional_tool "solargraph" solargraph

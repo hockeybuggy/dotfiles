@@ -369,33 +369,49 @@ setup_python_tools() {
 # Coding agents (Claude Code, Pi, Antigravity CLI)
 # ---------------------------------------------------------------------------
 
+agent_commands() {
+    mode=$1
+    install_mode_has "$mode" claude && echo claude
+    install_mode_has "$mode" pi && echo pi
+    install_mode_has "$mode" agy && echo agy
+    return 0
+}
+
 setup_agents() {
-    # Claude Code: official native installer, drops `claude` into ~/.local/bin.
-    if have claude; then
-        skip "Claude Code already installed"
-    else
-        info "Installing Claude Code"
-        curl -fsSL https://claude.ai/install.sh | bash || warn "Claude Code install failed (continuing)"
+    mode=$1
+
+    if install_mode_has "$mode" claude; then
+        # Claude Code: official native installer, drops `claude` into ~/.local/bin.
+        if have claude; then
+            skip "Claude Code already installed"
+        else
+            info "Installing Claude Code"
+            curl -fsSL https://claude.ai/install.sh | bash || warn "Claude Code install failed (continuing)"
+        fi
     fi
 
-    # Pi coding agent: npm-distributed, exposes the `pi` command. Needs node/npm,
-    # which the macOS and Linux paths above install.
-    if have pi; then
-        skip "Pi coding agent already installed"
-    elif have npm; then
-        info "Installing the Pi coding agent"
-        npm install -g --ignore-scripts @earendil-works/pi-coding-agent || warn "Pi install failed (continuing)"
-    else
-        warn "npm unavailable; cannot install the Pi coding agent"
+    if install_mode_has "$mode" pi; then
+        # Pi coding agent: npm-distributed, exposes the `pi` command. Needs node/npm,
+        # which the macOS and Linux paths above install.
+        if have pi; then
+            skip "Pi coding agent already installed"
+        elif have npm; then
+            info "Installing the Pi coding agent"
+            npm install -g --ignore-scripts @earendil-works/pi-coding-agent || warn "Pi install failed (continuing)"
+        else
+            warn "npm unavailable; cannot install the Pi coding agent"
+        fi
     fi
 
-    # Antigravity CLI (agy): Google's native installer, drops `agy` into
-    # ~/.local/bin (its default target, already on PATH via .zshrc).
-    if have agy; then
-        skip "Antigravity CLI (agy) already installed"
-    else
-        info "Installing the Antigravity CLI (agy)"
-        curl -fsSL https://antigravity.google/cli/install.sh | bash || warn "Antigravity CLI install failed (continuing)"
+    if install_mode_has "$mode" agy; then
+        # Antigravity CLI (agy): Google's native installer, drops `agy` into
+        # ~/.local/bin (its default target, already on PATH via .zshrc).
+        if have agy; then
+            skip "Antigravity CLI (agy) already installed"
+        else
+            info "Installing the Antigravity CLI (agy)"
+            curl -fsSL https://antigravity.google/cli/install.sh | bash || warn "Antigravity CLI install failed (continuing)"
+        fi
     fi
 }
 
@@ -432,9 +448,7 @@ main() {
     if install_mode_has "$INSTALL_MODE" development; then
         setup_python_tools
     fi
-    if install_mode_has "$INSTALL_MODE" agents; then
-        setup_agents
-    fi
+    setup_agents "$INSTALL_MODE"
 
     echo
     info "Done. Tools installed."
