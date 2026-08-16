@@ -15,6 +15,20 @@ else
     GREEN=""; RED=""; BOLD=""; RESET=""
 fi
 
+if [ "$#" -ne 2 ] || [ "$1" != "--mode" ]; then
+    echo "Usage: $0 --mode minimal|work|personal" >&2
+    exit 2
+fi
+mode=$2
+case "$mode" in
+    minimal|work|personal) ;;
+    *) echo "Unknown mode: $mode" >&2; exit 2 ;;
+esac
+if [ ! -f "$HOME/.dotfiles_mode" ] || [ "$(cat "$HOME/.dotfiles_mode")" != "$mode" ]; then
+    echo "Expected $mode install mode" >&2
+    exit 1
+fi
+
 # Make every installed tool resolvable regardless of the .zshrc fnm path quirk.
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/share/fnm:$PATH"
 # shellcheck source=/dev/null
@@ -27,36 +41,46 @@ fi
 # "label|command" -- the command must exit 0. Most print a version; diff-so-fancy
 # is a stdin filter with no version flag (it would block on the pane's tty), so we
 # just confirm it resolves on PATH.
-checks=(
-    "eza|eza --version"
-    "bat|bat --version"
-    "ripgrep (rg)|rg --version"
-    "fd|fd --version"
-    "fzf|fzf --version"
-    "bottom (btm)|btm --version"
-    "starship|starship --version"
-    "zoxide|zoxide --version"
-    "neovim|nvim --version"
-    "tmux|tmux -V"
-    "zsh|zsh --version"
-    "git|git --version"
-    "cargo|cargo --version"
-    "rustc|rustc --version"
-    "uv|uv --version"
-    "Python 3.14|uv python find --managed-python 3.14 --show-version | grep -Eq '^3\\.14\\.'"
-    "python3|python3 --version"
-    "ruff|ruff --version"
-    "ty|ty --version"
-    "pgcli|pgcli --version"
-    "pip|pip3 --version"
-    "node|node --version"
-    "npm|npm --version"
-    "diff-so-fancy|command -v diff-so-fancy"
-    "markdownlint|markdownlint --version"
-    "Claude Code|claude --version"
-    "Pi|pi --version"
-    "Antigravity CLI (agy)|agy --version"
-)
+checks_for_mode() {
+    checks=(
+        "eza|eza --version"
+        "bat|bat --version"
+        "ripgrep (rg)|rg --version"
+        "fd|fd --version"
+        "fzf|fzf --version"
+        "bottom (btm)|btm --version"
+        "starship|starship --version"
+        "zoxide|zoxide --version"
+        "neovim|nvim --version"
+        "tmux|tmux -V"
+        "zsh|zsh --version"
+        "git|git --version"
+        "python3|python3 --version"
+        "pip|pip3 --version"
+        "node|node --version"
+        "npm|npm --version"
+    )
+
+    case "$1" in
+        work|personal)
+            checks+=(
+                "cargo|cargo --version"
+                "rustc|rustc --version"
+                "uv|uv --version"
+                "Python 3.14|uv python find --managed-python 3.14 --show-version | grep -Eq '^3\\.14\\.'"
+                "ruff|ruff --version"
+                "ty|ty --version"
+                "pgcli|pgcli --version"
+                "diff-so-fancy|command -v diff-so-fancy"
+                "markdownlint|markdownlint --version"
+                "Claude Code|claude --version"
+                "Pi|pi --version"
+                "Antigravity CLI (agy)|agy --version"
+            )
+            ;;
+    esac
+}
+checks_for_mode "$mode"
 
 SOCK="verify"
 tmux -L "$SOCK" kill-server 2>/dev/null || true

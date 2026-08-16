@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 set -euo pipefail
 IFS=$'\n\t'
@@ -7,7 +7,7 @@ IFS=$'\n\t'
 # guards each entry with a [ -f ]/[ -d ]/[ -L ] test, which is only reachable if
 # an empty directory yields zero iterations instead of a "no matches found"
 # error — an empty agents/skills-pi is a normal state, not a failure.
-setopt null_glob
+shopt -s nullglob
 
 DOTFILES=$(cd "$(dirname "$0")" && pwd)
 LINKED_FILES="$HOME/.dotfiles_linked_files"

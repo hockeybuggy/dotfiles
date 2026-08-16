@@ -16,10 +16,12 @@ fail() {
 [ -f "$EXTENSION" ] || fail "missing /clear extension: $EXTENSION"
 
 home="$TMPDIR_ROOT/home"
+true_bin=$(command -v true)
 mkdir -p "$home"
 (
     cd "$ROOT"
-    HOME="$home" TERM=xterm ./bootstrap.sh >/dev/null
+    HOME="$home" TERM=xterm DOTFILES_SETUP_SCRIPT="$true_bin" \
+        ./bootstrap.sh --minimal >/dev/null
 )
 
 link="$home/.pi/agent/extensions/clear.ts"
