@@ -5,6 +5,11 @@
 set -uo pipefail
 
 DOTFILES=$(cd "$(dirname "$0")" && pwd)
+# shellcheck source=lib/install-mode.sh
+. "$DOTFILES/lib/install-mode.sh"
+MODE_FILE="$HOME/.dotfiles_mode"
+INSTALL_MODE=""
+BOOTSTRAP_HINT="run ./bootstrap.sh --minimal, --work, or --personal"
 STRICT=0
 CI=0
 OK_COUNT=0
@@ -60,6 +65,17 @@ for arg in "$@"; do
     esac
 done
 
+section "Install mode"
+if [ ! -f "$MODE_FILE" ]; then
+    fail "Install mode" "missing; $BOOTSTRAP_HINT"
+elif IFS= read -r INSTALL_MODE < "$MODE_FILE" && install_mode_is_valid "$INSTALL_MODE"; then
+    pass "Mode" "$INSTALL_MODE ($MODE_FILE)"
+    BOOTSTRAP_HINT="run ./bootstrap.sh --$INSTALL_MODE"
+else
+    fail "Install mode" "invalid in $MODE_FILE; run ./bootstrap.sh with exactly one mode"
+    INSTALL_MODE=""
+fi
+
 # Compare dotted numeric versions, ignoring non-numeric suffixes.
 version_ge() {
     awk -v actual="$1" -v required="$2" 'BEGIN {
@@ -79,7 +95,7 @@ check_tool() {
     if have "$command_name"; then
         pass "$label" "$(command -v "$command_name")"
     else
-        fail "$label" "missing; run ./setup.sh"
+        fail "$label" "missing; $BOOTSTRAP_HINT"
     fi
 }
 
@@ -99,7 +115,7 @@ check_min_version() {
     actual="$3"
     required="$4"
     if ! have "$command_name"; then
-        fail "$label" "missing; run ./setup.sh"
+        fail "$label" "missing; $BOOTSTRAP_HINT"
     elif [ -z "$actual" ]; then
         fail "$label" "could not determine version"
     elif version_ge "$actual" "$required"; then
@@ -180,39 +196,43 @@ check_tool "eza" eza
 check_tool "bottom (btm)" btm
 check_tool "starship" starship
 check_tool "zoxide" zoxide
-check_tool "uv" uv
 check_tool "fnm" fnm
-check_tool "gnupg (gpg)" gpg
-check_tool "diff-so-fancy" diff-so-fancy
 check_tool "node" node
 check_tool "npm" npm
-check_tool "markdownlint" markdownlint
-check_tool "cargo" cargo
-check_tool "rustc" rustc
 check_tool "python3" python3
-check_tool "ruff" ruff
-check_tool "ty" ty
-check_tool "pgcli" pgcli
 if have pip; then
     pass "pip" "$(command -v pip)"
 elif have pip3; then
     pass "pip" "$(command -v pip3)"
 else
-    fail "pip" "missing; run ./setup.sh"
+    fail "pip" "missing; $BOOTSTRAP_HINT"
 fi
-if have uv && uv python find --managed-python 3.14 --show-version 2>/dev/null | grep -Eq '^3\.14\.'; then
-    pass "uv-managed Python 3.14" "installed"
-else
-    fail "uv-managed Python 3.14" "missing; run uv python install 3.14"
+
+if install_mode_has "$INSTALL_MODE" development; then
+    check_tool "uv" uv
+    check_tool "gnupg (gpg)" gpg
+    check_tool "diff-so-fancy" diff-so-fancy
+    check_tool "markdownlint" markdownlint
+    check_tool "cargo" cargo
+    check_tool "rustc" rustc
+    check_tool "ruff" ruff
+    check_tool "ty" ty
+    check_tool "pgcli" pgcli
+    if have uv && uv python find --managed-python 3.14 --show-version 2>/dev/null | grep -Eq '^3\.14\.'; then
+        pass "uv-managed Python 3.14" "installed"
+    else
+        fail "uv-managed Python 3.14" "missing; $BOOTSTRAP_HINT"
+    fi
+    check_python_on_path "python3 (PATH)" python3
+    check_python_on_path "python (PATH)" python
 fi
-check_python_on_path "python3 (PATH)" python3
-check_python_on_path "python (PATH)" python
-if [ "$(uname -s)" = "Darwin" ]; then
+
+if [ "$(uname -s)" = "Darwin" ] && install_mode_has "$INSTALL_MODE" workstation; then
     check_tool "reattach-to-user-namespace" reattach-to-user-namespace
     if have brew && brew list --versions uutils-coreutils 2>/dev/null | grep -q .; then
         pass "uutils-coreutils" "installed by Homebrew"
     else
-        fail "uutils-coreutils" "missing; run brew install uutils-coreutils"
+        fail "uutils-coreutils" "missing; $BOOTSTRAP_HINT"
     fi
 fi
 
@@ -258,9 +278,13 @@ else
 fi
 
 section "Coding agents"
-check_tool "Claude Code" claude
-check_tool "Pi" pi
-check_tool "Antigravity CLI (agy)" agy
+if install_mode_has "$INSTALL_MODE" agents; then
+    check_tool "Claude Code" claude
+    check_tool "Pi" pi
+    check_tool "Antigravity CLI (agy)" agy
+else
+    note "Coding-agent executables" "not required for $INSTALL_MODE mode"
+fi
 # Skills link per-agent: agents/skills goes to all three agents,
 # agents/skills-claude to Claude Code only, agents/skills-pi to Pi only.
 # Count each agent only against the directories that target it.
@@ -414,27 +438,41 @@ else
 fi
 
 section "Optional dependencies"
-check_optional_tool "luarocks" luarocks
-check_optional_tool "stylua" stylua
-check_optional_tool "rbenv" rbenv
-check_optional_tool "rubocop" rubocop
-check_optional_tool "solargraph" solargraph
-check_optional_tool "prettier" prettier
+if install_mode_has "$INSTALL_MODE" development; then
+    check_optional_tool "luarocks" luarocks
+    check_optional_tool "stylua" stylua
+    check_optional_tool "rbenv" rbenv
+    check_optional_tool "rubocop" rubocop
+    check_optional_tool "solargraph" solargraph
+    check_optional_tool "prettier" prettier
+else
+    note "Development extras" "not checked in minimal mode"
+fi
 if [ "$CI" -eq 1 ]; then
     note "Machine-only checks" "skipped with --ci"
 else
-    if [ "$(uname -s)" = "Darwin" ]; then
+    if [ "$(uname -s)" = "Darwin" ] && install_mode_has "$INSTALL_MODE" workstation; then
         if find "$HOME/Library/Fonts" /Library/Fonts -iname '*Inconsolata*Nerd*' -print 2>/dev/null | grep -q .; then
             pass "Inconsolata Nerd Font" "installed"
         else
             warn "Inconsolata Nerd Font" "run brew install --cask font-inconsolata-nerd-font"
         fi
+    elif [ "$(uname -s)" != "Darwin" ] && install_mode_has "$INSTALL_MODE" workstation; then
+        if have fc-list && fc-list 2>/dev/null | grep -qi 'Inconsolata.*Nerd'; then
+            pass "Inconsolata Nerd Font" "installed"
+        else
+            warn "Inconsolata Nerd Font" "install the Inconsolata Nerd Font"
+        fi
+    fi
+    if [ "$(uname -s)" = "Darwin" ] && install_mode_has "$INSTALL_MODE" personal; then
+        check_optional_tool "duti" duti
+        if [ -d "$HOME/Applications/Open in Neovim.app" ]; then
+            pass "Open in Neovim handler" "installed"
+        else
+            warn "Open in Neovim handler" "run ./bootstrap.sh --personal"
+        fi
         if [ -d "/Applications/iTerm.app" ]; then pass "iTerm2" "installed"; else warn "iTerm2" "optional terminal is not installed"; fi
         if [ -d "/Applications/Ghostty.app" ]; then pass "Ghostty" "installed"; else warn "Ghostty" "optional terminal is not installed"; fi
-    elif have fc-list; then
-        if fc-list 2>/dev/null | grep -qi 'Inconsolata.*Nerd'; then pass "Inconsolata Nerd Font" "installed"; else warn "Inconsolata Nerd Font" "install the Inconsolata Nerd Font"; fi
-    else
-        warn "Inconsolata Nerd Font" "cannot check without fc-list"
     fi
 fi
 
