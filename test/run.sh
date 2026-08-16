@@ -14,6 +14,7 @@ set -euo pipefail
 
 REPO_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 "$REPO_ROOT/test/setup-script-name.sh"
+"$REPO_ROOT/test/install-mode.sh"
 "$REPO_ROOT/test/setup-pgcli.sh"
 "$REPO_ROOT/test/pi-pane-pretty.sh"
 "$REPO_ROOT/test/agy-pane-pretty.sh"
