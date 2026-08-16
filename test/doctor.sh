@@ -139,8 +139,10 @@ set -e
 [ "$status" -eq 1 ] || fail "invalid mode exited $status instead of 1"
 printf '%s\n' "$output" | grep -qi "invalid" || fail "invalid mode lacks diagnostic"
 
-grep -q './doctor.sh --ci' "$ROOT/test/run.sh" || fail "Debian verification does not run doctor"
-grep -q './doctor.sh --ci' "$ROOT/.github/workflows/test-setup.yml" || fail "macOS verification does not run doctor"
+grep -q 'doctor.sh' "$ROOT/test/run.sh" || fail "Debian verification does not run doctor"
+grep -q 'matrix:' "$ROOT/.github/workflows/test-setup.yml" || fail "Linux workflow has no mode matrix"
+grep -Fq 'mode: [minimal, work, personal]' "$ROOT/.github/workflows/test-setup.yml" || fail "Linux workflow omits an install mode"
+grep -q './bootstrap.sh --personal' "$ROOT/.github/workflows/test-setup.yml" || fail "macOS verification does not bootstrap personal mode"
 if grep -q 'fnm use lts-latest' "$ROOT/.github/workflows/test-setup.yml"; then
     fail "macOS verification activates an fnm version that setup.sh does not install"
 fi
