@@ -3,17 +3,15 @@ name: commit
 description: "Read this skill before making git commits"
 ---
 
-Create a git commit for the current changes. Match the repo's existing
-commit style — don't impose a format the repo doesn't already use.
+Create a git commit for the current changes. Use the user's commit
+style guide by default, and respect explicit repository-specific commit
+guidance where present.
 
 ## Determining the format
 
-Run `git log -n 30 --pretty=format:%s` and look at recent subjects:
-
-- If most subjects use Conventional Commits (`feat:`, `fix(scope):`,
-  etc.), follow that convention.
-- Otherwise, write a plain imperative subject (e.g., `Fix the quoting
-  of the clip command`). Capitalize the first word, no trailing period.
+Run `git log -n 30 --pretty=format:%s` and look at recent subjects to
+identify repository-specific conventions. Do not replace the user's
+style guide with an inferred style based only on commit history.
 
 Project `CLAUDE.md` or user instructions take precedence over what you
 infer from history. If they specify a style, follow it.
@@ -72,10 +70,8 @@ When you do write a body:
 5. If there are ambiguous extra files, ask the user for clarification
    before committing.
 6. Stage only the intended files (all changes if no files specified).
-7. Show the user the proposed commit message (subject and body) and
-   wait for approval before creating the commit. Apply any requested
-   edits and re-confirm. Use `AskUserQuestion` for a structured
-   approve/edit prompt when available, otherwise plain text. If the
-   user explicitly opts out of review for the current task (e.g.
-   "just commit", "no need to review"), skip the prompt.
+7. Choose a suitable commit message using the repository's style guide
+   and create the commit without waiting for approval. Ask for review
+   only when the scope or message is genuinely ambiguous, or when the
+   user explicitly requests it.
 8. Run `git commit -m "<subject>"` (and `-m "<body>"` if needed).

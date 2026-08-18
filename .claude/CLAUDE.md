@@ -6,9 +6,14 @@ markdown directly.
 
 ## Git Conventions
 
-Write commits like my existing style. Imperative mood, capitalize
-the first word, keep the subject under 50 characters. No trailing
-period. No conventional commits prefixes.
+Use this as my default commit style. Check for repository-specific
+commit guidance and respect it where present. Choose a suitable commit
+message without asking for approval by default. Ask only when the scope
+or message is genuinely ambiguous, or when the user explicitly asks to
+review it first.
+
+Imperative mood, capitalize the first word, keep the subject under 50
+characters. No trailing period. No conventional commits prefixes.
 
 Good verbs: Fix, Add, Change, Improve, Remove
 
