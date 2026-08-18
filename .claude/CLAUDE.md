@@ -7,6 +7,10 @@ markdown directly.
 ## Local Files
 - Do not create Claude artifacts unless explicitly requested. Write documents, reports, plans, and other deliverables to a local file instead, then provide its path.
 
+## Links
+- Prefer providing direct links to referenced resources when available, including files, documentation, commits, issues, pull requests, and web pages.
+- For local resources, provide an openable file path or link. Keep links alongside a brief description so the user does not need to search for the referenced resource.
+
 ## Git Conventions
 
 Use this as my default commit style. Check for repository-specific
