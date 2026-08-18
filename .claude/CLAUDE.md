@@ -52,6 +52,9 @@ Don't reply to PR review comments. When asked to address feedback,
 make the code changes and push them — let the diff speak. I'll write
 the replies myself.
 
+## Verification & Testing
+- Do NOT run the full test suite or docker test stack before committing unless explicitly asked. Run the targeted tests for files you changed, then commit/push. If you believe a broader run is needed, ask first.
+
 ## Shell commands
 
 Always use `python3`, never the bare `python` command — it isn't
