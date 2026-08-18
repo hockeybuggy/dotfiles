@@ -4,6 +4,9 @@ When providing research, plans, comparisons, or tables, output as
 raw markdown inside a code fence so it's copyable. Do not render
 markdown directly.
 
+## Local Files
+- Do not create Claude artifacts unless explicitly requested. Write documents, reports, plans, and other deliverables to a local file instead, then provide its path.
+
 ## Git Conventions
 
 Use this as my default commit style. Check for repository-specific
