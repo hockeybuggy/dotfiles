@@ -44,7 +44,26 @@ Write the **minimal** code that makes the test pass. No extras. No "while I'm he
 
 ## REFACTOR Phase
 
-Clean up duplication, naming, structure — without adding behavior. Run tests after each change. If anything goes red, revert immediately.
+Clean up duplication, naming, structure — without adding behavior. Re-run the scoped tests after each change. If anything goes red, revert immediately.
+
+## Scope of Test Runs
+
+Every run in the cycle is the **narrowest** one that answers the question — usually the single test, at most its file:
+
+```
+pytest path/to/test_file.py::test_name    # RED and GREEN
+pytest path/to/test_file.py               # REFACTOR, if the file is small
+```
+
+If the project has a test wrapper (`./scripts/test.sh`, `make test`, `bin/rspec`), use it with the same path/test argument rather than running it bare.
+
+Run the **full suite** only when there's a reason to:
+- Right before opening a PR or handing the branch back
+- After a change with wide blast radius (migrations, shared interfaces, config)
+- When a scoped run fails in a way that suggests unrelated breakage
+- When the plan or the user explicitly asks for it
+
+Full runs are slow — often a Docker stack — and re-running one after every task burns time without finding anything a scoped run missed. Don't run it "just to be safe" between tasks. This applies just as much when running headless with nobody to confirm with.
 
 ## Rules
 
@@ -57,5 +76,5 @@ Clean up duplication, naming, structure — without adding behavior. Run tests a
 
 - [ ] Test was written and confirmed failing before implementation
 - [ ] Implementation is minimal (nothing beyond what the test requires)  
-- [ ] All tests passing
+- [ ] Scoped tests for the changed code are passing
 - [ ] Code committed
