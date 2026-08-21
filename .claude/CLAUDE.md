@@ -47,8 +47,10 @@ nothing.
 
 ## Pull request bodies
 
-Shorthand references like `#123` and bare SHAs are fine here — GitHub
-autolinks them when it renders the description.
+Either form of GitHub reference is allowed here: full URLs or shorthand
+like `#123` and bare SHAs. GitHub autolinks the shorthand when it
+renders the description, so both end up clickable. Reusing a commit
+body that already carries full URLs is fine — don't rewrite them.
 
 For single-commit PRs, reuse the commit message: the commit subject
 becomes the PR title and the commit body becomes the PR body. Don't
