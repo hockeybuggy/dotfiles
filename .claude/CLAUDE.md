@@ -10,6 +10,7 @@ markdown directly.
 ## Links
 - Prefer providing direct links to referenced resources when available, including files, documentation, commits, issues, pull requests, and web pages.
 - For local resources, provide an openable file path or link. Keep links alongside a brief description so the user does not need to search for the referenced resource.
+- Never refer to a GitHub PR, issue, commit, or repo by shorthand alone (`repo#123`, `#123`, a bare SHA). Always give the full `https://github.com/...` URL, optionally with the shorthand as the link text: `[repo#123](https://github.com/owner/repo/pull/123)`.
 
 ## Git Conventions
 
