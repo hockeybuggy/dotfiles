@@ -10,7 +10,7 @@ markdown directly.
 ## Links
 - Prefer providing direct links to referenced resources when available, including files, documentation, commits, issues, pull requests, and web pages.
 - For local resources, provide an openable file path or link. Keep links alongside a brief description so the user does not need to search for the referenced resource.
-- Never refer to a GitHub PR, issue, commit, or repo by shorthand alone (`repo#123`, `#123`, a bare SHA). Always give the full `https://github.com/...` URL, optionally with the shorthand as the link text: `[repo#123](https://github.com/owner/repo/pull/123)`.
+- Never refer to a GitHub PR, issue, commit, or repo by shorthand alone (`repo#123`, `#123`, a bare SHA). Always give the full `https://github.com/...` URL, optionally with the shorthand as the link text: `[repo#123](https://github.com/owner/repo/pull/123)`. The exception is text that GitHub itself renders — see "Pull request bodies".
 
 ## Git Conventions
 
@@ -41,7 +41,14 @@ body when the subject says it all.
 Keep commit messages high-level and summary-focused, not exhaustive
 detail dumps. The body explains intent, not a changelog of every edit.
 
+Reference GitHub PRs and issues by full URL in commit messages. Most
+commit messages get read in a terminal, where `#123` autolinks to
+nothing.
+
 ## Pull request bodies
+
+Shorthand references like `#123` and bare SHAs are fine here — GitHub
+autolinks them when it renders the description.
 
 For single-commit PRs, reuse the commit message: the commit subject
 becomes the PR title and the commit body becomes the PR body. Don't
