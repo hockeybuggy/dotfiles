@@ -101,7 +101,8 @@ through the hook table in `.claude/settings.json`; Pi has no such table, so
 skills use to add the issue an agent is working on to its window title (for
 example `⚡ dotfiles #57`). The identifier is stored as a window option so the
 status hooks keep it across renames, and it is only shown while the agent has
-the window to itself.
+the window to itself. Windows the user has named by hand are left alone — the
+script only retitles a window whose current name it set itself.
 
 agy has its own lifecycle-hooks system (`hooks.json`), but only a couple of
 its events map cleanly onto "agent is working" / "agent is done" —

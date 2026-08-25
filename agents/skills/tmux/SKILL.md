@@ -118,6 +118,11 @@ identifier is stored as a window option, so the status hooks keep it in the
 title until it is cleared. Under pi the script is at
 `~/.pi/agent/scripts/tmux-title.sh`.
 
+A window the user has named themselves is left alone: the script backs off
+when the window carries a name it did not set, so a manual `rename-window`
+(before or during the session) is never overwritten. Renaming a window back to
+the agent's control means turning `automatic-rename` on again.
+
 ## Agent-only background work
 
 Use the dedicated `agent` socket only when the work is explicitly agent-only:

@@ -7,6 +7,9 @@
 # useful. These hooks override that with a status emoji plus the project name,
 # and restore automatic-rename when the session ends.
 #
+# A window the user has named themselves is left alone entirely — see the
+# ownership check below.
+#
 # An agent working on a specific issue or ticket can add its identifier with
 # `--task`; it is stored as a window option so the status hooks keep it in the
 # title on every subsequent rename. The task is only ever shown when the agent
@@ -32,9 +35,24 @@ else
 fi
 [ -z "$window" ] && exit 0
 
+# Never touch a window the user has named themselves. tmux turns
+# automatic-rename off for a window as soon as anything renames it, so "auto
+# is off and the current name is not the one we last set" means the name came
+# from the user (or from a window that was already named before the agent
+# started here), and it is not ours to overwrite. `#{automatic-rename}`
+# formats as 1/0, not on/off.
+info=$(tmux display-message -t "$window" -p '#{automatic-rename}|#W' 2>/dev/null)
+auto="${info%%|*}"
+current="${info#*|}"
+ours=$(tmux show-options -w -t "$window" -qv @agent_title 2>/dev/null)
+if [ "$auto" = "0" ] && [ "$current" != "$ours" ]; then
+    exit 0
+fi
+
 if [ "$1" = "--reset" ]; then
     tmux set-window-option -t "$window" -u @agent_task 2>/dev/null
     tmux set-window-option -t "$window" -u @agent_emoji 2>/dev/null
+    tmux set-window-option -t "$window" -u @agent_title 2>/dev/null
     tmux set-window-option -t "$window" automatic-rename on
     exit 0
 fi
@@ -64,7 +82,9 @@ panes=$(tmux display-message -t "$window" -p '#{window_panes}' 2>/dev/null)
 title="$emoji $project"
 [ -n "$task" ] && title="$title $task"
 
-# Pin the name so automatic-rename can't clobber it with the version string.
+# Pin the name so automatic-rename can't clobber it with the version string,
+# and remember it so a later user rename is recognisable as not ours.
 tmux set-window-option -t "$window" automatic-rename off
+tmux set-window-option -t "$window" @agent_title "$title"
 tmux rename-window -t "$window" "$title"
 exit 0
