@@ -86,6 +86,12 @@ git branch -d feature/feature-name
 git push origin --delete feature/feature-name
 ```
 
+If the tmux window was labelled with the issue you were working on, clear it:
+
+```bash
+bash ~/.claude/hooks/tmux-title.sh --task
+```
+
 ## Checklist
 
 - [ ] All tests passing

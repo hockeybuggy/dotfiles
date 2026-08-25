@@ -100,6 +100,24 @@ tmux send-keys -t "$pane" C-c
 
 Use `-l` for literal text. Pass `Enter` as a separate argument.
 
+## Labelling your own window with the issue you are on
+
+The status hooks title the agent's own window `<emoji> <project>`. When you are
+working on a specific issue, ticket, or PR, add its identifier so the window
+list says which one:
+
+```zsh
+bash ~/.claude/hooks/tmux-title.sh --task 'ABC-1234'   # or '#123', 'owner/repo#123'
+bash ~/.claude/hooks/tmux-title.sh --task              # forget it again
+```
+
+This is the one exception to "do not rename user windows": it renames only the
+window the agent is running in, and only while that window holds a single pane
+— a split window is shared, so the title is not the agent's to claim. The
+identifier is stored as a window option, so the status hooks keep it in the
+title until it is cleared. Under pi the script is at
+`~/.pi/agent/scripts/tmux-title.sh`.
+
 ## Agent-only background work
 
 Use the dedicated `agent` socket only when the work is explicitly agent-only:

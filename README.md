@@ -97,6 +97,12 @@ both `~/.claude/hooks/` and `~/.pi/agent/scripts/`. Claude Code wires them up
 through the hook table in `.claude/settings.json`; Pi has no such table, so
 `agents/extensions/notifications.ts` subscribes to the equivalent events.
 
+`tmux-title.sh` also takes `--task <identifier>`, which the `github` and `tmux`
+skills use to add the issue an agent is working on to its window title (for
+example `⚡ dotfiles #57`). The identifier is stored as a window option so the
+status hooks keep it across renames, and it is only shown while the agent has
+the window to itself.
+
 agy has its own lifecycle-hooks system (`hooks.json`), but only a couple of
 its events map cleanly onto "agent is working" / "agent is done" —
 `agents/agy/hooks.json` wires those two (`PreInvocation` and `Stop`) to

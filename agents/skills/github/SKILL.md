@@ -29,6 +29,27 @@ View logs for failed steps only:
 gh run view <run-id> --repo owner/repo --log-failed
 ```
 
+## Label the tmux window with the issue
+
+When you start work on a specific issue or PR, record its identifier so the
+tmux window title says which one you are on:
+
+```bash
+bash ~/.claude/hooks/tmux-title.sh --task '#123'
+```
+
+Use `owner/repo#123` when the issue lives in a different repo than the working
+directory. The script is a no-op outside tmux, and it only shows the task while
+the agent has the window to itself — in a split window the title stays generic.
+The status hooks keep the identifier in the title on every later rename, so set
+it once when the work starts. Clear it when you move off the issue:
+
+```bash
+bash ~/.claude/hooks/tmux-title.sh --task
+```
+
+Under pi the same script is at `~/.pi/agent/scripts/tmux-title.sh`.
+
 ## Returning URLs to the user
 
 When you hand back a PR or any URL the user will click, print it as a **bare
