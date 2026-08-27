@@ -12,7 +12,9 @@ that finishes on its own, use a regular `zsh` command unless the user
 explicitly asks for herdr.
 
 If the user says "tmux", use the `tmux` skill instead — both are installed, and
-the two do not share sessions.
+the two do not share sessions. The tracked config sets the prefix to `ctrl+s`
+to match `.tmux.conf`, so a herdr session running inside tmux leaves both
+fighting over the same prefix key.
 
 ## Container names
 

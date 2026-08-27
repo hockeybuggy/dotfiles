@@ -1,15 +1,56 @@
 # herdr configuration -- linked to ~/.config/herdr/config.toml by bootstrap.sh.
 #
-# Deliberately minimal: herdr's defaults already cover most of what .tmux.conf
-# sets up by hand (prefix+h/j/k/l pane focus, prefix+minus / prefix+v splits,
-# mouse support, a 10MB scrollback buffer). Run `herdr --default-config` to see
-# every available setting, and `herdr server reload-config` after editing.
+# Only the settings that differ from herdr's defaults live here; run
+# `herdr --default-config` to see everything available, and reload with
+# `herdr server reload-config` or prefix+r after editing.
 #
 # Note that herdr keeps its logs, sockets and session state in the same
 # directory as this file. Only config.toml is tracked here; the rest is local
 # state and stays out of the repo.
+#
+# herdr ignores unknown keys and unparseable bindings *silently* -- a typo
+# doesn't fail to load, it just quietly does nothing. Verify a binding by
+# pressing it rather than by a clean startup.
 
 [terminal]
 # Match .tmux.conf's `default-shell`: panes should always start zsh, whatever
 # $SHELL happens to be for the process that launched the server.
 default_shell = "/bin/zsh"
+
+# Bindings that pull herdr towards .tmux.conf. Plenty already agree out of the
+# box and need nothing here: prefix+h/j/k/l pane focus, prefix+minus for a
+# stacked split, prefix+c new tab, prefix+p / prefix+n tab cycling,
+# prefix+1..9, prefix+x close pane, prefix+z zoom, prefix+? help, and mouse
+# support.
+[keys]
+# tmux's `set -g prefix C-s`. herdr has no `send-prefix` equivalent, so nesting
+# herdr inside tmux leaves both fighting over ctrl+s.
+prefix = "ctrl+s"
+
+# tmux binds both `|` and `\` to a side-by-side split; keep herdr's prefix+v
+# alongside them.
+split_vertical = ["prefix+v", "prefix+|", "prefix+\\"]
+
+# tmux's prefix+d detach, prefix+, rename, prefix+& kill-window. Note herdr's
+# close_tab does not ask for confirmation the way tmux does.
+detach = "prefix+d"
+rename_tab = "prefix+comma"
+close_tab = "prefix+ampersand"
+
+# tmux's `bind r source-file`. That displaces resize_mode from its prefix+r
+# default onto herdr's old reload binding.
+reload_config = "prefix+r"
+resize_mode = "prefix+shift+r"
+
+# Unportable from .tmux.conf, for the record:
+#
+#   - ctrl+h/j/k/l pane focus. tmux uses an `if-shell` test so Vim splits still
+#     receive the keys; herdr has no conditional bindings, so binding them here
+#     would break Vim window navigation inside panes. Use prefix+h/j/k/l.
+#   - prefix+H/J/K/L resize. herdr binds those to *swap pane* by default and
+#     that wins over resize_pane_*, silently. Use resize mode above instead:
+#     prefix+shift+r, then h/l for width and j/k for height, esc to finish.
+#   - prefix+b break-pane. herdr has no break-pane action; prefix+b stays
+#     herdr's sidebar toggle. `herdr pane move <id> --new-tab` does it by hand.
+#   - vi copy mode (`mode-keys vi`). herdr is mouse-first for selection and has
+#     no vi-keys equivalent; prefix+e opens the scrollback in $EDITOR.

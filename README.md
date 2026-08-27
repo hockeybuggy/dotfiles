@@ -135,12 +135,20 @@ official installer (a single binary into `~/.local/bin`, already on PATH). It
 is additive: tmux stays installed and configured, and the two share nothing, so
 either can be used on a given machine.
 
-`.config/herdr/config.toml` is deliberately minimal -- herdr's defaults already
-cover most of what `.tmux.conf` configures by hand -- and links to
-`~/.config/herdr/config.toml` like any other tracked dotfile. Run
+`.config/herdr/config.toml` links to `~/.config/herdr/config.toml` like any
+other tracked dotfile, and holds only what differs from herdr's defaults: zsh
+as the pane shell, and the keybindings that pull herdr towards `.tmux.conf` --
+`ctrl+s` prefix, `|` and `\` for a side-by-side split, `prefix+d` detach,
+`prefix+,` rename, `prefix+&` close tab, and `prefix+r` reload. Much of
+`.tmux.conf` already matches herdr's defaults; the handful of bindings that
+cannot be ported at all are listed in the config's own comments. Run
 `herdr --default-config` to see every setting and `herdr server reload-config`
-after editing. herdr keeps its sockets, logs, and session state in that same
-directory; only `config.toml` is tracked.
+(or `prefix+r`) after editing. herdr keeps its sockets, logs, and session state
+in that same directory; only `config.toml` is tracked.
+
+Be aware that herdr ignores unknown config keys and unparseable bindings
+silently -- a typo does not fail to load, it just quietly does nothing. Test a
+binding by pressing it.
 
 Note that the agent hooks above still label *tmux* windows. Agents driving
 herdr should use the `herdr` skill (`agents/skills/herdr/`).
