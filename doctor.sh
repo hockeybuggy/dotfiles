@@ -227,6 +227,10 @@ if install_mode_has "$INSTALL_MODE" development; then
     check_python_on_path "python (PATH)" python
 fi
 
+if install_mode_has "$INSTALL_MODE" herdr; then
+    check_tool "herdr" herdr
+fi
+
 if [ "$(uname -s)" = "Darwin" ] && install_mode_has "$INSTALL_MODE" workstation; then
     check_tool "reattach-to-user-namespace" reattach-to-user-namespace
     if have brew && brew list --versions uutils-coreutils 2>/dev/null | grep -q .; then

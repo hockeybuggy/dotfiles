@@ -27,6 +27,7 @@ all steps succeed.
 | Claude Code | — | Required | Required |
 | Pi and Antigravity CLI (`agy`) | Required | — | Required |
 | macOS workstation support | — | Required | Required |
+| herdr | — | Required | Required |
 | Personal macOS Markdown integration | — | — | Required |
 
 Use `minimal` for a hosted VM, `work` for a work computer, and `personal` for
@@ -126,6 +127,24 @@ window, mirroring `use-pi-in-pane`. See
 [Antigravity's headless-mode docs](https://antigravity.google/docs/cli/headless)
 for the underlying flags.
 
+## herdr
+
+[herdr](https://herdr.dev/) is a terminal multiplexer being trialled in place
+of tmux, installed by `setup.sh` in `work` and `personal` modes via its
+official installer (a single binary into `~/.local/bin`, already on PATH). It
+is additive: tmux stays installed and configured, and the two share nothing, so
+either can be used on a given machine.
+
+`.config/herdr/config.toml` is deliberately minimal -- herdr's defaults already
+cover most of what `.tmux.conf` configures by hand -- and links to
+`~/.config/herdr/config.toml` like any other tracked dotfile. Run
+`herdr --default-config` to see every setting and `herdr server reload-config`
+after editing. herdr keeps its sockets, logs, and session state in that same
+directory; only `config.toml` is tracked.
+
+Note that the agent hooks above still label *tmux* windows. Agents driving
+herdr should use the `herdr` skill (`agents/skills/herdr/`).
+
 ## Checking a machine with `doctor.sh`
 
 Run the doctor after installation to check required tools, linked config,
@@ -162,6 +181,7 @@ can poke around in tmux yourself:
 1. Executables
     1. neovim - 11.0
     1. tmux - 3.5
+    1. [herdr](https://herdr.dev/) - 0.8
     1. iterm2
 1. command line utils
     1. zsh  - 5.0

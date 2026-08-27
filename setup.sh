@@ -366,6 +366,27 @@ setup_python_tools() {
 }
 
 # ---------------------------------------------------------------------------
+# herdr (terminal multiplexer)
+# ---------------------------------------------------------------------------
+
+setup_herdr() {
+    mode=$1
+
+    install_mode_has "$mode" herdr || return 0
+
+    # herdr's official installer drops a single static binary into
+    # ~/.local/bin (already on PATH via .zshrc) and leaves shell rc files
+    # alone. Homebrew has a formula, but installer-managed installs are the
+    # only ones that support `herdr update` and the preview channel.
+    if have herdr; then
+        skip "herdr already installed"
+    else
+        info "Installing herdr"
+        curl -fsSL https://herdr.dev/install.sh | sh || warn "herdr install failed (continuing)"
+    fi
+}
+
+# ---------------------------------------------------------------------------
 # Coding agents (Claude Code, Pi, Antigravity CLI)
 # ---------------------------------------------------------------------------
 
@@ -448,6 +469,7 @@ main() {
     if install_mode_has "$INSTALL_MODE" development; then
         setup_python_tools
     fi
+    setup_herdr "$INSTALL_MODE"
     setup_agents "$INSTALL_MODE"
 
     echo

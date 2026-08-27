@@ -31,6 +31,12 @@ Ghostty window tailing it. Claude Code runs them from the hook table in
 `agents/extensions/notifications.ts` binds the same scripts to the
 equivalent Pi events.
 
+[herdr](https://herdr.dev/) is being trialled as a replacement for tmux.
+`setup.sh` installs it in `work` and `personal` modes, `.config/herdr/config.toml`
+holds a deliberately minimal config, and `agents/skills/herdr/` teaches agents to
+drive it. tmux and its config, hooks, and skills are untouched — both are
+installed, and neither knows about the other.
+
 `.config/mcp/mcp.json` is the shared MCP server list, read by Pi through the
 `pi-mcp-adapter` package (install with `pi install npm:pi-mcp-adapter`). Claude
 Code ignores that file, so its equivalent servers come from plugins declared in

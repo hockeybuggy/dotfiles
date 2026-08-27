@@ -1,0 +1,15 @@
+# herdr configuration -- linked to ~/.config/herdr/config.toml by bootstrap.sh.
+#
+# Deliberately minimal: herdr's defaults already cover most of what .tmux.conf
+# sets up by hand (prefix+h/j/k/l pane focus, prefix+minus / prefix+v splits,
+# mouse support, a 10MB scrollback buffer). Run `herdr --default-config` to see
+# every available setting, and `herdr server reload-config` after editing.
+#
+# Note that herdr keeps its logs, sockets and session state in the same
+# directory as this file. Only config.toml is tracked here; the rest is local
+# state and stays out of the repo.
+
+[terminal]
+# Match .tmux.conf's `default-shell`: panes should always start zsh, whatever
+# $SHELL happens to be for the process that launched the server.
+default_shell = "/bin/zsh"
