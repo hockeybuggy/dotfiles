@@ -17,6 +17,12 @@
 # $SHELL happens to be for the process that launched the server.
 default_shell = "/bin/zsh"
 
+[ui]
+# herdr puts the tab bar on top; tmux's status line sits at the bottom, which is
+# where years of muscle memory expects to find the window list. Prefix, navigate,
+# copy and resize modes borrow this row for their own status bars.
+tab_bar_position = "bottom"
+
 # Bindings that pull herdr towards .tmux.conf. Plenty already agree out of the
 # box and need nothing here: prefix+h/j/k/l pane focus, prefix+minus for a
 # stacked split, prefix+c new tab, prefix+p / prefix+n tab cycling,
@@ -42,6 +48,20 @@ close_tab = "prefix+ampersand"
 reload_config = "prefix+r"
 resize_mode = "prefix+shift+r"
 
+# tmux's prefix+s choose-session: workspaces are the nearest thing herdr has to
+# sessions, so the picker moves off prefix+w onto prefix+s. That displaces
+# settings, which has no tmux counterpart to be faithful to.
+workspace_picker = "prefix+s"
+settings = "prefix+shift+s"
+
+# No tmux counterpart. previous_agent/next_agent/focus_agent are unbound by
+# default; prefix+w is free since workspace_picker moved off it above, and
+# prefix+q is free since detach moved off it onto prefix+d. Avoiding [ and ]
+# since they're awkward to reach.
+next_agent = "prefix+w"
+previous_agent = "prefix+q"
+focus_agent = "prefix+alt+1..9"
+
 # Unportable from .tmux.conf, for the record:
 #
 #   - ctrl+h/j/k/l pane focus. tmux uses an `if-shell` test so Vim splits still
@@ -54,3 +74,7 @@ resize_mode = "prefix+shift+r"
 #     herdr's sidebar toggle. `herdr pane move <id> --new-tab` does it by hand.
 #   - vi copy mode (`mode-keys vi`). herdr is mouse-first for selection and has
 #     no vi-keys equivalent; prefix+e opens the scrollback in $EDITOR.
+
+[theme]
+name = "catppuccin"
+auto_switch = false
