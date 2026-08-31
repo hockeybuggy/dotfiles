@@ -118,8 +118,7 @@ function doIt() {
     echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.pi/agent/CLAUDE.md"
 
     # Antigravity CLI (agy): share the same CLAUDE.md as global rules (agy
-    # calls this GEMINI.md), share the MCP server list, and wire lifecycle
-    # hooks for the same sound/tmux-title notifications as Claude Code and pi.
+    # calls this GEMINI.md) and share the MCP server list.
     echo "\n${GREEN}Setting up agy config${RESET}"
     mkdir -p "$HOME/.gemini/config"
     ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.gemini/config/GEMINI.md"
@@ -128,11 +127,6 @@ function doIt() {
     if [ -f ".config/mcp/mcp.json" ]; then
         ln -sf "$PWD/.config/mcp/mcp.json" "$HOME/.gemini/config/mcp_config.json"
         echo "Linked: $PWD/.config/mcp/mcp.json -> $HOME/.gemini/config/mcp_config.json"
-    fi
-
-    if [ -f "agents/agy/hooks.json" ]; then
-        ln -sf "$PWD/agents/agy/hooks.json" "$HOME/.gemini/config/hooks.json"
-        echo "Linked: $PWD/agents/agy/hooks.json -> $HOME/.gemini/config/hooks.json"
     fi
 
     # ~/.gemini/config/skills/* are symlinks that resolve into this repo, which
@@ -173,26 +167,23 @@ with open(path, 'w') as f:
         done
     fi
 
-    # Hook scripts (sounds, tmux window titles) are shared: Claude Code runs
-    # them from its settings.json hook table, pi from the notifications
-    # extension. Link the same files into both agents' config directories.
-    #
-    # Pi renamed hooks to extensions and warns on startup if ~/.pi/agent/hooks
-    # still exists, so its copies live in ~/.pi/agent/scripts instead. Remove
-    # the old directory if a previous bootstrap created it.
-    if [ -d "agents/hooks" ]; then
-        if [ -d "$HOME/.pi/agent/hooks" ]; then
-            rm -rf "$HOME/.pi/agent/hooks"
-            echo "Removed deprecated ~/.pi/agent/hooks"
+    # The agent notification hooks (sounds, the shared notification log, tmux
+    # window titles) are gone -- herdr surfaces agent state itself. Their
+    # symlinks live outside the repo, so removing the sources doesn't unlink
+    # them: prune what earlier bootstraps left behind. agy's hooks.json is the
+    # one that matters, since a dangling link there makes every turn error.
+    for stale in "$HOME/.gemini/config/hooks.json" "$HOME/.pi/agent/extensions/notifications.ts"; do
+        if [ -L "$stale" ] && [ ! -e "$stale" ]; then
+            rm -f "$stale"
+            echo "Removed stale link: $stale"
         fi
-        mkdir -p "$HOME/.claude/hooks" "$HOME/.pi/agent/scripts"
-        for hook in agents/hooks/*.sh; do
-            hook_name=$(basename "$hook")
-            ln -sf "$PWD/$hook" "$HOME/.claude/hooks/$hook_name"
-            ln -sf "$PWD/$hook" "$HOME/.pi/agent/scripts/$hook_name"
-            echo "Linked hook: $PWD/$hook -> ~/.claude/hooks/$hook_name, ~/.pi/agent/scripts/$hook_name"
-        done
-    fi
+    done
+    for stale_dir in "$HOME/.claude/hooks" "$HOME/.pi/agent/scripts" "$HOME/.pi/agent/hooks"; do
+        if [ -d "$stale_dir" ]; then
+            find "$stale_dir" -maxdepth 1 -type l ! -exec test -e {} \; -delete 2>/dev/null
+            rmdir "$stale_dir" 2>/dev/null && echo "Removed empty $stale_dir"
+        fi
+    done
 
     # Agent skills. Most are shared by Claude Code and the Pi coding agent, but
     # some only make sense for one of them, so each source directory declares

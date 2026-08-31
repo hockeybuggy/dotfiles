@@ -90,22 +90,6 @@ agy also reads `mcpServers` config directly (its own copy lives at
 `~/.gemini/config/mcp_config.json`), so `bootstrap.sh` symlinks the same
 `.config/mcp/mcp.json` there too.
 
-## Agent hooks
-
-The `agents/hooks/` directory holds the scripts that play notification sounds
-and rename the tmux window as an agent works. `bootstrap.sh` links them into
-both `~/.claude/hooks/` and `~/.pi/agent/scripts/`. Claude Code wires them up
-through the hook table in `.claude/settings.json`; Pi has no such table, so
-`agents/extensions/notifications.ts` subscribes to the equivalent events.
-
-agy has its own lifecycle-hooks system (`hooks.json`), but only a couple of
-its events map cleanly onto "agent is working" / "agent is done" —
-`agents/agy/hooks.json` wires those two (`PreInvocation` and `Stop`) to
-`agents/hooks/agy-working.sh` and `agents/hooks/agy-done.sh`, thin wrappers
-that read agy's stdin JSON payload and call the same shared `tmux-title.sh`
-and `done.sh` scripts. `bootstrap.sh` symlinks it to
-`~/.gemini/config/hooks.json`.
-
 ## Antigravity CLI (agy)
 
 `setup.sh` installs [agy](https://antigravity.google/docs/cli/overview)
@@ -150,8 +134,12 @@ Be aware that herdr ignores unknown config keys and unparseable bindings
 silently -- a typo does not fail to load, it just quietly does nothing. Test a
 binding by pressing it.
 
-Note that the agent hooks above still label *tmux* windows. Agents driving
-herdr should use the `herdr` skill (`agents/skills/herdr/`).
+herdr also replaces the agent notification hooks this repo used to carry
+(completion sounds, a shared notification log, and tmux window titles renamed
+per agent state). Its sidebar shows every pane's agent state directly, plays
+its own sounds, and jumps to whatever needs attention with `prefix+o`, so the
+hooks are gone rather than duplicated. Agents driving herdr should use the
+`herdr` skill (`agents/skills/herdr/`).
 
 ## Checking a machine with `doctor.sh`
 

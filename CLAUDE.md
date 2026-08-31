@@ -21,21 +21,17 @@ instead, and link into only that agent. Moving a skill between these
 directories strips it from the other agent, so re-run `bootstrap.sh` after
 a `git mv` to prune the symlink left behind.
 
-The `agents/hooks/` directory holds the sound, tmux-title, and
-notification-log scripts, also shared by both agents. `done.sh` and
-`notify.sh` call `log-event.sh`, which appends a colour-coded line
-(agent, project, `session:window.pane`, state) to
-`~/devel/AGENT_NOTIFICATIONS.log`; the `agent-notifications` skill opens a
-Ghostty window tailing it. Claude Code runs them from the hook table in
-`.claude/settings.json`; Pi has no hook table, so
-`agents/extensions/notifications.ts` binds the same scripts to the
-equivalent Pi events.
-
 [herdr](https://herdr.dev/) is being trialled as a replacement for tmux.
 `setup.sh` installs it in `work` and `personal` modes, `.config/herdr/config.toml`
 holds a deliberately minimal config, and `agents/skills/herdr/` teaches agents to
-drive it. tmux and its config, hooks, and skills are untouched — both are
-installed, and neither knows about the other.
+drive it. tmux and its config and skills are untouched — both are installed,
+and neither knows about the other.
+
+There are no agent notification hooks any more: the sound, tmux-title and
+notification-log scripts under `agents/hooks/`, plus the Claude hook table,
+`agents/extensions/notifications.ts` and agy's `hooks.json`, were removed once
+herdr started surfacing agent state itself. Only the `gh api` permission guard
+remains in `.claude/settings.json`. Don't reintroduce them without asking.
 
 `.config/mcp/mcp.json` is the shared MCP server list, read by Pi through the
 `pi-mcp-adapter` package (install with `pi install npm:pi-mcp-adapter`). Claude

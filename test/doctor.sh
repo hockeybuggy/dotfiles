@@ -27,7 +27,7 @@ printf '%s\n' "$output" | grep -q "Summary" || fail "missing summary"
 
 fake_bin="$TMPDIR_ROOT/bin"
 healthy_home="$TMPDIR_ROOT/healthy-home"
-mkdir -p "$fake_bin" "$healthy_home/.claude/hooks" "$healthy_home/.pi/agent/extensions"
+mkdir -p "$fake_bin" "$healthy_home/.claude" "$healthy_home/.pi/agent/extensions"
 cat > "$fake_bin/tool" <<'EOF'
 #!/bin/sh
 name=${0##*/}
@@ -69,7 +69,6 @@ ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.claude/CLAUDE.md"
 mkdir -p "$healthy_home/.pi/agent" "$healthy_home/.gemini/config" "$healthy_home/.gemini/antigravity-cli"
 ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.pi/agent/CLAUDE.md"
 ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.gemini/config/GEMINI.md"
-ln -s "$ROOT/agents/agy/hooks.json" "$healthy_home/.gemini/config/hooks.json"
 ln -s "$ROOT/.config/mcp/mcp.json" "$healthy_home/.gemini/config/mcp_config.json"
 python3 - "$healthy_home/.gemini/antigravity-cli/settings.json" "$ROOT" <<'PY'
 import json
@@ -79,11 +78,6 @@ PY
 
 for extension in "$ROOT"/agents/extensions/*.ts; do
     ln -s "$extension" "$healthy_home/.pi/agent/extensions/$(basename "$extension")"
-done
-mkdir -p "$healthy_home/.pi/agent/scripts"
-for hook in "$ROOT"/agents/hooks/*.sh; do
-    ln -s "$hook" "$healthy_home/.claude/hooks/$(basename "$hook")"
-    ln -s "$hook" "$healthy_home/.pi/agent/scripts/$(basename "$hook")"
 done
 echo '{}' > "$healthy_home/.claude/settings.json"
 mkdir -p "$healthy_home/.claude/skills" "$healthy_home/.pi/agent/skills" "$healthy_home/.gemini/config/skills"
