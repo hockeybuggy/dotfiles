@@ -9,6 +9,16 @@ export SHELL="/bin/zsh"
 export EDITOR="nvim"
 export TERMINAL="urxvt"
 
+# Ghostty renders OSC 8 hyperlinks and herdr passes them through, but tools
+# that sniff $TERM_PROGRAM -- Claude Code among them -- see "tmux" whenever a
+# pane inherited that value, and conclude the terminal cannot do hyperlinks.
+# They then print link text with no colour, so a link is indistinguishable
+# from prose. GHOSTTY_BIN_DIR is a truthful signal that survives into panes,
+# so use it to force hyperlinks back on only where they genuinely work.
+if [[ -n "$GHOSTTY_BIN_DIR" ]]; then
+    export FORCE_HYPERLINK=1
+fi
+
 export PATH="$HOME/.bin:$PATH"
 # Add some package managers to the path
 export PATH="/usr/local/bin:$PATH"
