@@ -23,6 +23,12 @@ default_shell = "/bin/zsh"
 # copy and resize modes borrow this row for their own status bars.
 tab_bar_position = "bottom"
 
+# Default 3, which combined with Ghostty's discrete wheel multiplier made one
+# notch travel roughly nine lines -- easy to leave a pane scrolled up by
+# accident. One line per notch here, one event per notch in the Ghostty config.
+# Deliberate scrollback reading is prefix+[ or prefix+e, neither affected.
+mouse_scroll_lines = 1
+
 # Bindings that pull herdr towards .tmux.conf. Plenty already agree out of the
 # box and need nothing here: prefix+minus for a stacked split, prefix+c new
 # tab, prefix+p / prefix+n tab cycling, prefix+1..9, prefix+x close pane,
