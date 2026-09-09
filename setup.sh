@@ -24,6 +24,13 @@ fi
 
 LOCAL_BIN="$HOME/.local/bin"
 
+# zoxide's release assets carry the version in their filenames, so there is no
+# /releases/latest/download/ URL to point at the way eza and bottom manage.
+# Upstream's install.sh resolves the URL through the unauthenticated GitHub API
+# instead, which throttles on CI runners and then misreports the throttle as an
+# unsupported architecture, so the version is pinned here and bumped by hand.
+ZOXIDE_VERSION="0.10.0"
+
 info() { echo "${GREEN}==>${RESET} $*"; }
 skip() { echo "${YELLOW}--- skip:${RESET} $*"; }
 warn() { echo "${RED}!!! ${RESET}$*" >&2; }
@@ -289,13 +296,10 @@ setup_linux() {
         skip "starship already installed"
     fi
 
-    # zoxide
-    if ! have zoxide; then
-        info "Installing zoxide"
-        curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-    else
-        skip "zoxide already installed"
-    fi
+    # zoxide (prebuilt release binary; see ZOXIDE_VERSION at the top)
+    install_release_binary "zoxide" \
+        "https://github.com/ajeetdsouza/zoxide/releases/download/v${ZOXIDE_VERSION}/zoxide-${ZOXIDE_VERSION}-${ra}-unknown-linux-musl.tar.gz" \
+        "zoxide"
 
     if install_mode_has "$INSTALL_MODE" development; then
         # uv
