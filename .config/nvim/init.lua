@@ -142,7 +142,9 @@ vim.keymap.set('n', ']w', vim.diagnostic.goto_next, { desc = 'Next diagnostic' }
 vim.keymap.set('n', '[w', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show diagnostics' })
 
--- Window switching
+-- Window switching. Only reachable in a bare terminal: tmux and herdr both
+-- claim ctrl+h/j/k/l for pane focus and never pass them through, so inside
+-- either multiplexer use `<C-w>h` and friends.
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
@@ -357,8 +359,6 @@ require('lazy').setup({
     },
 
     'ruanyl/vim-gh-line', -- Copy GitHub permalinks
-
-    'christoomey/vim-tmux-navigator', -- Navigate between tmux panes and Vim windows
 
     { 'nvim-tree/nvim-web-devicons', opts = {} },
 
