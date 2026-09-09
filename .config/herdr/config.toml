@@ -42,16 +42,22 @@ prefix = "ctrl+s"
 # alongside them.
 split_vertical = ["prefix+v", "prefix+|", "prefix+\\"]
 
-# tmux's root-table ctrl+h/j/k/l pane focus, plus arrow keys as aliases for
-# herdr's default prefix+h/j/k/l. herdr intercepts a direct binding before the
-# pane app sees it, so ctrl+h/j/k/l no longer reach Vim -- use `<C-w>h` and
-# friends for windows inside a pane. Same trade for the shell: ctrl+l no longer
-# clears the screen, so type `clear`. tmux keeps prefix+ctrl+l for that; herdr
-# has no send-keys binding to mirror it.
-focus_pane_left = ["prefix+h", "prefix+left", "ctrl+h"]
-focus_pane_down = ["prefix+j", "prefix+down", "ctrl+j"]
-focus_pane_up = ["prefix+k", "prefix+up", "ctrl+k"]
-focus_pane_right = ["prefix+l", "prefix+right", "ctrl+l"]
+# tmux's root-table ctrl+h/j/k/l pane focus, with ctrl+arrows alongside. These
+# replace herdr's prefix+h/j/k/l default rather than adding to it -- pane focus
+# is frequent enough that the prefix is not worth paying.
+#
+# herdr intercepts a direct binding before the pane app sees it, so ctrl+h/j/k/l
+# no longer reach Vim -- use `<C-w>h` and friends for windows inside a pane.
+# Same trade for the shell: ctrl+l no longer clears the screen, so type `clear`.
+# tmux keeps prefix+ctrl+l for that; herdr has no send-keys binding to mirror it.
+#
+# The arrows are deliberately ctrl+arrow and not bare arrow: a bare binding
+# would swallow arrow keys in every pane, breaking shell history and cursor
+# movement. Nothing in .zshrc binds ctrl+arrow.
+focus_pane_left = ["ctrl+h", "ctrl+left"]
+focus_pane_down = ["ctrl+j", "ctrl+down"]
+focus_pane_up = ["ctrl+k", "ctrl+up"]
+focus_pane_right = ["ctrl+l", "ctrl+right"]
 
 # tmux's root-table `C-\` last-pane. Unbound in herdr by default.
 last_pane = "ctrl+backslash"
