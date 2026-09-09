@@ -24,8 +24,14 @@ a `git mv` to prune the symlink left behind.
 [herdr](https://herdr.dev/) is being trialled as a replacement for tmux.
 `setup.sh` installs it in `work` and `personal` modes, `.config/herdr/config.toml`
 holds a deliberately minimal config, and `agents/skills/herdr/` teaches agents to
-drive it. tmux and its config and skills are untouched — both are installed,
-and neither knows about the other.
+drive it. tmux's own config and skills are otherwise untouched — both are
+installed, and outside herdr neither knows about the other.
+
+The exception is nesting: `.tmux-herdr.conf` holds the extra bindings a tmux
+needs to be usable *inside* a herdr pane, where herdr swallows `ctrl+s` and
+`ctrl+h/j/k/l` before tmux sees them. `.tmux.conf` sources it when `$HERDR_ENV`
+is set. It is purely additive, so keep it that way — it can load in a server
+that is not inside herdr.
 
 There are no agent notification hooks any more: the sound, tmux-title and
 notification-log scripts under `agents/hooks/`, plus the Claude hook table,
