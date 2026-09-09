@@ -122,10 +122,11 @@ either can be used on a given machine.
 `.config/herdr/config.toml` links to `~/.config/herdr/config.toml` like any
 other tracked dotfile, and holds only what differs from herdr's defaults: zsh
 as the pane shell, and the keybindings that pull herdr towards `.tmux.conf` --
-`ctrl+s` prefix, `|` and `\` for a side-by-side split, `prefix+d` detach,
-`prefix+,` rename, `prefix+&` close tab, and `prefix+r` reload. Much of
-`.tmux.conf` already matches herdr's defaults; the handful of bindings that
-cannot be ported at all are listed in the config's own comments. Run
+`ctrl+s` prefix, prefix-free `ctrl+h/j/k/l` and `ctrl+arrow` pane focus, `|`
+and `\` for a side-by-side split, `prefix+d` detach, `prefix+,` rename,
+`prefix+&` close tab, and `prefix+r` reload. Much of `.tmux.conf` already
+matches herdr's defaults; the handful of bindings that cannot be ported at all
+are listed in the config's own comments. Run
 `herdr --default-config` to see every setting and `herdr server reload-config`
 (or `prefix+r`) after editing. herdr keeps its sockets, logs, and session state
 in that same directory; only `config.toml` is tracked.

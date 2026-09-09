@@ -42,11 +42,25 @@ prefix = "ctrl+s"
 # alongside them.
 split_vertical = ["prefix+v", "prefix+|", "prefix+\\"]
 
-# Arrow keys as aliases for the default prefix+h/j/k/l pane focus.
-focus_pane_left = ["prefix+h", "prefix+left"]
-focus_pane_down = ["prefix+j", "prefix+down"]
-focus_pane_up = ["prefix+k", "prefix+up"]
-focus_pane_right = ["prefix+l", "prefix+right"]
+# tmux's root-table ctrl+h/j/k/l pane focus, with ctrl+arrows alongside. These
+# replace herdr's prefix+h/j/k/l default rather than adding to it -- pane focus
+# is frequent enough that the prefix is not worth paying.
+#
+# herdr intercepts a direct binding before the pane app sees it, so ctrl+h/j/k/l
+# no longer reach Vim -- use `<C-w>h` and friends for windows inside a pane.
+# Same trade for the shell: ctrl+l no longer clears the screen, so type `clear`.
+# tmux keeps prefix+ctrl+l for that; herdr has no send-keys binding to mirror it.
+#
+# The arrows are deliberately ctrl+arrow and not bare arrow: a bare binding
+# would swallow arrow keys in every pane, breaking shell history and cursor
+# movement. Nothing in .zshrc binds ctrl+arrow.
+focus_pane_left = ["ctrl+h", "ctrl+left"]
+focus_pane_down = ["ctrl+j", "ctrl+down"]
+focus_pane_up = ["ctrl+k", "ctrl+up"]
+focus_pane_right = ["ctrl+l", "ctrl+right"]
+
+# tmux's root-table `C-\` last-pane. Unbound in herdr by default.
+last_pane = "ctrl+backslash"
 
 # tmux's prefix+d detach, prefix+, rename, prefix+& kill-window. Note herdr's
 # close_tab does not ask for confirmation the way tmux does.
@@ -75,9 +89,6 @@ focus_agent = "prefix+alt+1..9"
 
 # Unportable from .tmux.conf, for the record:
 #
-#   - ctrl+h/j/k/l pane focus. tmux uses an `if-shell` test so Vim splits still
-#     receive the keys; herdr has no conditional bindings, so binding them here
-#     would break Vim window navigation inside panes. Use prefix+h/j/k/l.
 #   - prefix+H/J/K/L resize. herdr binds those to *swap pane* by default and
 #     that wins over resize_pane_*, silently. Use resize mode above instead:
 #     prefix+shift+r, then h/l for width and j/k for height, esc to finish.
