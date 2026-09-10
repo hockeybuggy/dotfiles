@@ -1,44 +1,45 @@
 ---
 name: use-pi-in-pane
-description: Run the `pi` coding agent as a headless subagent (--mode json) inside a visible, named tmux window so the user can watch it stream while the agent still captures and verifies its structured output. Use when asked to "run pi", "run pi in a pane", "let me watch pi work", "run pi where I can see it", or to delegate to pi with a live view. Requires running inside tmux.
+description: Run the `pi` coding agent as a headless subagent (--mode json) inside a visible, labelled herdr tab so the user can watch it stream while the agent still captures and verifies its structured output. Use when asked to "run pi", "run pi in a pane", "let me watch pi work", "run pi where I can see it", or to delegate to pi with a live view. Requires running inside herdr.
 allowed-tools: Bash
 ---
 
-# Running pi in a visible tmux window
+# Running pi in a visible herdr tab
 
 Use this whenever you delegate a discrete task to pi. pi runs **headless in
 JSON mode** — you drive it, capture the full event stream, and verify the
-result — but it runs in a new, named tmux window so the user can watch it
+result — but it runs in a new, labelled herdr tab so the user can watch it
 stream in real time. When pi exits, control returns to you with the JSON log
 to parse.
 
-The visible window makes delegation auditable and lets the user follow along
+The visible tab makes delegation auditable and lets the user follow along
 without sacrificing structured output.
 
 ## How it works
 
 `run-pi-pane.sh` (shipped with this skill) does the plumbing:
 
-- opens a new tmux window (named after the task via `TASK_NAME`, see below)
-  and runs pi there with the canonical headless flags
-  (`--mode json --print --approve --no-session`);
-- the window shows a readable activity stream via `pretty.jq`: text and
+- creates a new tab in the current workspace (labelled after the task via
+  `TASK_NAME`, see below) and runs pi in its pane with the canonical headless
+  flags (`--mode json --print --approve --no-session`);
+- the pane shows a readable activity stream via `pretty.jq`: text and
   reasoning as it arrives, plus one concise summary for each tool execution
   with its name, most useful argument, and any failure — `tee` sits
   **upstream** of the pretty-printer, so the raw `.jsonl` log is captured in
   full even if the view hiccups;
 - it **blocks until pi exits**, then prints `KEY=VALUE` lines back to you;
-- the window stays open afterward so the user can scroll the transcript — they
-  close it themselves with `Ctrl-D`.
+- the pane returns to its zsh prompt afterward so the user can scroll the
+  transcript — they close the tab themselves with `Ctrl-D`.
 
-The window is a live view for the human. The `.jsonl` log is the source of
+The tab is a live view for the human. The `.jsonl` log is the source of
 truth for you.
 
 ## Prerequisites
 
-- **Must be inside tmux.** The wrapper needs `$TMUX` to open a window, and it
-  uses the **user's own tmux server** so the window is visible to them. Start
-  the agent from tmux before delegating.
+- **Must be inside herdr.** The wrapper needs `$HERDR_ENV` to create a tab,
+  and it uses the **user's own herdr session** so the tab is visible to them.
+  Start the agent from herdr before delegating. If the user is on tmux
+  instead, this skill does not apply.
 - `pi` and `jq` on `PATH`. The wrapper resolves `pi` absolutely from your
   shell, so fnm's shim works even though the pane's shell may have a leaner
   `PATH`.
@@ -62,8 +63,8 @@ TASK_NAME="fix-login-bug" bash "$skill_dir/run-pi-pane.sh" \
 ```
 
 Set `TASK_NAME` to a short slug describing the delegated task — it becomes the
-new tmux window's name, so the user can tell what it's for at a glance without
-opening it. It defaults to `pi-task` if omitted; always set it.
+new tab's label, so the user can tell what it's for at a glance without
+switching to it. It defaults to `pi-task` if omitted; always set it.
 
 Any extra arguments after the log path pass straight through to pi, so
 per-task flags work as usual:
@@ -82,9 +83,9 @@ Each run should start from a clean, up-to-date base — don't reuse a stale
 worktree from an earlier attempt:
 
 - Create a **fresh worktree rebased on `origin/main`** immediately before
-  launching pi, so the window starts from current `main`.
-- **Prefix the launch with `cd <worktree-path> && `.** The window does not
-  inherit your working directory — without the `cd` it runs pi from the wrong
+  launching pi, so the tab starts from current `main`.
+- **Prefix the launch with `cd <worktree-path> && `.** The wrapper passes its
+  own `$PWD` as the tab's `--cwd`; without the `cd` it runs pi from the wrong
   cwd and its relative paths and context-file discovery resolve against the
   wrong repo:
 
@@ -92,9 +93,14 @@ worktree from an earlier attempt:
   cd "$worktree_path" && TASK_NAME="fix-login-bug" bash "$skill_dir/run-pi-pane.sh" "$prompt_file" "$json_log" ...
   ```
 
-- If you self-test the tmux wiring, use an **isolated tmux server**
-  (`tmux -L test-$$`), never the user's default server, so a test window
-  can't disturb their live session.
+- If you self-test the herdr wiring, use an **isolated named session**, never
+  the user's, so a test tab can't disturb their live workspaces. `HERDR_SESSION`
+  alone is not enough — `HERDR_SOCKET_PATH` is exported into every managed pane
+  and wins, so unset it too:
+
+  ```bash
+  env -u HERDR_SOCKET_PATH HERDR_SESSION=test-$$ herdr server &
+  ```
 
 ## Reading the result
 
@@ -104,10 +110,10 @@ The wrapper prints, on its own stdout:
 JSON_LOG=/abs/path/to/run.jsonl
 STDERR_LOG=/abs/path/to/run.stderr.log
 PI_EXIT=0            # pi's own exit code
-STATUS=complete      # "complete", or "aborted" if the user closed the window early
+STATUS=complete      # "complete", or "aborted" if the user closed the tab early
 ```
 
-`STATUS=aborted` (wrapper exit 1) means the window was closed before pi finished —
+`STATUS=aborted` (wrapper exit 1) means the tab was closed before pi finished —
 the run is incomplete; do not treat its output as done. On `STATUS=complete`,
 parse the log:
 
@@ -129,18 +135,19 @@ files pi claims to have changed, run the relevant tests/lint yourself, and check
 
 ## Pitfalls
 
-- **No `$TMUX`.** The wrapper can't open a window; it exits 1 with a clear
-  message. Start the agent from tmux, then retry — don't try to force a window.
-- **The window lingers on purpose.** After pi exits, the window drops to a
-  shell so the user can read the transcript. That's intended; the user closes
-  it. You are already unblocked and holding the log — don't wait on the window.
-- **Window closure is an unreliable signal.** Don't infer success or failure
-  from the window disappearing. Rely on the exit sentinel / `STATUS` line, and
-  before declaring an abort or failure, re-verify with `git log` in the
-  worktree — the work may have committed even if the window closed early.
+- **No `$HERDR_ENV`.** The wrapper can't create a tab; it exits 1 with a clear
+  message. Start the agent from herdr, then retry — don't try to force a tab
+  into another session.
+- **The tab lingers on purpose.** After pi exits, the pane drops back to its
+  zsh prompt so the user can read the transcript. That's intended; the user
+  closes it. You are already unblocked and holding the log — don't wait on the
+  tab.
+- **Tab closure is an unreliable signal.** Don't infer success or failure from
+  the tab disappearing. Rely on the exit sentinel / `STATUS` line, and before
+  declaring an abort or failure, re-verify with `git log` in the worktree — the
+  work may have committed even if the tab closed early.
 - **Give unique log filenames per attempt** so retries don't clobber the audit
   trail. The wrapper derives `STDERR_LOG`, the exit-code file, and its sentinel
   from the log path.
-- **Always set `TASK_NAME`.** Without it the window is just named `pi-task`,
-  which is indistinguishable from any other delegated run in the tmux window
-  list.
+- **Always set `TASK_NAME`.** Without it the tab is just labelled `pi-task`,
+  which is indistinguishable from any other delegated run in the tab bar.
