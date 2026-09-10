@@ -88,6 +88,9 @@ checks_for_mode() {
 }
 checks_for_mode "$mode"
 
+# Per-check wall clock budget, polled in 0.25s steps.
+TIMEOUT_SECS=60
+
 SOCK="verify"
 tmux -L "$SOCK" kill-server 2>/dev/null || true
 # A login zsh so the demo runs through the real .zshrc (aliases, starship, ...).
@@ -109,8 +112,12 @@ for i in "${!checks[@]}"; do
     tmux -L "$SOCK" send-keys -t v \
         "clear; printf '### %s ###\\n' \"$label\"; $cmd; printf 'DONE_${i}_RC%d\\n' \"\$?\"" Enter
 
+    # A tool's first run can be far slower than its steady state -- `claude`
+    # finishes its native install on first invocation -- and this runs on a
+    # container that has just installed everything, so be generous. The budget
+    # only costs wall clock when a check is genuinely going to fail.
     out=""
-    for _ in $(seq 1 60); do
+    for _ in $(seq 1 $((TIMEOUT_SECS * 4))); do
         out=$(tmux -L "$SOCK" capture-pane -p -t v 2>/dev/null || echo)
         if printf '%s\n' "$out" | grep -Eq "DONE_${i}_RC[0-9]"; then
             break
@@ -122,13 +129,21 @@ for i in "${!checks[@]}"; do
     # First line of the command's own output, for the summary.
     detail=$(printf '%s\n' "$out" | awk '/^### /{f=1;next} /DONE_'"$i"'_RC/{f=0} f && NF {print; exit}')
 
+    # An empty rc means the marker never appeared, which is a timeout rather than
+    # a failing command. Say which, so a slow tool doesn't read as a missing one.
+    if [ -z "$rc" ]; then
+        reason="no result after ${TIMEOUT_SECS}s"
+    else
+        reason="not found / non-zero exit"
+    fi
+
     if [ "${rc:-1}" = "0" ]; then
         results+=("$label|ok|$detail")
         printf '  %s✓%s %-16s %s\n' "$GREEN" "$RESET" "$label" "$detail"
     else
-        results+=("$label|FAIL|not found / non-zero exit")
+        results+=("$label|FAIL|$reason")
         failures=$((failures + 1))
-        printf '  %s✗%s %-16s %s\n' "$RED" "$RESET" "$label" "not found / non-zero exit"
+        printf '  %s✗%s %-16s %s\n' "$RED" "$RESET" "$label" "$reason"
     fi
 done
 
