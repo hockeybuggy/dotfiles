@@ -29,6 +29,13 @@ tab_bar_position = "bottom"
 # Deliberate scrollback reading is prefix+[ or prefix+e, neither affected.
 mouse_scroll_lines = 1
 
+# Default "dots", which distinguishes blocked/working/done/idle purely by the
+# colour of an identical mark -- hard to read at a glance, and worse against the
+# catppuccin palette where several of those colours sit close together.
+# "symbols" gives each state its own glyph, so shape carries the meaning and
+# colour is only reinforcement.
+status_indicators = "symbols"
+
 # Bindings that pull herdr towards .tmux.conf. Plenty already agree out of the
 # box and need nothing here: prefix+minus for a stacked split, prefix+c new
 # tab, prefix+p / prefix+n tab cycling, prefix+1..9, prefix+x close pane,
