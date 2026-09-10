@@ -1,5 +1,5 @@
 # pretty.jq — turn pi's --mode json event stream into a readable live
-# view for the tmux pane. Best-effort only: the full-fidelity record is
+# view for the herdr pane. Best-effort only: the full-fidelity record is
 # the raw .jsonl log (captured upstream via tee), which the agent parses.
 #
 # Assistant deltas carry prose and reasoning. Tool execution events carry
