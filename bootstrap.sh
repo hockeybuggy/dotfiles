@@ -129,32 +129,25 @@ function doIt() {
         echo "Linked: $PWD/.config/mcp/mcp.json -> $HOME/.gemini/config/mcp_config.json"
     fi
 
-    # ~/.gemini/config/skills/* are symlinks that resolve into this repo, which
-    # agy treats as a real path outside whatever project it's running in. By
-    # default it denies (interactively: prompts "outside workspace" for) any
-    # read of a path outside the current workspace, which would otherwise
-    # make every shared skill unreadable. A read_file() allow-rule scoped to
-    # this repo's own path fixes that without loosening access anywhere else
-    # on disk -- add it to agy's personal settings file if it isn't there
-    # already; everything else in that file (colorScheme, model,
-    # trustedWorkspaces) is the user's own and stays untouched.
+    # agy reads one settings file and rewrites it itself, so it cannot be
+    # symlinked -- agents/agy/settings.json is merged into it instead. That
+    # tracked file carries only portable defaults (colour scheme, model, and
+    # an allowlist of read-only commands); machine-local keys such as
+    # trustedWorkspaces stay in the personal file and are never touched.
+    #
+    # The extra allow-rule is this repo's own path. ~/.gemini/config/skills/*
+    # are symlinks that resolve back into here, which agy treats as a real
+    # path outside whatever project it's running in. By default it denies
+    # (interactively: prompts "outside workspace" for) any read of a path
+    # outside the current workspace, which would otherwise make every shared
+    # skill unreadable. Scoping the rule to this repo fixes that without
+    # loosening access anywhere else on disk.
     mkdir -p "$HOME/.gemini/antigravity-cli"
-    python3 -c "
-import json, os
-
-path = os.path.expanduser('~/.gemini/antigravity-cli/settings.json')
-settings = {}
-if os.path.exists(path):
-    with open(path) as f:
-        settings = json.load(f)
-rule = 'read_file(' + os.getcwd() + ')'
-allow = settings.setdefault('permissions', {}).setdefault('allow', [])
-if rule not in allow:
-    allow.append(rule)
-with open(path, 'w') as f:
-    json.dump(settings, f, indent=2)
-"
-    echo "Added a read_file() allow-rule for $PWD to ~/.gemini/antigravity-cli/settings.json"
+    python3 lib/merge-agy-settings.py \
+        agents/agy/settings.json \
+        "$HOME/.gemini/antigravity-cli/settings.json" \
+        --allow-rule "read_file($PWD)"
+    echo "Merged: $PWD/agents/agy/settings.json -> ~/.gemini/antigravity-cli/settings.json"
 
     # Pi extensions are global and load from per-extension symlinks.
     if [ -d "agents/extensions" ]; then

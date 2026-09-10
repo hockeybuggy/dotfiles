@@ -39,6 +39,15 @@ Code ignores that file, so its equivalent servers come from plugins declared in
 `.claude/settings.json` under `extraKnownMarketplaces` and `enabledPlugins`.
 Adding a server usually means touching both.
 
+`agents/agy/settings.json` holds portable agy defaults — colour scheme, model,
+and an allowlist of read-only commands. agy reads only
+`~/.gemini/antigravity-cli/settings.json` and rewrites it itself, so it can't be
+symlinked; `bootstrap.sh` merges the tracked file in via
+`lib/merge-agy-settings.py` instead. The merge only ever adds, so local keys
+like `trustedWorkspaces` survive and anything already set wins. Keep home paths
+and workspace lists out of the tracked file — `test/agy-settings-merge.sh`
+enforces that.
+
 This repo is public. Anything employer-specific — internal tool paths,
 hostnames, ticket prefixes, private MCP servers — belongs in an
 untracked local file, never in a tracked one:
