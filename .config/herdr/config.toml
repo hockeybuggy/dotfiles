@@ -12,6 +12,10 @@
 # doesn't fail to load, it just quietly does nothing. Verify a binding by
 # pressing it rather than by a clean startup.
 
+# Written by herdr itself after the first-run notification prompt. It is a
+# top-level key, so it has to sit above the first [table] header.
+onboarding = false
+
 [terminal]
 # Match .tmux.conf's `default-shell`: panes should always start zsh, whatever
 # $SHELL happens to be for the process that launched the server.
