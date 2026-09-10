@@ -1,0 +1,31 @@
+{
+  "colorScheme": "dark",
+  "model": "Gemini 3.8 Flash (Medium)",
+  "permissions": {
+    "allow": [
+      "command(git status)",
+      "command(git diff)",
+      "command(git log)",
+      "command(git branch)",
+      "command(git grep)",
+      "command(git show)",
+      "command(gh)",
+      "command(herdr)",
+      "command(docker ps)",
+      "command(ls)",
+      "command(cat)",
+      "command(grep)",
+      "command(head)",
+      "command(tail)",
+      "command(which)",
+      "command(ps)",
+      "command(shasum)",
+      "command(npm test)",
+      "command(pytest)",
+      "command(python3 -m pytest)",
+      "command(./scripts/test.sh)",
+      "command(./scripts/lint.sh)",
+      "command(./scripts/typecheck.sh)"
+    ]
+  }
+}
