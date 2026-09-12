@@ -56,6 +56,12 @@ person. Do not omit it to keep a one-line comment short, and do not substitute a
 vaguer wording — the footer is the same every time so it's easy to scan for and
 easy to filter out.
 
+Inline comments are where the footer goes missing: each `comments[].body` in a
+review payload needs its **own** footer, and the review's top-level `body`
+doesn't cover them. The same goes for comments posted by any other route — a
+review command's `--comment` mode, an MCP tool, a reply to a thread. Check every
+payload before sending it (see the check below).
+
 Post a review with all its inline comments in a single call. **Build the payload
 as a JSON file and pass `--input`** — do not try to assemble the comment list
 out of `-f`/`-F` field flags (see the warning below):
@@ -84,8 +90,16 @@ cat > "$TMPDIR/review.json" <<'JSON'
 JSON
 
 gh pr view 55 --repo owner/repo --json headRefOid --jq .headRefOid  # fill in COMMIT_SHA
-gh api repos/owner/repo/pulls/55/reviews --method POST --input "$TMPDIR/review.json"
+
+jq -e '[.body, .comments[]?.body]
+  | map(select(. != null and . != ""))
+  | all(test("\n\n\\(:robot: written with [^)]+\\)$"))' "$TMPDIR/review.json" \
+  && gh api repos/owner/repo/pulls/55/reviews --method POST --input "$TMPDIR/review.json"
 ```
+
+Always gate the POST on that `jq -e` check. If it prints `false`, add the footer
+to each comment that's missing it and run the check again. Don't post first and
+fix afterwards.
 
 Omit `body` (or leave it `""`) when the review has no overall summary — the
 inline comments already carry their own footer.
