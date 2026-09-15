@@ -1,4 +1,5 @@
 add_newline = false
+command_timeout = 2000
 
 [aws]
 disabled = true
@@ -26,4 +27,10 @@ time_format = "%R"
 format = "[$time]($style) "
 
 [package]
+disabled = true
+
+[python]
+disabled = true
+
+[ruby]
 disabled = true
