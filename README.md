@@ -70,13 +70,6 @@ The `agents/extensions/` directory holds global Pi extensions. `bootstrap.sh`
 symlinks each extension into `~/.pi/agent/extensions/`; reload Pi with `/reload`
 after changing one.
 
-`/exit` quits Pi, aborting the active turn before requesting a graceful shutdown.
-It uses Pi's extension API; no changes to Pi itself are needed.
-
-Test the command with Node 22.6 or newer:
-
-    node --experimental-strip-types --test test/pi-exit-alias.mjs
-
 ## MCP servers
 
 `.config/mcp/mcp.json` is the shared, tool-agnostic MCP server list; it links
