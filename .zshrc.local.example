@@ -5,13 +5,24 @@
 # This file is untracked on purpose — keep employer tooling, private paths,
 # hostnames, and tokens here rather than in .zshrc.
 
-# Company or client CLI hooks
-# if command -v some-tool > /dev/null 2>&1; then
-#     eval "$(some-tool _hook)"
-# fi
-
 # Extra PATH entries
+#
+# Add the directory yourself rather than trusting that it is already there.
+# Entries from /etc/paths.d only reach PATH via path_helper in /etc/zprofile,
+# which non-login shells never run.
 # [[ -d "/opt/vendor/bin" ]] && export PATH="/opt/vendor/bin:$PATH"
+
+# Company or client CLI hooks
+#
+# Guard on the tool's absolute path, not `command -v`. A `command -v` guard
+# depends on PATH already being complete, so in a non-login shell it fails and
+# silently skips the whole block instead of erroring.
+#
+# Hooks like these often prepend a version manager's shims (rbenv, pyenv), so
+# any PATH entry that has to win over those belongs after the eval.
+# if [[ -x "/opt/vendor/bin/some-tool" ]]; then
+#     eval "$(/opt/vendor/bin/some-tool _hook)"
+# fi
 
 # Environment variables
 # export SOME_API_URL="https://internal.example.com"
