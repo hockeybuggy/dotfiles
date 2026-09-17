@@ -183,8 +183,8 @@ zsh_version=""
 if have nvim; then nvim_version=$(nvim --version 2>/dev/null | awk 'NR == 1 {gsub(/^v/, "", $2); print $2}'); fi
 if have tmux; then tmux_version=$(tmux -V 2>/dev/null | awk '{print $2}'); fi
 if have zsh; then zsh_version=$(zsh --version 2>/dev/null | awk '{print $2}'); fi
-# Neovim calls its 0.11 release "11.0" in the dependency documentation.
-check_min_version "neovim" nvim "$nvim_version" "0.11.0"
+# nvim-treesitter's `main` branch, which init.lua now uses, requires 0.12.
+check_min_version "neovim" nvim "$nvim_version" "0.12.0"
 check_min_version "tmux" tmux "$tmux_version" "3.5"
 check_min_version "zsh" zsh "$zsh_version" "5.0"
 check_tool "git" git
@@ -442,6 +442,8 @@ else
 fi
 
 section "Optional dependencies"
+# nvim-treesitter needs this to compile parsers; only packaged on macOS here.
+check_optional_tool "tree-sitter" tree-sitter
 if install_mode_has "$INSTALL_MODE" development; then
     if install_mode_has "$INSTALL_MODE" personal; then
         check_optional_tool "luarocks" luarocks
