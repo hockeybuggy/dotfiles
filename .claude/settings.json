@@ -29,7 +29,8 @@
       "Bash(gh issue comment)",
       "Bash(gh issue comment:*)",
       "Bash(gh pr review)",
-      "Bash(gh pr review:*)"
+      "Bash(gh pr review:*)",
+      "Bash(agy)"
     ]
   },
   "hooks": {
