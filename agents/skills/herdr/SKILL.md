@@ -141,6 +141,29 @@ On timeout the command prints a JSON error and exits 1.
 Report the command's output and exit status. Do not close a user-requested pane
 or tab after a finite command; it remains available for the user to inspect.
 
+### Signalling a backgrounded command
+
+herdr derives agent state by matching the pane's title and screen, so a command
+the agent backgrounds and stops watching leaves the pane looking **idle** — the
+user cannot tell a finished turn from one waiting on a build. Wrap such a
+command so the pane advertises the wait:
+
+```zsh
+~/.claude/skills/herdr/herdr-bg.zsh --label 'test suite' zsh -c 'npm test'
+```
+
+The wrapper sets a `bg` pane-metadata token for the command's lifetime and
+clears it on exit, and the tracked `config.toml` renders that token in the
+sidebar (prefix+b). Concurrent jobs collapse into one count. It is a
+transparent pass-through outside herdr and forwards the command's exit status,
+so it is safe to use unconditionally.
+
+Use it only for a command the agent genuinely stops waiting on. A command the
+agent blocks on already keeps the pane in `working`, and wrapping it adds
+nothing. This does **not** change the tab-bar glyph — herdr's state enum has no
+"waiting" member and a reported state loses to title detection — so it is a
+sidebar-only hint, not an at-a-glance one.
+
 ### Inspecting state
 
 ```zsh

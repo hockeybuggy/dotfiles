@@ -40,6 +40,29 @@ mouse_scroll_lines = 1
 # colour is only reinforcement.
 status_indicators = "symbols"
 
+# Surface the `bg` pane-metadata token that `agents/skills/herdr/herdr-bg.zsh`
+# sets while a wrapped command runs, so a pane waiting on a backgrounded build
+# does not read as plain idle. herdr has no state for "not idle, but not
+# thinking either" -- the state enum is idle/working/blocked/unknown -- so a
+# display-only token plus a relabelled idle state is as close as it gets.
+#
+# The token rides on a row that always has content rather than getting a row of
+# its own, which would leave every agent an extra blank line when no job is
+# running. claude needs its own entry because herdr ships a default
+# rows_by_agent for it that would otherwise ignore `rows` entirely.
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", "machine", "workspace", "tab"],
+  ["agent", { token = "$bg", fg = "#f9e2af" }],
+]
+
+[ui.sidebar.agents.rows_by_agent]
+claude = [
+  ["state_icon", "machine", "workspace", "tab"],
+  ["terminal_title_stripped", { token = "$bg", fg = "#f9e2af" }],
+  ["agent"],
+]
+
 # Bindings that pull herdr towards .tmux.conf. Plenty already agree out of the
 # box and need nothing here: prefix+minus for a stacked split, prefix+c new
 # tab, prefix+p / prefix+n tab cycling, prefix+1..9, prefix+x close pane,

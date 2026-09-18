@@ -21,6 +21,7 @@ REPO_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 "$REPO_ROOT/test/pi-pane-pretty.sh"
 "$REPO_ROOT/test/agy-pane-pretty.sh"
 "$REPO_ROOT/test/agy-settings-merge.sh"
+"$REPO_ROOT/test/herdr-bg.sh"
 
 IMAGE=dotfiles-test
 INTERACTIVE=0

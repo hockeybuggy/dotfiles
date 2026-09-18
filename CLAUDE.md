@@ -39,6 +39,14 @@ notification-log scripts under `agents/hooks/`, plus the Claude hook table,
 herdr started surfacing agent state itself. Only the `gh api` permission guard
 remains in `.claude/settings.json`. Don't reintroduce them without asking.
 
+The one gap herdr's own state detection leaves is a command an agent backgrounds
+and stops watching, which leaves the pane looking idle. `agents/skills/herdr/herdr-bg.zsh`
+wraps such a command and reports a `bg` pane-metadata token for its lifetime;
+`.config/herdr/config.toml` renders that token in the sidebar. It is a wrapper the
+agent opts into per command, deliberately not a hook. Note that `herdr config check`
+is the only way to catch a config typo — a parse error silently reverts the whole
+file to defaults.
+
 `.config/mcp/mcp.json` is the shared MCP server list, read by Pi through the
 `pi-mcp-adapter` package (install with `pi install npm:pi-mcp-adapter`). Claude
 Code ignores that file, so its equivalent servers come from plugins declared in
