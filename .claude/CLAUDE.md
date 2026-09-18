@@ -6,11 +6,15 @@ markdown directly.
 
 ## Code Comments
 
-Do NOT add explanatory comments to code. Only add a comment when the
-logic is genuinely non-obvious and cannot be clarified by naming. Never
-narrate what the code does line-by-line. Similarly, do not add extra
-tests beyond what is needed to cover the change — no redundant or
-trivial assertions.
+Do NOT add explanatory or narrative comments to code. Only add a comment
+when the logic is genuinely non-obvious, cannot be clarified by naming,
+and the comment explains *why* rather than *what*. Never add
+section-header comments, JSDoc for self-evident parameters, or comments
+restating the next line.
+
+Keep diffs minimal — no drive-by refactors or reformatting. Similarly,
+do not add extra tests beyond what is needed to cover the change — no
+redundant or trivial assertions.
 
 ## Local Files
 - Do not create Claude artifacts unless explicitly requested. Write documents, reports, plans, and other deliverables to a local file instead, then provide its path.
