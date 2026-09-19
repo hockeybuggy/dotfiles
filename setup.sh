@@ -54,6 +54,7 @@ macos_formulae() {
     mode=$1
     cat <<'EOF'
 neovim
+tree-sitter-cli
 tmux
 zsh
 git
