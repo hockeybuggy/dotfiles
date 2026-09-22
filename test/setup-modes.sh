@@ -36,6 +36,7 @@ printf '%s\n' "$work_macos" | grep -qw reattach-to-user-namespace || fail "work 
 printf '%s\n' "$personal_macos" | grep -qw duti || fail "personal macOS omits duti"
 printf '%s\n' "$minimal_linux" | grep -qw python3 || fail "minimal Linux omits bootstrap's Python runtime"
 ! printf '%s\n' "$minimal_linux" | grep -qw build-essential || fail "minimal Linux includes build tools"
+printf '%s\n' "$minimal_linux" | grep -qw gcc || fail "minimal Linux omits a C compiler for treesitter parsers"
 printf '%s\n' "$work_linux" | grep -qw build-essential || fail "work Linux omits build tools"
 printf '%s\n' "$work_linux" | grep -qw gnupg || fail "work Linux omits GnuPG"
 printf '%s\n' "$minimal_agents" | grep -qw pi || fail "minimal omits Pi"

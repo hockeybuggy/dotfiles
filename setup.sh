@@ -106,6 +106,8 @@ bat
 fzf
 unzip
 tar
+gcc
+libc6-dev
 EOF
     if install_mode_has "$mode" development; then
         cat <<'EOF'

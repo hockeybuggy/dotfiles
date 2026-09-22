@@ -189,6 +189,7 @@ check_min_version "tmux" tmux "$tmux_version" "3.5"
 check_min_version "zsh" zsh "$zsh_version" "5.0"
 check_tool "git" git
 check_tool "tree-sitter" tree-sitter
+check_tool "C compiler (cc)" cc
 check_tool "fzf" fzf
 check_tool "ripgrep (rg)" rg
 check_tool "fd" fd

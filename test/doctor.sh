@@ -51,7 +51,7 @@ exit 0
 EOF
 chmod +x "$fake_bin/tool"
 
-core_commands="nvim tmux zsh git tree-sitter fzf rg fd bat eza btm starship zoxide fnm node npm python3 pip"
+core_commands="nvim tmux zsh git tree-sitter cc fzf rg fd bat eza btm starship zoxide fnm node npm python3 pip"
 development_commands="uv gpg diff-so-fancy markdownlint cargo rustc ruff ty pgcli claude"
 minimal_agent_commands="pi agy"
 for command_name in $core_commands; do
