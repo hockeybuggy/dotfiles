@@ -188,6 +188,7 @@ check_min_version "neovim" nvim "$nvim_version" "0.12.0"
 check_min_version "tmux" tmux "$tmux_version" "3.5"
 check_min_version "zsh" zsh "$zsh_version" "5.0"
 check_tool "git" git
+check_tool "tree-sitter" tree-sitter
 check_tool "fzf" fzf
 check_tool "ripgrep (rg)" rg
 check_tool "fd" fd
@@ -442,8 +443,6 @@ else
 fi
 
 section "Optional dependencies"
-# nvim-treesitter needs this to compile parsers; only packaged on macOS here.
-check_optional_tool "tree-sitter" tree-sitter
 if install_mode_has "$INSTALL_MODE" development; then
     if install_mode_has "$INSTALL_MODE" personal; then
         check_optional_tool "luarocks" luarocks

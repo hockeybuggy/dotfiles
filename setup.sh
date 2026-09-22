@@ -332,6 +332,20 @@ setup_linux() {
         skip "neovim already installed"
     fi
 
+    # tree-sitter CLI, which nvim-treesitter needs to compile parsers
+    if ! have tree-sitter; then
+        info "Installing tree-sitter"
+        local tmp ta
+        case "$na" in x86_64) ta=x64 ;; *) ta=$na ;; esac
+        tmp=$(mktemp -d)
+        download "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-${ta}.gz" "$tmp/tree-sitter.gz"
+        gunzip "$tmp/tree-sitter.gz"
+        install -m 0755 "$tmp/tree-sitter" "$LOCAL_BIN/tree-sitter"
+        rm -rf "$tmp"
+    else
+        skip "tree-sitter already installed"
+    fi
+
     # fnm + node + npm-distributed tools (markdownlint-cli, diff-so-fancy)
     if ! have fnm; then
         info "Installing fnm"
