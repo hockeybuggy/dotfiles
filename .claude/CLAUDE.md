@@ -18,6 +18,7 @@ redundant or trivial assertions.
 
 ## Local Files
 - Do not create Claude artifacts unless explicitly requested. Write documents, reports, plans, and other deliverables to a local file instead, then provide its path.
+- Whenever you save a screenshot or other file for me to look at, give the full absolute path of every file in your reply (e.g. `/Users/me/project/shots/1-login.png`), not a relative directory heading with bare filenames under it. Expand `$TMPDIR`, `~`, and paths relative to your working directory — I can't see your cwd. Never make me ask where it went.
 
 ## Links
 - Prefer providing direct links to referenced resources when available, including files, documentation, commits, issues, pull requests, and web pages.
