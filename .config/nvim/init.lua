@@ -514,69 +514,39 @@ require('lazy').setup({
     },
 
     { -- Highlight, edit, and navigate code
-      -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-      -- The `main` branch is the one that supports Neovim 0.12; `master` is
-      -- locked to 0.11 and older. It installs parsers and queries only, so the
-      -- treesitter features themselves are Neovim's and are opted into below.
       'nvim-treesitter/nvim-treesitter',
       branch = 'main',
       lazy = false, -- This plugin does not support lazy-loading
       build = ':TSUpdate',
+      -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
       config = function()
         require('nvim-treesitter').install({
           'bash',
           'c',
-          'css',
           'diff',
-          'dockerfile',
-          'embedded_template',
-          'git_config',
-          'git_rebase',
-          'gitcommit',
-          'gitignore',
           'html',
           'htmldjango',
-          'ini',
-          'javascript',
-          'json',
           'lua',
           'luadoc',
           'markdown',
           'markdown_inline',
-          'proto',
-          'python',
           'query',
-          'requirements',
-          'ruby',
-          'rust',
-          'scss',
-          'sql',
-          'terraform',
-          'toml',
-          'tsv',
-          'tsx',
-          'typescript',
           'vim',
           'vimdoc',
-          'xml',
-          'yaml',
+          'rust',
+          'python',
+          'ruby',
         })
 
-        local treesitter_group = vim.api.nvim_create_augroup('Treesitter', { clear = true })
         vim.api.nvim_create_autocmd('FileType', {
-          group = treesitter_group,
+          group = vim.api.nvim_create_augroup('Treesitter', { clear = true }),
           callback = function(args)
-            local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
-            if not lang or not vim.treesitter.language.add(lang) then
+            if not pcall(vim.treesitter.start, args.buf) then
               return
             end
-
-            vim.treesitter.start(args.buf, lang)
-
-            -- Ruby depends on vim's regex highlighting for its indent rules, so
-            -- it keeps the legacy syntax engine and vim's own indentexpr.
-            if lang == 'ruby' then
-              vim.bo[args.buf].syntax = 'on'
+            -- GetRubyIndent relies on regex syntax groups.
+            if vim.bo[args.buf].filetype == 'ruby' then
+              vim.bo[args.buf].syntax = 'ON'
             else
               vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
             end
