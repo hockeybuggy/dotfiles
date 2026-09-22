@@ -1,6 +1,6 @@
 ---
 name: supervise-herdr-agents
-description: "Launch a dedicated agent in its own herdr tab that watches your other herdr-tracked agents and reacts the moment one goes `blocked` -- auto-answering prompts it judges safe and escalating everything else to you. Use when asked to \"supervise my agents\", \"watch my agents for blocked state\", \"let me know when an agent needs me\", \"babysit my agents\", or to keep an eye on several agent panes while you're away. Requires running inside herdr."
+description: "Launch a dedicated agent in its own herdr tab that watches your other herdr-tracked agents and reacts the moment one goes `blocked` -- auto-answering prompts it judges safe and escalating everything else to you. Use when asked to \"supervise my agents\", \"watch my agents for blocked state\", \"let me know when an agent needs me\", \"babysit my agents\", or to keep an eye on several agent panes while you're away. For checking on a single agent from the current session, use the `herdr` skill's watching recipe instead. Requires running inside herdr."
 ---
 
 # Supervising herdr agents

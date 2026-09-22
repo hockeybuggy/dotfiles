@@ -1,6 +1,6 @@
 ---
 name: herdr
-description: "Create and drive herdr panes, tabs, and workspaces. Put user-requested work in the user's running herdr session; reserve a named agent session for agent-only background work."
+description: "Create and drive herdr panes, tabs, and workspaces, and talk to or watch other agents running in them. Put user-requested work in the user's running herdr session; reserve a named agent session for agent-only background work."
 ---
 
 # Herdr Skill
@@ -141,6 +141,22 @@ On timeout the command prints a JSON error and exits 1.
 Report the command's output and exit status. Do not close a user-requested pane
 or tab after a finite command; it remains available for the user to inspect.
 
+### Restarting a long-running process
+
+To restart a dev server or watcher in the user's pane, interrupt it and wait
+for the shell to be back in the foreground before running anything. Don't
+match a prompt character like `\$` with `wait-output`, because it is already
+on screen. The shell has the foreground again once its pid leads the
+foreground process group:
+
+```zsh
+herdr pane send-keys "$pane" ctrl+c
+until herdr pane process-info --pane "$pane" | python3 -c '
+import json,sys; p=json.load(sys.stdin)["result"]["process_info"]
+sys.exit(p["foreground_process_group_id"] != p["shell_pid"])'; do sleep 2; done
+herdr pane run "$pane" 'scripts/up'
+```
+
 ### Inspecting state
 
 ```zsh
@@ -151,6 +167,92 @@ herdr session list
 ```
 
 `pane process-info` needs `--pane <id>`; it rejects a bare positional id.
+`pane read` prints plain text, not JSON.
+
+### Finding "the other pane"
+
+`pane list` has no tab labels. So when the user says "the other session" or
+"the server tab", use `peers.sh` from this skill's directory. It prints pane
+id, agent, status, tab label and cwd for the other panes in the current tab,
+or for every tab with `--all`:
+
+```zsh
+"$skill_dir/peers.sh" --all
+```
+
+If more than one pane fits, ask the user which one they mean.
+
+## Driving another agent
+
+herdr tracks the agents it recognises (Claude, pi, Codex and others) and
+reports each one as `idle`, `working`, `blocked`, `done` or `unknown`. Use the
+`herdr agent` commands for them. `pane run` and `pane read` are for shells.
+The target can be a pane id or an agent name.
+
+```zsh
+herdr agent list
+herdr agent get "$pane"              # .result.agent.agent_status
+herdr agent read "$pane" --source visible --lines 40
+herdr agent prompt "$pane" 'Relay: the owner picked option B.' --wait --timeout 600000
+```
+
+`agent prompt` is safer than `pane run`. If the agent is sitting at an
+approval or question dialog, it refuses with `agent_blocked` and sends nothing,
+where `pane run` would type straight into the dialog. With `--wait` it also
+confirms that a turn started, then returns once the agent settles. If a prompt
+times out or stalls, check `agent get` and `agent read` before sending it again,
+because it may already have been delivered.
+
+When an agent is `blocked`, read the screen and ask the user before answering
+it. Once they say how, answer with `herdr agent send-keys "$pane" 1 enter`, or
+whatever keys the dialog expects. Only send slash commands like `/compact` when
+the user asks for them.
+
+### Watching an agent
+
+When the user asks for an agent to be watched or checked on, don't poll on a
+timer. Start a background wait instead. It returns the moment the agent needs
+attention or finishes:
+
+```zsh
+herdr agent wait "$pane" --until blocked --until done --timeout 3600000
+```
+
+In Claude Code, run it with Bash `run_in_background`. The harness wakes you
+when it exits. Then read the screen, report to the user, and start the next
+wait if they want you to keep watching. For resilience, a long fallback wakeup
+(20–30 minutes) is enough, in case a wait hangs. To watch several agents and
+auto-answer safe prompts, use the `supervise-herdr-agents` skill.
+
+### Sending a prompt later
+
+Don't use `sleep N && herdr pane run …`. It fires blind, even if the agent is
+busy or blocked. Use `prompt-later.sh` from this skill's directory instead. It
+sleeps, waits for the agent to settle, and submits the prompt with
+`agent prompt`. If the agent is blocked, it sends nothing. Run it detached so
+it outlives your session:
+
+```zsh
+nohup "$skill_dir/prompt-later.sh" 10800 "$pane" 'Continue as far as you safely can.' \
+  >"$TMPDIR/prompt-later.log" 2>&1 &
+```
+
+## Remote machines
+
+Saved SSH machines take the same commands with a `--machine` prefix. Pane
+ids and agent names belong to one server, so run discovery on the remote side
+first:
+
+```zsh
+herdr --machine halite agent list
+herdr --machine halite agent prompt "$remote_pane" 'Status?' --wait --timeout 120000
+```
+
+Only add, rename, enable or remove machine profiles when the user asks. The
+first `herdr machine add` for a host has to approve installing the remote
+binary from an interactive terminal, so ask the user to run it themselves
+(`! herdr machine add --label <label> <ssh-target>`). Don't retry it
+non-interactively.
 
 ## Agent-only background work
 
