@@ -13,7 +13,7 @@ command -v jq >/dev/null 2>&1 || { echo "missing jq on PATH" >&2; exit 1; }
 scope="${HERDR_TAB_ID:?}"
 [ "${1:-}" = "--all" ] && scope=""
 
-jq -rn \
+peers="$(jq -rn \
   --argjson panes "$(herdr pane list)" \
   --argjson tabs "$(herdr tab list)" \
   --argjson agents "$(herdr agent list)" \
@@ -24,4 +24,12 @@ jq -rn \
   | $panes.result.panes[]
   | select(.pane_id != $self and ($scope == "" or .tab_id == $scope))
   | [.pane_id, ($kinds[.pane_id] // "-"), .agent_status, ($labels[.tab_id] // "-"), .cwd]
-  | @tsv'
+  | @tsv')"
+
+if [ -n "$peers" ]; then
+  printf '%s\n' "$peers"
+elif [ -n "$scope" ]; then
+  echo "no other panes in this tab (try --all)" >&2
+else
+  echo "no other panes" >&2
+fi
