@@ -50,7 +50,8 @@ to each other.
 GitHub image uploads require a browser session, so the user does this
 part. Tell them:
 
-1. The directory path holding the screenshots, and the list of files.
+1. The full absolute path of the directory holding the screenshots
+   (expand `$TMPDIR`), and the list of files.
 2. To open the PR description editor and drag the whole directory's
    contents into the comment box.
 3. To paste back the resulting markdown/`<img>` tags, in any order —
