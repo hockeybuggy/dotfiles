@@ -33,6 +33,7 @@ export PATH=$PATH:~/Library/Android/sdk/platform-tools
 export GOPATH=$HOME/go
 
 # fnm (node version manager) https://github.com/Schniz/fnm
+export PATH="$HOME/.local/share/fnm:$PATH"
 eval "$(fnm env)"
 
 # zoxide (directory jumper) https://github.com/ajeetdsouza/zoxide
@@ -140,12 +141,6 @@ function zle-line-finish () {
 zle -N zle-line-init
 zle -N zle-line-finish
 
-# fnm
-FNM_PATH="/home/hockeybuggy/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-    export PATH="$FNM_PATH:$PATH"
-    eval "`fnm env`"
-fi
 [[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 
 # Added by Antigravity CLI installer
