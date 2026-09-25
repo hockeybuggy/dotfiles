@@ -32,7 +32,7 @@ cat > "$fake_bin/tool" <<'EOF'
 #!/bin/sh
 name=${0##*/}
 case "$name" in
-    nvim) echo "NVIM v0.11.0" ;;
+    nvim) echo "NVIM v0.12.0" ;;
     tmux) echo "tmux 3.5" ;;
     zsh) [ "${1:-}" = "--version" ] && echo "zsh 5.9" ;;
     uv) case "$*" in *"python find"*) echo "3.14.0" ;; *) echo "uv 1.0" ;; esac ;;
@@ -51,7 +51,7 @@ exit 0
 EOF
 chmod +x "$fake_bin/tool"
 
-core_commands="nvim tmux zsh git fzf rg fd bat eza btm starship zoxide fnm node npm python3 pip"
+core_commands="nvim tmux zsh git tree-sitter cc fzf rg fd bat eza btm starship zoxide fnm node npm python3 pip"
 development_commands="uv gpg diff-so-fancy markdownlint cargo rustc ruff ty pgcli claude"
 minimal_agent_commands="pi agy"
 for command_name in $core_commands; do
