@@ -65,16 +65,25 @@ like `#123` and bare SHAs. GitHub autolinks the shorthand when it
 renders the description, so both end up clickable. Reusing a commit
 body that already carries full URLs is fine — don't rewrite them.
 
-For single-commit PRs, reuse the commit message: the commit subject
-becomes the PR title and the commit body becomes the PR body. Don't
-write a separate PR description that says the same thing differently.
+Keep PR descriptions short and scannable: a 1–2 sentence summary,
+then short bullets. No walls of prose. When the repository has a PR
+template or PR conventions, follow them, and write each template
+section in this style.
+
+For single-commit PRs, build the PR from the commit message: the
+subject becomes the title (unless the repository requires a different
+title format) and the body is a condensed version of the commit body.
+Keep the substance, drop the paragraphs.
+
+If a change breaks consumers, say so plainly in the PR description.
+Ask before choosing a major version or changeset bump, even when the
+repository's rules call for one.
 
 Do not hard-wrap PR descriptions. Reflow each paragraph onto a single
 line and let Markdown handle wrapping — GitHub renders hard line
 breaks as paragraph-internal line breaks, which looks bad. Hard
-wrapping at ~72 is only for commit message bodies. When reusing a
-commit message as a PR description, strip the hard line breaks within
-each paragraph but keep blank lines between paragraphs.
+wrapping at ~72 is only for commit message bodies. When condensing a
+commit message into a PR description, strip the hard line breaks.
 
 ## General
 

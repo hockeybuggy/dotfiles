@@ -30,8 +30,9 @@ embed the returned `<img>` tags in the PR description.
 
 - Same URL, same viewport, same data, same scroll position for a pair.
   Anything else makes the pair unreadable as a diff.
-- Screenshot the whole affected region — the full page or the full
-  component. Never crop to a single row or detail unless asked.
+- Capture the full affected region for every view — the full page or
+  the full component. When the change is a small detail, also capture
+  a cropped close-up pair of it.
 - Let the page settle before capturing: fonts loaded, animations done,
   spinners gone.
 
@@ -43,7 +44,8 @@ subdirectories. Default to a temp directory outside the repo (e.g.
 repo-relative path only if the user asks for one.
 
 Name files `<view>-before.png` / `<view>-after.png` so pairs sort next
-to each other.
+to each other, and close-ups `<view>-closeup-before.png` /
+`<view>-closeup-after.png`.
 
 ## Hand-off to the user
 
@@ -61,18 +63,20 @@ Wait for the user's paste. Do not invent, guess, or reuse URLs.
 
 ## Updating the PR
 
-Once the user returns the tags, build a two-column markdown table and
+Once the user returns the tags, build a labelled markdown table and
 update the PR description with `gh pr edit --body-file`:
 
 ```markdown
-| Before | After |
-| --- | --- |
-| <img src="..." width="400"> | <img src="..." width="400"> |
+| View | Before | After |
+| --- | --- | --- |
+| Login | <img src="..." width="400"> | <img src="..." width="400"> |
 ```
 
-- One row per view, with a preceding heading or a leading label column
-  when there is more than one view.
+- One row per view or close-up.
+- Before running `gh pr edit`, check that each image URL's filename
+  matches its row label and its before/after column.
 - Keep the existing PR body and append the table under a `## Screenshots`
-  heading, unless the user says otherwise.
+  heading, or into the testing section if the repo's PR template has
+  one, unless the user says otherwise.
 - Re-read the rendered body (`gh pr view --web` or `gh pr view`) to
   confirm the table renders as a table and every image resolves.
