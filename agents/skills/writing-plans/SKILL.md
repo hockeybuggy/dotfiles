@@ -1,91 +1,57 @@
 ---
 name: writing-plans
-description: Writes detailed implementation plans with bite-sized tasks, exact file paths, complete code, and TDD steps. Use when a design or spec has been approved and is ready to be turned into an implementation plan. Triggers on "write a plan for this", "create an implementation plan", "how do we build this", "plan out the implementation", or after brainstorming/design is complete. Always write plans before starting implementation — never skip to code.
+description: Write an implementation plan for another, usually less capable, model to carry out with the executing-plans skill. Use when the user asks for a plan ("write a plan", "plan out the implementation", "how do we build this"), or before starting large work.
 ---
 
 # Writing Plans
 
-**Announce:** "I'm using the writing-plans skill to create the implementation plan."
+Write a plan when the user asks for one, or before starting large work.
 
-## Principles
+## Who will execute it
 
-Write for an engineer who is **skilled but has zero context** on your codebase, tooling, or domain. Assume they:
-- Don't know file locations or naming conventions
-- Won't make good test design decisions without guidance
-- Will implement tasks out of order if the plan allows it
-- Will add extra features if the spec leaves room
+The plan is carried out by another model, often a much less capable one. If
+the user hasn't said which model, ask before writing. Scale the detail to it:
+a slightly weaker model needs the approach and the traps, while a small local
+model needs every file, function name and command spelled out, plus code for
+anything easy to get wrong.
 
-**DRY. YAGNI. TDD. Frequent commits.**
+## Where it goes
 
-## Plan Format
+Follow the repo's convention if it has one (check `AGENTS.md`/`CLAUDE.md` and
+existing plan directories). Otherwise save it to
+`.plans/YYYY-MM-DD-<name>.md`, which is ignored globally. Don't commit it.
 
-Save to: `docs/plans/YYYY-MM-DD-<feature-name>.md`
+## Format
 
 ```markdown
-# [Feature Name] Implementation Plan
+# <Feature> plan
 
-> **For implementors:** Work through tasks using the executing-plans skill.
+Execute with the `executing-plans` skill. Executor: <model>.
 
-**Goal:** [One sentence]  
-**Architecture:** [2–3 sentences]  
-**Tech stack:** [Key technologies]
+**Goal:** <one sentence>
+**Approach:** <2–3 sentences on the design and why>
+**Out of scope:** <what not to touch>
 
----
+### Task 1: <name>
 
-### Task 1: [Component Name]
+**Files:** `path/to/file.py` (modify), `tests/path/test_file.py` (create)
 
-**Files:**
-- Create: `exact/path/to/new-file.py`
-- Modify: `exact/path/to/existing.py`
-- Test: `tests/exact/path/to/test_file.py`
+**Approach:** <what to change and how, the functions involved, edge cases>
 
-- [ ] **Step 1: Write the failing test**
-  ```python
-  def test_specific_behavior():
-      result = function_under_test(input_value)
-      assert result == expected_value
-  ```
-
-- [ ] **Step 2: Run test — confirm it fails**
-  ```
-  pytest tests/exact/path/to/test_file.py::test_specific_behavior -v
-  ```
-  Expected: FAIL — `function_under_test` not defined
-
-- [ ] **Step 3: Write minimal implementation**
-  ```python
-  def function_under_test(input_value):
-      return expected_value
-  ```
-
-- [ ] **Step 4: Run test — confirm it passes**
-- [ ] **Step 5: Commit**
-  ```
-  git commit -m "feat: add function_under_test"
-  ```
+- [ ] Write a failing test for <behaviour> in `tests/path/test_file.py`
+- [ ] Run `<targeted test command>` and check it fails because <reason>
+- [ ] Implement <change>
+- [ ] Run `<targeted test command>` and check it passes
 ```
 
-## Required in Every Task
+## Rules
 
-- **Exact file paths** — no "put it somewhere in the models directory"
-- **Complete code** — no "similar to Task 3", no TBD, no "add appropriate error handling"
-- **Working test code** — not "write tests for the above"
-- **Run commands** — exact commands the implementor should run to verify
-- **Commit message** — what to commit after the task
-
-## Forbidden Patterns (These Make a Plan Fail)
-
-- `"TBD"`, `"TODO"`, `"implement later"`, `"fill in details"`
-- `"Add appropriate error handling"` without showing what the handler looks like
-- `"Write tests for the above"` without actual test code
-- `"Similar to Task N"` — repeat the code; tasks may be done out of order
-- Steps that say what to do without showing how
-
-## After Writing the Plan
-
-Self-review checklist:
-- [ ] Every requirement in the spec maps to at least one task
-- [ ] No placeholders anywhere
-- [ ] Every task has test code, implementation code, and a run command
-- [ ] Tasks are ordered so each one can be done without needing a later task
-- [ ] Total task count is realistic for the scope (2–5 min per task is ideal)
+- Every task has test-first steps and exact, **targeted** test commands.
+  Never have the executor run the full suite.
+- Order tasks so each one only depends on earlier ones.
+- Keep code to what the executor would otherwise get wrong. Don't write the
+  whole implementation into the plan.
+- No placeholders: no "TBD", "add appropriate error handling", or "similar
+  to Task 2".
+- Say where commit boundaries fall if it isn't obvious, e.g. "commit after
+  Tasks 1–3: the parser change".
