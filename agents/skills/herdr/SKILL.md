@@ -208,6 +208,26 @@ it. Once they say how, answer with `herdr agent send-keys "$pane" 1 enter`, or
 whatever keys the dialog expects. Only send slash commands like `/compact` when
 the user asks for them.
 
+### Delegating a task to another agent
+
+Never run an agent non-interactively (`pi -p`, `claude -p`, `agy
+--output-format`, `codex exec` and the like). Start it interactively in its
+own tab so the user can watch, answer its prompts and take over:
+
+```zsh
+pane="$(herdr tab create --label fix-login-bug --cwd "$worktree" --no-focus \
+  | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"]["root_pane"]["pane_id"])')"
+herdr agent start fix-login-bug --kind pi --pane "$pane"
+herdr agent prompt "$pane" "Read $prompt_file and follow it." --wait --timeout 1800000
+```
+
+The new agent has none of your context, so write the task, scope, conventions
+and how to verify it to a file first. Pass extra CLI flags after `--`, e.g.
+`herdr agent start … -- --model <model>`. When it settles, check
+`agent get`. If it is `blocked`, handle it as described above. Otherwise read
+its answer with `agent read`, then verify its changes yourself with `git
+status`, the diff and the relevant tests. Leave the tab open for the user.
+
 ### Watching an agent
 
 When the user asks for an agent to be watched or checked on, don't poll on a
