@@ -5,38 +5,31 @@ description: Creates and manages isolated git worktrees for feature development.
 
 # Using Git Worktrees
 
-**Announce:** "I'm using the using-git-worktrees skill to set up an isolated workspace."
-
 Worktrees let you work on a feature branch in a separate directory without disturbing your main working tree. Each feature gets its own directory and branch.
 
 ## Setup (run these commands)
 
 ```bash
-# 1. Make sure your main branch is clean
-git status
+# 1. Create a worktree on a new branch from the latest main
+git fetch origin
+git worktree add -b feature/feature-name .worktrees/feature-name origin/main
 
-# 2. Create a worktree for the feature
-git worktree add .worktrees/feature-name feature/feature-name
-# This creates: a new directory at .worktrees/feature-name
-#               a new branch: feature/feature-name
-
-# 3. Move into the worktree
+# 2. Move into the worktree
 cd .worktrees/feature-name
 
-# 4. Run your project setup (install deps, etc.)
+# 3. Run your project setup (install deps, etc.)
 # e.g.: npm install / pip install -r requirements.txt / bundle install
-
-# 5. Verify tests pass before touching anything
-# e.g.: pytest / npm test / rails test
 ```
+
+Don't run the full test suite to get a baseline.
 
 ## Naming Convention
 
 - Directory: `.worktrees/<feature-name>` (repo root, alongside `.git`)
 - Branch: `feature/<feature-name>` or `fix/<bug-name>`
 
-Make sure `.worktrees/` is git-ignored (add it to `.gitignore` or
-`.git/info/exclude` if it isn't already) so the nested worktrees don't
+Always put worktrees under `.worktrees/`, never in sibling directories.
+`.worktrees/` is in the global git ignore, so the nested worktrees don't
 show up as untracked content in the main tree.
 
 ## Working in the Worktree
@@ -46,16 +39,17 @@ All development happens in the worktree directory. Your main branch directory is
 ```bash
 # Check which worktrees exist
 git worktree list
+```
 
-# Remove a worktree when done (after merge)
-cd /path/to/main/repo
+## Cleaning up
+
+When the user says the branch is merged, remove its worktree and local
+branch from the main checkout:
+
+```bash
 git worktree remove .worktrees/feature-name
 git branch -d feature/feature-name
 ```
 
-## Checklist Before Starting Work
-
-- [ ] Main branch is clean (`git status` shows nothing uncommitted)
-- [ ] Worktree created on a new branch
-- [ ] Dependencies installed in worktree
-- [ ] Test suite passes in clean state (baseline confirmed)
+If `git branch -d` refuses because the PR was squash-merged, confirm it's
+merged on GitHub before using `-D`. Leave the worktree alone until then.

@@ -1,85 +1,36 @@
 ---
 name: executing-plans
-description: Executes an implementation plan in batches with human checkpoints between each batch. Use when a plan exists and should be worked through with periodic human review rather than full automation. Triggers on "execute this plan", "work through the plan", "implement step by step", or when the user wants to be involved at each checkpoint rather than letting it run fully autonomous.
+description: Carry out an implementation plan written with the writing-plans skill, from worktree to draft PR. Use when asked to "execute this plan", "work through the plan", or "implement the plan".
 ---
 
 # Executing Plans
 
-**Announce:** "I'm using the executing-plans skill. I'll work through the plan in batches and check in with you between each."
+## Before starting
 
-## Setup
+1. Read the whole plan.
+2. Create a worktree for the work with the `using-git-worktrees` skill and do
+   everything there.
 
-Before starting:
-1. Confirm which plan file to use
-2. Confirm batch size (default: 3 tasks per batch, or natural groupings)
-3. Confirm the test command to run between batches
+## Working through it
 
-## The Batch Loop
+- Work through the tasks in order without stopping to check in.
+- Stop and ask the user only when you're blocked, or when you'd need to do
+  something the plan doesn't say (a different approach, extra files, skipping
+  a task). Explain what you found and what you propose.
+- Write the failing test first, as the plan says, and check it fails before
+  implementing.
+- Run only the targeted tests the plan gives you, or the tests for files you
+  changed. **Never run the full test suite** unless the user asks.
+- Tick each step's checkbox (`- [x]`) in the plan file as you finish it, so
+  another session can pick up where you left off.
+- Commit in groups a reviewer would want to read together, not one commit
+  per task. Follow the `commit` skill for messages.
 
-### Start of Each Batch
+## When every task is done
 
-Show the user which tasks are in this batch:
-```
-Batch [N] — Tasks [X–Y]:
-- Task X: [name]
-- Task X+1: [name]
-- Task Y: [name]
-
-Starting...
-```
-
-### Work Through the Batch
-
-For each task:
-- Implement it following TDD (write test first)
-- Verify tests pass
-- Commit
-
-### End of Batch Checkpoint
-
-After completing the batch, run the full test suite, then report:
-
-```
-Batch [N] complete ✅
-
-Tasks done:
-- [X]: [brief description of what was implemented]
-- [X+1]: [brief description]
-- [Y]: [brief description]
-
-Tests: [N passing, 0 failing]
-Commits: [N]
-
-Issues encountered: [none / description of any deviations]
-
-Next batch: Tasks [A–B] — [brief description]
-Continue?
-```
-
-**Wait for user confirmation before the next batch.**
-
-## Handling Problems Mid-Batch
-
-If a task hits a blocker:
-1. Complete any tasks in the batch that don't depend on the blocked task
-2. Report the blocker clearly at the checkpoint
-3. Propose options before proceeding
-
-## Tracking Progress
-
-Maintain a running summary using the plan's checkbox syntax:
-```
-- [x] Task 1: Done
-- [x] Task 2: Done
-- [ ] Task 3: In progress (current batch)
-- [ ] Task 4: Pending
-```
-
-Show this at each checkpoint so the user can see where you are.
-
-## Checklist for Completion
-
-- [ ] All tasks checked off
-- [ ] Full test suite passing
-- [ ] No skipped tasks without user sign-off
-- [ ] Proceed to finishing-a-development-branch
+1. Check `git status` is clean and read the full diff against the base
+   branch for leftovers: debug output, stray files, unrelated changes.
+2. If the repo's `AGENTS.md`/`CLAUDE.md` says to merge locally, do that.
+   Otherwise push the branch and open a **draft** PR without asking. Ask
+   before marking it ready for review.
+3. Report the PR link and anything you deviated from in the plan.
