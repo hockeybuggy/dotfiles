@@ -103,3 +103,9 @@ the replies myself.
 
 Always use `python3`, never the bare `python` command — it isn't
 guaranteed to exist or point at Python 3.
+
+## Chrome DevTools MCP
+
+Open tabs with `new_page` using `background: true`, and don't pass
+`bringToFront: true` to `select_page` unless a page needs focus to work
+(e.g. keyboard input in an editor). Otherwise Chrome steals my focus.
