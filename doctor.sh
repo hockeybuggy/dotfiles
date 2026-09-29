@@ -251,7 +251,7 @@ else
     done < "$manifest"
 fi
 check_repo_link "Claude CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-check_repo_link "pi CLAUDE.md" "$HOME/.pi/agent/CLAUDE.md"
+check_repo_link "pi AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
 check_repo_link "agy GEMINI.md" "$HOME/.gemini/config/GEMINI.md"
 if [ -f "$HOME/.claude/settings.json" ]; then
     pass "Claude settings" "$HOME/.claude/settings.json exists"

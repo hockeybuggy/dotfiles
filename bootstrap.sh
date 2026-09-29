@@ -108,21 +108,24 @@ function doIt() {
     # Claude Code configuration
     echo "\n${GREEN}Setting up Claude Code config${RESET}"
     mkdir -p "$HOME/.claude"
-    ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-    echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.claude/CLAUDE.md"
+    # Claude Code only reads AGENTS.md from projects, so the global rules
+    # still have to be linked in as CLAUDE.md.
+    ln -sf "$PWD/agents/AGENTS.md" "$HOME/.claude/CLAUDE.md"
+    echo "Linked: $PWD/agents/AGENTS.md -> $HOME/.claude/CLAUDE.md"
 
-    # Pi coding agent: share the same CLAUDE.md as global context
+    # Pi coding agent: share the same AGENTS.md as global context
     echo "\n${GREEN}Setting up pi config${RESET}"
     mkdir -p "$HOME/.pi/agent"
-    ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.pi/agent/CLAUDE.md"
-    echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.pi/agent/CLAUDE.md"
+    [ -L "$HOME/.pi/agent/CLAUDE.md" ] && rm "$HOME/.pi/agent/CLAUDE.md"
+    ln -sf "$PWD/agents/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
+    echo "Linked: $PWD/agents/AGENTS.md -> $HOME/.pi/agent/AGENTS.md"
 
-    # Antigravity CLI (agy): share the same CLAUDE.md as global rules (agy
+    # Antigravity CLI (agy): share the same AGENTS.md as global rules (agy
     # calls this GEMINI.md) and share the MCP server list.
     echo "\n${GREEN}Setting up agy config${RESET}"
     mkdir -p "$HOME/.gemini/config"
-    ln -sf "$PWD/.claude/CLAUDE.md" "$HOME/.gemini/config/GEMINI.md"
-    echo "Linked: $PWD/.claude/CLAUDE.md -> $HOME/.gemini/config/GEMINI.md"
+    ln -sf "$PWD/agents/AGENTS.md" "$HOME/.gemini/config/GEMINI.md"
+    echo "Linked: $PWD/agents/AGENTS.md -> $HOME/.gemini/config/GEMINI.md"
 
     if [ -f ".config/mcp/mcp.json" ]; then
         ln -sf "$PWD/.config/mcp/mcp.json" "$HOME/.gemini/config/mcp_config.json"
