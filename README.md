@@ -57,10 +57,6 @@ Skills that only make sense for one agent go in a sibling directory instead:
 | `agents/skills-pi/` | Pi only |
 | `agents/skills-local/` | Claude, Pi, and agy (untracked) |
 
-agy has no agy-only sibling directory yet -- `use-agy-in-pane`, the skill that
-drives it, is Claude-only by nature (it's Claude delegating to a headless
-agy), so it lives in `agents/skills-claude/`.
-
 Move a skill between them with `git mv`, then re-run `bootstrap.sh` — it prunes
 the symlink the skill left behind in the agent that no longer gets it.
 
@@ -104,12 +100,9 @@ scoped to this repo's path in agy's personal
 `~/.gemini/antigravity-cli/settings.json`, alongside whatever prefs (colour
 scheme, model, `trustedWorkspaces`) already live there.
 
-To delegate a task to agy the way you'd delegate to Pi, use the
-`use-agy-in-pane` skill (`agents/skills-claude/use-agy-in-pane/`) -- it runs
-`agy --output-format stream-json` headless inside a visible, named tmux
-window, mirroring `use-pi-in-pane`. See
-[Antigravity's headless-mode docs](https://antigravity.google/docs/cli/headless)
-for the underlying flags.
+To delegate a task to agy (or any other agent), the `herdr` skill starts it
+interactively in its own tab with `herdr agent start` and prompts it with
+`herdr agent prompt`, so the user can watch and step in.
 
 ## herdr
 
