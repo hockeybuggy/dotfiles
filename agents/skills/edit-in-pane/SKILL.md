@@ -14,22 +14,25 @@ bash "$skill_dir/edit-in-pane.sh" "$file"
 
 `edit-in-pane.sh` (in this skill's directory) splits a focused pane below
 yours, runs `nvim <file>; exit` in it, prints `PANE=<id>`, and returns once
-the user quits nvim and the pane closes. Then read the file and continue.
+the user quits nvim and the pane closes, printing `CHANGED=yes` or
+`CHANGED=no`. Then read the file and continue.
 
 - **Write the file outside the repo** (under `$TMPDIR`) unless the user wants
   it kept, and give them its absolute path.
 - **Make it easy to fill in.** For questions, put each on its own heading with
   an empty `>` line for the answer and any suggested default in brackets, and
   say at the top that blank means "take the default".
-- **Wait without a short timeout.** The user may take a long time. If your
-  tool call times out anyway, the pane is still open, so wait again rather
-  than reopening it:
+- **Don't let the wait time out.** The user may take an hour. In Claude
+  Code, whose Bash tool caps at 10 minutes, run the script with
+  `run_in_background` and you'll be woken when it exits. In pi, pass no
+  timeout. If a wait is cut short anyway, the pane is still open, so wait
+  on it again rather than opening another:
 
   ```zsh
-  while herdr pane get "$pane" >/dev/null 2>&1; do sleep 1; done
+  until [[ "$(herdr pane get "$pane" 2>&1)" == *'"pane_not_found"'* ]]; do sleep 1; done
   ```
 
-- **An unchanged file means they bailed**, e.g. `:q!`. Ask in chat before
+- **`CHANGED=no` means they bailed**, e.g. `:q!`. Ask in chat before
   treating that as "all defaults".
 
 It also works as `$GIT_EDITOR` for commit messages and rebase todo lists:
