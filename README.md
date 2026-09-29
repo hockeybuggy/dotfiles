@@ -89,7 +89,7 @@ agy also reads `mcpServers` config directly (its own copy lives at
 ## Antigravity CLI (agy)
 
 `setup.sh` installs [agy](https://antigravity.google/docs/cli/overview)
-alongside Claude Code and Pi. `bootstrap.sh` links `CLAUDE.md` to
+alongside Claude Code and Pi. `bootstrap.sh` links `agents/AGENTS.md` to
 `~/.gemini/config/GEMINI.md` (agy's name for the same global-rules file), so
 all three agents follow the same conventions.
 

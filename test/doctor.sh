@@ -65,10 +65,10 @@ fi
 
 ln -s "$ROOT/.gitmessage" "$healthy_home/.gitmessage"
 echo "$healthy_home/.gitmessage" > "$healthy_home/.dotfiles_linked_files"
-ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.claude/CLAUDE.md"
+ln -s "$ROOT/agents/AGENTS.md" "$healthy_home/.claude/CLAUDE.md"
 mkdir -p "$healthy_home/.pi/agent" "$healthy_home/.gemini/config" "$healthy_home/.gemini/antigravity-cli"
-ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.pi/agent/CLAUDE.md"
-ln -s "$ROOT/.claude/CLAUDE.md" "$healthy_home/.gemini/config/GEMINI.md"
+ln -s "$ROOT/agents/AGENTS.md" "$healthy_home/.pi/agent/AGENTS.md"
+ln -s "$ROOT/agents/AGENTS.md" "$healthy_home/.gemini/config/GEMINI.md"
 ln -s "$ROOT/.config/mcp/mcp.json" "$healthy_home/.gemini/config/mcp_config.json"
 python3 - "$healthy_home/.gemini/antigravity-cli/settings.json" "$ROOT" <<'PY'
 import json
