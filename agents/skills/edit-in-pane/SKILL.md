@@ -1,6 +1,6 @@
 ---
 name: edit-in-pane
-description: "Hand a file to the user in nvim in a new herdr pane, wait until they quit, then read what they wrote and carry on. Use when the user wants to answer questions, review a plan, or edit a draft in their editor instead of in chat — e.g. \"put these in a file and open it in vim\", \"let me edit that\", \"open it in a pane\". Requires running inside herdr."
+description: "Hand a file to the user in nvim in a new herdr pane, wait until they quit, then read what they wrote and carry on. Use when the user wants to answer questions, review a plan, edit a draft, or write or tweak a commit message in their editor instead of in chat — e.g. \"put these in a file and open it in vim\", \"let me edit that\", \"let me write the commit message\", \"open it in a pane\". Requires running inside herdr."
 ---
 
 # Edit in pane
@@ -35,11 +35,19 @@ the user quits nvim and the pane closes, printing `CHANGED=yes` or
 - **`CHANGED=no` means they bailed**, e.g. `:q!`. Ask in chat before
   treating that as "all defaults".
 
-It also works as `$GIT_EDITOR` for commit messages and rebase todo lists:
+## Commit messages
+
+When the user wants to write or edit a commit message, use the script as
+`$GIT_EDITOR` rather than writing the message yourself and passing `-F`:
 
 ```zsh
-GIT_EDITOR="$skill_dir/edit-in-pane.sh" git commit
+GIT_EDITOR="$skill_dir/edit-in-pane.sh" git commit          # or --amend
+GIT_EDITOR="$skill_dir/edit-in-pane.sh" git rebase -i HEAD~3
 ```
+
+Git stays in charge, so `commit.verbose` shows the diff, comments are
+stripped, hooks run, and an empty message aborts the commit. A rebase opens
+one pane per editor stop.
 
 Without `$HERDR_ENV` the script exits 1. Say so, and fall back to asking in
 chat.
