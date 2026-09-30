@@ -1,11 +1,22 @@
 ---
 name: commit
-description: "Read this skill before making git commits"
+description: "Read this skill in full before making git commits"
 ---
 
 Create a git commit for the current changes. Use the user's commit
 style guide by default, and respect explicit repository-specific commit
 guidance where present.
+
+## The essentials
+
+- Subject: imperative, capitalised, no trailing period. Aim for about
+  50 characters and never go past 72.
+- Body: skip it when the subject says it all. Otherwise write at least
+  two paragraphs, the problem first and then the solution. A single
+  paragraph is not enough: add the missing one or drop the body.
+- Quoting: backticks inside a double-quoted shell string run as
+  commands and vanish from the message. Write the message with a quoted
+  heredoc (see the last step).
 
 ## Determining the format
 
@@ -36,7 +47,8 @@ Skip the body for trivial changes where the subject is self-explanatory
 When you do write a body:
 
 - Wrap lines at ~72 characters.
-- Separate paragraphs with a blank line.
+- Separate paragraphs with a blank line. Use at least two: the state
+  before the change (the problem), then how this change addresses it.
 - Use backticks around file names, variables, and code references.
 - Optionally add a final paragraph on alternatives considered, when
   the chosen approach isn't obvious.
@@ -74,4 +86,17 @@ When you do write a body:
    and create the commit without waiting for approval. Ask for review
    only when the scope or message is genuinely ambiguous, or when the
    user explicitly requests it.
-8. Run `git commit -m "<subject>"` (and `-m "<body>"` if needed).
+8. Commit with a quoted heredoc so backticks and quotes survive:
+
+   ```sh
+   git commit -F - <<'EOF'
+   Subject line
+
+   Problem paragraph.
+
+   Solution paragraph.
+   EOF
+   ```
+
+   For a subject-only commit, `git commit -m '<subject>'` with single
+   quotes is fine.
