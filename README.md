@@ -60,6 +60,26 @@ Skills that only make sense for one agent go in a sibling directory instead:
 Move a skill between them with `git mv`, then re-run `bootstrap.sh` — it prunes
 the symlink the skill left behind in the agent that no longer gets it.
 
+## Merged PR cleanup
+
+Bootstrap links `git-cleanup-merged-pr` into `~/.bin` and adds a Claude allow
+rule for that entry point only. It requires Git, `gh` authentication, and
+Python 3. Run it against the main checkout:
+
+    ~/.bin/git-cleanup-merged-pr --repo /path/to/repo 123
+    ~/.bin/git-cleanup-merged-pr --repo /path/to/repo 123 --delete-remote
+
+The command verifies the PR is merged, branch tips match its head, and its
+worktree is clean before deleting anything. It handles squash/rebase merges
+and discovers the worktree by branch rather than guessing its directory.
+Remote deletion is opt-in and uses a SHA lease; newer commits stop cleanup.
+Don't use it while another agent is using that worktree.
+
+If Claude still blocks the command, use `/permissions` → Recently denied to
+approve a retry rather than broadening permissions. Narrow allow rules are
+honoured in auto mode unless `autoMode.classifyAllShell` is enabled; see the
+[auto-mode documentation](https://code.claude.com/docs/en/auto-mode-config#route-all-shell-commands-through-the-classifier).
+
 ## Pi extensions
 
 The `agents/extensions/` directory holds global Pi extensions. `bootstrap.sh`

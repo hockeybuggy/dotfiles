@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+
+import argparse
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+
+def run(*command, cwd):
+    return subprocess.run(
+        command, cwd=cwd, text=True, capture_output=True, check=True
+    ).stdout.strip()
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Clean up a verified merged GitHub PR."
+    )
+    parser.add_argument("pr", type=int)
+    parser.add_argument("--repo", required=True, type=Path, help="Main checkout path")
+    parser.add_argument("--delete-remote", action="store_true")
+    args = parser.parse_args()
+    if args.pr <= 0:
+        parser.error("PR number must be positive")
+
+    repo = Path(run("git", "rev-parse", "--show-toplevel", cwd=args.repo)).resolve()
+    origin = run("git", "remote", "get-url", "origin", cwd=repo)
+    push_urls = run("git", "remote", "get-url", "--push", "--all", "origin", cwd=repo)
+    if push_urls.splitlines() != [origin]:
+        raise ValueError("Origin's push URL must match its fetch URL.")
+    repository = json.loads(
+        run(
+            "gh",
+            "repo",
+            "view",
+            origin,
+            "--json",
+            "nameWithOwner,defaultBranchRef",
+            cwd=repo,
+        )
+    )
+    name = repository["nameWithOwner"]
+    pr = json.loads(run("gh", "api", f"repos/{name}/pulls/{args.pr}", cwd=repo))
+    if pr["merged"] is not True:
+        raise ValueError("PR is not merged; nothing removed.")
+    if pr["head"]["repo"] is None or pr["head"]["repo"]["full_name"] != name:
+        raise ValueError("Cannot clean up a fork PR through origin.")
+    branch = pr["head"]["ref"]
+    head = pr["head"]["sha"]
+    default_branch = (repository.get("defaultBranchRef") or {}).get("name")
+    if branch in {"main", "master", default_branch, pr["base"]["ref"]}:
+        raise ValueError("Refusing to delete a protected branch.")
+    ref = f"refs/heads/{branch}"
+    run("git", "check-ref-format", ref, cwd=repo)
+
+    records = run("git", "worktree", "list", "--porcelain", "-z", cwd=repo).split(
+        "\0\0"
+    )
+    worktrees = [
+        dict(field.partition(" ")[::2] for field in record.split("\0") if field)
+        for record in records
+        if record
+    ]
+    if Path(worktrees[0]["worktree"]).resolve() != repo:
+        raise ValueError("Run cleanup from the main checkout, not a linked worktree.")
+    targets = [tree for tree in worktrees if tree.get("branch") == ref]
+    for tree in targets:
+        path = Path(tree["worktree"])
+        if path.resolve() == repo or "locked" in tree or "prunable" in tree:
+            raise ValueError(f"Cannot remove worktree: {path}")
+        if run("git", "status", "--porcelain", "--untracked-files=all", cwd=path):
+            raise ValueError(f"Worktree is not clean: {path}")
+
+    local_refs = dict(
+        line.split(" ", 1)
+        for line in run(
+            "git",
+            "for-each-ref",
+            "--format=%(refname) %(objectname)",
+            "refs/heads/",
+            cwd=repo,
+        ).splitlines()
+    )
+    local_head = local_refs.get(ref)
+    if local_head is not None and local_head != head:
+        raise ValueError(
+            "Local branch tip differs from the merged PR head; nothing removed."
+        )
+    remote_ref = run("git", "ls-remote", "--heads", "origin", ref, cwd=repo)
+    if remote_ref and remote_ref.split()[0] != head:
+        raise ValueError(
+            "Remote branch tip differs from the merged PR head; nothing removed."
+        )
+
+    if args.delete_remote and remote_ref:
+        run(
+            "git",
+            "push",
+            f"--force-with-lease={ref}:{head}",
+            "origin",
+            f":{ref}",
+            cwd=repo,
+        )
+    for tree in targets:
+        run("git", "worktree", "remove", "--", tree["worktree"], cwd=repo)
+    if local_head is not None:
+        try:
+            run("git", "branch", "-d", "--", branch, cwd=repo)
+        except subprocess.CalledProcessError:
+            if run("git", "rev-parse", "--verify", ref, cwd=repo) != head:
+                raise ValueError(
+                    "Local branch tip changed during cleanup; branch preserved."
+                )
+            run("git", "branch", "-D", "--", branch, cwd=repo)
+    print(f"Cleaned up https://github.com/{name}/pull/{args.pr} ({branch}).")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (ValueError, OSError, subprocess.CalledProcessError) as error:
+        message = (
+            error.stderr.strip()
+            if isinstance(error, subprocess.CalledProcessError)
+            else str(error)
+        )
+        sys.exit(f"Cleanup stopped: {message}")

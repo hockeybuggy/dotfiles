@@ -14,6 +14,7 @@
   "permissions": {
     "defaultMode": "auto",
     "allow": [
+      "Bash(~/.bin/git-cleanup-merged-pr *)",
       "Bash(bundle exec rspec)",
       "Bash(bundle exec rspec:*)",
       "Bash(uv run pytest)",

@@ -25,6 +25,7 @@ jobs:
         run: |
           export TERM=xterm
           ./test/setup-script-name.sh
+          python3 ./test/merged-pr-cleanup.py
           ./bootstrap.sh --personal
           export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/share/fnm:$PATH"
           export EDITOR=nvim

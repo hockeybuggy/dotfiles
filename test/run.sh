@@ -19,6 +19,7 @@ REPO_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 "$REPO_ROOT/test/mode-ci.sh"
 "$REPO_ROOT/test/setup-pgcli.sh"
 "$REPO_ROOT/test/agy-settings-merge.sh"
+python3 "$REPO_ROOT/test/merged-pr-cleanup.py"
 
 IMAGE=dotfiles-test
 INTERACTIVE=0

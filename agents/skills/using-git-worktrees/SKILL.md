@@ -1,6 +1,6 @@
 ---
 name: using-git-worktrees
-description: Creates and manages isolated git worktrees for feature development. Use when starting a new feature, working on a plan, or any time development work should be isolated from the main branch. Triggers on "start working on", "new feature", "create a branch", "implement the plan", or after a design/spec has been approved. Always set up a worktree before implementation begins.
+description: Creates and manages isolated git worktrees for feature development. Use when starting a new feature, working on a plan, or any time development work should be isolated from the main branch. Triggers on "start working on", "new feature", "create a branch", "implement the plan", or after a design/spec has been approved. Always set up a worktree before implementation begins. Also use when cleaning up a merged PR's branch or worktree.
 ---
 
 # Using Git Worktrees
@@ -43,13 +43,29 @@ git worktree list
 
 ## Cleaning up
 
-When the user says the branch is merged, remove its worktree and local
-branch from the main checkout:
+When the user confirms a merge, or repository rules require post-merge
+cleanup, use the checked helper from the main checkout. Don't remove a
+worktree another agent is still using.
 
 ```bash
-git worktree remove .worktrees/feature-name
-git branch -d feature/feature-name
+~/.bin/git-cleanup-merged-pr --repo /path/to/repo 123
 ```
 
-If `git branch -d` refuses because the PR was squash-merged, confirm it's
-merged on GitHub before using `-D`. Leave the worktree alone until then.
+Add `--delete-remote` only when the user or repository rules call for remote
+branch deletion. Check each PR independently; leave unmerged PRs alone.
+
+The helper verifies the PR is merged on GitHub before any deletion. Local
+and remote branch tips must match the merged PR's head exactly, and the
+branch's actual worktree must be clean. It rejects fork PRs, default/base
+branches, locked worktrees, and differing origin fetch/push URLs. Remote
+deletion uses an explicit SHA lease to protect changes made during cleanup.
+It tries `git branch -d` first; `-D` is only a fallback after merge and tip
+verification, so squash/rebase merges don't block safe cleanup.
+
+Bootstrap installs the helper in `~/.bin` and its narrowly scoped Claude
+permission rule. Do not add blanket permissions for Git deletion commands.
+If the helper is missing, ask the user to run bootstrap with their recorded
+mode. If tool permissions block it, report the exact command and denial and
+request scoped approval; in Claude, direct the user to `/permissions` →
+Recently denied to approve a retry. Don't disguise the command or bypass
+the block with an interpreter or alternative deletion commands.
