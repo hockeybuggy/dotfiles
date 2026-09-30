@@ -33,8 +33,9 @@ message without asking for approval by default. Ask only when the scope
 or message is genuinely ambiguous, or when the user explicitly asks to
 review it first.
 
-Imperative mood, capitalize the first word, keep the subject under 50
-characters. No trailing period. No conventional commits prefixes.
+Imperative mood, capitalize the first word, aim for about 50 characters
+in the subject and never go past 72. No trailing period. No conventional
+commits prefixes.
 
 Good verbs: Fix, Add, Change, Improve, Remove
 
