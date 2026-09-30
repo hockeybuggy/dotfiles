@@ -33,6 +33,12 @@
       "Bash(agy)"
     ]
   },
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Merged Git cleanup: Allow removing clean, inactive worktrees and deleting local and configured-remote feature branches in the working repository after verifying the associated PR is merged and the branch has no work outside that merge. Allow git branch -D for verified squash/rebase merges. Remote branch deletion is allowed when the user or repository rules request post-merge remote cleanup. This does not allow deleting default, shared or release branches, discarding uncommitted work, or force-pushing."
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {
