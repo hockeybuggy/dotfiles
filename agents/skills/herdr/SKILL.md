@@ -77,8 +77,12 @@ herdr pane run "$pane" 'rg badger'
 
 ### New tab in the current workspace
 
+Always pass `--workspace "$HERDR_WORKSPACE_ID"`. Without it, `tab create` uses
+the *focused* workspace, which is wherever the user is looking, not the
+workspace the agent runs in.
+
 ```zsh
-tab="$(herdr tab create --label search --cwd "$PWD" --no-focus \
+tab="$(herdr tab create --workspace "$HERDR_WORKSPACE_ID" --label search --cwd "$PWD" --no-focus \
   | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"]["tab"]["tab_id"])')"
 ```
 
@@ -215,7 +219,8 @@ Never run an agent non-interactively (`pi -p`, `claude -p`, `agy
 own tab so the user can watch, answer its prompts and take over:
 
 ```zsh
-pane="$(herdr tab create --label fix-login-bug --cwd "$worktree" --no-focus \
+pane="$(herdr tab create --workspace "$HERDR_WORKSPACE_ID" --label fix-login-bug \
+  --cwd "$worktree" --no-focus \
   | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"]["root_pane"]["pane_id"])')"
 herdr agent start fix-login-bug --kind pi --pane "$pane"
 herdr agent prompt "$pane" "Read $prompt_file and follow it." --wait --timeout 1800000

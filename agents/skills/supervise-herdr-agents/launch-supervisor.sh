@@ -25,7 +25,7 @@ require jq
 [ -n "${HERDR_ENV:-}" ] || { echo "not inside herdr -- start this from a herdr pane" >&2; exit 1; }
 [ -f "$mission_file" ] || { echo "mission file not found: $mission_file" >&2; exit 1; }
 
-tab_json="$(herdr tab create --cwd "$PWD" --label "$label" --no-focus)"
+tab_json="$(herdr tab create --workspace "$HERDR_WORKSPACE_ID" --cwd "$PWD" --label "$label" --no-focus)"
 tab_id="$(jq -r '.result.tab.tab_id' <<<"$tab_json")"
 pane_id="$(jq -r '.result.root_pane.pane_id' <<<"$tab_json")"
 
