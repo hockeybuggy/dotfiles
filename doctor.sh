@@ -260,6 +260,10 @@ else
 fi
 if [ -f "$DOTFILES/.config/mcp/mcp.json" ]; then
     check_repo_link "agy mcp_config.json" "$HOME/.gemini/config/mcp_config.json"
+    check_repo_link "pi mcp.json" "$HOME/.pi/agent/mcp.json"
+fi
+if grep -q 'npm:pi-mcp-adapter' "$HOME/.pi/agent/settings.json" 2>/dev/null; then
+    warn "pi MCP" "pi-mcp-adapter overrides built-in MCP; run: pi remove npm:pi-mcp-adapter"
 fi
 agy_settings="$HOME/.gemini/antigravity-cli/settings.json"
 if [ -f "$agy_settings" ] && python3 -c "

@@ -120,6 +120,11 @@ function doIt() {
     ln -sf "$PWD/agents/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
     echo "Linked: $PWD/agents/AGENTS.md -> $HOME/.pi/agent/AGENTS.md"
 
+    if [ -f ".config/mcp/mcp.json" ]; then
+        ln -sf "$PWD/.config/mcp/mcp.json" "$HOME/.pi/agent/mcp.json"
+        echo "Linked: $PWD/.config/mcp/mcp.json -> $HOME/.pi/agent/mcp.json"
+    fi
+
     # Antigravity CLI (agy): share the same AGENTS.md as global rules (agy
     # calls this GEMINI.md) and share the MCP server list.
     echo "\n${GREEN}Setting up agy config${RESET}"

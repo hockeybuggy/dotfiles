@@ -68,13 +68,16 @@ after changing one.
 
 ## MCP servers
 
-`.config/mcp/mcp.json` is the shared, tool-agnostic MCP server list; it links
-to `~/.config/mcp/mcp.json`, the highest-precedence source for Pi's
-[`pi-mcp-adapter`](https://pi.dev/packages/pi-mcp-adapter) package. Install the
-adapter once per machine (it records itself in the untracked
-`~/.pi/agent/settings.json`):
+`.config/mcp/mcp.json` is the shared, tool-agnostic MCP server list.
+`bootstrap.sh` links it to `~/.pi/agent/mcp.json`, where Pi's
+[built-in MCP support](https://pi.dev/docs/latest/mcp) reads it. Check the
+servers with:
 
-    pi install npm:pi-mcp-adapter
+    pi mcp list
+
+Don't install `pi-mcp-adapter` alongside it. The adapter replaces the built-in
+support, and Pi then ignores `mcp.json`; `doctor.sh` warns when it is still
+installed. Remove it with `pi remove npm:pi-mcp-adapter`.
 
 Claude Code does not read that file, so it gets the same servers through
 plugins instead. `.claude/settings.json` declares the marketplaces and enabled
