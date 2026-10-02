@@ -20,6 +20,30 @@ source "$DOTFILES/lib/install-mode.sh"
 GREEN=$(tput setaf 2)
 RESET=$(tput sgr0)
 
+function section() {
+    printf '\n%s\n' "${GREEN}$1${RESET}"
+}
+
+# Paths inside the repo print relative to it, and paths under $HOME print with ~.
+function short() {
+    # shellcheck disable=SC2088
+    case "$1" in
+        "$DOTFILES"/*) printf '%s' "${1#"$DOTFILES"/}" ;;
+        "$HOME"/*) printf '~/%s' "${1#"$HOME"/}" ;;
+        *) printf '%s' "$1" ;;
+    esac
+}
+
+# Usage: report <label> <source> <destination>...
+function report() {
+    local label=$1 src=${2%/} dst
+    shift 2
+    printf '%s: %s\n' "$label" "$(short "$src")"
+    for dst in "$@"; do
+        printf '    -> %s\n' "$(short "$dst")"
+    done
+}
+
 function usage() {
     install_mode_usage "./bootstrap.sh"
 }
@@ -56,29 +80,21 @@ function parseArgs() {
 }
 
 function doIt() {
-    # Clean up old symlinks first
-    if [ -f "$LINKED_FILES" ]; then
-        echo "${GREEN}Found previous linked files list, cleaning up old symlinks...${RESET}"
-        while IFS= read -r link; do
-            if [ -L "$link" ]; then
-                rm "$link"
-                echo "Removed symlink: $link"
-            fi
-        done < "$LINKED_FILES"
-        rm "$LINKED_FILES"
-        echo "Cleanup complete."
-    fi
-
-    echo "\n${GREEN}Symlinking files${RESET}"
-    # Initialize the linked files list
-    touch "$LINKED_FILES"
+    section "Symlinking files"
+    new_linked_files="$LINKED_FILES.tmp.$$"
+    : > "$new_linked_files"
 
     # Array of excluded files/directories (in addition to .gitignore)
     excluded=(
         ".git"
         ".claude"
+        ".github"
         "agents"
+        "lib"
+        "test"
         "bootstrap.sh"
+        "doctor.sh"
+        "setup.sh"
         "CLAUDE.md"
         "README.md"
     )
@@ -96,39 +112,45 @@ function doIt() {
 
             mkdir -p "$(dirname "$HOME/$file")"
             ln -sf "$PWD/$file" "$HOME/$file"
-            echo "Linked: $PWD/$file -> $HOME/$file"
-
-            # Add the symlink path to our linked files list
-            echo "$HOME/$file" >> "$LINKED_FILES"
+            report "Linked" "$PWD/$file" "$HOME/$file"
+            echo "$HOME/$file" >> "$new_linked_files"
         fi
     done
 
-    echo "Created linked files list at $PWD/$LINKED_FILES with $(wc -l < "$LINKED_FILES" | tr -d ' ') entries."
+    # Unlink whatever the previous run linked that no longer exists here.
+    if [ -f "$LINKED_FILES" ]; then
+        while IFS= read -r link; do
+            if [ -L "$link" ] && ! grep -qxF "$link" "$new_linked_files"; then
+                rm "$link"
+                echo "Removed stale link: $(short "$link")"
+            fi
+        done < "$LINKED_FILES"
+    fi
+    mv "$new_linked_files" "$LINKED_FILES"
 
-    # Claude Code configuration
-    echo "\n${GREEN}Setting up Claude Code config${RESET}"
+    section "Setting up Claude Code config"
     mkdir -p "$HOME/.claude"
     # Claude Code only reads AGENTS.md from projects, so the global rules
     # still have to be linked in as CLAUDE.md.
     ln -sf "$PWD/agents/AGENTS.md" "$HOME/.claude/CLAUDE.md"
-    echo "Linked: $PWD/agents/AGENTS.md -> $HOME/.claude/CLAUDE.md"
+    report "Linked" "$PWD/agents/AGENTS.md" "$HOME/.claude/CLAUDE.md"
 
     # Pi coding agent: share the same AGENTS.md as global context
-    echo "\n${GREEN}Setting up pi config${RESET}"
+    section "Setting up pi config"
     mkdir -p "$HOME/.pi/agent"
     [ -L "$HOME/.pi/agent/CLAUDE.md" ] && rm "$HOME/.pi/agent/CLAUDE.md"
     ln -sf "$PWD/agents/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
-    echo "Linked: $PWD/agents/AGENTS.md -> $HOME/.pi/agent/AGENTS.md"
+    report "Linked" "$PWD/agents/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
 
     if [ -f ".config/mcp/mcp.json" ]; then
         ln -sf "$PWD/.config/mcp/mcp.json" "$HOME/.pi/agent/mcp.json"
-        echo "Linked: $PWD/.config/mcp/mcp.json -> $HOME/.pi/agent/mcp.json"
+        report "Linked" "$PWD/.config/mcp/mcp.json" "$HOME/.pi/agent/mcp.json"
     fi
 
     # Pi rewrites its settings file itself, so merge in the tracked defaults
     # rather than symlinking it, the same way as agy's settings below.
     python3 lib/merge-settings.py agents/pi/settings.json "$HOME/.pi/agent/settings.json"
-    echo "Merged: $PWD/agents/pi/settings.json -> ~/.pi/agent/settings.json"
+    report "Merged" "$PWD/agents/pi/settings.json" "$HOME/.pi/agent/settings.json"
 
     # Pi records packages only in its own settings file, so uninstall the
     # ones earlier setups added by hand. pi-mcp-adapter would also replace Pi's
@@ -136,21 +158,21 @@ function doIt() {
     if command -v pi >/dev/null 2>&1; then
         for package in npm:pi-mcp-adapter npm:pi-web-access npm:@ifi/oh-pi-themes; do
             if grep -qF "\"$package\"" "$HOME/.pi/agent/settings.json" 2>/dev/null; then
-                pi remove "$package" && echo "Removed pi package: $package"
+                pi remove "$package" >/dev/null && echo "Removed pi package: $package"
             fi
         done
     fi
 
     # Antigravity CLI (agy): share the same AGENTS.md as global rules (agy
     # calls this GEMINI.md) and share the MCP server list.
-    echo "\n${GREEN}Setting up agy config${RESET}"
+    section "Setting up agy config"
     mkdir -p "$HOME/.gemini/config"
     ln -sf "$PWD/agents/AGENTS.md" "$HOME/.gemini/config/GEMINI.md"
-    echo "Linked: $PWD/agents/AGENTS.md -> $HOME/.gemini/config/GEMINI.md"
+    report "Linked" "$PWD/agents/AGENTS.md" "$HOME/.gemini/config/GEMINI.md"
 
     if [ -f ".config/mcp/mcp.json" ]; then
         ln -sf "$PWD/.config/mcp/mcp.json" "$HOME/.gemini/config/mcp_config.json"
-        echo "Linked: $PWD/.config/mcp/mcp.json -> $HOME/.gemini/config/mcp_config.json"
+        report "Linked" "$PWD/.config/mcp/mcp.json" "$HOME/.gemini/config/mcp_config.json"
     fi
 
     # agy reads one settings file and rewrites it itself, so it cannot be
@@ -171,7 +193,9 @@ function doIt() {
         agents/agy/settings.json \
         "$HOME/.gemini/antigravity-cli/settings.json" \
         --allow-rule "read_file($PWD)"
-    echo "Merged: $PWD/agents/agy/settings.json -> ~/.gemini/antigravity-cli/settings.json"
+    report "Merged" "$PWD/agents/agy/settings.json" "$HOME/.gemini/antigravity-cli/settings.json"
+
+    section "Linking Pi extensions and agent skills"
 
     # Pi extensions are global and load from per-extension symlinks.
     if [ -d "agents/extensions" ]; then
@@ -180,7 +204,7 @@ function doIt() {
             [ -f "$extension" ] || continue
             extension_name=$(basename "$extension")
             ln -sfn "$extension" "$HOME/.pi/agent/extensions/$extension_name"
-            echo "Linked extension: $extension -> ~/.pi/agent/extensions/$extension_name"
+            report "Linked extension" "$extension" "$HOME/.pi/agent/extensions/$extension_name"
         done
     fi
 
@@ -192,13 +216,13 @@ function doIt() {
     for stale in "$HOME/.gemini/config/hooks.json" "$HOME/.pi/agent/extensions/notifications.ts"; do
         if [ -L "$stale" ] && [ ! -e "$stale" ]; then
             rm -f "$stale"
-            echo "Removed stale link: $stale"
+            echo "Removed stale link: $(short "$stale")"
         fi
     done
     for stale_dir in "$HOME/.claude/hooks" "$HOME/.pi/agent/scripts" "$HOME/.pi/agent/hooks"; do
         if [ -d "$stale_dir" ]; then
             find "$stale_dir" -maxdepth 1 -type l ! -exec test -e {} \; -delete 2>/dev/null
-            rmdir "$stale_dir" 2>/dev/null && echo "Removed empty $stale_dir"
+            rmdir "$stale_dir" 2>/dev/null && echo "Removed empty $(short "$stale_dir")"
         fi
     done
 
@@ -211,7 +235,10 @@ function doIt() {
     #   agents/skills-pi       Pi only (tracked)
     #   agents/skills-local    both agents (untracked, work-specific)
     #
-    # Both agents discover skills through per-skill symlinks, so a skill works
+    # agy only understands agent-agnostic skills, so it gets the "both"
+    # directories too -- not agents/skills-claude or agents/skills-pi.
+    #
+    # The agents discover skills through per-skill symlinks, so a skill works
     # the same way whichever directory it lives in.
     #
     # ~/.pi/agent/skills used to be a single symlink to agents/skills; replace
@@ -233,32 +260,20 @@ function doIt() {
         for skill_dir in "$PWD/$skills_root"/*/; do
             [ -d "$skill_dir" ] || continue
             skill_name=$(basename "$skill_dir")
-            targets=""
+            targets=()
             case "$skills_agents" in
-                both|claude)
-                    ln -sfn "$skill_dir" "$HOME/.claude/skills/$skill_name"
-                    targets="~/.claude/skills/$skill_name"
-                    ;;
+                both|claude) targets+=("$HOME/.claude/skills/$skill_name") ;;
             esac
             case "$skills_agents" in
-                both|pi)
-                    ln -sfn "$skill_dir" "$HOME/.pi/agent/skills/$skill_name"
-                    targets="${targets:+$targets, }~/.pi/agent/skills/$skill_name"
-                    ;;
+                both|pi) targets+=("$HOME/.pi/agent/skills/$skill_name") ;;
             esac
-            echo "Linked skill: $skill_dir -> $targets"
-        done
-    done
-
-    # agy only understands agent-agnostic skills, so it gets the shared and
-    # local directories -- not agents/skills-claude or agents/skills-pi.
-    for skills_root in "agents/skills" "agents/skills-local"; do
-        [ -d "$skills_root" ] || continue
-        for skill_dir in "$PWD/$skills_root"/*/; do
-            [ -d "$skill_dir" ] || continue
-            skill_name=$(basename "$skill_dir")
-            ln -sfn "$skill_dir" "$HOME/.gemini/config/skills/$skill_name"
-            echo "Linked skill: $skill_dir -> ~/.gemini/config/skills/$skill_name"
+            case "$skills_agents" in
+                both) targets+=("$HOME/.gemini/config/skills/$skill_name") ;;
+            esac
+            for target in "${targets[@]}"; do
+                ln -sfn "$skill_dir" "$target"
+            done
+            report "Linked skill" "$skill_dir" "${targets[@]}"
         done
     done
 
@@ -270,10 +285,11 @@ function doIt() {
             [ -L "$skill_link" ] || continue
             [ -e "$skill_link" ] && continue
             rm -f "$skill_link"
-            echo "Pruned stale skill link: $skill_link"
+            echo "Pruned stale skill link: $(short "$skill_link")"
         done
     done
 
+    section "Setting up Claude Code settings"
     if [ -f ".claude/settings.local.json" ]; then
         python3 -c "
 import json, sys
@@ -297,14 +313,14 @@ base = json.load(open('.claude/settings.json'))
 local = json.load(open('.claude/settings.local.json'))
 deep_merge(base, local)
 json.dump(base, open(sys.argv[1], 'w'), indent=2)
-print('Merged .claude/settings.json + settings.local.json -> ' + sys.argv[1])
 " "$HOME/.claude/settings.json"
+        report "Merged" "$PWD/.claude/settings.json + settings.local.json" "$HOME/.claude/settings.json"
     else
         cp ".claude/settings.json" "$HOME/.claude/settings.json"
-        echo "Copied: .claude/settings.json -> $HOME/.claude/settings.json"
+        report "Copied" "$PWD/.claude/settings.json" "$HOME/.claude/settings.json"
     fi
 
-    echo "\n${GREEN}Done${RESET}"
+    section "Done"
 }
 
 if parseArgs "$@"; then
@@ -327,6 +343,6 @@ doIt
 mode_tmp="$MODE_FILE.tmp.$$"
 printf '%s\n' "$INSTALL_MODE" > "$mode_tmp"
 mv "$mode_tmp" "$MODE_FILE"
-echo "Recorded install mode: $INSTALL_MODE ($MODE_FILE)"
+echo "Recorded install mode: $INSTALL_MODE ($(short "$MODE_FILE"))"
 
 unset doIt
