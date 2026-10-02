@@ -125,7 +125,12 @@ function doIt() {
         echo "Linked: $PWD/.config/mcp/mcp.json -> $HOME/.pi/agent/mcp.json"
     fi
 
-    # Pi records packages only in the untracked settings.json, so uninstall the
+    # Pi rewrites its settings file itself, so merge in the tracked defaults
+    # rather than symlinking it, the same way as agy's settings below.
+    python3 lib/merge-settings.py agents/pi/settings.json "$HOME/.pi/agent/settings.json"
+    echo "Merged: $PWD/agents/pi/settings.json -> ~/.pi/agent/settings.json"
+
+    # Pi records packages only in its own settings file, so uninstall the
     # ones earlier setups added by hand. pi-mcp-adapter would also replace Pi's
     # built-in MCP support.
     if command -v pi >/dev/null 2>&1; then
@@ -162,7 +167,7 @@ function doIt() {
     # skill unreadable. Scoping the rule to this repo fixes that without
     # loosening access anywhere else on disk.
     mkdir -p "$HOME/.gemini/antigravity-cli"
-    python3 lib/merge-agy-settings.py \
+    python3 lib/merge-settings.py \
         agents/agy/settings.json \
         "$HOME/.gemini/antigravity-cli/settings.json" \
         --allow-rule "read_file($PWD)"

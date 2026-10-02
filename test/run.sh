@@ -18,7 +18,7 @@ REPO_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 "$REPO_ROOT/test/setup-modes.sh"
 "$REPO_ROOT/test/mode-ci.sh"
 "$REPO_ROOT/test/setup-pgcli.sh"
-"$REPO_ROOT/test/agy-settings-merge.sh"
+"$REPO_ROOT/test/settings-merge.sh"
 
 IMAGE=dotfiles-test
 INTERACTIVE=0
