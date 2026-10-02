@@ -66,6 +66,13 @@ The `agents/extensions/` directory holds global Pi extensions. `bootstrap.sh`
 symlinks each extension into `~/.pi/agent/extensions/`; reload Pi with `/reload`
 after changing one.
 
+## Pi settings
+
+`agents/pi/settings.json` holds portable Pi defaults (provider, model, and
+thinking level). Pi rewrites `~/.pi/agent/settings.json` itself, so
+`bootstrap.sh` merges the tracked file into it rather than symlinking it. The
+merge only adds keys that are missing, so anything already set locally wins.
+
 ## MCP servers
 
 `.config/mcp/mcp.json` is the shared, tool-agnostic MCP server list.

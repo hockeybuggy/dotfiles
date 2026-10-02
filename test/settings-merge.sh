@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# agy-settings-merge.sh -- prove lib/merge-agy-settings.py only ever adds to
-# agy's personal settings file.
+# settings-merge.sh -- prove lib/merge-settings.py only ever adds to an
+# agent's personal settings file.
 #
 # The file being merged into is the user's only copy of these settings, and
 # agy rewrites it behind our back, so the risks worth pinning down are all
@@ -12,7 +12,7 @@
 set -euo pipefail
 
 REPO_ROOT=$(cd "$(dirname "$0")/.." && pwd)
-MERGE="$REPO_ROOT/lib/merge-agy-settings.py"
+MERGE="$REPO_ROOT/lib/merge-settings.py"
 
 workdir=$(mktemp -d)
 trap 'rm -rf "$workdir"' EXIT
@@ -31,7 +31,7 @@ cat > "$defaults" <<'JSON'
 JSON
 
 fail() {
-    echo "agy settings merge: $1" >&2
+    echo "settings merge: $1" >&2
     exit 1
 }
 
@@ -103,4 +103,13 @@ for rule in allow:
         'tracked rule contains a home path: ' + rule
 " "$REPO_ROOT/agents/agy/settings.json" || fail "agents/agy/settings.json is not portable"
 
-echo "agy settings merge: ok"
+python3 -c "
+import json, sys
+text = open(sys.argv[1]).read()
+settings = json.loads(text)
+for key in ('lastChangelogVersion', 'packages', 'enabledModels'):
+    assert key not in settings, key + ' must stay local'
+assert '/Users/' not in text and '/home/' not in text, 'tracked file contains a home path'
+" "$REPO_ROOT/agents/pi/settings.json" || fail "agents/pi/settings.json is not portable"
+
+echo "settings merge: ok"

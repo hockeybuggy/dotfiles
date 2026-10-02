@@ -54,13 +54,14 @@ equivalent servers come from plugins declared in `.claude/settings.json` under
 Adding a server usually means touching both.
 
 `agents/agy/settings.json` holds portable agy defaults — colour scheme, model,
-and an allowlist of read-only commands. agy reads only
-`~/.gemini/antigravity-cli/settings.json` and rewrites it itself, so it can't be
-symlinked; `bootstrap.sh` merges the tracked file in via
-`lib/merge-agy-settings.py` instead. The merge only ever adds, so local keys
-like `trustedWorkspaces` survive and anything already set wins. Keep home paths
-and workspace lists out of the tracked file — `test/agy-settings-merge.sh`
-enforces that.
+and an allowlist of read-only commands. `agents/pi/settings.json` does the same
+for Pi — default provider, model, and thinking level. Both agents rewrite their
+own settings files (`~/.gemini/antigravity-cli/settings.json` and
+`~/.pi/agent/settings.json`), so neither can be symlinked; `bootstrap.sh` merges
+the tracked files in via `lib/merge-settings.py` instead. The merge only ever
+adds, so local keys like `trustedWorkspaces` survive and anything already set
+wins. Keep home paths, workspace lists, and machine-specific model lists out of
+the tracked files — `test/settings-merge.sh` enforces that.
 
 This repo is public. Anything employer-specific — internal tool paths,
 hostnames, ticket prefixes, private MCP servers — belongs in an

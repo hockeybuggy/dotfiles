@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Merge this repo's tracked agy defaults into agy's personal settings file.
+"""Merge this repo's tracked agent defaults into an agent's personal settings.
+
+Pi and agy both rewrite their own settings files, so neither can be tracked
+directly. Pi writes ~/.pi/agent/settings.json whenever a preference or its own
+bookkeeping changes, which would churn a symlinked copy in this repo.
 
 agy reads exactly one settings file, ~/.gemini/antigravity-cli/settings.json,
 with no project-level or .local layer to override it. It also rewrites that
@@ -13,7 +17,7 @@ the user put it there deliberately. Nothing is ever removed, so machine-local
 keys such as trustedWorkspaces survive untouched.
 
 Usage:
-  merge-agy-settings.py <defaults.json> <target.json> [--allow-rule RULE ...]
+  merge-settings.py <defaults.json> <target.json> [--allow-rule RULE ...]
 """
 
 import argparse
@@ -52,13 +56,13 @@ def load(path, what):
     except (OSError, ValueError) as err:
         # Never overwrite a file we could not parse -- it is the user's only
         # copy of these settings.
-        sys.exit(f"merge-agy-settings: cannot read {what} {path}: {err}")
+        sys.exit(f"merge-settings: cannot read {what} {path}: {err}")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("defaults", help="tracked defaults to merge in")
-    parser.add_argument("target", help="agy's personal settings file")
+    parser.add_argument("target", help="the agent's personal settings file")
     parser.add_argument(
         "--allow-rule",
         action="append",
