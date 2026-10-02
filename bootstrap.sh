@@ -125,6 +125,17 @@ function doIt() {
         echo "Linked: $PWD/.config/mcp/mcp.json -> $HOME/.pi/agent/mcp.json"
     fi
 
+    # Pi records packages only in the untracked settings.json, so uninstall the
+    # ones earlier setups added by hand. pi-mcp-adapter would also replace Pi's
+    # built-in MCP support.
+    if command -v pi >/dev/null 2>&1; then
+        for package in npm:pi-mcp-adapter npm:pi-web-access npm:@ifi/oh-pi-themes; do
+            if grep -qF "\"$package\"" "$HOME/.pi/agent/settings.json" 2>/dev/null; then
+                pi remove "$package" && echo "Removed pi package: $package"
+            fi
+        done
+    fi
+
     # Antigravity CLI (agy): share the same AGENTS.md as global rules (agy
     # calls this GEMINI.md) and share the MCP server list.
     echo "\n${GREEN}Setting up agy config${RESET}"

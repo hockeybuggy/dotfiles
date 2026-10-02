@@ -76,8 +76,9 @@ servers with:
     pi mcp list
 
 Don't install `pi-mcp-adapter` alongside it. The adapter replaces the built-in
-support, and Pi then ignores `mcp.json`; `doctor.sh` warns when it is still
-installed. Remove it with `pi remove npm:pi-mcp-adapter`.
+support, and Pi then ignores `mcp.json`. `bootstrap.sh` uninstalls it, along
+with the `pi-web-access` and `@ifi/oh-pi-themes` packages earlier setups added
+by hand, and `doctor.sh` warns if the adapter is still installed.
 
 Claude Code does not read that file, so it gets the same servers through
 plugins instead. `.claude/settings.json` declares the marketplaces and enabled
