@@ -128,12 +128,17 @@ setup_macos() {
 
     info "Installing $INSTALL_MODE formulae with Homebrew"
     # Intentional word splitting: macos_formulae emits one formula per line.
+    # -q drops the "already installed" warning brew prints for each formula.
     # shellcheck disable=SC2046
-    brew install $(macos_formulae "$INSTALL_MODE")
+    brew install -q $(macos_formulae "$INSTALL_MODE")
 
     if install_mode_has "$INSTALL_MODE" workstation; then
-        info "Installing the Inconsolata Nerd Font"
-        brew install --cask font-inconsolata-nerd-font || warn "Font install failed (continuing)"
+        if brew list --cask font-inconsolata-nerd-font >/dev/null 2>&1; then
+            skip "Inconsolata Nerd Font already installed"
+        else
+            info "Installing the Inconsolata Nerd Font"
+            brew install --cask font-inconsolata-nerd-font || warn "Font install failed (continuing)"
+        fi
     fi
 
     if install_mode_has "$INSTALL_MODE" development; then
@@ -184,7 +189,9 @@ APPLESCRIPT
 
     mkdir -p "$HOME/Applications"
     rm -rf "$MD_HANDLER_APP"
-    osacompile -o "$MD_HANDLER_APP" "$src"
+    # osacompile always reports re-signing the bundle it just built.
+    local out
+    out=$(osacompile -o "$MD_HANDLER_APP" "$src" 2>&1) || { echo "$out" >&2; return 1; }
     rm -rf "$tmpdir"
 
     # osacompile leaves no bundle id and a catch-all Viewer document type. Give
@@ -363,10 +370,10 @@ setup_linux() {
 
 setup_python_tools() {
     info "Installing Python 3.14, ruff, ty and pgcli"
-    uv python install 3.14
-    uv tool install --python 3.14 ruff
-    uv tool install --python 3.14 ty
-    uv tool install --python 3.14 --with psycopg-binary pgcli
+    uv python install 3.14 --quiet
+    uv tool install --python 3.14 ruff --quiet
+    uv tool install --python 3.14 ty --quiet
+    uv tool install --python 3.14 --with psycopg-binary pgcli --quiet
 }
 
 # ---------------------------------------------------------------------------
