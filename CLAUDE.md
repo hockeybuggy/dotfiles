@@ -44,10 +44,13 @@ notification-log scripts under `agents/hooks/`, plus the Claude hook table,
 herdr started surfacing agent state itself. Only the `gh api` permission guard
 remains in `.claude/settings.json`. Don't reintroduce them without asking.
 
-`.config/mcp/mcp.json` is the shared MCP server list, read by Pi through the
-`pi-mcp-adapter` package (install with `pi install npm:pi-mcp-adapter`). Claude
-Code ignores that file, so its equivalent servers come from plugins declared in
-`.claude/settings.json` under `extraKnownMarketplaces` and `enabledPlugins`.
+`.config/mcp/mcp.json` is the shared MCP server list. Bootstrap links it to
+`~/.pi/agent/mcp.json` for Pi's built-in MCP support and to agy's
+`mcp_config.json`. Keep Pi-only keys such as `exposure` out of it, since agy
+reads the same file. `pi-mcp-adapter` must not be installed: it replaces the
+built-in and Pi then ignores `mcp.json`. Claude Code ignores that file, so its
+equivalent servers come from plugins declared in `.claude/settings.json` under
+`extraKnownMarketplaces` and `enabledPlugins`.
 Adding a server usually means touching both.
 
 `agents/agy/settings.json` holds portable agy defaults — colour scheme, model,

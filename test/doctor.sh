@@ -70,6 +70,7 @@ mkdir -p "$healthy_home/.pi/agent" "$healthy_home/.gemini/config" "$healthy_home
 ln -s "$ROOT/agents/AGENTS.md" "$healthy_home/.pi/agent/AGENTS.md"
 ln -s "$ROOT/agents/AGENTS.md" "$healthy_home/.gemini/config/GEMINI.md"
 ln -s "$ROOT/.config/mcp/mcp.json" "$healthy_home/.gemini/config/mcp_config.json"
+ln -s "$ROOT/.config/mcp/mcp.json" "$healthy_home/.pi/agent/mcp.json"
 python3 - "$healthy_home/.gemini/antigravity-cli/settings.json" "$ROOT" <<'PY'
 import json
 import sys
@@ -151,6 +152,13 @@ output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT
 status=$?
 [ "$status" -eq 0 ] || fail "expected a healthy personal setup to exit 0, got $status: $output"
 printf '%s\n' "$output" | grep -q "luarocks" || fail "personal mode omits Lua tool checks"
+
+echo '{"packages": ["npm:pi-mcp-adapter"]}' > "$healthy_home/.pi/agent/settings.json"
+set +e
+output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+set -e
+printf '%s\n' "$output" | grep -Eq '![[:space:]]+pi MCP' || fail "doctor does not warn about pi-mcp-adapter"
+rm "$healthy_home/.pi/agent/settings.json"
 
 printf 'invalid\n' > "$healthy_home/.dotfiles_mode"
 set +e
