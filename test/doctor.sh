@@ -32,8 +32,8 @@ cat > "$fake_bin/tool" <<'EOF'
 #!/bin/sh
 name=${0##*/}
 case "$name" in
-    nvim) echo "NVIM v0.11.0" ;;
-    tmux) echo "tmux 3.5" ;;
+    nvim) echo "NVIM v0.12.0" ;;
+    tmux) echo "tmux 3.8" ;;
     zsh) [ "${1:-}" = "--version" ] && echo "zsh 5.9" ;;
     uv) case "$*" in *"python find"*) echo "3.14.0" ;; *) echo "uv 1.0" ;; esac ;;
     git)
