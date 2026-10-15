@@ -180,9 +180,9 @@ can poke around in tmux yourself:
 ## Dependencies
 
 1. Executables
-    1. neovim - 11.0
-    1. tmux - 3.5
-    1. [herdr](https://herdr.dev/) - 0.8
+    1. neovim - 0.12
+    1. tmux - 3.8
+    1. [herdr](https://herdr.dev/) - 0.9
     1. iterm2
 1. command line utils
     1. zsh  - 5.0

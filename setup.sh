@@ -326,7 +326,7 @@ setup_linux() {
         "https://github.com/ClementTsang/bottom/releases/latest/download/bottom_${ra}-unknown-linux-gnu.tar.gz" \
         "btm"
 
-    # neovim (official tarball; apt's is far older than the README's 11.0)
+    # neovim (official tarball; apt's is far older than the README's 0.12)
     if ! have nvim; then
         info "Installing neovim"
         local tmp

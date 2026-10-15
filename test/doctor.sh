@@ -32,8 +32,8 @@ cat > "$fake_bin/tool" <<'EOF'
 #!/bin/sh
 name=${0##*/}
 case "$name" in
-    nvim) echo "NVIM v0.11.0" ;;
-    tmux) echo "tmux 3.5" ;;
+    nvim) echo "NVIM v0.12.0" ;;
+    tmux) echo "tmux 3.8" ;;
     zsh) [ "${1:-}" = "--version" ] && echo "zsh 5.9" ;;
     uv) case "$*" in *"python find"*) echo "3.14.0" ;; *) echo "uv 1.0" ;; esac ;;
     git)
@@ -107,8 +107,10 @@ printf '%s\n' "$output" | grep -Eq '✗[[:space:]]+Pi' || fail "minimal mode did
 for command_name in $minimal_agent_commands; do
     ln -s tool "$fake_bin/$command_name"
 done
+set +e
 output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
 status=$?
+set -e
 [ "$status" -eq 0 ] || fail "expected a healthy minimal setup to exit 0, got $status: $output"
 printf '%s\n' "$output" | grep -q "Mode.*minimal" || fail "minimal mode is not displayed"
 if printf '%s\n' "$output" | grep -Eq '✗[[:space:]]+(uv|Claude Code|cargo)'; then
@@ -116,6 +118,7 @@ if printf '%s\n' "$output" | grep -Eq '✗[[:space:]]+(uv|Claude Code|cargo)'; t
 fi
 
 rm "$fake_bin/pi" "$fake_bin/agy"
+ln -s tool "$fake_bin/herdr"
 printf 'work\n' > "$healthy_home/.dotfiles_mode"
 set +e
 output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
@@ -128,8 +131,10 @@ for command_name in $development_commands; do
     ln -s tool "$fake_bin/$command_name"
 done
 
+set +e
 output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
 status=$?
+set -e
 [ "$status" -eq 0 ] || fail "expected a healthy work setup without Pi and agy, got $status: $output"
 printf '%s\n' "$output" | grep -q "0 FAIL" || fail "healthy summary contains failures"
 printf '%s\n' "$output" | grep -Eq '^[[:space:]]+✓[[:space:]]+pgcli[[:space:]]' || fail "missing pgcli check"
@@ -148,8 +153,10 @@ set -e
 for command_name in $minimal_agent_commands; do
     ln -s tool "$fake_bin/$command_name"
 done
+set +e
 output=$(HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
 status=$?
+set -e
 [ "$status" -eq 0 ] || fail "expected a healthy personal setup to exit 0, got $status: $output"
 printf '%s\n' "$output" | grep -q "luarocks" || fail "personal mode omits Lua tool checks"
 
