@@ -56,6 +56,8 @@ export RUST_SRC_PATH=$HOME/programs/rust/src
 alias -g L="| less"
 alias -g DN="> /dev/null"
 
+alias /exit="exit"
+
 bindkey -s "^T" "^[Isudo ^[A" # "T" for "toughguy". credit -> thoughtbot
 
 #------------------------------
