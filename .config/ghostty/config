@@ -1,4 +1,7 @@
 theme = dark:iTerm2 Solarized Dark,light:iTerm2 Solarized Light
+# Uncomment for a light terminal while the system theme is dark.
+# theme = iTerm2 Solarized Light
+
 font-family = InconsolataLGC Nerd Font
 font-size = 17
 
