@@ -34,8 +34,8 @@ tab_bar_position = "bottom"
 mouse_scroll_lines = 1
 
 # Default "dots", which distinguishes blocked/working/done/idle purely by the
-# colour of an identical mark -- hard to read at a glance, and worse against the
-# catppuccin palette where several of those colours sit close together.
+# colour of an identical mark -- hard to read at a glance, and worse against a
+# palette where several of those colours sit close together.
 # "symbols" gives each state its own glyph, so shape carries the meaning and
 # colour is only reinforcement.
 status_indicators = "symbols"
@@ -110,5 +110,5 @@ focus_agent = "prefix+alt+1..9"
 #     no vi-keys equivalent; prefix+e opens the scrollback in $EDITOR.
 
 [theme]
-name = "catppuccin"
+name = "solarized"
 auto_switch = false
