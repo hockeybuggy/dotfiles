@@ -10,9 +10,8 @@ that profile's expected tools and configuration. Use `doctor.sh --strict` when
 warnings should also fail. Use `doctor.sh --ci` for checks in CI.
 
 `agents/AGENTS.md` holds the global agent rules. Bootstrap links it into
-Claude Code as `~/.claude/CLAUDE.md` (Claude only reads `CLAUDE.md` from
-projects), into Pi as `~/.pi/agent/AGENTS.md`, and into agy as
-`~/.gemini/config/GEMINI.md`.
+Claude Code as `~/.claude/CLAUDE.md`, into Pi as `~/.pi/agent/AGENTS.md`,
+and into agy as `~/.gemini/config/GEMINI.md`.
 
 The `.claude/` directory contains global Claude Code config. The
 bootstrap script handles it specially — it merges `settings.json` with
