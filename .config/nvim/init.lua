@@ -515,11 +515,13 @@ require('lazy').setup({
 
     { -- Highlight, edit, and navigate code
       'nvim-treesitter/nvim-treesitter',
+      branch = 'main',
+      lazy = false,
       build = ':TSUpdate',
-      main = 'nvim-treesitter.configs', -- Sets main module to use for opts
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-      opts = {
-        ensure_installed = {
+      config = function()
+        local ts = require('nvim-treesitter')
+        ts.install({
           'bash',
           'c',
           'diff',
@@ -535,18 +537,40 @@ require('lazy').setup({
           'rust',
           'python',
           'ruby',
-        },
-        -- Autoinstall languages that are not installed
-        auto_install = true,
-        highlight = {
-          enable = true,
-          -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-          --  If you are experiencing weird indenting issues, add the language to
-          --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-          additional_vim_regex_highlighting = { 'ruby' },
-        },
-        indent = { enable = true, disable = { 'ruby' } },
-      },
+        })
+
+        local function attach(buf, lang)
+          if not pcall(vim.treesitter.start, buf, lang) then
+            return
+          end
+          -- Ruby relies on vim's regex highlighting for its indent rules.
+          if lang == 'ruby' then
+            vim.bo[buf].syntax = 'on'
+          else
+            vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
+        end
+
+        local available = ts.get_available()
+        vim.api.nvim_create_autocmd('FileType', {
+          group = vim.api.nvim_create_augroup('treesitter-attach', { clear = true }),
+          callback = function(args)
+            local lang = vim.treesitter.language.get_lang(args.match)
+            if not lang then
+              return
+            end
+            if vim.tbl_contains(ts.get_installed(), lang) or not vim.tbl_contains(available, lang) then
+              attach(args.buf, lang)
+              return
+            end
+            ts.install(lang):await(vim.schedule_wrap(function()
+              if vim.api.nvim_buf_is_valid(args.buf) then
+                attach(args.buf, lang)
+              end
+            end))
+          end,
+        })
+      end,
     },
 
     {

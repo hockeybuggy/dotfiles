@@ -54,6 +54,7 @@ macos_formulae() {
     mode=$1
     cat <<'EOF'
 neovim
+tree-sitter-cli
 tmux
 zsh
 git
@@ -326,7 +327,7 @@ setup_linux() {
         "https://github.com/ClementTsang/bottom/releases/latest/download/bottom_${ra}-unknown-linux-gnu.tar.gz" \
         "btm"
 
-    # neovim (official tarball; apt's is far older than the README's 11.0)
+    # neovim (official tarball; apt's is far older than the README's 0.12)
     if ! have nvim; then
         info "Installing neovim"
         local tmp
@@ -336,6 +337,16 @@ setup_linux() {
         rm -rf "$tmp"
     else
         skip "neovim already installed"
+    fi
+
+    # tree-sitter CLI, which nvim-treesitter needs to build parsers
+    if ! have tree-sitter; then
+        info "Installing tree-sitter"
+        download "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-${na/x86_64/x64}.gz" "$LOCAL_BIN/tree-sitter.gz"
+        gunzip -f "$LOCAL_BIN/tree-sitter.gz"
+        chmod 0755 "$LOCAL_BIN/tree-sitter"
+    else
+        skip "tree-sitter already installed"
     fi
 
     # fnm + node + npm-distributed tools (markdownlint-cli, diff-so-fancy)
