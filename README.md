@@ -182,7 +182,7 @@ can poke around in tmux yourself:
 1. Executables
     1. neovim - 0.12
     1. tree-sitter CLI - 0.26.1
-    1. tmux - 3.8
+    1. tmux - 3.5
     1. [herdr](https://herdr.dev/) - 0.9.5
     1. iterm2
 1. command line utils

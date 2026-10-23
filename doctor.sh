@@ -184,7 +184,7 @@ if have nvim; then nvim_version=$(nvim --version 2>/dev/null | awk 'NR == 1 {gsu
 if have tmux; then tmux_version=$(tmux -V 2>/dev/null | awk '{print $2}'); fi
 if have zsh; then zsh_version=$(zsh --version 2>/dev/null | awk '{print $2}'); fi
 check_min_version "neovim" nvim "$nvim_version" "0.12.0"
-check_min_version "tmux" tmux "$tmux_version" "3.8"
+check_min_version "tmux" tmux "$tmux_version" "3.5"
 check_min_version "zsh" zsh "$zsh_version" "5.0"
 check_tool "tree-sitter" tree-sitter
 check_tool "git" git
