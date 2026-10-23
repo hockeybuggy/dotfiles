@@ -43,6 +43,7 @@ eval "$(zoxide init zsh)"
 export WORKON_HOME="$HOME/devel/envs"
 export GREP_OPTIONS="--color=auto"
 export XDG_CONFIG_HOME="$HOME/.config"
+export EZA_CONFIG_DIR="$XDG_CONFIG_HOME/eza"
 export EXERCISM_CONFIG_FILE=$XDG_CONFIG_HOME/exercism
 export RUST_SRC_PATH=$HOME/programs/rust/src
 
