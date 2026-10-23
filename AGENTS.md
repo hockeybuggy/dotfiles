@@ -80,6 +80,3 @@ rather than hardcoding private namespaces.
 Keep changes focused. Don't over-engineer things.
 
 Please use Canadian spelling (e.g., colour, centre, travelling, defence) in your responses and when writing code/documentation.
-
-`CLAUDE.md` in this repo is a symlink to `AGENTS.md`, because Claude Code
-does not read `AGENTS.md` itself. Edit `AGENTS.md`.
