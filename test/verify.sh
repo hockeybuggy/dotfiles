@@ -52,6 +52,7 @@ checks_for_mode() {
         "starship|starship --version"
         "zoxide|zoxide --version"
         "neovim|nvim --version"
+        "tree-sitter|tree-sitter --version"
         "tmux|tmux -V"
         "zsh|zsh --version"
         "git|git --version"
