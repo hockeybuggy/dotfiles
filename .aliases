@@ -15,12 +15,12 @@ alias vi="nvim"
 alias vim="nvim"
 
 # LS aliases
-alias ls="eza --long"
-alias la="eza --long --all"
-alias ll="eza --long"
+alias ls="eza --long --no-user"
+alias la="eza --long --no-user --all"
+alias ll="eza --long --no-user"
 alias lt="eza --tree --git-ignore | bat"
-alias lg="eza --long --git-ignore --git"
-alias lla="eza --long --all | bat"
+alias lg="eza --long --no-user --git-ignore --git"
+alias lla="eza --long --no-user --all | bat"
 
 # Python aliases
 alias py="python3"
