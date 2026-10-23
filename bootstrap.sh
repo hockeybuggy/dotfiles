@@ -130,8 +130,6 @@ function doIt() {
 
     section "Setting up Claude Code config"
     mkdir -p "$HOME/.claude"
-    # Claude Code only reads AGENTS.md from projects, so the global rules
-    # still have to be linked in as CLAUDE.md.
     ln -sf "$PWD/agents/AGENTS.md" "$HOME/.claude/CLAUDE.md"
     report "Linked" "$PWD/agents/AGENTS.md" "$HOME/.claude/CLAUDE.md"
 
