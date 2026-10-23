@@ -1,6 +1,7 @@
 # The bashrc of Douglas James Anderson
 
 export PATH="$HOME/.bin:$PATH"
+export EZA_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/eza"
 
 
 #------------------------------
