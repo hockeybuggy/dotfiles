@@ -47,10 +47,13 @@ Every comment you post to a PR — inline, review body, or top-level — ends wi
 an attribution footer on its own line, separated by a blank line:
 
 ```
-(:robot: written with <model name>)
+(🤖 written with <model name>)
 ```
 
-Use your own model's name, e.g. `(:robot: written with Claude Opus 5)`. A human
+Use the literal 🤖 emoji, not `:robot:` — GitHub leaves the shortcode unrendered
+immediately after `(`.
+
+Use your own model's name, e.g. `(🤖 written with Claude Opus 5)`. A human
 reading the thread should never have to guess whether they're replying to a
 person. Do not omit it to keep a one-line comment short, and do not substitute a
 vaguer wording — the footer is the same every time so it's easy to scan for and
@@ -76,14 +79,14 @@ cat > "$TMPDIR/review.json" <<'JSON'
       "path": "lib/parser.rb",
       "line": 42,
       "side": "RIGHT",
-      "body": "This drops the nil case — `value` can be nil here.\n\n(:robot: written with Claude Opus 5)"
+      "body": "This drops the nil case — `value` can be nil here.\n\n(🤖 written with Claude Opus 5)"
     },
     {
       "path": "lib/parser.rb",
       "start_line": 51,
       "line": 58,
       "side": "RIGHT",
-      "body": "This loop re-reads the file on every pass.\n\n(:robot: written with Claude Opus 5)"
+      "body": "This loop re-reads the file on every pass.\n\n(🤖 written with Claude Opus 5)"
     }
   ]
 }
@@ -93,7 +96,7 @@ gh pr view 55 --repo owner/repo --json headRefOid --jq .headRefOid  # fill in CO
 
 jq -e '[.body, .comments[]?.body]
   | map(select(. != null and . != ""))
-  | all(test("\n\n\\(:robot: written with [^)]+\\)$"))' "$TMPDIR/review.json" \
+  | all(test("\n\n\\(🤖 written with [^)]+\\)$"))' "$TMPDIR/review.json" \
   && gh api repos/owner/repo/pulls/55/reviews --method POST --input "$TMPDIR/review.json"
 ```
 
@@ -138,7 +141,7 @@ existing inline thread rather than starting a new top-level one:
 gh api repos/owner/repo/pulls/55/comments/<comment-id>/replies \
   --method POST --field body="Fixed in the latest push.
 
-(:robot: written with Claude Opus 5)"
+(🤖 written with Claude Opus 5)"
 ```
 
 ## Returning URLs to the user
