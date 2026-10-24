@@ -17,7 +17,7 @@ anything easy to get wrong.
 
 ## Where it goes
 
-Follow the repo's convention if it has one (check `AGENTS.md`/`CLAUDE.md` and
+Follow the repo's convention if it has one (check `AGENTS.md` and
 existing plan directories). Otherwise save it to
 `.plans/YYYY-MM-DD-<name>.md`, which is ignored globally. Don't commit it.
 
