@@ -1,3 +1,5 @@
+export PATH="$PATH:$HOME/.docker/bin"
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 
