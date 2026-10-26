@@ -7,6 +7,7 @@ alias :e="echo 'Nope. Not vim dummy.' && sleep 1 && vim"
 # Common shorthands
 alias l="bat"  # Alias comes from the fact that this used to be `less`
 alias cc="claude"
+alias oc="opencode"
 alias g="git"
 alias t="tmux"
 
