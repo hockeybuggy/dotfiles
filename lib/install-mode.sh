@@ -15,7 +15,7 @@ install_mode_has() {
         core)
             install_mode_is_valid "$mode"
             ;;
-        development|claude|workstation|herdr)
+        development|claude|opencode|workstation|herdr)
             case "$mode" in
                 work|personal) return 0 ;;
                 *) return 1 ;;

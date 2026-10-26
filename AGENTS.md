@@ -62,6 +62,16 @@ adds, so local keys like `trustedWorkspaces` survive and anything already set
 wins. Keep home paths, workspace lists, and machine-specific model lists out of
 the tracked files — `test/settings-merge.sh` enforces that.
 
+`agents/opencode/` holds OpenCode config. OpenCode never rewrites
+`opencode.json`, so bootstrap regenerates `~/.config/opencode/opencode.json`
+from the tracked `opencode.json` plus the gitignored `opencode.local.json`
+via `lib/merge-local.py` (the same merge as Claude's settings). The local file
+is copied from `opencode.local.json.example` on first run. The TUI rewrites
+`cli.json`, so the tracked `cli.json` (theme) is only merged in with
+`lib/merge-settings.py`, like Pi and agy. Plugins in
+`agents/opencode/plugins/` are symlinked into `~/.config/opencode/plugins/`;
+`ask-gh-api-comment-writes.js` mirrors Claude's `gh api` permission guard.
+
 This repo is public. Anything employer-specific — internal tool paths,
 hostnames, ticket prefixes, private MCP servers — belongs in an
 untracked local file, never in a tracked one:
@@ -69,6 +79,7 @@ untracked local file, never in a tracked one:
 - `~/.zshrc.local` for shell setup (sourced last by `.zshrc`)
 - `~/.gitconfig.local` for Git identity and signing
 - `.claude/settings.local.json` for Claude plugins and permissions
+- `agents/opencode/opencode.local.json` for OpenCode providers, models and MCP servers
 - `agents/skills-local/` for work-specific skills
 
 Each has a tracked `.example` counterpart where one makes sense. When

@@ -112,4 +112,19 @@ for key in ('lastChangelogVersion', 'packages', 'enabledModels'):
 assert '/Users/' not in text and '/home/' not in text, 'tracked file contains a home path'
 " "$REPO_ROOT/agents/pi/settings.json" || fail "agents/pi/settings.json is not portable"
 
+for tracked in agents/opencode/opencode.json agents/opencode/opencode.local.json.example agents/opencode/cli.json; do
+    python3 -c "
+import json, sys
+text = open(sys.argv[1]).read()
+settings = json.loads(text)
+assert '/Users/' not in text and '/home/' not in text, 'tracked file contains a home path'
+" "$REPO_ROOT/$tracked" || fail "$tracked is not portable"
+done
+python3 -c "
+import json, sys
+settings = json.load(open(sys.argv[1]))
+assert 'providers' not in settings and 'mcp' not in settings
+" "$REPO_ROOT/agents/opencode/opencode.json" \
+    || fail "agents/opencode/opencode.json must not define providers or mcp; keep them in opencode.local.json"
+
 echo "settings merge: ok"

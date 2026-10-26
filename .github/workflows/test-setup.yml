@@ -26,7 +26,7 @@ jobs:
           export TERM=xterm
           ./test/setup-script-name.sh
           ./bootstrap.sh --personal
-          export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/share/fnm:$PATH"
+          export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.cargo/bin:$HOME/.local/share/fnm:$PATH"
           export EDITOR=nvim
           ./test/verify.sh --mode personal
           ./doctor.sh --ci

@@ -52,7 +52,7 @@ EOF
 chmod +x "$fake_bin/tool"
 
 core_commands="nvim tree-sitter tmux zsh git fzf rg fd bat eza btm starship zoxide fnm node npm python3 pip"
-development_commands="uv gpg diff-so-fancy markdownlint cargo rustc ruff ty pgcli claude"
+development_commands="uv gpg diff-so-fancy markdownlint cargo rustc ruff ty pgcli claude opencode"
 minimal_agent_commands="pi agy"
 for command_name in $core_commands; do
     ln -s tool "$fake_bin/$command_name"
