@@ -409,12 +409,13 @@ setup_herdr() {
 }
 
 # ---------------------------------------------------------------------------
-# Coding agents (Claude Code, Pi, Antigravity CLI)
+# Coding agents (Claude Code, OpenCode, Pi, Antigravity CLI)
 # ---------------------------------------------------------------------------
 
 agent_commands() {
     mode=$1
     install_mode_has "$mode" claude && echo claude
+    install_mode_has "$mode" opencode && echo opencode
     install_mode_has "$mode" pi && echo pi
     install_mode_has "$mode" agy && echo agy
     return 0
@@ -430,6 +431,17 @@ setup_agents() {
         else
             info "Installing Claude Code"
             curl -fsSL https://claude.ai/install.sh | bash || warn "Claude Code install failed (continuing)"
+        fi
+    fi
+
+    if install_mode_has "$mode" opencode; then
+        # OpenCode 2: official installer, drops `opencode` into ~/.opencode/bin.
+        # .zshrc already adds that to PATH, so stop the installer editing rc files.
+        if have opencode || [ -x "$HOME/.opencode/bin/opencode" ]; then
+            skip "OpenCode already installed"
+        else
+            info "Installing OpenCode"
+            curl -fsSL https://opencode.ai/v2/install | bash -s -- --no-modify-path || warn "OpenCode install failed (continuing)"
         fi
     fi
 

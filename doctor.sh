@@ -283,6 +283,11 @@ if install_mode_has "$INSTALL_MODE" claude; then
 else
     note "Claude Code" "not required for $INSTALL_MODE mode"
 fi
+if install_mode_has "$INSTALL_MODE" opencode; then
+    check_tool "OpenCode" opencode
+else
+    note "OpenCode" "not required for $INSTALL_MODE mode"
+fi
 if install_mode_has "$INSTALL_MODE" pi; then
     check_tool "Pi" pi
 else

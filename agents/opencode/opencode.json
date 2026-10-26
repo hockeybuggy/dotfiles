@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permissions": [
+    { "action": "shell", "resource": "bundle exec rspec *", "effect": "allow" },
+    { "action": "shell", "resource": "uv run pytest *", "effect": "allow" },
+    { "action": "shell", "resource": "uv run pyright *", "effect": "allow" },
+    { "action": "shell", "resource": "uv run black --check *", "effect": "allow" },
+    { "action": "shell", "resource": "gh pr comment *", "effect": "ask" },
+    { "action": "shell", "resource": "gh issue comment *", "effect": "ask" },
+    { "action": "shell", "resource": "gh pr review *", "effect": "ask" },
+    { "action": "shell", "resource": "agy *", "effect": "ask" }
+  ]
+}

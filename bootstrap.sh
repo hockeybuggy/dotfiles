@@ -289,34 +289,35 @@ function doIt() {
 
     section "Setting up Claude Code settings"
     if [ -f ".claude/settings.local.json" ]; then
-        python3 -c "
-import json, sys
-
-def deep_merge(base, local):
-    # Recursively merge so nested dicts (e.g. permissions.ask and
-    # permissions.allow) are combined rather than wholesale replaced.
-    for key, value in local.items():
-        if isinstance(value, dict) and isinstance(base.get(key), dict):
-            deep_merge(base[key], value)
-        elif isinstance(value, list) and isinstance(base.get(key), list):
-            # Union lists (e.g. permissions.allow) so tracked base entries
-            # and machine-local entries combine instead of local replacing
-            # base wholesale.
-            base[key] = base[key] + [v for v in value if v not in base[key]]
-        else:
-            base[key] = value
-    return base
-
-base = json.load(open('.claude/settings.json'))
-local = json.load(open('.claude/settings.local.json'))
-deep_merge(base, local)
-json.dump(base, open(sys.argv[1], 'w'), indent=2)
-" "$HOME/.claude/settings.json"
+        python3 lib/merge-local.py .claude/settings.json .claude/settings.local.json "$HOME/.claude/settings.json"
         report "Merged" "$PWD/.claude/settings.json + settings.local.json" "$HOME/.claude/settings.json"
     else
         cp ".claude/settings.json" "$HOME/.claude/settings.json"
         report "Copied" "$PWD/.claude/settings.json" "$HOME/.claude/settings.json"
     fi
+
+    # OpenCode never rewrites opencode.json, so it is regenerated from the
+    # tracked file plus the gitignored machine-local overlay. cli.json is
+    # rewritten by the TUI, so its tracked defaults are only merged in.
+    section "Setting up OpenCode config"
+    mkdir -p "$HOME/.config/opencode"
+    if [ ! -f "agents/opencode/opencode.local.json" ]; then
+        cp agents/opencode/opencode.local.json.example agents/opencode/opencode.local.json
+        report "Copied" "$PWD/agents/opencode/opencode.local.json.example" "$PWD/agents/opencode/opencode.local.json"
+    fi
+    python3 lib/merge-local.py \
+        agents/opencode/opencode.json \
+        agents/opencode/opencode.local.json \
+        "$HOME/.config/opencode/opencode.json"
+    report "Merged" "$PWD/agents/opencode/opencode.json + opencode.local.json" "$HOME/.config/opencode/opencode.json"
+    python3 lib/merge-settings.py agents/opencode/cli.json "$HOME/.config/opencode/cli.json"
+    report "Merged" "$PWD/agents/opencode/cli.json" "$HOME/.config/opencode/cli.json"
+    mkdir -p "$HOME/.config/opencode/plugins"
+    for plugin in "$PWD"/agents/opencode/plugins/*.js; do
+        [ -f "$plugin" ] || continue
+        ln -sf "$plugin" "$HOME/.config/opencode/plugins/$(basename "$plugin")"
+        report "Linked plugin" "$plugin" "$HOME/.config/opencode/plugins/$(basename "$plugin")"
+    done
 
     section "Done"
 }

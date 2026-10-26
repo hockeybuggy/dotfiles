@@ -30,7 +30,7 @@ if [ ! -f "$HOME/.dotfiles_mode" ] || [ "$(cat "$HOME/.dotfiles_mode")" != "$mod
 fi
 
 # Make every installed tool resolvable regardless of the .zshrc fnm path quirk.
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/share/fnm:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.cargo/bin:$HOME/.local/share/fnm:$PATH"
 # shellcheck source=/dev/null
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 if command -v fnm >/dev/null 2>&1; then
@@ -75,6 +75,7 @@ checks_for_mode() {
                 "diff-so-fancy|command -v diff-so-fancy"
                 "markdownlint|markdownlint --version"
                 "Claude Code|claude --version"
+                "OpenCode|opencode --version"
             )
             ;;
     esac

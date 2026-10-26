@@ -1,0 +1,10 @@
+{
+  "providers": {
+    "openai": {
+      "models": {
+        "gpt-6-sol": { "disabled": true },
+        "gpt-5.6-sol": { "disabled": true }
+      }
+    }
+  }
+}
