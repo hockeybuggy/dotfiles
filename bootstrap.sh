@@ -313,9 +313,9 @@ function doIt() {
     python3 lib/merge-settings.py agents/opencode/cli.json "$HOME/.config/opencode/cli.json"
     report "Merged" "$PWD/agents/opencode/cli.json" "$HOME/.config/opencode/cli.json"
     mkdir -p "$HOME/.config/opencode/plugins"
-    for plugin in "$PWD"/agents/opencode/plugins/*.js; do
-        [ -f "$plugin" ] || continue
-        ln -sf "$plugin" "$HOME/.config/opencode/plugins/$(basename "$plugin")"
+    for plugin in "$PWD"/agents/opencode/plugins/*; do
+        [ -e "$plugin" ] || continue
+        ln -sfn "$plugin" "$HOME/.config/opencode/plugins/$(basename "$plugin")"
         report "Linked plugin" "$plugin" "$HOME/.config/opencode/plugins/$(basename "$plugin")"
     done
 

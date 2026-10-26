@@ -70,7 +70,8 @@ is copied from `opencode.local.json.example` on first run. The TUI rewrites
 `cli.json`, so the tracked `cli.json` (theme) is only merged in with
 `lib/merge-settings.py`, like Pi and agy. Plugins in
 `agents/opencode/plugins/` are symlinked into `~/.config/opencode/plugins/`;
-`ask-gh-api-comment-writes.js` mirrors Claude's `gh api` permission guard.
+`ask-gh-api-comment-writes.js` mirrors Claude's `gh api` permission guard,
+and `model-alias/` is a TUI plugin adding `/model` as an alias of `/models`.
 
 This repo is public. Anything employer-specific — internal tool paths,
 hostnames, ticket prefixes, private MCP servers — belongs in an
