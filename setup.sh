@@ -437,7 +437,7 @@ setup_agents() {
     if install_mode_has "$mode" opencode; then
         # OpenCode 2: official installer, drops `opencode` into ~/.opencode/bin.
         # .zshrc already adds that to PATH, so stop the installer editing rc files.
-        if have opencode || [ -x "$HOME/.opencode/bin/opencode" ]; then
+        if [ -x "$HOME/.opencode/bin/opencode" ]; then
             skip "OpenCode already installed"
         else
             info "Installing OpenCode"
