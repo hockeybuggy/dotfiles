@@ -3,5 +3,8 @@
   "theme": {
     "name": "solarized",
     "mode": "dark"
+  },
+  "session": {
+    "sidebar": "hide"
   }
 }
