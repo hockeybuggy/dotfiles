@@ -186,12 +186,32 @@ or for every tab with `--all`:
 
 If more than one pane fits, ask the user which one they mean.
 
+For "the pane above", "the pane on the right" and the like, ask herdr for the
+neighbour of your own pane. Pass `--pane "$HERDR_PANE_ID"`: `pane neighbor
+--current` resolves to the pane the user has focused, which may be in another
+workspace entirely. `neighbor_pane_id` is missing when there is no pane on that
+side:
+
+```zsh
+herdr pane neighbor --pane "$HERDR_PANE_ID" --direction up \
+  | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"]["neighbor"].get("neighbor_pane_id", ""))'
+```
+
+Directions are `up`, `down`, `left` and `right`. `herdr pane layout --pane
+"$HERDR_PANE_ID"` gives every pane's rectangle in the tab when the user
+describes a position the neighbour lookup can't, like "the bottom-right pane".
+
 ## Driving another agent
 
 herdr tracks the agents it recognises (Claude, pi, Codex and others) and
 reports each one as `idle`, `working`, `blocked`, `done` or `unknown`. Use the
 `herdr agent` commands for them. `pane run` and `pane read` are for shells.
 The target can be a pane id or an agent name.
+
+Each agent's TUI has its own keys for interrupting, answering dialogs and
+quitting, and guessing them can do damage. In OpenCode, `ctrl+c` exits and one
+`esc` doesn't interrupt. Before sending keys to an OpenCode pane, read the
+`herdr-opencode` skill.
 
 ```zsh
 herdr agent list
