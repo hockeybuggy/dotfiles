@@ -2,7 +2,7 @@ theme = dark:iTerm2 Solarized Dark,light:iTerm2 Solarized Light
 # Uncomment for a light terminal while the system theme is dark.
 # theme = iTerm2 Solarized Light
 
-font-family = InconsolataLGC Nerd Font
+font-family = Inconsolata Nerd Font Mono
 font-size = 17
 
 # Treat Option as Alt/Meta so Option-key shortcuts work (e.g. Claude
