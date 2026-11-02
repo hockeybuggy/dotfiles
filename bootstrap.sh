@@ -318,6 +318,12 @@ function doIt() {
         ln -sfn "$plugin" "$HOME/.config/opencode/plugins/$(basename "$plugin")"
         report "Linked plugin" "$plugin" "$HOME/.config/opencode/plugins/$(basename "$plugin")"
     done
+    mkdir -p "$HOME/.config/opencode/themes"
+    for theme in "$PWD"/agents/opencode/themes/*.json; do
+        [ -e "$theme" ] || continue
+        ln -sfn "$theme" "$HOME/.config/opencode/themes/$(basename "$theme")"
+        report "Linked theme" "$theme" "$HOME/.config/opencode/themes/$(basename "$theme")"
+    done
 
     section "Done"
 }

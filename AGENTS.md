@@ -77,6 +77,11 @@ searching for it), and
 `effort/` lets `/effort <level>` set the model's variant (the built-in
 `/effort` only opens a picker, which a bare `/effort` still does).
 
+Themes in `agents/opencode/themes/` are symlinked into
+`~/.config/opencode/themes/`. `solarized-shell.json` is Solarized with Build
+and focus in the gold of the starship prompt. OpenCode only finds a new theme
+file when it starts; `/reload` doesn't pick one up.
+
 This repo is public. Anything employer-specific — internal tool paths,
 hostnames, ticket prefixes, private MCP servers — belongs in an
 untracked local file, never in a tracked one:
