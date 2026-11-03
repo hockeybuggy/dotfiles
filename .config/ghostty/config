@@ -3,6 +3,11 @@ theme = dark:iTerm2 Solarized Dark,light:iTerm2 Solarized Light
 # theme = iTerm2 Solarized Light
 
 font-family = Inconsolata Nerd Font Mono
+# Inconsolata lacks most symbols (arrows, geometric shapes, Greek). Left to
+# macOS fallback, Ghostty sometimes shapes them with AppleGothic but draws them
+# from Menlo, so herdr's ◐ shows up as ɽ and OpenCode's ↳ as ώ. Naming Menlo
+# as the fallback keeps both steps in one font.
+font-family = Menlo
 font-size = 17
 
 # Treat Option as Alt/Meta so Option-key shortcuts work (e.g. Claude
