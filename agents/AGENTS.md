@@ -105,6 +105,17 @@ the replies myself.
 Always use `python3`, never the bare `python` command — it isn't
 guaranteed to exist or point at Python 3.
 
+## herdr
+
+When `$HERDR_ENV` is set, you are running in a pane of
+[herdr](https://herdr.dev/), a terminal multiplexer, and `$HERDR_PANE_ID`
+is your own pane. When I say "the pane above", "the pane on the left", "the
+other pane", "the server tab" or "the agent next door", I mean herdr panes
+and tabs relative to yours, not windows or editor splits. Load the `herdr`
+skill to find and drive them. If another agent is running in that pane,
+load the skill for that agent too if there is one, e.g. `herdr-opencode`
+for OpenCode.
+
 ## Chrome DevTools MCP
 
 Open tabs with `new_page` using `background: true`, and don't pass
