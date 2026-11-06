@@ -6,5 +6,9 @@
   },
   "session": {
     "sidebar": "hide"
+  },
+  "keybinds": {
+    "prompt.editor": "ctrl+g,<leader>e",
+    "session.first": "home,alt+home"
   }
 }
