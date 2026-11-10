@@ -6,8 +6,8 @@ description: "Capture before/after screenshots of a web UI change and embed them
 # Shots
 
 Capture matched before/after screenshots of a web UI change, collect them
-in one flat directory, then hand them to the user to upload to GitHub and
-embed the returned `<img>` tags in the PR description.
+in one flat directory, then upload them into the PR description with
+`gh pr edit --attach`.
 
 ## Steps
 
@@ -47,36 +47,43 @@ Name files `<view>-before.png` / `<view>-after.png` so pairs sort next
 to each other, and close-ups `<view>-closeup-before.png` /
 `<view>-closeup-after.png`.
 
-## Hand-off to the user
-
-GitHub image uploads require a browser session, so the user does this
-part. Tell them:
-
-1. The full absolute path of the directory holding the screenshots
-   (expand `$TMPDIR`), and the list of files.
-2. To open the PR description editor and drag the whole directory's
-   contents into the comment box.
-3. To paste back the resulting markdown/`<img>` tags, in any order —
-   filenames in the URLs are enough to match them up.
-
-Wait for the user's paste. Do not invent, guess, or reuse URLs.
-
 ## Updating the PR
 
-Once the user returns the tags, build a labelled markdown table and
-update the PR description with `gh pr edit --body-file`:
+Write the new PR body to a file: the existing body (`gh pr view --json
+body -q .body`) plus a labelled table that references each screenshot by
+its absolute local path. Use Markdown image syntax — `gh` only rewrites
+`![alt](path)` references, not `<img>` tags.
 
 ```markdown
 | View | Before | After |
 | --- | --- | --- |
-| Login | <img src="..." width="400"> | <img src="..." width="400"> |
+| Login | ![Login before](/abs/path/login-before.png) | ![Login after](/abs/path/login-after.png) |
+```
+
+Then pass the body and every referenced file in one command. `gh`
+uploads each attachment and swaps its local path for the uploaded URL:
+
+```zsh
+gh pr edit <number> --body-file "$TMPDIR/shots/body.md" \
+  --attach "$TMPDIR/shots/login-before.png" \
+  --attach "$TMPDIR/shots/login-after.png"
 ```
 
 - One row per view or close-up.
-- Before running `gh pr edit`, check that each image URL's filename
-  matches its row label and its before/after column.
-- Keep the existing PR body and append the table under a `## Screenshots`
-  heading, or into the testing section if the repo's PR template has
-  one, unless the user says otherwise.
-- Re-read the rendered body (`gh pr view --web` or `gh pr view`) to
-  confirm the table renders as a table and every image resolves.
+- Attach exactly the files the table references; unreferenced
+  attachments get appended to the end of the body.
+- Append the table under a `## Screenshots` heading, or into the
+  testing section if the repo's PR template has one, unless the user
+  says otherwise.
+- If some uploads fail, `gh` still updates the PR with the rest and
+  exits non-zero. Check the exit status, then re-read the body with
+  `gh pr view` to confirm the table renders and no local paths remain.
+
+## Fallback: manual upload
+
+`--attach` needs `gh` 2.101 or newer and push access to the repository,
+so it fails on PRs from forks. In that case, give the user the full
+absolute path of the screenshot directory and the list of files, ask
+them to drag the files into the PR description editor and paste back
+the resulting tags, then build the same table from those URLs. Do not
+invent, guess, or reuse URLs.
