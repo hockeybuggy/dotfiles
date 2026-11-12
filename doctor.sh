@@ -218,10 +218,12 @@ if install_mode_has "$INSTALL_MODE" development; then
     check_tool "ruff" ruff
     check_tool "ty" ty
     check_tool "pgcli" pgcli
-    if have uv && uv python find --managed-python 3.14 --show-version 2>/dev/null | grep -Eq '^3\.14\.'; then
-        pass "uv-managed Python 3.14" "installed"
+    if have uv && uv python find --managed-python 3.15 --show-version 2>/dev/null | grep -Eq '^3\.15\.'; then
+        pass "uv-managed Python 3.15" "installed"
+    elif have uv && uv python find --managed-python 3.14 --show-version 2>/dev/null | grep -Eq '^3\.14\.'; then
+        warn "uv-managed Python 3.15" "only 3.14 installed; $BOOTSTRAP_HINT"
     else
-        fail "uv-managed Python 3.14" "missing; $BOOTSTRAP_HINT"
+        fail "uv-managed Python 3.15" "missing; $BOOTSTRAP_HINT"
     fi
     check_python_on_path "python3 (PATH)" python3
     check_python_on_path "python (PATH)" python

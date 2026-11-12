@@ -381,11 +381,11 @@ setup_linux() {
 # ---------------------------------------------------------------------------
 
 setup_python_tools() {
-    info "Installing Python 3.14, ruff, ty and pgcli"
-    uv python install 3.14 --quiet
-    uv tool install --python 3.14 ruff --quiet
-    uv tool install --python 3.14 ty --quiet
-    uv tool install --python 3.14 --with psycopg-binary pgcli --quiet
+    info "Installing Python 3.15, ruff, ty and pgcli"
+    uv python install 3.15 --quiet
+    uv tool install --python 3.15 ruff --quiet
+    uv tool install --python 3.15 ty --quiet
+    uv tool install --python 3.15 --with psycopg-binary pgcli --quiet
 }
 
 # ---------------------------------------------------------------------------

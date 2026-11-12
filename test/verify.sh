@@ -68,7 +68,7 @@ checks_for_mode() {
                 "cargo|cargo --version"
                 "rustc|rustc --version"
                 "uv|uv --version"
-                "Python 3.14|uv python find --managed-python 3.14 --show-version | grep -Eq '^3\\.14\\.'"
+                "Python 3.15|uv python find --managed-python 3.15 --show-version | grep -Eq '^3\\.15\\.'"
                 "ruff|ruff --version"
                 "ty|ty --version"
                 "pgcli|pgcli --version"
