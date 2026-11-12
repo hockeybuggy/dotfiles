@@ -106,6 +106,7 @@ bat
 fzf
 unzip
 tar
+libatomic1
 EOF
     if install_mode_has "$mode" development; then
         cat <<'EOF'
