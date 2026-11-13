@@ -19,6 +19,7 @@ redundant or trivial assertions.
 ## Local Files
 - Do not create Claude artifacts unless explicitly requested. Write documents, reports, plans, and other deliverables to a local file instead, then provide its path.
 - Whenever you save a screenshot or other file for me to look at, give the full absolute path of every file in your reply (e.g. `/Users/me/project/shots/1-login.png`), not a relative directory heading with bare filenames under it. Expand `$TMPDIR`, `~`, and paths relative to your working directory — I can't see your cwd. Never make me ask where it went.
+- End the line with the path: never follow a file path with punctuation or more words. Ghostty treats a trailing `.` as part of the path, and also any following word that ends in `.` or `/`, so a click opens a file that doesn't exist. Put the path last on its line, on its own line, as a list item, or after a label (`Plan: /Users/me/plan.html`). Backticks don't help because the TUI hides them.
 
 ## Links
 - Prefer providing direct links to referenced resources when available, including files, documentation, commits, issues, pull requests, and web pages.
