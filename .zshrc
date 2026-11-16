@@ -147,9 +147,6 @@ zle -N zle-line-finish
 
 [[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 
-# Added by Antigravity CLI installer
-export PATH="/Users/douglas/.local/bin:$PATH"
-
 # Machine-local config (work tooling, private paths). Untracked; sourced last
 # so it can override anything above. See .zshrc.local.example.
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

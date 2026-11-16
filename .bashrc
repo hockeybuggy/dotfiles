@@ -63,6 +63,4 @@ case "$TERM" in
         ;;
 esac
 
-
-# Added by Antigravity CLI installer
-export PATH="/Users/douglas/.local/bin:$PATH"
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
