@@ -8,7 +8,7 @@ export SHELL="/bin/zsh"
 export EDITOR="nvim"
 export TERMINAL="urxvt"
 export GREP_OPTIONS="--color=auto"
-export XDG_CONFIG_HOME="~/.config"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 if [ -s "/usr/bin/setxkbmap" ]; then
     # Turn off the stupid caps lock key
