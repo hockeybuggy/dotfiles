@@ -216,22 +216,35 @@ the user asks for them.
 
 Never run an agent non-interactively (`pi -p`, `claude -p`, `agy
 --output-format`, `codex exec` and the like). Start it interactively in its
-own tab so the user can watch, answer its prompts and take over:
-
-```zsh
-pane="$(herdr tab create --workspace "$HERDR_WORKSPACE_ID" --label fix-login-bug \
-  --cwd "$worktree" --no-focus \
-  | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"]["root_pane"]["pane_id"])')"
-herdr agent start fix-login-bug --kind pi --pane "$pane"
-herdr agent prompt "$pane" "Read $prompt_file and follow it." --wait --timeout 1800000
-```
+own tab so the user can watch, answer its prompts and take over.
 
 The new agent has none of your context, so write the task, scope, conventions
-and how to verify it to a file first. Pass extra CLI flags after `--`, e.g.
-`herdr agent start … -- --model <model>`. When it settles, check
-`agent get`. If it is `blocked`, handle it as described above. Otherwise read
-its answer with `agent read`, then verify its changes yourself with `git
-status`, the diff and the relevant tests. Leave the tab open for the user.
+and how to verify it to a file first. Then, for OpenCode, use `delegate.sh`
+from this skill's directory. Don't work out the launch by hand:
+
+```zsh
+"$skill_dir/delegate.sh" --label fix-login-bug --cwd "$worktree" \
+  --model sonnet --effort high "$brief_file"
+```
+
+It opens a tab in the current workspace without stealing focus and starts
+OpenCode. It selects the model and effort and checks the footer to confirm
+both took, then sends "Read <brief> and follow it." It prints `pane=`, `tab=`,
+`session=` and `footer=`. Keep the pane and session ids for later. `--model`
+is any text that matches exactly one model, as the `/model` command takes it.
+Leave out `--model` or `--effort` to keep OpenCode's default. The OpenCode TUI
+has no `--model` flag, so don't pass one after `--`. If the script fails, it
+says why and leaves the tab open. Read the screen before retrying.
+
+For other kinds, create the tab, then `herdr agent start <label> --kind
+<kind> --pane "$pane"` with extra CLI flags after `--`, and send the brief
+with `herdr agent prompt`.
+
+When the agent settles, check `agent get`. If it is `blocked`, handle it as
+described above. Otherwise read its answer with `agent read`. For an OpenCode
+agent, `opencode session export <session>` gives the whole transcript. Then
+verify its changes yourself with `git status`, the diff and the relevant
+tests. Leave the tab open for the user.
 
 ### Watching an agent
 
