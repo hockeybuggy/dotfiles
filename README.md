@@ -60,6 +60,15 @@ Skills that only make sense for one agent go in a sibling directory instead:
 Move a skill between them with `git mv`, then re-run `bootstrap.sh` — it prunes
 the symlink the skill left behind in the agent that no longer gets it.
 
+## Local agent instructions
+
+`agents/AGENTS.local.md` (untracked, see the `.example`) holds machine-local
+rules that should load in every session, alongside the public
+`agents/AGENTS.md`. `bootstrap.sh` links it to `~/.claude/rules/AGENTS.local.md`
+for Claude, `~/.pi/agent/APPEND_SYSTEM.md` for Pi, and
+`~/.config/opencode/AGENTS.local.md`, which `agents/opencode/opencode.json`
+lists under `instructions`. agy doesn't get it.
+
 ## Pi extensions
 
 The `agents/extensions/` directory holds global Pi extensions. `bootstrap.sh`

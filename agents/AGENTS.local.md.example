@@ -1,0 +1,8 @@
+## Pull request approvals
+
+Every PR in an `example-org/*` repo should get approvals from two different
+reviewers before it merges. GitHub doesn't enforce it: `reviewDecision`
+reads `APPROVED` after the first approval, so don't rely on it.
+
+- Report review status as a count, e.g. "1 of 2 approvals". Only call a PR
+  approved or ready to merge once it has two.

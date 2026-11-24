@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "instructions": ["~/.config/opencode/AGENTS.local.md"],
   "permissions": [
     { "action": "shell", "resource": "bundle exec rspec *", "effect": "allow" },
     { "action": "shell", "resource": "uv run pytest *", "effect": "allow" },

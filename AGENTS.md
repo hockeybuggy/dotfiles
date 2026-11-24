@@ -91,6 +91,9 @@ untracked local file, never in a tracked one:
 - `.claude/settings.local.json` for Claude plugins and permissions
 - `agents/opencode/opencode.local.json` for OpenCode providers, models and MCP servers
 - `agents/skills-local/` for work-specific skills
+- `agents/AGENTS.local.md` for work-specific rules every session should see.
+  Bootstrap links it into Claude Code (`~/.claude/rules/`), Pi
+  (`APPEND_SYSTEM.md`) and OpenCode (an `instructions` entry), but not agy
 
 Each has a tracked `.example` counterpart where one makes sense. When
 writing a skill or config that a stranger will read, keep it generic:

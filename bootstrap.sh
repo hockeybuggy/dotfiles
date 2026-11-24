@@ -193,6 +193,32 @@ function doIt() {
         --allow-rule "read_file($PWD)"
     report "Merged" "$PWD/agents/agy/settings.json" "$HOME/.gemini/antigravity-cli/settings.json"
 
+    # Work-only rules that every session should see but that can't go in the
+    # public AGENTS.md. Each agent loads one extra file from its own place:
+    # Claude Code's user rules, Pi's APPEND_SYSTEM.md, and the OpenCode
+    # `instructions` entry in agents/opencode/opencode.json. agy is left out.
+    section "Linking local agent instructions"
+    local_instructions="$PWD/agents/AGENTS.local.md"
+    local_instruction_links=(
+        "$HOME/.claude/rules/AGENTS.local.md"
+        "$HOME/.pi/agent/APPEND_SYSTEM.md"
+        "$HOME/.config/opencode/AGENTS.local.md"
+    )
+    if [ -f "$local_instructions" ]; then
+        for link in "${local_instruction_links[@]}"; do
+            mkdir -p "$(dirname "$link")"
+            ln -sf "$local_instructions" "$link"
+        done
+        report "Linked" "$local_instructions" "${local_instruction_links[@]}"
+    else
+        for link in "${local_instruction_links[@]}"; do
+            if [ "$(readlink "$link")" = "$local_instructions" ]; then
+                rm -f "$link"
+                echo "Removed stale link: $(short "$link")"
+            fi
+        done
+    fi
+
     section "Linking Pi extensions and agent skills"
 
     # Pi extensions are global and load from per-extension symlinks.
