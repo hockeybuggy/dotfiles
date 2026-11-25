@@ -1,8 +1,8 @@
 ## Output Formatting
 
-When providing research, plans, comparisons, or tables, output as
-raw markdown inside a code fence so it's copyable. Do not render
-markdown directly.
+Render markdown normally in chat, including tables, plans, and
+research. Only wrap output in a code fence as raw markdown when I ask
+for something to copy and paste.
 
 ## Code Comments
 
