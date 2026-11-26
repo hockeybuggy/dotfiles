@@ -240,15 +240,16 @@ timer. Start a background wait instead. It returns the moment the agent needs
 attention or finishes:
 
 ```zsh
-herdr agent wait "$pane" --until blocked --until done --until idle --timeout 3600000
+herdr agent wait "$pane" --until blocked --until done --timeout 3600000
 ```
 
-Always include `idle`. Not every agent reports `done` when it finishes:
-herdr only shows `done` for a finished turn nobody has looked at, and some
-agents go straight back to `idle`. A wait on `done` alone can then hang until
-it times out. If the agent was already `idle` when you start the wait, it
-returns at once, so check `agent get` first and only wait while it's
-`working`.
+Not every agent reports `done` when it finishes: herdr only shows `done` for
+a finished turn nobody has looked at, and some agents go straight back to
+`idle`. A wait on `done` alone can then hang until it times out. Add
+`--until idle` only when you need to know the agent stopped, such as when it
+is working on a task you gave it. Leave it out when merely watching, because
+`idle` fires on every settled turn and floods the user with noise. An agent
+that is already `idle` matches at once, so check `agent get` first.
 
 In Claude Code, run it with Bash `run_in_background`. The harness wakes you
 when it exits. Then read the screen, report to the user, and start the next
