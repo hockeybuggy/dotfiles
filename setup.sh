@@ -55,7 +55,6 @@ macos_formulae() {
     cat <<'EOF'
 neovim
 tree-sitter-cli
-tmux
 zsh
 git
 fzf
@@ -389,6 +388,22 @@ setup_python_tools() {
 }
 
 # ---------------------------------------------------------------------------
+# tmux
+# ---------------------------------------------------------------------------
+
+# drover relies on OSC 7501 program status, which is only on tmux's main
+# branch until 3.9 is released. Switch back to the formula then.
+setup_tmux() {
+    [ "$(uname -s)" = "Darwin" ] || return 0
+    if brew list tmux >/dev/null 2>&1; then
+        skip "tmux already installed"
+    else
+        info "Installing tmux from its main branch"
+        brew install --HEAD tmux || warn "tmux install failed (continuing)"
+    fi
+}
+
+# ---------------------------------------------------------------------------
 # herdr (terminal multiplexer)
 # ---------------------------------------------------------------------------
 
@@ -504,6 +519,7 @@ main() {
     if install_mode_has "$INSTALL_MODE" development; then
         setup_python_tools
     fi
+    setup_tmux
     setup_herdr "$INSTALL_MODE"
     setup_agents "$INSTALL_MODE"
 

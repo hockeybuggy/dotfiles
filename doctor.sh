@@ -181,7 +181,7 @@ nvim_version=""
 tmux_version=""
 zsh_version=""
 if have nvim; then nvim_version=$(nvim --version 2>/dev/null | awk 'NR == 1 {gsub(/^v/, "", $2); print $2}'); fi
-if have tmux; then tmux_version=$(tmux -V 2>/dev/null | awk '{print $2}'); fi
+if have tmux; then tmux_version=$(tmux -V 2>/dev/null | awk '{sub(/^next-/, "", $2); print $2}'); fi
 if have zsh; then zsh_version=$(zsh --version 2>/dev/null | awk '{print $2}'); fi
 check_min_version "neovim" nvim "$nvim_version" "0.12.0"
 check_min_version "tmux" tmux "$tmux_version" "3.5"

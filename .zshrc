@@ -103,6 +103,15 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 
 eval "$(starship init zsh)"
 
+# tmux clears a pane's OSC 7501 agent state (working, blocked, idle) when the
+# shell prompt mark OSC 133 A arrives, so an agent that crashes or is killed
+# stops showing as working once the prompt is back.
+if [[ -n "$TMUX" ]]; then
+    _tmux_prompt_mark() { print -n '\e]133;A\e\\' }
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd _tmux_prompt_mark
+fi
+
 # Get Special keys working {{{2
 
 # create a zkbd compatible hash;
