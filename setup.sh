@@ -404,6 +404,26 @@ setup_tmux() {
 }
 
 # ---------------------------------------------------------------------------
+# drover (tmux agent tracker)
+# ---------------------------------------------------------------------------
+
+setup_drover() {
+    mode=$1
+
+    install_mode_has "$mode" drover || return 0
+
+    if have drover; then
+        skip "drover already installed"
+    elif have cargo; then
+        info "Installing drover"
+        cargo install --locked --git ssh://git@github.com/hockeybuggy/drover drover \
+            || warn "drover install failed (continuing)"
+    else
+        warn "drover needs cargo; skipping"
+    fi
+}
+
+# ---------------------------------------------------------------------------
 # herdr (terminal multiplexer)
 # ---------------------------------------------------------------------------
 
@@ -520,6 +540,7 @@ main() {
         setup_python_tools
     fi
     setup_tmux
+    setup_drover "$INSTALL_MODE"
     setup_herdr "$INSTALL_MODE"
     setup_agents "$INSTALL_MODE"
 

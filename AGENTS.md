@@ -43,6 +43,12 @@ notification-log scripts under `agents/hooks/`, plus the Claude hook table,
 herdr started surfacing agent state itself. Only the `gh api` permission guard
 remains in `.claude/settings.json`. Don't reintroduce them without asking.
 
+drover (`~/devel/drover`, private repo `hockeybuggy/drover`) tracks coding
+agent state in tmux from OSC 7501, which needs tmux's main branch until 3.9
+(`setup.sh` installs `--HEAD`). `.tmux.conf` holds the glyph and agent-row
+formats and the drover bindings, and the `tmux` and `supervise-agents` skills
+drive agents with it; herdr stays installed during the trial.
+
 `.config/mcp/mcp.json` is the shared MCP server list. Bootstrap links it to
 `~/.pi/agent/mcp.json` for Pi's built-in MCP support and to agy's
 `mcp_config.json`. Keep Pi-only keys such as `exposure` out of it, since agy

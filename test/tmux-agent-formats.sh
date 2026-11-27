@@ -65,4 +65,9 @@ case "$row" in *"range=pane|$blocked]"*) ;; *) fail "agent row has no click rang
 case "$row" in *'themis · Review ##[fg=red]counts'*) ;; *) fail "agent row did not strip 'OC | ' or escape #: $row" ;; esac
 case "$row" in *"range=pane|$empty]"*) fail "agent row lists a pane without an agent: $row" ;; esac
 
+keys=$(t list-keys -T prefix)
+printf '%s\n' "$keys" | grep -q 'drover next' || fail "prefix+w is not bound to drover next"
+printf '%s\n' "$keys" | grep -q 'drover prev' || fail "prefix+q is not bound to drover prev"
+printf '%s\n' "$keys" | grep -q 'drover pick' || fail "prefix+a is not bound to drover pick"
+
 echo "ok"
