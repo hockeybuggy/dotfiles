@@ -99,9 +99,15 @@ make the code changes and push them — let the diff speak. I'll write
 the replies myself.
 
 When writing review comments on someone else's PR, keep each one
-short — a sentence or two. Frame suggestions and concerns as questions
-("Could this be `null` here?", "Would a guard clause read better?")
-rather than directives, and leave out preamble and praise padding.
+short — a sentence or two — and leave out preamble and praise padding.
+Consider framing suggestions and concerns as questions ("Could this be
+`null` here?") rather than directives, but not where a question would
+come across as coy or passive-aggressive; a plain statement is better
+then.
+
+Draft review comments and show them to me before posting anything.
+Don't submit a review or leave a comment until I've approved the
+wording.
 
 ## Verification & Testing
 - Do NOT run the full test suite or docker test stack before committing unless explicitly asked. Run the targeted tests for files you changed, then commit/push. If you believe a broader run is needed, ask first.
