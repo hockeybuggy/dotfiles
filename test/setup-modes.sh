@@ -26,6 +26,8 @@ personal_agents=$(agent_commands personal)
 printf '%s\n' "$minimal_macos" | grep -qw neovim || fail "minimal macOS omits neovim"
 printf '%s\n' "$minimal_macos" | grep -qw fnm || fail "minimal macOS omits fnm"
 printf '%s\n' "$minimal_macos" | grep -qw node || fail "minimal macOS omits node"
+! printf '%s\n' "$minimal_macos" | grep -qw tmux || fail "macOS formulae install a tmux release; setup_tmux installs HEAD"
+type setup_tmux >/dev/null 2>&1 || fail "setup.sh has no setup_tmux"
 ! printf '%s\n' "$minimal_macos" | grep -qw uv || fail "minimal macOS includes uv"
 ! printf '%s\n' "$minimal_macos" | grep -qw duti || fail "minimal macOS includes duti"
 

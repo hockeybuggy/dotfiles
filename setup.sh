@@ -55,7 +55,6 @@ macos_formulae() {
     cat <<'EOF'
 neovim
 tree-sitter-cli
-tmux
 zsh
 git
 fzf
@@ -389,6 +388,42 @@ setup_python_tools() {
 }
 
 # ---------------------------------------------------------------------------
+# tmux
+# ---------------------------------------------------------------------------
+
+# drover relies on OSC 7501 program status, which is only on tmux's main
+# branch until 3.9 is released. Switch back to the formula then.
+setup_tmux() {
+    [ "$(uname -s)" = "Darwin" ] || return 0
+    if brew list tmux >/dev/null 2>&1; then
+        skip "tmux already installed"
+    else
+        info "Installing tmux from its main branch"
+        brew install --HEAD tmux || warn "tmux install failed (continuing)"
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# drover (tmux agent tracker)
+# ---------------------------------------------------------------------------
+
+setup_drover() {
+    mode=$1
+
+    install_mode_has "$mode" drover || return 0
+
+    if have drover; then
+        skip "drover already installed"
+    elif have cargo; then
+        info "Installing drover"
+        cargo install --locked --git ssh://git@github.com/hockeybuggy/drover drover \
+            || warn "drover install failed (continuing)"
+    else
+        warn "drover needs cargo; skipping"
+    fi
+}
+
+# ---------------------------------------------------------------------------
 # herdr (terminal multiplexer)
 # ---------------------------------------------------------------------------
 
@@ -504,6 +539,8 @@ main() {
     if install_mode_has "$INSTALL_MODE" development; then
         setup_python_tools
     fi
+    setup_tmux
+    setup_drover "$INSTALL_MODE"
     setup_herdr "$INSTALL_MODE"
     setup_agents "$INSTALL_MODE"
 

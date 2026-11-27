@@ -33,7 +33,7 @@ cat > "$fake_bin/tool" <<'EOF'
 name=${0##*/}
 case "$name" in
     nvim) echo "NVIM v0.12.0" ;;
-    tmux) echo "tmux 3.5" ;;
+    tmux) echo "tmux ${FAKE_TMUX_VERSION:-3.5}" ;;
     zsh) [ "${1:-}" = "--version" ] && echo "zsh 5.9" ;;
     uv) case "$*" in *"python find"*) echo "3.15.0" ;; *) echo "uv 1.0" ;; esac ;;
     git)
@@ -52,7 +52,7 @@ EOF
 chmod +x "$fake_bin/tool"
 
 core_commands="nvim tree-sitter tmux zsh git fzf rg fd bat eza btm starship zoxide fnm node npm python3 pip"
-development_commands="uv gpg diff-so-fancy markdownlint cargo rustc ruff ty pgcli claude opencode"
+development_commands="uv gpg diff-so-fancy markdownlint cargo rustc ruff ty pgcli claude opencode herdr drover"
 minimal_agent_commands="pi agy"
 for command_name in $core_commands; do
     ln -s tool "$fake_bin/$command_name"
@@ -114,6 +114,9 @@ printf '%s\n' "$output" | grep -q "Mode.*minimal" || fail "minimal mode is not d
 if printf '%s\n' "$output" | grep -Eq '✗[[:space:]]+(uv|Claude Code|cargo)'; then
     fail "minimal mode requires a development-only tool"
 fi
+
+output=$(FAKE_TMUX_VERSION=next-3.9 HOME="$healthy_home" PATH="$env_path" SHELL=/bin/zsh EDITOR=nvim "$ROOT/doctor.sh" --ci 2>&1)
+printf '%s\n' "$output" | grep -Eq '✓[[:space:]]+tmux[[:space:]]+3\.9' || fail "doctor rejected a tmux HEAD build: $output"
 
 rm "$fake_bin/pi" "$fake_bin/agy"
 printf 'work\n' > "$healthy_home/.dotfiles_mode"
